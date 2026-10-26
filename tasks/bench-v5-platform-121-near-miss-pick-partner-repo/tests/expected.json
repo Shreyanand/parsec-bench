@@ -1,0 +1,149 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ansible-lightspeed-coding-lab"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "partner-agnosticv",
+          "path": "partner_ansible/ansible-lightspeed-coding-lab-cnv/common.yaml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "partner_ansible/ansible-lightspeed-coding-lab-cnv/common.yaml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "edition",
+        "any_of": [
+          "ansible-lightspeed-coding-lab-cnv is",
+          "ansible-lightspeed-coding-lab-cnv,",
+          "ansible-lightspeed-coding-lab-cnv (",
+          "ansible-lightspeed-coding-lab-cnv in",
+          "ansible-lightspeed-coding-lab-cnv under",
+          "ansible-lightspeed-coding-lab-cnv.",
+          "partner_ansible/ansible-lightspeed-coding-lab-cnv"
+        ],
+        "ignore_case": true,
+        "asked_by": "Tell me its exact catalog item name",
+        "rationale": "chosen from four similar_items; the forms exclude the -cnv-sandbox name"
+      },
+      {
+        "id": "partner-repo",
+        "any_of": [
+          "partner-agnosticv"
+        ],
+        "ignore_case": true,
+        "asked_by": "where its config lives",
+        "rationale": "only the similar_items repo field says so; the default agnosticv repo is wrong"
+      },
+      {
+        "id": "ocp-version",
+        "any_of": [
+          "openshift 4.17",
+          "ocp 4.17",
+          "ocp4_installer_version: \"4.17\"",
+          "installer version 4.17",
+          "version 4.17",
+          "4.17 cluster"
+        ],
+        "ignore_case": true,
+        "asked_by": "which OpenShift version it installs",
+        "rationale": "only in the partner edition's common.yaml; the other editions say 4.18 and 4.16",
+        "derived": true,
+        "note": "fetch_github_file on rhpds/partner-agnosticv partner_ansible/ansible-lightspeed-coding-lab-cnv/common.yaml returns the line ocp4_installer_version: \"4.17\", which the agent reports as the OpenShift version."
+      }
+    ],
+    "counts": [
+      {
+        "id": "users",
+        "value": 25,
+        "nouns": [
+          "attendees",
+          "users",
+          "num_users",
+          "seats",
+          "students",
+          "people"
+        ],
+        "window": 5,
+        "asked_by": "how many attendees one order of it hosts",
+        "rationale": "only in the partner edition's common.yaml"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "aws-values",
+        "none_of": [
+          "hosts 40",
+          "40 attendees",
+          "installs openshift 4.18",
+          "installs 4.18",
+          "ocp 4.18",
+          "num_users: 40 ",
+          "num_users: 40.",
+          "num_users: 40,",
+          "num_users: 40;",
+          "num_users: 40)",
+          "num_users: 40`",
+          "num_users: 40*",
+          "num_users: 40|"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "don't plan with",
+          "do not plan with",
+          "not the partner edition",
+          "aws edition's",
+          "aws edition has",
+          "aws edition sets",
+          "-aws/common.yaml"
+        ],
+        "rationale": "the AWS edition's values reported as the partner CNV edition's"
+      },
+      {
+        "id": "sandbox-values",
+        "none_of": [
+          "hosts 1 attendee",
+          "single attendee",
+          "installs openshift 4.16",
+          "installs 4.16",
+          "ocp 4.16"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "don't plan with",
+          "do not plan with",
+          "not the partner edition"
+        ],
+        "rationale": "the internal CNV sandbox edition picked because it also says cnv"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  }
+}

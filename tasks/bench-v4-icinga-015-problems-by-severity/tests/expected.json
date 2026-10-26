@@ -1,0 +1,110 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_problems"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "search_services"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "list_alerts"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "counts": [
+      {
+        "id": "critical",
+        "value": 3,
+        "nouns": [
+          "critical",
+          "criticals"
+        ],
+        "window": 5,
+        "asked_by": "Report how many are Critical",
+        "rationale": "derived by counting state=2 rows. Checked against the seed's own literals: the outputs contain 14, 6, 3, 1, 3 and 19, so a bare 3 could coincide -- which is why the noun proximity rule and not a substring is used"
+      },
+      {
+        "id": "warning",
+        "value": 3,
+        "nouns": [
+          "warning",
+          "warnings"
+        ],
+        "window": 5,
+        "asked_by": "how many are Warning",
+        "rationale": "state=1 rows"
+      },
+      {
+        "id": "unknown",
+        "value": 1,
+        "nouns": [
+          "unknown",
+          "unknowns"
+        ],
+        "window": 5,
+        "asked_by": "how many are Unknown",
+        "rationale": "state=3 rows"
+      }
+    ],
+    "required": [
+      {
+        "id": "worst-first",
+        "any_of": [
+          "anarchy-stuck-subjects",
+          "Stuck AnarchySubjects"
+        ],
+        "ignore_case": true,
+        "asked_by": "say which single problem you would look at first",
+        "rationale": "the 14-subject east-1 backlog is the largest CRITICAL by an order of magnitude; naming a WARNING or the suppressed UNKNOWN first is a prioritisation error"
+      },
+      {
+        "id": "suppressed-noted",
+        "any_of": [
+          "acknowledged",
+          "downtime",
+          "suppressed"
+        ],
+        "ignore_case": true,
+        "asked_by": "Note any that are already suppressed, since those need no attention",
+        "rationale": "one of the seven is acknowledged and in downtime; an agent that reports seven equally urgent problems has not read the suppression fields"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "miscount",
+        "none_of": [
+          "7 critical",
+          "seven critical",
+          "6 critical",
+          "all critical",
+          "5 critical"
+        ],
+        "ignore_case": true,
+        "rationale": "an agent that counts every problem as CRITICAL, or confuses the subject counts in the outputs with the number of problems, asserts one of these"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

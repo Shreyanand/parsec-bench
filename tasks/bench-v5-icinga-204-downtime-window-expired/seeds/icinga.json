@@ -1,0 +1,88 @@
+{
+  "hosts": [
+    {
+      "name": "mq-relay-ams-1",
+      "type": "Host",
+      "attrs": {
+        "display_name": "mq-relay-ams-1",
+        "host_name": "mq-relay-ams-1",
+        "address": "10.88.3.40",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "messaging-eu"
+        ],
+        "last_check": 1794994140,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.62 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "mq-relay-ams-1!amqp-queue-depth",
+      "type": "Service",
+      "attrs": {
+        "display_name": "AMQP queue depth (orders.inbound)",
+        "host_name": "mq-relay-ams-1",
+        "state": 2,
+        "state_type": 1,
+        "check_attempt": 3,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "last_state_change": 1794988320,
+        "last_hard_state_change": 1794988500,
+        "last_check": 1794994080,
+        "last_check_result": {
+          "output": "QUEUE CRITICAL - orders.inbound depth 48211 messages (crit 20000)",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": [
+    {
+      "name": "mq-relay-ams-1!b61f0c2e-5d1a-4c8e-9a77-0e3f2d9b4a10",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "mq-relay-ams-1",
+        "service_name": "",
+        "author": "rvoskuijlen",
+        "comment": "CHG-40917 broker firmware upgrade, rolling restart of the relay pair",
+        "entry_time": 1794823500,
+        "start_time": 1794938400,
+        "end_time": 1794952800,
+        "fixed": true,
+        "duration": 14400,
+        "trigger_time": 1794938400,
+        "is_in_effect": false
+      }
+    },
+    {
+      "name": "mq-relay-ams-1!amqp-queue-depth!4e93a7d5-21c0-4b6f-8d12-c7a95f03e8b1",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "mq-relay-ams-1",
+        "service_name": "amqp-queue-depth",
+        "author": "tsalonen",
+        "comment": "CHG-41022 move orders.inbound to quorum queues; depth will spike during the drain",
+        "entry_time": 1794930000,
+        "start_time": 1795204800,
+        "end_time": 1795215600,
+        "fixed": true,
+        "duration": 10800,
+        "trigger_time": 0,
+        "is_in_effect": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "generic-rhdp",
+        "detailed": true
+      },
+      "result": {
+        "result": "[{\"name\":\"babylon-schema-yaml-diff\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Babylon Schema YAML Diff\",\"host_name\":\"generic-rhdp\",\"state\":3,\"state_type\":1,\"acknowledgement\":1,\"downtime_depth\":1,\"groups\":[],\"last_check_result\":{\"output\":\"UNKNOWN - GitHub API 401 Unauthorized while fetching the schema for comparison\",\"state\":3,\"exit_status\":3}}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_comments",
+        "host": "generic-rhdp"
+      },
+      "result": {
+        "result": "[{\"name\":\"generic-rhdp-comment-1\",\"type\":\"Comment\",\"attrs\":{\"host_name\":\"generic-rhdp\",\"author\":\"opentlc-mgr\",\"text\":\"Expected: the schema-diff check uses a PAT that we rotate on the 1st of each month, and it reads UNKNOWN until the Vault sync runs. Tracked in RHDPSUP-8812. No action needed unless it is still UNKNOWN after the sync window.\",\"entry_time\":1781000000.0,\"service_name\":\"babylon-schema-yaml-diff\"}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_downtimes",
+        "host": "generic-rhdp"
+      },
+      "result": {
+        "result": "[{\"name\":\"generic-rhdp-downtime-1\",\"type\":\"Downtime\",\"attrs\":{\"host_name\":\"generic-rhdp\",\"author\":\"opentlc-mgr\",\"comment\":\"PAT rotation window, monthly\",\"start_time\":1781000000.0,\"end_time\":1781600000.0,\"fixed\":true,\"was_cancelled\":false,\"service_name\":\"babylon-schema-yaml-diff\"}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "No -- this is not an actual problem, and no action is needed.\n\nThe service is UNKNOWN rather than CRITICAL, and it is both acknowledged and inside an active scheduled downtime, so it is deliberately suppressed rather than unnoticed.\n\nThe reason is in the comment on it: the schema-diff check authenticates with a PAT that gets rotated on the 1st of each month, and between the rotation and the Vault sync the check reads UNKNOWN because the GitHub API returns 401. That is a known, expected window rather than a fault in the check or in Babylon.\n\nIt is tracked as RHDPSUP-8812. The one thing worth watching is the condition the comment attaches: if the service is still UNKNOWN after the sync window has passed, then it stops being expected and does need looking at."
+}

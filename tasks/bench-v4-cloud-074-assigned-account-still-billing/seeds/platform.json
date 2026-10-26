@@ -1,0 +1,70 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [
+    {
+      "babylon_anarchy_subject_id": "bas-north-p2xhw",
+      "cluster": "north",
+      "name": "labs-emea.rhel-edge-lab.prod.p2xhw",
+      "namespace": "babylon-anarchy-labs-emea",
+      "governor": "labs-emea.rhel-edge-lab.prod",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "p2xhw",
+        "env_type": "rhel-edge-lab"
+      },
+      "resource_claim": {
+        "name": "rhel-edge-lab-p2xhw",
+        "namespace": "user-tcolberg-redhat-com"
+      },
+      "requester_email": "tcolberg@example.org"
+    },
+    {
+      "babylon_anarchy_subject_id": "bas-south-mz4tq",
+      "cluster": "south",
+      "name": "labs-emea.rhel-edge-lab.prod.mz4tq",
+      "namespace": "babylon-anarchy-labs-emea",
+      "governor": "labs-emea.rhel-edge-lab.prod",
+      "current_state": "destroy-failed",
+      "desired_state": "destroyed",
+      "healthy": false,
+      "instance_vars": {
+        "guid": "mz4tq",
+        "env_type": "rhel-edge-lab"
+      },
+      "requester_email": "rvashti@example.org"
+    },
+    {
+      "babylon_anarchy_subject_id": "bas-south-d8cvj",
+      "cluster": "south",
+      "name": "ocp4-workshop-base.d8cvj",
+      "namespace": "babylon-anarchy-ocp4-workshop-base",
+      "governor": "ocp4-workshop-base",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "d8cvj",
+        "env_type": "ocp4-workshop-base"
+      }
+    }
+  ],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

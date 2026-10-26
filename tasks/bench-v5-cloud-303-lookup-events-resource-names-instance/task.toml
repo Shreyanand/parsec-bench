@@ -1,0 +1,24 @@
+schema_version = "1.3"
+
+[task]
+name = "bench/bench-v5-cloud-303-lookup-events-resource-names-instance"
+description = "Authored bench scenario (see provenance.md)"
+
+[metadata]
+suite = "bench/v5"
+kind = "trap"
+services = ["cloud"]
+
+[environment]
+docker_image = "registry.access.redhat.com/ubi9/ubi:latest"
+workdir = "/"
+
+[[environment.mcp_servers]]
+name = "cloud"
+url = "${CLOUD_MCP_URL}"
+
+[verifier]
+timeout_sec = 120.0
+
+[agent]
+timeout_sec = 900.0

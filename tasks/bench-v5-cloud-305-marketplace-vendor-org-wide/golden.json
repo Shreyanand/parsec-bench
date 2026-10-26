@@ -1,0 +1,87 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_marketplace_agreements",
+      "args": {
+        "vendor_name": "Brightmoor"
+      },
+      "result": {
+        "agreements": [
+          {
+            "account_id": "391774208516",
+            "account_name": "rhdp-data-eng-01",
+            "agreement_id": "agmt-b4w9t2k7x1qe",
+            "product_name": "Brightmoor Query Accelerator",
+            "product_id": "prod-bqa71c4e",
+            "vendor_name": "Brightmoor Analytics",
+            "agreement_start": "2026-01-15T00:00:00Z",
+            "agreement_end": "2027-01-14T00:00:00Z",
+            "auto_renew": true,
+            "status": "ACTIVE",
+            "classification": "SaaS (Auto-Renew)",
+            "currency": "USD",
+            "estimated_cost": 12480.0,
+            "estimated_cost_usd": 12480.0,
+            "offer_type": "PrivateOffer",
+            "terms": [
+              {
+                "type": "Configurable"
+              }
+            ],
+            "last_updated": "2026-10-11T03:30:00Z"
+          },
+          {
+            "account_id": "457102938841",
+            "account_name": "rhdp-demo-sales-04",
+            "agreement_id": "agmt-f2j7m4d9s6tu",
+            "product_name": "Brightmoor Lineage Catalog",
+            "product_id": "prod-blc39a8d",
+            "vendor_name": "Brightmoor Analytics",
+            "agreement_start": "2026-03-01T00:00:00Z",
+            "agreement_end": "2027-02-28T00:00:00Z",
+            "auto_renew": false,
+            "status": "ACTIVE",
+            "classification": "SaaS (Contract)",
+            "currency": "USD",
+            "estimated_cost": 4125.0,
+            "estimated_cost_usd": 4125.0,
+            "offer_type": "PrivateOffer",
+            "terms": [
+              {
+                "type": "Configurable"
+              }
+            ],
+            "last_updated": "2026-10-11T03:30:00Z"
+          },
+          {
+            "account_id": "391774208562",
+            "account_name": "rhdp-data-eng-02",
+            "agreement_id": "agmt-k8c3n6v0p5ra",
+            "product_name": "Brightmoor Query Accelerator",
+            "product_id": "prod-bqa71c4e",
+            "vendor_name": "Brightmoor Analytics",
+            "agreement_start": "2026-05-01T00:00:00Z",
+            "agreement_end": "2027-04-30T00:00:00Z",
+            "auto_renew": false,
+            "status": "ACTIVE",
+            "classification": "SaaS (Contract)",
+            "currency": "USD",
+            "estimated_cost": 7350.0,
+            "estimated_cost_usd": 7350.0,
+            "offer_type": "PrivateOffer",
+            "terms": [
+              {
+                "type": "Configurable"
+              }
+            ],
+            "last_updated": "2026-10-11T03:30:00Z"
+          }
+        ],
+        "count": 3,
+        "truncated": false
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "We hold 3 AWS Marketplace agreements with Brightmoor Analytics, on three different accounts:\n\n| account | account name | product | agreement | auto-renew | estimated cost (USD) |\n|---|---|---|---|---|---|\n| 391774208516 | rhdp-data-eng-01 | Brightmoor Query Accelerator | agmt-b4w9t2k7x1qe | yes | 12,480 |\n| 391774208562 | rhdp-data-eng-02 | Brightmoor Query Accelerator | agmt-k8c3n6v0p5ra | no | 7,350 |\n| 457102938841 | rhdp-demo-sales-04 | Brightmoor Lineage Catalog | agmt-f2j7m4d9s6tu | no | 4,125 |\n\nOnly one auto-renews: the Query Accelerator agreement on 391774208516 (rhdp-data-eng-01), which renews on 2027-01-14. The combined estimated cost is 23,955 USD.\n\nAll three are ACTIVE. Two accounts each buy Brightmoor Query Accelerator separately, which is the obvious consolidation candidate.\n"
+}

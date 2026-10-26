@@ -1,0 +1,44 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_problems"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 2,
+    "counts_missed": [
+      {
+        "asked_by": "how many distinct hosts have at least one problem",
+        "id": "host-count",
+        "nouns": [
+          "hosts",
+          "host"
+        ],
+        "rationale": "requires deduplicating host_name across seven rows, which is the aggregation being measured",
+        "value": 4,
+        "window": 6
+      }
+    ],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

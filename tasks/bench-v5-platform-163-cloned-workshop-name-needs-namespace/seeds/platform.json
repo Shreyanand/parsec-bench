@@ -1,0 +1,373 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [
+    {
+      "babylon_workshop_id": "dunlin-user-aokonkwo-redhat-com-ocp-argo-sync-course",
+      "cluster": "dunlin",
+      "namespace": "user-aokonkwo-redhat-com",
+      "name": "ocp-argo-sync-course",
+      "display_name": "Argo CD Sync Course",
+      "catalog_item": "ocp.argo-sync-course.prod",
+      "workshop_id": "v9tsl",
+      "multiworkshop": "",
+      "description": "Copy of the Argo CD course.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-11-20T12:30:00Z",
+        "end": "2026-11-21T12:30:00Z"
+      },
+      "provision_count": {
+        "ordered": 4,
+        "active": 3,
+        "failed": 1,
+        "retries": 0
+      },
+      "user_count": 4,
+      "user_assignments_count": 4,
+      "resource_claims_count": 4,
+      "resource_claims": [
+        {
+          "name": "ocp-argo-sync-course-prod-h4jsd",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "ocp-argo-sync-course",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "ocp-argo-sync-course.prod-h4jsd",
+              "anarchy_namespace": "babylon-anarchy-ocp-argo-sync-course",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "h4jsd",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "west",
+                  "job_id": 5806610,
+                  "status": "successful",
+                  "completed": "2026-11-20T13:02:44Z"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "ocp-argo-sync-course-prod-k8wfr",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "ocp-argo-sync-course",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "ocp-argo-sync-course.prod-k8wfr",
+              "anarchy_namespace": "babylon-anarchy-ocp-argo-sync-course",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "k8wfr",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "west",
+                  "job_id": 5806625,
+                  "status": "successful",
+                  "completed": "2026-11-20T13:09:31Z"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "ocp-argo-sync-course-prod-p2ycn",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "ocp-argo-sync-course",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "ocp-argo-sync-course.prod-p2ycn",
+              "anarchy_namespace": "babylon-anarchy-ocp-argo-sync-course",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "p2ycn",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "west",
+                  "job_id": 5806631,
+                  "status": "successful",
+                  "completed": "2026-11-20T13:12:19Z"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "ocp-argo-sync-course-prod-x8kfv",
+          "state": "failed",
+          "healthy": false,
+          "ready": false,
+          "resources": [
+            {
+              "name": "ocp-argo-sync-course",
+              "healthy": false,
+              "ready": false,
+              "anarchy_subject": "ocp-argo-sync-course.prod-x8kfv",
+              "anarchy_namespace": "babylon-anarchy-ocp-argo-sync-course",
+              "current_state": "failed",
+              "desired_state": "started",
+              "guid": "x8kfv",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "west",
+                  "job_id": 5806638,
+                  "status": "failed",
+                  "completed": "2026-11-20T13:15:07Z"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "babylon_workshop_id": "dunlin-user-tfolau-redhat-com-ocp-argo-sync-course",
+      "cluster": "dunlin",
+      "namespace": "user-tfolau-redhat-com",
+      "name": "ocp-argo-sync-course",
+      "display_name": "Argo CD Sync Course",
+      "catalog_item": "ocp.argo-sync-course.prod",
+      "workshop_id": "h6pvd",
+      "multiworkshop": "",
+      "description": "Two-day Argo CD course for the Auckland group.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-11-24T07:00:00Z",
+        "end": "2026-11-26T19:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 5,
+        "active": 3,
+        "failed": 2,
+        "retries": 0
+      },
+      "user_count": 5,
+      "user_assignments_count": 5,
+      "resource_claims_count": 5,
+      "resource_claims": [
+        {
+          "name": "ocp-argo-sync-course-prod-b7nqe",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "ocp-argo-sync-course",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "ocp-argo-sync-course.prod-b7nqe",
+              "anarchy_namespace": "babylon-anarchy-ocp-argo-sync-course",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "b7nqe",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "west",
+                  "job_id": 5813192,
+                  "status": "successful",
+                  "completed": "2026-11-24T07:41:18Z"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "ocp-argo-sync-course-prod-c2rlw",
+          "state": "failed",
+          "healthy": false,
+          "ready": false,
+          "resources": [
+            {
+              "name": "ocp-argo-sync-course",
+              "healthy": false,
+              "ready": false,
+              "anarchy_subject": "ocp-argo-sync-course.prod-c2rlw",
+              "anarchy_namespace": "babylon-anarchy-ocp-argo-sync-course",
+              "current_state": "failed",
+              "desired_state": "started",
+              "guid": "c2rlw",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "west",
+                  "job_id": 5813207,
+                  "status": "failed",
+                  "completed": "2026-11-24T07:49:55Z"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "ocp-argo-sync-course-prod-d5vhy",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "ocp-argo-sync-course",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "ocp-argo-sync-course.prod-d5vhy",
+              "anarchy_namespace": "babylon-anarchy-ocp-argo-sync-course",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "d5vhy",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "west",
+                  "job_id": 5813219,
+                  "status": "successful",
+                  "completed": "2026-11-24T07:53:02Z"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "ocp-argo-sync-course-prod-f9mpk",
+          "state": "failed",
+          "healthy": false,
+          "ready": false,
+          "resources": [
+            {
+              "name": "ocp-argo-sync-course",
+              "healthy": false,
+              "ready": false,
+              "anarchy_subject": "ocp-argo-sync-course.prod-f9mpk",
+              "anarchy_namespace": "babylon-anarchy-ocp-argo-sync-course",
+              "current_state": "failed",
+              "desired_state": "started",
+              "guid": "f9mpk",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "west",
+                  "job_id": 5813244,
+                  "status": "failed",
+                  "completed": "2026-11-24T08:06:37Z"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "ocp-argo-sync-course-prod-g3xtz",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "ocp-argo-sync-course",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "ocp-argo-sync-course.prod-g3xtz",
+              "anarchy_namespace": "babylon-anarchy-ocp-argo-sync-course",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "g3xtz",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "west",
+                  "job_id": 5813251,
+                  "status": "successful",
+                  "completed": "2026-11-24T08:11:40Z"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "babylon_workshop_id": "dunlin-user-tfolau-redhat-com-ocp-argo-sync-course-dryrun",
+      "cluster": "dunlin",
+      "namespace": "user-tfolau-redhat-com",
+      "name": "ocp-argo-sync-course-dryrun",
+      "display_name": "Argo CD Sync Course (trainer dry run)",
+      "catalog_item": "ocp.argo-sync-course.prod",
+      "workshop_id": "q3zbm",
+      "multiworkshop": "",
+      "description": "Trainer dry run of the Argo CD course.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-11-22T21:00:00Z",
+        "end": "2026-11-23T21:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 1,
+        "active": 1,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 1,
+      "user_assignments_count": 1,
+      "resource_claims_count": 1,
+      "resource_claims": [
+        {
+          "name": "ocp-argo-sync-course-prod-m6tcb",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "ocp-argo-sync-course",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "ocp-argo-sync-course.prod-m6tcb",
+              "anarchy_namespace": "babylon-anarchy-ocp-argo-sync-course",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "m6tcb",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "west",
+                  "job_id": 5810077,
+                  "status": "successful",
+                  "completed": "2026-11-22T21:15:26Z"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,40 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "507318246190",
+          "action": "list_users"
+        }
+      },
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "\nSELECT\n  eventTime,\n  eventName,\n  eventSource,\n  awsRegion,\n  errorCode\nFROM cloudtrail_events\nWHERE recipientAccountId = '507318246190'\n  AND userIdentity.arn LIKE '%nightly-ingest%'\n  AND eventTime > '2026-10-08 07:30:00'\n  AND eventTime < '2026-10-10 07:30:00'\nORDER BY eventTime ASC\n",
+          "max_results": 500
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 7,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

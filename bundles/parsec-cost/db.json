@@ -1,0 +1,715 @@
+{
+  "account_costs": [
+    {
+      "account_cost_id": "acctcost-aws-111111111111-service-2024-01",
+      "account_id": "111111111111",
+      "items": {
+        "AmazonEC2": {
+          "amount": 1200.45,
+          "unit": "USD"
+        },
+        "AmazonS3": {
+          "amount": 210.1,
+          "unit": "USD"
+        },
+        "AWSLambda": {
+          "amount": 89.45,
+          "unit": "USD"
+        }
+      },
+      "total": 1500
+    },
+    {
+      "account_cost_id": "acctcost-aws-222222222222-service-2024-01",
+      "account_id": "222222222222",
+      "items": {
+        "AmazonEC2": {
+          "amount": 980.2,
+          "unit": "USD"
+        },
+        "AmazonRDS": {
+          "amount": 410.3,
+          "unit": "USD"
+        },
+        "AmazonCloudWatch": {
+          "amount": 59.5,
+          "unit": "USD"
+        }
+      },
+      "total": 1450
+    },
+    {
+      "account_cost_id": "acctcost-aws-org-service-2024-01",
+      "account_id": "org-wide aggregate",
+      "items": {
+        "AmazonEC2": {
+          "amount": 2180.65,
+          "unit": "USD"
+        },
+        "AmazonS3": {
+          "amount": 210.1,
+          "unit": "USD"
+        },
+        "AmazonRDS": {
+          "amount": 410.3,
+          "unit": "USD"
+        },
+        "AWSLambda": {
+          "amount": 89.45,
+          "unit": "USD"
+        },
+        "AmazonCloudWatch": {
+          "amount": 59.5,
+          "unit": "USD"
+        }
+      },
+      "total": 2950
+    }
+  ],
+  "aws_cost_results": [
+    {
+      "accounts_queried": 2,
+      "aws_cost_result_id": "awscost-service-2024-01",
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "period_id": "period-2024-01",
+      "results": [
+        {
+          "account_id": "111111111111",
+          "items": {
+            "AmazonEC2": {
+              "amount": 1200.45,
+              "unit": "USD"
+            },
+            "AmazonS3": {
+              "amount": 210.1,
+              "unit": "USD"
+            },
+            "AWSLambda": {
+              "amount": 89.45,
+              "unit": "USD"
+            }
+          },
+          "total": 1500
+        },
+        {
+          "account_id": "222222222222",
+          "items": {
+            "AmazonEC2": {
+              "amount": 980.2,
+              "unit": "USD"
+            },
+            "AmazonRDS": {
+              "amount": 410.3,
+              "unit": "USD"
+            },
+            "AmazonCloudWatch": {
+              "amount": 59.5,
+              "unit": "USD"
+            }
+          },
+          "total": 1450
+        }
+      ],
+      "total_cost": 2950
+    },
+    {
+      "accounts_queried": 2,
+      "aws_cost_result_id": "awscost-instance-2024-01",
+      "group_by": "INSTANCE_TYPE",
+      "period": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "period_id": "period-2024-01",
+      "results": [
+        {
+          "account_id": "111111111111",
+          "items": {
+            "m5.2xlarge": {
+              "amount": 700.25,
+              "unit": "USD"
+            },
+            "g5.4xlarge": {
+              "amount": 320.2,
+              "unit": "USD"
+            },
+            "t3.medium": {
+              "amount": 180,
+              "unit": "USD"
+            }
+          },
+          "total": 1200.45
+        },
+        {
+          "account_id": "222222222222",
+          "items": {
+            "r6i.large": {
+              "amount": 430.2,
+              "unit": "USD"
+            },
+            "m6i.xlarge": {
+              "amount": 350,
+              "unit": "USD"
+            },
+            "c6i.large": {
+              "amount": 200,
+              "unit": "USD"
+            }
+          },
+          "total": 980.2
+        }
+      ],
+      "total_cost": 2180.65
+    },
+    {
+      "accounts_queried": 2,
+      "aws_cost_result_id": "awscost-linked-2024-02",
+      "group_by": "LINKED_ACCOUNT",
+      "period": {
+        "start": "2024-02-01",
+        "end": "2024-02-29"
+      },
+      "period_id": "period-2024-02",
+      "results": [
+        {
+          "account_id": "111111111111",
+          "items": {
+            "111111111111": {
+              "amount": 1625.75,
+              "unit": "USD"
+            }
+          },
+          "total": 1625.75
+        },
+        {
+          "account_id": "222222222222",
+          "items": {
+            "222222222222": {
+              "amount": 1510.4,
+              "unit": "USD"
+            }
+          },
+          "total": 1510.4
+        }
+      ],
+      "total_cost": 3136.15
+    }
+  ],
+  "azure_cost_results": [
+    {
+      "azure_cost_result_id": "azurecost-cache-2024-01-all",
+      "cache_last_refresh": "2024-02-02T08:30:00Z",
+      "period": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "period_id": "period-2024-01",
+      "results": [
+        {
+          "subscription_name": "Prod-Analytics",
+          "gpu_cost": 420.5,
+          "services": {
+            "Virtual Machines": {
+              "cost": 980.4,
+              "meter_subcategories": {
+                "Dsv5 Series": 540.2,
+                "NCasT4_v3": 420.5,
+                "Spot VMs": 19.7
+              }
+            },
+            "Storage": {
+              "cost": 210.3,
+              "meter_subcategories": {
+                "Premium SSD": 140.1,
+                "Standard HDD": 70.2
+              }
+            },
+            "Networking": {
+              "cost": 89.3,
+              "meter_subcategories": {
+                "Bandwidth": 54.8,
+                "Load Balancer": 34.5
+              }
+            }
+          },
+          "total": 1280
+        },
+        {
+          "subscription_name": "Dev-Sandbox",
+          "gpu_cost": 75,
+          "services": {
+            "Virtual Machines": {
+              "cost": 260,
+              "meter_subcategories": {
+                "B-series": 110,
+                "NVadsA10 v5": 75,
+                "D2s v5": 75
+              }
+            },
+            "Storage": {
+              "cost": 95,
+              "meter_subcategories": {
+                "Standard SSD": 55,
+                "Snapshots": 40
+              }
+            },
+            "AI + Machine Learning": {
+              "cost": 45,
+              "meter_subcategories": {
+                "Azure Machine Learning": 45
+              }
+            }
+          },
+          "total": 400
+        }
+      ],
+      "source": "cache",
+      "subscriptions_queried": "all",
+      "total_cost": 1680
+    },
+    {
+      "azure_cost_result_id": "azurecost-live-2024-01-prod-filter-compute",
+      "blobs_processed": 6,
+      "meter_filter": "Compute",
+      "period": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "period_id": "period-2024-01",
+      "results": [
+        {
+          "subscription_name": "Prod-Analytics",
+          "gpu_cost": 420.5,
+          "services": {
+            "Virtual Machines": {
+              "cost": 980.4,
+              "meter_subcategories": {
+                "Dsv5 Series": 540.2,
+                "NCasT4_v3": 420.5,
+                "Spot VMs": 19.7
+              }
+            }
+          },
+          "total": 980.4
+        }
+      ],
+      "source": "live",
+      "subscriptions_queried": "[\"Prod-Analytics\"]",
+      "total_cost": 980.4
+    },
+    {
+      "azure_cost_result_id": "azurecost-live-2024-02-empty",
+      "blobs_processed": 0,
+      "note": "No matching billing blobs found for requested period.",
+      "period": {
+        "start": "2024-02-01",
+        "end": "2024-02-29"
+      },
+      "period_id": "period-2024-02",
+      "results": [],
+      "source": "live",
+      "subscriptions_queried": "1",
+      "total_cost": 0
+    }
+  ],
+  "azure_service_costs": [
+    {
+      "azure_service_cost_id": "azsvc-prod-vm-2024-01",
+      "cost": 980.4,
+      "meter_subcategories": {
+        "Dsv5 Series": 540.2,
+        "NCasT4_v3": 420.5,
+        "Spot VMs": 19.7
+      }
+    },
+    {
+      "azure_service_cost_id": "azsvc-prod-storage-2024-01",
+      "cost": 210.3,
+      "meter_subcategories": {
+        "Premium SSD": 140.1,
+        "Standard HDD": 70.2
+      }
+    },
+    {
+      "azure_service_cost_id": "azsvc-dev-vm-2024-01",
+      "cost": 260,
+      "meter_subcategories": {
+        "B-series": 110,
+        "NVadsA10 v5": 75,
+        "D2s v5": 75
+      }
+    },
+    {
+      "azure_service_cost_id": "azsvc-dev-aiml-2024-01",
+      "cost": 45,
+      "meter_subcategories": {
+        "Azure Machine Learning": 45
+      }
+    }
+  ],
+  "azure_subscription_costs": [
+    {
+      "azure_subscription_cost_id": "azsub-prod-analytics-2024-01",
+      "gpu_cost": 420.5,
+      "services": {
+        "Virtual Machines": {
+          "cost": 980.4,
+          "meter_subcategories": {
+            "Dsv5 Series": 540.2,
+            "NCasT4_v3": 420.5,
+            "Spot VMs": 19.7
+          }
+        },
+        "Storage": {
+          "cost": 210.3,
+          "meter_subcategories": {
+            "Premium SSD": 140.1,
+            "Standard HDD": 70.2
+          }
+        },
+        "Networking": {
+          "cost": 89.3,
+          "meter_subcategories": {
+            "Bandwidth": 54.8,
+            "Load Balancer": 34.5
+          }
+        }
+      },
+      "subscription_name": "Prod-Analytics",
+      "total": 1280
+    },
+    {
+      "azure_subscription_cost_id": "azsub-dev-sandbox-2024-01",
+      "gpu_cost": 75,
+      "services": {
+        "Virtual Machines": {
+          "cost": 260,
+          "meter_subcategories": {
+            "B-series": 110,
+            "NVadsA10 v5": 75,
+            "D2s v5": 75
+          }
+        },
+        "Storage": {
+          "cost": 95,
+          "meter_subcategories": {
+            "Standard SSD": 55,
+            "Snapshots": 40
+          }
+        },
+        "AI + Machine Learning": {
+          "cost": 45,
+          "meter_subcategories": {
+            "Azure Machine Learning": 45
+          }
+        }
+      },
+      "subscription_name": "Dev-Sandbox",
+      "total": 400
+    },
+    {
+      "azure_subscription_cost_id": "azsub-finops-shared-2024-02",
+      "gpu_cost": 0,
+      "services": {
+        "Storage": {
+          "cost": 120,
+          "meter_subcategories": {
+            "Blob Storage": 85,
+            "Archive Storage": 35
+          }
+        },
+        "Networking": {
+          "cost": 30,
+          "meter_subcategories": {
+            "VPN Gateway": 30
+          }
+        }
+      },
+      "subscription_name": "FinOps-Shared",
+      "total": 150
+    }
+  ],
+  "capacity_metric_results": [
+    {
+      "capacity_metric_result_id": "capres-ec2-family-2024w05",
+      "capacity_totals_id": "captot-2024w05-family",
+      "capacity_window_id": "capwin-2024w05",
+      "group_by": "INSTANCE_FAMILY",
+      "metric": "reservation_utilization",
+      "period": {
+        "start": "2024-01-29T00:00:00Z",
+        "end": "2024-02-04T23:59:59Z"
+      },
+      "results": [
+        {
+          "dimension": "m5",
+          "reserved_units": 120,
+          "used_units": 102,
+          "utilization_pct": 85,
+          "estimated_cost_usd": 1440,
+          "unused_estimated_cost_usd": 216
+        },
+        {
+          "dimension": "r6i",
+          "reserved_units": 80,
+          "used_units": 52,
+          "utilization_pct": 65,
+          "estimated_cost_usd": 980,
+          "unused_estimated_cost_usd": 343
+        },
+        {
+          "dimension": "g5",
+          "reserved_units": 24,
+          "used_units": 18,
+          "utilization_pct": 75,
+          "estimated_cost_usd": 720,
+          "unused_estimated_cost_usd": 180
+        }
+      ],
+      "totals": {
+        "overall_utilization_pct": 76.8,
+        "total_dimensions": 3,
+        "total_estimated_cost_usd": 3140,
+        "unused_estimated_cost_usd": 739
+      }
+    },
+    {
+      "capacity_metric_result_id": "capres-account-2024w06",
+      "capacity_totals_id": "captot-2024w06-account",
+      "capacity_window_id": "capwin-2024w06",
+      "group_by": "LINKED_ACCOUNT",
+      "metric": "savings_plan_utilization",
+      "period": {
+        "start": "2024-02-05T00:00:00Z",
+        "end": "2024-02-11T23:59:59Z"
+      },
+      "results": [
+        {
+          "dimension": "111111111111",
+          "commitment_usd": 900,
+          "used_commitment_usd": 810,
+          "utilization_pct": 90,
+          "estimated_cost_usd": 900,
+          "unused_estimated_cost_usd": 90
+        },
+        {
+          "dimension": "222222222222",
+          "commitment_usd": 700,
+          "used_commitment_usd": 490,
+          "utilization_pct": 70,
+          "estimated_cost_usd": 700,
+          "unused_estimated_cost_usd": 210
+        }
+      ],
+      "totals": {
+        "overall_utilization_pct": 81.25,
+        "total_dimensions": 2,
+        "total_estimated_cost_usd": 1600,
+        "unused_estimated_cost_usd": 300
+      }
+    }
+  ],
+  "capacity_totals": [
+    {
+      "capacity_totals_id": "captot-2024w05-family",
+      "overall_utilization_pct": 76.8,
+      "total_dimensions": 3,
+      "total_estimated_cost_usd": 3140,
+      "unused_estimated_cost_usd": 739
+    },
+    {
+      "capacity_totals_id": "captot-2024w06-account",
+      "overall_utilization_pct": 81.25,
+      "results_truncated": false,
+      "total_dimensions": 2,
+      "total_estimated_cost_usd": 1600,
+      "unused_estimated_cost_usd": 300
+    },
+    {
+      "capacity_totals_id": "captot-2024w07-cluster",
+      "overall_utilization_pct": 68.4,
+      "results_truncated": true,
+      "total_dimensions": 12,
+      "total_estimated_cost_usd": 4820,
+      "transient_cost_usd": 155.4,
+      "transient_excluded": 2,
+      "unused_estimated_cost_usd": 1523.8
+    }
+  ],
+  "capacity_windows": [
+    {
+      "capacity_window_id": "capwin-2024w05",
+      "end": "2024-02-04T23:59:59Z",
+      "start": "2024-01-29T00:00:00Z"
+    },
+    {
+      "capacity_window_id": "capwin-2024w06",
+      "end": "2024-02-11T23:59:59Z",
+      "start": "2024-02-05T00:00:00Z"
+    },
+    {
+      "capacity_window_id": "capwin-2024w07",
+      "end": "2024-02-18T23:59:59Z",
+      "start": "2024-02-12T00:00:00Z"
+    }
+  ],
+  "cost_monitor_results": [
+    {
+      "cost_monitor_result_id": "cmr-overview-2024-01",
+      "endpoint": "/cost-monitor/overview",
+      "_dashboard_link": "https://dash.example.com/cost-monitor/overview?period=2024-01",
+      "results": [
+        {
+          "provider": "aws",
+          "total_cost": 2950,
+          "period_id": "period-2024-01"
+        },
+        {
+          "provider": "azure",
+          "total_cost": 1680,
+          "period_id": "period-2024-01"
+        },
+        {
+          "provider": "gcp",
+          "total_cost": 980.75,
+          "period_id": "period-2024-01"
+        }
+      ]
+    },
+    {
+      "cost_monitor_result_id": "cmr-anomalies-2024-01",
+      "endpoint": "/cost-monitor/anomalies",
+      "results": [
+        {
+          "provider": "aws",
+          "service": "AmazonEC2",
+          "delta_pct": 18.4
+        },
+        {
+          "provider": "azure",
+          "subscription": "Prod-Analytics",
+          "delta_pct": 12.1
+        }
+      ]
+    },
+    {
+      "cost_monitor_result_id": "cmr-summary-2024-02",
+      "endpoint": "/cost-monitor/summary",
+      "_dashboard_link": "https://dash.example.com/cost-monitor/summary?period=2024-02",
+      "results": [
+        {
+          "provider": "aws",
+          "total_cost": 3136.15,
+          "period_id": "period-2024-02"
+        },
+        {
+          "provider": "azure",
+          "total_cost": 150,
+          "period_id": "period-2024-02"
+        }
+      ]
+    }
+  ],
+  "gcp_cost_results": [
+    {
+      "breakdown": [
+        {
+          "name": "ml-platform-prod",
+          "cost": 420.25
+        },
+        {
+          "name": "shared-services",
+          "cost": 310.5
+        },
+        {
+          "name": "customer-analytics-dev",
+          "cost": 250
+        }
+      ],
+      "daily_rows": 31,
+      "gcp_cost_result_id": "gcpcost-project-2024-01",
+      "group_by": "PROJECT",
+      "period": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "period_id": "period-2024-01",
+      "total_cost": 980.75
+    },
+    {
+      "breakdown": [
+        {
+          "name": "Compute Engine",
+          "cost": 510.4
+        },
+        {
+          "name": "BigQuery",
+          "cost": 260.15
+        },
+        {
+          "name": "Cloud Storage",
+          "cost": 110.2
+        },
+        {
+          "name": "Vertex AI",
+          "cost": 100
+        }
+      ],
+      "daily_rows": 31,
+      "gcp_cost_result_id": "gcpcost-service-2024-01",
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2024-01-01",
+        "end": "2024-01-31"
+      },
+      "period_id": "period-2024-01",
+      "total_cost": 980.75
+    },
+    {
+      "breakdown": [
+        {
+          "name": "Compute Engine",
+          "cost": 540.1
+        },
+        {
+          "name": "BigQuery",
+          "cost": 280.4
+        },
+        {
+          "name": "Cloud Storage",
+          "cost": 120.3
+        }
+      ],
+      "daily_rows": 29,
+      "gcp_cost_result_id": "gcpcost-service-2024-02",
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2024-02-01",
+        "end": "2024-02-29"
+      },
+      "period_id": "period-2024-02",
+      "total_cost": 940.8
+    }
+  ],
+  "periods": [
+    {
+      "period_id": "period-2024-01",
+      "start": "2024-01-01",
+      "end": "2024-01-31"
+    },
+    {
+      "period_id": "period-2024-02",
+      "start": "2024-02-01",
+      "end": "2024-02-29"
+    },
+    {
+      "period_id": "period-2023-12",
+      "start": "2023-12-01",
+      "end": "2023-12-31"
+    }
+  ]
+}

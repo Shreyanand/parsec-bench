@@ -1,0 +1,211 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "pg-archive-01",
+          "detailed": true
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "search": "wal-archive"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-scripts",
+          "search": "check_marker_age"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "pg-archive-01",
+          "service": "wal-archive-freshness"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-scripts",
+          "search": "marker"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "wal-archive-freshness"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-scripts",
+          "search": "storage"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "pg-archive"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-scripts",
+          "search": "check_"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "marker"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-scripts",
+          "path": "plugins/storage/check_marker_age.sh"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "path": "groups/database"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-scripts",
+          "path": "."
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "path": "groups"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/storage/check_marker_age.sh"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "pg-primary-ord-1"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "upstream-host",
+        "any_of": [
+          "pg-primary-ord-1"
+        ],
+        "ignore_case": true,
+        "asked_by": "whatever is really broken",
+        "rationale": "the host the script points to"
+      },
+      {
+        "id": "real-cause",
+        "any_of": [
+          "max_wal_senders",
+          "standby connections",
+          "wal senders",
+          "wal_senders"
+        ],
+        "ignore_case": true,
+        "asked_by": "whatever is really broken",
+        "rationale": "only in the third call's output, so it proves the chain was followed"
+      },
+      {
+        "id": "failure-start",
+        "any_of": [
+          "2026-11-17 21:52",
+          "21:52",
+          "2026-11-17 21:40",
+          "21:40 UTC on 2026-11-17",
+          "21:40 on 2026-11-17",
+          "Nov 17",
+          "17 Nov",
+          "2026-11-17"
+        ],
+        "ignore_case": true,
+        "asked_by": "when the real failure started",
+        "rationale": "the upstream service's state change / last run"
+      }
+    ],
+    "required_total": 4,
+    "counts_missed": [
+      {
+        "id": "warn-hours",
+        "value": 26,
+        "nouns": [
+          "hours",
+          "h",
+          "warning",
+          "warn"
+        ],
+        "window": 4,
+        "asked_by": "the plugin's warning threshold",
+        "rationale": "WARN_HOURS default; appears only in the script",
+        "extra_any_of": [
+          "26 h",
+          "26h",
+          "26 hours"
+        ]
+      }
+    ],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

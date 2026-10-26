@@ -1,0 +1,137 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [
+    {
+      "azure_subscription_id": "azs-pool-08-311",
+      "database": "pools",
+      "id": "pool-08-311",
+      "used": true,
+      "projecttag": "edge-ops-lab"
+    },
+    {
+      "azure_subscription_id": "azs-pool-08-314",
+      "database": "pools",
+      "id": "pool-08-314",
+      "used": true,
+      "projecttag": "ansible-net-auto"
+    },
+    {
+      "azure_subscription_id": "azs-pool-08-317",
+      "database": "pools",
+      "id": "pool-08-317",
+      "used": false,
+      "projecttag": "retail-ai-lab"
+    },
+    {
+      "azure_subscription_id": "azs-pool-08-322",
+      "database": "pools",
+      "id": "pool-08-322",
+      "used": true,
+      "projecttag": "retail-ai-lab"
+    },
+    {
+      "azure_subscription_id": "azs-pool-08-325",
+      "database": "pools",
+      "id": "pool-08-325",
+      "used": false,
+      "projecttag": ""
+    },
+    {
+      "azure_subscription_id": "azs-pool-08-329",
+      "database": "pools",
+      "id": "pool-08-329",
+      "used": true,
+      "projecttag": "rosa-mlops-demo"
+    },
+    {
+      "azure_subscription_id": "azs-pool-12-402",
+      "database": "pools",
+      "id": "pool-12-402",
+      "used": true,
+      "projecttag": "devsecops-path"
+    },
+    {
+      "azure_subscription_id": "azs-pool-12-405",
+      "database": "pools",
+      "id": "pool-12-405",
+      "used": false,
+      "projecttag": ""
+    },
+    {
+      "azure_subscription_id": "azs-pool-12-409",
+      "database": "pools",
+      "id": "pool-12-409",
+      "used": false,
+      "projecttag": ""
+    },
+    {
+      "azure_subscription_id": "azs-pool-12-413",
+      "database": "pools",
+      "id": "pool-12-413",
+      "used": true,
+      "projecttag": "sap-on-azure-lab"
+    },
+    {
+      "azure_subscription_id": "azs-pool-12-418",
+      "database": "pools",
+      "id": "pool-12-418",
+      "used": false,
+      "projecttag": ""
+    },
+    {
+      "azure_subscription_id": "azs-pool-12-420",
+      "database": "pools",
+      "id": "pool-12-420",
+      "used": false,
+      "projecttag": ""
+    },
+    {
+      "azure_subscription_id": "azs-pool-15-503",
+      "database": "pools",
+      "id": "pool-15-503",
+      "used": true,
+      "projecttag": "quarkus-dev-day"
+    },
+    {
+      "azure_subscription_id": "azs-pool-15-507",
+      "database": "pools",
+      "id": "pool-15-507",
+      "used": false,
+      "projecttag": ""
+    },
+    {
+      "azure_subscription_id": "azs-pool-15-511",
+      "database": "pools",
+      "id": "pool-15-511",
+      "used": false,
+      "projecttag": ""
+    },
+    {
+      "azure_subscription_id": "azs-pool-15-516",
+      "database": "pools",
+      "id": "pool-15-516",
+      "used": true,
+      "projecttag": "openshift-ai-101"
+    },
+    {
+      "azure_subscription_id": "azs-pool-15-519",
+      "database": "pools",
+      "id": "pool-15-519",
+      "used": false,
+      "projecttag": ""
+    },
+    {
+      "azure_subscription_id": "azs-aro-shared-legacy-3",
+      "database": "pools",
+      "id": "aro-shared-legacy-3",
+      "used": true,
+      "projecttag": "aro-migration"
+    }
+  ],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": []
+}

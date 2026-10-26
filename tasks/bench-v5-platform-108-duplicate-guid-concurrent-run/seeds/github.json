@@ -1,0 +1,32 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/configs/iot-fleet-sim/default_vars_ec2.yml",
+      "content": "---\n# iot-fleet-sim defaults for the ec2 cloud provider\ncloud_provider: ec2\naws_region: us-west-2\n\n# One CloudFormation stack per lab\nstack_name: \"{{ env_type }}-{{ guid }}\"\nstack_retries: 1\n\nbastion_instance_type: m6i.large\nsim_node_instance_type: c6i.2xlarge\nsim_node_count: 4\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/configs/iot-fleet-sim/default_vars_ec2.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/configs/iot-fleet-sim/default_vars_ec2.yml",
+      "content": "---\n# iot-fleet-sim defaults for the ec2 cloud provider\ncloud_provider: ec2\naws_region: us-west-2\n\n# One CloudFormation stack per lab\nstack_name: \"{{ env_type }}-{{ guid }}\"\nstack_retries: 1\n\nbastion_instance_type: m6i.large\nsim_node_instance_type: c6i.2xlarge\nsim_node_count: 4\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/configs/iot-fleet-sim/default_vars_ec2.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038",
+      "path": "ansible/configs/iot-fleet-sim/default_vars_ec2.yml",
+      "content": "---\n# iot-fleet-sim defaults for the ec2 cloud provider\ncloud_provider: ec2\naws_region: us-west-2\n\n# One CloudFormation stack per lab\nstack_name: \"{{ env_type }}-{{ guid }}\"\nstack_retries: 1\n\nbastion_instance_type: m6i.large\nsim_node_instance_type: c6i.2xlarge\nsim_node_count: 4\n",
+      "file_id": "agnosticd/agnosticd-v2@a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038-ansible/configs/iot-fleet-sim/default_vars_ec2.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

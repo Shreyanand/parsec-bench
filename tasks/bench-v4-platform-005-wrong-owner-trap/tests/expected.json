@@ -1,0 +1,102 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "counts": [
+      {
+        "id": "gitea-version-major",
+        "value": 1,
+        "nouns": [
+          "1.22.3",
+          "gitea version",
+          "version"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "1.22.3"
+        ],
+        "asked_by": "Report the Gitea version the workload pins",
+        "rationale": "the version literal only the defaults file supplies; extra_any_of carries the exact string, which is how any real answer states it"
+      }
+    ],
+    "citations": [
+      {
+        "id": "defaults",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+        "asked_by": "give the full `owner/repo:path` of the file you read it from",
+        "rationale": "THE point of the scenario: the owner is agnosticd, not rhpds. 21 real trajectory calls got that wrong, and the citation matcher requires the owner half"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-owner-claim",
+        "none_of": [
+          "rhpds/agnosticd-v2"
+        ],
+        "ignore_case": true,
+        "rationale": "an agent that guessed the owner and then reported it asserts this. It is the answer-side half of the same trap the forbidden call list catches on the wire, so a lucky retry after a 404 still does not score"
+      }
+    ],
+    "required": [
+      {
+        "id": "admin-user",
+        "any_of": [
+          "opentlc-mgr"
+        ],
+        "ignore_case": true,
+        "asked_by": "the Gitea admin user it configures",
+        "rationale": "a second literal only the defaults file supplies"
+      },
+      {
+        "id": "operator-channel",
+        "any_of": [
+          "latest"
+        ],
+        "ignore_case": true,
+        "asked_by": "the pipeline operator channel it selects",
+        "rationale": "a third literal from the same file. Three independent reads make the answer component worth its weight, which is what lets the tool weight come down to 0.3 without the trap going cheap"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

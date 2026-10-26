@@ -1,0 +1,4217 @@
+[
+ {
+  "id": "bench-v4-cloud-024-guid-to-account",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_account_db"
+  ],
+  "reward": 0.2,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.25,
+  "agent_seconds": 10.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cloud-025-gcp-project-status",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_gcp_projects"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 29.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cloud-026-gpu-abuse-triage",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "query_aws_account",
+   "query_cloudtrail",
+   "query_marketplace_agreements"
+  ],
+  "reward": 0.925,
+  "completion": 1.0,
+  "tool_calls": 0.75,
+  "answer": 1.0,
+  "agent_seconds": 116.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cloud-027-azure-pool-database-trap",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_azure_pools"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 54.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cloud-055-azure-subscription-not-found",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_azure_pools"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 39.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cloud-057-cloudtrail-select-only-refusal",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_cloudtrail"
+  ],
+  "reward": 0.4,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.5,
+  "agent_seconds": 10.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cloud-058-malformed-account-id",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_account"
+  ],
+  "reward": 0.6,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.75,
+  "agent_seconds": 10.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cloud-059-blank-owner-email-fallback",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_account_db"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 38.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cloud-060-marketplace-cost-not-in-usd",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_marketplace_agreements"
+  ],
+  "reward": 0.4,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.5,
+  "agent_seconds": 55.0,
+  "note": "routing cap: measures parsec's routing, not its marketplace tool use (the cost sub-agent has no query_marketplace_agreements; README Ruling 4)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cloud-074-assigned-account-still-billing",
+  "primary": "cloud",
+  "services": [
+   "cloud",
+   "platform",
+   "cost"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aws_account_db",
+   "query_aws_costs",
+   "query_babylon_catalog"
+  ],
+  "reward": 0.666667,
+  "completion": 1.0,
+  "tool_calls": 0.666667,
+  "answer": 0.666667,
+  "agent_seconds": 78.0,
+  "note": "routing cap: measures parsec's routing, not its cost tool use (the babylon sub-agent has no query_aws_costs; README Ruling 5)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cost-028-highest-spend-provider",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aws_costs",
+   "query_azure_costs",
+   "query_gcp_costs"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 52.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cost-029-no-cost-rows-for-guid",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_azure_costs"
+  ],
+  "reward": 0.8,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.75,
+  "agent_seconds": 35.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cost-030-threshold-not-an-anomaly",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "query_aws_capacity_manager",
+   "query_aws_costs",
+   "query_cost_monitor"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 103.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cost-050-partial-account-coverage",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_costs"
+  ],
+  "reward": 0.825,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.75,
+  "agent_seconds": 34.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cost-051-gcp-net-of-credits",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_gcp_costs"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 31.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cost-053-capacity-dropped-reservations",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_capacity_manager"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 64.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cost-054-monitor-no-dashboard-link",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_cost_monitor"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 45.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cost-064-reservation-release-active-job-check",
+  "primary": "cost",
+  "services": [
+   "cost",
+   "cloud",
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aap2",
+   "query_aws_account_db",
+   "query_aws_capacity_manager"
+  ],
+  "reward": 0.76,
+  "completion": 1.0,
+  "tool_calls": 0.666667,
+  "answer": 0.8,
+  "agent_seconds": 64.0,
+  "note": "routing cap: measures parsec's routing, not its AAP2 tool use (the cost sub-agent has no query_aap2; README Ruling 4)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cost-073-end-exclusive-alert-day",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_costs"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 50.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-cost-075-vm-count-not-in-billing",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_azure_costs"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 48.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-010-stuck-anarchysubjects",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga"
+  ],
+  "reward": 0.495,
+  "completion": 1.0,
+  "tool_calls": 0.25,
+  "answer": 0.6,
+  "agent_seconds": 46.0,
+  "note": "routing cap: measures parsec's routing, not its Icinga tool use (the babylon sub-agent has no query_icinga; README Ruling 4)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-011-aap2-job-status-alert",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 57.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-012-nodes-ready-threshold",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 41.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-013-acknowledged-not-an-issue",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.48,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.6,
+  "agent_seconds": 10.0,
+  "note": "routing cap: measures parsec's routing, not its Icinga tool use (the babylon sub-agent has no query_icinga; README Ruling 4)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-014-check-script-path-moved",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga",
+   "search_github_repo"
+  ],
+  "reward": null,
+  "completion": null,
+  "tool_calls": null,
+  "answer": null,
+  "agent_seconds": null,
+  "note": null,
+  "unmeasured": "Both samples (0.550, 0.550) were invalid: search_github_repo answers only the exact seeded search key, so the graded file was never reached, and get_services returned [] for a valid filter_expr on 2 of 2 samples"
+ },
+ {
+  "id": "bench-v4-icinga-015-problems-by-severity",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 42.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-016-hosts-most-problems",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.84,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.8,
+  "agent_seconds": 43.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-017-invented-action-trap",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 37.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-045-hosts-search-filter",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 39.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-046-services-search-cross-host",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 33.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-047-downtime-similar-host-names",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 30.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-048-comment-service-vs-host-scope",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 28.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-icinga-072-alert-output-not-decoy-metrics",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.0,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.0,
+  "agent_seconds": 88.0,
+  "note": "routing cap: measures parsec's routing, not its Icinga tool use (the ocpv sub-agent has no query_icinga; README Ruling 5)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-001-ee-entrypoint-rca",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 0.525,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.75,
+  "agent_seconds": 228.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-002-collection-not-found-rca",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 0.86,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.8,
+  "agent_seconds": 212.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-003-tojson-dict-literal-rca",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 0.42,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.6,
+  "agent_seconds": 337.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-004-events-then-config",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 0.733333,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.833333,
+  "agent_seconds": 69.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-005-wrong-owner-trap",
+  "primary": "platform",
+  "services": [
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 111.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-006-version-tag-not-a-ref",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 64.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-007-directory-path-fetch",
+  "primary": "platform",
+  "services": [
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "search_github_repo"
+  ],
+  "reward": 0.85,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 1.0,
+  "agent_seconds": 40.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-008-log-does-not-say",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 195.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-009-catalog-item-no-config",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "lookup_catalog_item",
+   "query_aap2",
+   "search_agnosticv_prs"
+  ],
+  "reward": 0.825,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.75,
+  "agent_seconds": 146.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-018-find-jobs-window",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 34.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-019-anarchysubject-state",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 54.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-020-ocpv-vm-inventory",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_ocpv_cluster"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 61.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-021-babylon-missing-cluster-trap",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 37.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-022-job-on-no-controller",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_aap2"
+  ],
+  "reward": 0.7,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 1.0,
+  "agent_seconds": 55.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-023-splunk-guid-no-events",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_splunk"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 70.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-031-helm-url-not-a-timeout",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 5,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2",
+   "query_splunk",
+   "search_github_repo"
+  ],
+  "reward": 0.84,
+  "completion": 1.0,
+  "tool_calls": 0.8,
+  "answer": 0.857143,
+  "agent_seconds": 366.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-032-shared-secret-not-a-registry-outage",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 169.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-033-schema-change-not-the-oom",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2",
+   "search_agnosticv_prs"
+  ],
+  "reward": 0.785714,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.714286,
+  "agent_seconds": 102.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-034-rate-limit-not-an-outage",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 0.847222,
+  "completion": 1.0,
+  "tool_calls": 0.75,
+  "answer": 0.888889,
+  "agent_seconds": 236.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-036-secret-redacted-not-absent",
+  "primary": "platform",
+  "services": [
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 61.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-037-ocpv-healthy-vm-degraded-machineset",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_ocpv_cluster"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 103.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-038-anarchy-subject-guid-cross-cluster",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 53.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-040-workshop-cross-cluster-name-search",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 69.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-041-resource-pool-unfiltered-list",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 58.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-042-deployment-via-resource-claim",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 54.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-043-multiworkshop-asset-failure",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 70.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-044-search-catalog-env-type",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 33.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-062-provisioning-job-trace",
+  "primary": "platform",
+  "services": [
+   "cloud",
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aap2",
+   "query_aws_account_db"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 135.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-065-other-guid-job-not-the-failure",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_aap2",
+   "query_babylon_catalog"
+  ],
+  "reward": 0.86,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.8,
+  "agent_seconds": 124.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-066-per-guid-cluster-and-lifespan",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 8,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 133.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-067-branch-name-not-the-cause",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 60.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-068-deprecation-warning-not-the-fatal",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 85.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-069-typo-variable-not-located",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 62.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-070-invented-fix-variables",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 66.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v4-platform-071-unmonitored-proxy-not-esxi-alert",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "query_aap2",
+   "query_icinga"
+  ],
+  "reward": 0.383333,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.333333,
+  "agent_seconds": 135.0,
+  "note": "routing cap: measures parsec's routing, not its Icinga tool use (the babylon sub-agent has no query_icinga; README Ruling 5)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-301-gcp-delete-counter-not-a-state",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_gcp_projects"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 76.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-302-cloudtrail-local-time-window",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_cloudtrail"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 46.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-303-lookup-events-resource-names-instance",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_account"
+  ],
+  "reward": 0.8,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.75,
+  "agent_seconds": 92.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-304-marketplace-active-past-end",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_marketplace_agreements"
+  ],
+  "reward": 0.228571,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.285714,
+  "agent_seconds": 72.0,
+  "note": "routing cap: measures parsec's routing, not its marketplace tool use (the cost sub-agent has no query_marketplace_agreements; README Ruling R3, v3 Ruling 4 class)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-305-marketplace-vendor-org-wide",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_marketplace_agreements"
+  ],
+  "reward": 0.114286,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.142857,
+  "agent_seconds": 162.0,
+  "note": "routing cap: measures parsec's routing, not its marketplace tool use (the cost sub-agent has no query_marketplace_agreements; README Ruling R3, v3 Ruling 4 class)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-306-account-db-reservation-none-free",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_account_db"
+  ],
+  "reward": null,
+  "completion": null,
+  "tool_calls": null,
+  "answer": null,
+  "agent_seconds": null,
+  "note": null,
+  "unmeasured": "The simulator matches query_aws_account_db `reservation` exactly, not as the documented substring, so the two gpu-ee-dryrun rows never come back; required fact dryrun-is-different is unreachable and the forbidden trap can never fire"
+ },
+ {
+  "id": "bench-v5-cloud-307-azure-two-project-tags",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_azure_pools"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 54.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-308-azure-leftover-tag-on-free-sub",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_azure_pools"
+  ],
+  "reward": 0.233333,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.333333,
+  "agent_seconds": 82.0,
+  "note": "routing cap: measures parsec's routing, not its Azure pools tool use (the babylon sub-agent has no query_azure_pools; README Ruling R3, v3 Ruling 4 class)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-309-deleted-iam-user-trail-remains",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "query_aws_account",
+   "query_aws_account_db",
+   "query_cloudtrail"
+  ],
+  "reward": 0.766667,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.666667,
+  "agent_seconds": 136.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-310-stopped-lab-restarted-billing",
+  "primary": "cloud",
+  "services": [
+   "cloud",
+   "platform",
+   "cost"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aws_account_db",
+   "query_aws_costs",
+   "query_babylon_catalog"
+  ],
+  "reward": 0.783333,
+  "completion": 1.0,
+  "tool_calls": 0.666667,
+  "answer": 0.833333,
+  "agent_seconds": 97.0,
+  "note": "routing cap: measures parsec's routing, not its cost tool use (the babylon sub-agent has no query_aws_costs; README Ruling R3, v3 Ruling 4 class)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-311-owner-handover-inventory",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_account_db"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 57.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-312-gcp-event-label-roster",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_gcp_projects"
+  ],
+  "reward": 0.133333,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.166667,
+  "agent_seconds": 30.0,
+  "note": "routing cap (R3 class): parsec routed to babylon, which lacks the expected query_gcp_projects; measures parsec's routing, not its use of that tool",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-313-azure-no-single-pool-fits",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_azure_pools"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 48.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-314-deleterule-two-event-sources",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_cloudtrail"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 107.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-315-min-cost-drops-unestimated",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_marketplace_agreements"
+  ],
+  "reward": 0.266667,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.333333,
+  "agent_seconds": 176.0,
+  "note": "routing cap (R3 class): parsec routed to cost, which lacks the expected query_marketplace_agreements; measures parsec's routing, not its use of that tool",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-316-cleaned-sandbox-live-iam-keys",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_aws_account",
+   "query_aws_account_db"
+  ],
+  "reward": 0.36,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.3,
+  "agent_seconds": 76.0,
+  "note": "routing cap (R3 class): parsec routed to babylon+cost (scored re-run), which lacks the expected query_aws_account; measures parsec's routing, not its use of that tool",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-317-namesake-user-other-account",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_aws_account",
+   "query_cloudtrail"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 56.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-318-free-sandboxes-lack-ami-agreement",
+  "primary": "cloud",
+  "services": [
+   "cloud"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aws_account_db",
+   "query_azure_pools",
+   "query_marketplace_agreements"
+  ],
+  "reward": 0.725,
+  "completion": 1.0,
+  "tool_calls": 0.666667,
+  "answer": 0.75,
+  "agent_seconds": 120.0,
+  "note": "routing cap (R3 class): parsec routed to security+babylon, which lacks the expected query_azure_pools; measures parsec's routing, not its use of that tool",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cloud-319-billing-lab-unknown-to-babylon",
+  "primary": "cloud",
+  "services": [
+   "cloud",
+   "platform",
+   "cost"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "query_aws_account",
+   "query_aws_account_db",
+   "query_aws_costs",
+   "query_babylon_catalog"
+  ],
+  "reward": 0.5875,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.625,
+  "agent_seconds": 168.0,
+  "note": "routing cap (R3 class): parsec routed to babylon+cost, which lacks the expected query_aws_account; measures parsec's routing, not its use of that tool",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-401-monitor-drilldown-wrong-month",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_cost_monitor"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 36.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-402-unused-cost-preset-has-no-utilisation",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_capacity_manager"
+  ],
+  "reward": 0.84,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.8,
+  "agent_seconds": 51.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-403-capacity-results-truncated-at-50",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_capacity_manager"
+  ],
+  "reward": 0.84,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.8,
+  "agent_seconds": 678.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-404-azure-gpu-cost-counts-standard-disks",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_azure_costs"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 49.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-405-azure-cache-stale-for-month-close",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_azure_costs"
+  ],
+  "reward": 0.825,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.75,
+  "agent_seconds": 35.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-406-gcp-daily-rows-is-not-day-coverage",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_gcp_costs"
+  ],
+  "reward": 0.86,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.8,
+  "agent_seconds": 62.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-407-aws-historical-query-came-back-org-wide",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_costs"
+  ],
+  "reward": 0.6,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.5,
+  "agent_seconds": 36.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-408-three-cloud-total-gcp-query-failed",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aws_costs",
+   "query_azure_costs",
+   "query_gcp_costs"
+  ],
+  "reward": 0.72,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.6,
+  "agent_seconds": 94.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-409-top-spender-chain-to-instance-type",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "query_aws_capacity_manager",
+   "query_aws_costs",
+   "query_cost_monitor"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 89.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-410-released-sandbox-still-spending",
+  "primary": "cost",
+  "services": [
+   "cost",
+   "cloud",
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aap2",
+   "query_aws_account_db",
+   "query_aws_costs"
+  ],
+  "reward": 0.62,
+  "completion": 1.0,
+  "tool_calls": 0.666667,
+  "answer": 0.6,
+  "agent_seconds": 83.0,
+  "note": "routing cap: measures parsec's routing, not its AAP2 tool use (the cost sub-agent has no query_aap2; README Ruling R3, v3 Ruling 4 class)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-411-org-week-linked-account-league",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_costs"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 51.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-412-azure-vm-line-has-no-series-split",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_azure_costs"
+  ],
+  "reward": 0.72,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.6,
+  "agent_seconds": 57.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-413-gcp-unknown-project-bucket",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_gcp_costs"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 46.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-414-az-id-is-not-a-zone-name",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_capacity_manager"
+  ],
+  "reward": 0.771429,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.714286,
+  "agent_seconds": 112.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-415-breakdown-ranked-by-hours-not-cost",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_cost_monitor"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 35.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-416-peak-day-is-a-cross-service-sum",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aws_costs"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 72.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-417-commit-usage-excludes-tax-and-support",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aws_costs",
+   "query_azure_costs",
+   "query_gcp_costs"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 136.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-418-capacity-window-starts-mid-review",
+  "primary": "cost",
+  "services": [
+   "cost"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aws_capacity_manager",
+   "query_cost_monitor"
+  ],
+  "reward": 0.825,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.75,
+  "agent_seconds": 89.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-cost-419-chargeback-predates-current-tenant",
+  "primary": "cost",
+  "services": [
+   "cost",
+   "cloud",
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "query_aap2",
+   "query_aws_account_db",
+   "query_aws_costs",
+   "query_cost_monitor"
+  ],
+  "reward": 0.553571,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.571429,
+  "agent_seconds": 108.0,
+  "note": "routing cap (R3 class): parsec routed to cost+icinga, which lacks the expected query_aap2; measures parsec's routing, not its use of that tool",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-201-soft-critical-not-yet-hard",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.883333,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.833333,
+  "agent_seconds": 33.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-202-flapping-recovery-is-not-resolution",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.866667,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.833333,
+  "agent_seconds": 81.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-203-perfdata-headroom-to-critical",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.48,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.6,
+  "agent_seconds": 96.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-204-downtime-window-expired",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.6,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.5,
+  "agent_seconds": 34.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-205-notifications-disabled-nobody-paged",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.733333,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.666667,
+  "agent_seconds": 211.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-206-stale-ok-check",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.733333,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.666667,
+  "agent_seconds": 51.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-207-host-down-masks-service-alerts",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 44.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-208-service-not-monitored",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.4,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.25,
+  "agent_seconds": 85.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-209-backup-freshness-upstream-service",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga"
+  ],
+  "reward": 0.333333,
+  "completion": 1.0,
+  "tool_calls": 0.333333,
+  "answer": 0.333333,
+  "agent_seconds": 259.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-210-command-vars-override-script-default",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga"
+  ],
+  "reward": 0.883333,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.833333,
+  "agent_seconds": 82.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-211-thresholds-file-never-deployed",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga",
+   "search_github_repo"
+  ],
+  "reward": 0.2,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.285714,
+  "agent_seconds": 10.0,
+  "note": "routing cap: measures parsec's routing, not its Icinga/GitHub tool use (the cost sub-agent has no query_icinga, fetch_github_file or search_github_repo; README Ruling R3, v3 Ruling 4 class); no tool call at all, which the agent states",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-212-fix-on-main-not-on-pinned-ref",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga"
+  ],
+  "reward": 0.8,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.714286,
+  "agent_seconds": 198.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-213-host-down-is-paused-vm",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "platform"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_icinga",
+   "query_ocpv_cluster"
+  ],
+  "reward": 0.55,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.571429,
+  "agent_seconds": 319.0,
+  "note": "routing cap: measures parsec's routing, not its OCPV tool use (the icinga sub-agent has no query_ocpv_cluster; README Ruling R3, v3 Ruling 4 class)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-214-hostgroup-membership-rollup",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 34.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-215-ack-comment-author-and-expiry",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.657143,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.571429,
+  "agent_seconds": 39.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-216-flexible-downtime-duration",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.766667,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.666667,
+  "agent_seconds": 30.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-217-longest-open-problem",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.883333,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.833333,
+  "agent_seconds": 34.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-218-host-downtime-leaves-services-live",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.8,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 1.0,
+  "agent_seconds": 40.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-219-host-down-pings-old-address",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 0.771429,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.714286,
+  "agent_seconds": 79.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-220-no-p99-in-latency-check",
+  "primary": "icinga",
+  "services": [
+   "icinga"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 32.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-221-crc-counter-never-resets",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 80.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-222-lag-check-runs-on-satellite",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga"
+  ],
+  "reward": 0.9,
+  "completion": 1.0,
+  "tool_calls": 0.666667,
+  "answer": 1.0,
+  "agent_seconds": 138.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-223-executed-plugin-not-the-shell-twin",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga",
+   "search_github_repo"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 105.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-224-dead-first-replica-eats-timeout",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "query_icinga"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 343.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-icinga-225-monitor-outlived-its-namespace",
+  "primary": "icinga",
+  "services": [
+   "icinga",
+   "platform"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "query_icinga",
+   "query_ocpv_cluster"
+  ],
+  "reward": 0.671429,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.714286,
+  "agent_seconds": 162.0,
+  "note": "routing cap (R3 class): parsec routed to icinga+babylon, which lacks the expected query_ocpv_cluster; measures parsec's routing, not its use of that tool",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-101-vcpu-quota-from-catalog-sizing",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 0.8,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.714286,
+  "agent_seconds": 222.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-102-no-proxy-misses-api-domain",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": null,
+  "completion": null,
+  "tool_calls": null,
+  "answer": null,
+  "agent_seconds": null,
+  "note": null,
+  "unmeasured": "Its seed was corrected after its first sample; every sample taken after the correction failed on the environment (gateway rate limits, model API timeouts or simulated-tool timeouts), so no valid sample exists."
+ },
+ {
+  "id": "bench-v5-platform-103-olm-channel-not-in-catalog",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 0.86,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.8,
+  "agent_seconds": 129.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-104-cfn-dependency-and-what-changed",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": null,
+  "completion": null,
+  "tool_calls": null,
+  "answer": null,
+  "agent_seconds": null,
+  "note": null,
+  "unmeasured": "Its seed was corrected after its first sample; every sample taken after the correction failed on the environment (gateway rate limits, model API timeouts or simulated-tool timeouts), so no valid sample exists."
+ },
+ {
+  "id": "bench-v5-platform-105-failed-revision-not-main",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 0.71,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.8,
+  "agent_seconds": 206.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-106-yaml-float-version",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 197.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-107-host-pattern-skipped-play",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": null,
+  "completion": null,
+  "tool_calls": null,
+  "answer": null,
+  "agent_seconds": null,
+  "note": null,
+  "unmeasured": "Its seed was corrected after its first sample; every sample taken after the correction failed on the environment (gateway rate limits, model API timeouts or simulated-tool timeouts), so no valid sample exists."
+ },
+ {
+  "id": "bench-v5-platform-108-duplicate-guid-concurrent-run",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 0.783333,
+  "completion": 1.0,
+  "tool_calls": 0.666667,
+  "answer": 0.833333,
+  "agent_seconds": 2106.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-109-quoted-false-is-truthy",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 0.325,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.25,
+  "agent_seconds": 1477.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-110-renamed-catalog-item",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "lookup_catalog_item",
+   "query_aap2",
+   "search_agnosticv_prs"
+  ],
+  "reward": 0.875,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.833333,
+  "agent_seconds": 329.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-111-recycled-sandbox-swallowed-teardown",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 5,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 0.94,
+  "completion": 1.0,
+  "tool_calls": 0.8,
+  "answer": 1.0,
+  "agent_seconds": 1392.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-112-exec-pool-disk-not-the-bastion",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2",
+   "query_splunk"
+  ],
+  "reward": 0.8375,
+  "completion": 1.0,
+  "tool_calls": 0.75,
+  "answer": 0.875,
+  "agent_seconds": 1094.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-113-account-region-override-not-capacity",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2",
+   "search_agnosticv_prs"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 937.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-114-ee-nightly-float-not-a-commit",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2",
+   "search_github_repo"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 311.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-115-find-jobs-default-page-not-the-total",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aap2"
+  ],
+  "reward": null,
+  "completion": null,
+  "tool_calls": null,
+  "answer": null,
+  "agent_seconds": null,
+  "note": null,
+  "unmeasured": "The simulator ignores find_jobs `created_before` (and once `max_results:200`), so two October decoy jobs leak in and the graded counts become 59/20 instead of the seeded 57/19"
+ },
+ {
+  "id": "bench-v5-platform-116-timeout-headroom-from-history",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_aap2"
+  ],
+  "reward": 0.675,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.75,
+  "agent_seconds": 127.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-117-dependency-project-sync-failed",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 2015.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-118-pending-pvcs-wait-for-first-consumer",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_ocpv_cluster"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 206.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-119-pvc-storage-class-not-on-cluster",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_ocpv_cluster"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 61.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-120-errors-only-matches-are-not-errors",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_splunk"
+  ],
+  "reward": 0.68,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.6,
+  "agent_seconds": 206.0,
+  "note": "simulation divergence (pre-declared): the errors_only search drops the row whose only match is error=false, so the agent sees 4 hits where the instruction says 5; graded facts remain reachable",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-121-near-miss-pick-partner-repo",
+  "primary": "platform",
+  "services": [
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item"
+  ],
+  "reward": 0.5,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.5,
+  "agent_seconds": 1305.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-122-search-total-not-page",
+  "primary": "platform",
+  "services": [
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "search_github_repo"
+  ],
+  "reward": 0.72,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.6,
+  "agent_seconds": 82.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-123-prod-stage-overrides-common",
+  "primary": "platform",
+  "services": [
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item"
+  ],
+  "reward": 0.9125,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.875,
+  "agent_seconds": 58.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-124-event-accounts-not-returned",
+  "primary": "platform",
+  "services": [
+   "cloud",
+   "platform"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "query_aap2",
+   "query_aws_account_db"
+  ],
+  "reward": 0.9,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.857143,
+  "agent_seconds": 386.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-125-controller-reboot-not-the-playbook",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "icinga"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_aap2",
+   "query_icinga"
+  ],
+  "reward": 0.55,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.571429,
+  "agent_seconds": 46.0,
+  "note": "routing cap: measures parsec's routing, not its AAP2 tool use (the icinga sub-agent has no query_aap2; README Ruling R3, v3 Ruling 4 class)",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-126-stop-job-from-tower-jobs",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_aap2",
+   "query_babylon_catalog"
+  ],
+  "reward": 0.85,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 1.0,
+  "agent_seconds": 50.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-127-catalog-keyword-match-prod-stage",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 35.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-128-failed-action-census-by-kind",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 51.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-129-destroyed-subject-hidden-without-guid",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 35.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-130-destroy-failed-retry-pending",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 161.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-131-deployment-first-resource-blind-spot",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 112.0,
+  "note": "simulation divergence (pre-declared): list_deployments `guid` does not fall back to instance_vars.guid, so the healthy-looking deployment the trap depends on never appears; required facts remain reachable",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-132-event-seat-math-standalone-workshop",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 0.71,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.8,
+  "agent_seconds": 54.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-133-component-sub-components-hop",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 66.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-134-pool-search-canary-two-clusters",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 38.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-135-catalog-component-drift-fanout",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 8,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 0.505,
+  "completion": 1.0,
+  "tool_calls": 0.75,
+  "answer": 0.4,
+  "agent_seconds": 242.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-136-provision-key-mode-too-open",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 105.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-137-generated-password-forbidden-chars",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 0.85,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 1.0,
+  "agent_seconds": 397.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-138-project-prefix-not-a-dns-label",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 0.883333,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.833333,
+  "agent_seconds": 85.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-139-ami-id-pinned-to-one-region",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 107.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-140-lookup-normalises-underscore-path",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 0.86,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.8,
+  "agent_seconds": 170.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-141-nested-loop-item-collision",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 0.883333,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.833333,
+  "agent_seconds": 79.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-142-duplicate-yaml-key-last-wins",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 0.883333,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.833333,
+  "agent_seconds": 98.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-143-empty-storage-class-skips-default",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2",
+   "search_agnosticv_prs"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 300.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-144-version-compared-as-string",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 98.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-145-prod-stage-deploys-from-fork",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 0.341667,
+  "completion": 1.0,
+  "tool_calls": 0.75,
+  "answer": 0.166667,
+  "agent_seconds": 186.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-146-assumed-role-session-outlived",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 3,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 224.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-147-fail-closed-webhook-no-endpoints",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2",
+   "query_splunk"
+  ],
+  "reward": 0.4375,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 0.625,
+  "agent_seconds": 90.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-148-precheck-caches-nxdomain",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 4,
+  "tools": [
+   "fetch_github_file",
+   "query_aap2",
+   "search_github_repo"
+  ],
+  "reward": 0.75,
+  "completion": 1.0,
+  "tool_calls": 0.75,
+  "answer": 0.75,
+  "agent_seconds": 95.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-149-alphabetised-workloads-before-operator",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "challenge",
+  "expected_calls": 5,
+  "tools": [
+   "fetch_github_file",
+   "lookup_catalog_item",
+   "query_aap2",
+   "search_agnosticv_prs"
+  ],
+  "reward": 0.95,
+  "completion": 1.0,
+  "tool_calls": 0.8,
+  "answer": 1.0,
+  "agent_seconds": 289.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-150-retiring-instance-is-sole-gpu-machine",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_ocpv_cluster"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 45.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-151-backup-schedule-is-commented-out",
+  "primary": "platform",
+  "services": [
+   "github"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "fetch_github_file"
+  ],
+  "reward": 0.8,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.75,
+  "agent_seconds": 42.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-152-path-search-cannot-find-variable-uses",
+  "primary": "platform",
+  "services": [
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file",
+   "search_github_repo"
+  ],
+  "reward": 0.922222,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.888889,
+  "agent_seconds": 53.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-153-override-uses-removed-variable-name",
+  "primary": "platform",
+  "services": [
+   "github"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "fetch_github_file"
+  ],
+  "reward": 0.922222,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.888889,
+  "agent_seconds": 50.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-154-change-touched-unscoped-host",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_aap2"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 95.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-155-order-time-was-queue-wait",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_aap2",
+   "query_splunk"
+  ],
+  "reward": 0.616667,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 0.666667,
+  "agent_seconds": 118.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-156-ignored-probe-failures-lab-is-fine",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "negative",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_aap2",
+   "query_ocpv_cluster"
+  ],
+  "reward": 0.85,
+  "completion": 1.0,
+  "tool_calls": 0.5,
+  "answer": 1.0,
+  "agent_seconds": 196.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-157-drain-blocked-by-node-local-disk",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aap2",
+   "query_ocpv_cluster"
+  ],
+  "reward": 0.836364,
+  "completion": 1.0,
+  "tool_calls": 0.666667,
+  "answer": 0.909091,
+  "agent_seconds": 82.0,
+  "note": "routing cap (R3 class): parsec routed to ocpv, which lacks the expected query_aap2; measures parsec's routing, not its use of that tool",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-158-lab-instances-outside-default-region",
+  "primary": "platform",
+  "services": [
+   "cloud",
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aap2",
+   "query_aws_account",
+   "query_aws_account_db"
+  ],
+  "reward": 0.275,
+  "completion": 1.0,
+  "tool_calls": 0.333333,
+  "answer": 0.25,
+  "agent_seconds": 93.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-159-renewal-run-never-saw-host",
+  "primary": "platform",
+  "services": [
+   "platform",
+   "icinga"
+  ],
+  "kind": "chain breaks",
+  "tranche": "regression",
+  "expected_calls": 3,
+  "tools": [
+   "query_aap2",
+   "query_icinga"
+  ],
+  "reward": 0.702381,
+  "completion": 1.0,
+  "tool_calls": 0.666667,
+  "answer": 0.714286,
+  "agent_seconds": 86.0,
+  "note": "routing cap (R3 class): parsec routed to aap2+babylon, which lacks the expected query_icinga; measures parsec's routing, not its use of that tool",
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-160-event-attendee-codes-any-cluster",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "happy",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 44.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-161-pool-unclaimed-lifespan-not-the-ceiling",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 35.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-162-shared-session-needs-multiuser-item",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 1,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 45.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-163-cloned-workshop-name-needs-namespace",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 82.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-164-workshop-item-replaced-by-v2",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 140.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-165-renamed-item-same-asset-uuid",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 99.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-166-failed-stop-job-already-retried",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_aap2",
+   "query_babylon_catalog"
+  ],
+  "reward": 0.7,
+  "completion": 1.0,
+  "tool_calls": 0.0,
+  "answer": 1.0,
+  "agent_seconds": 69.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-167-ordered-workers-override-default",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 76.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-168-event-stage-component-not-prod",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 2,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 1.0,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 1.0,
+  "agent_seconds": 160.0,
+  "note": null,
+  "unmeasured": null
+ },
+ {
+  "id": "bench-v5-platform-169-failed-claims-still-need-cleanup",
+  "primary": "platform",
+  "services": [
+   "platform"
+  ],
+  "kind": "trap",
+  "tranche": "regression",
+  "expected_calls": 8,
+  "tools": [
+   "query_babylon_catalog"
+  ],
+  "reward": 0.9125,
+  "completion": 1.0,
+  "tool_calls": 1.0,
+  "answer": 0.875,
+  "agent_seconds": 109.0,
+  "note": null,
+  "unmeasured": null
+ }
+]

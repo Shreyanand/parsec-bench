@@ -1,0 +1,24 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "path": "monitoring/babylon/check_stuck_subjects.py",
+      "content": "#!/usr/bin/env python3\n\"\"\"Alert when too many AnarchySubjects sit in a pending state.\"\"\"\n\nSTUCK_MINUTES = 30\nWARN_COUNT = 3\nCRIT_COUNT = 5\n\ndef classify(stuck):\n    if stuck >= CRIT_COUNT:\n        return 2\n    if stuck >= WARN_COUNT:\n        return 1\n    return 0\n",
+      "file_id": "rhpds/rhdp-monitoring@main-monitoring/babylon/check_stuck_subjects.py"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "path": "monitoring/babylon/check_stuck_subjects.py",
+      "content": "#!/usr/bin/env python3\n\"\"\"Alert when too many AnarchySubjects sit in a pending state.\"\"\"\n\nSTUCK_MINUTES = 30\nWARN_COUNT = 3\nCRIT_COUNT = 5\n\ndef classify(stuck):\n    if stuck >= CRIT_COUNT:\n        return 2\n    if stuck >= WARN_COUNT:\n        return 1\n    return 0\n",
+      "file_id": "rhpds/rhdp-monitoring@HEAD-monitoring/babylon/check_stuck_subjects.py"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

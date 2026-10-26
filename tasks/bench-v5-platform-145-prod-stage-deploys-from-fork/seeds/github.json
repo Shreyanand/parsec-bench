@@ -1,0 +1,105 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "account": "logistics_bu",
+      "directory": "courier-routing-lab",
+      "path": "logistics_bu/courier-routing-lab",
+      "files": [
+        "common.yaml",
+        "dev.yaml",
+        "prod.yaml"
+      ],
+      "default_branch": "main",
+      "message": "",
+      "catalog_item_id": "rhpds/agnosticv-logistics_bu/courier-routing-lab"
+    }
+  ],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_courier_routing/tasks/main.yml",
+      "content": "---\n# ocp4_workload_courier_routing: route optimiser and map tiles for the courier routing lab\n- name: Create the courier routing namespace\n  kubernetes.core.k8s:\n    api_version: v1\n    kind: Namespace\n    name: \"courier-routing-{{ guid }}\"\n    state: present\n\n- name: Create the map tile bucket\n  amazon.aws.s3_bucket:\n    name: \"{{ courier_routing_bucket_name }}\"\n    region: \"{{ aws_region }}\"\n    state: present\n\n- name: Deploy the route optimiser\n  kubernetes.core.k8s:\n    state: present\n    template: route-optimiser.yaml.j2\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_courier_routing/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_courier_routing/tasks/main.yml",
+      "content": "---\n# ocp4_workload_courier_routing: route optimiser and map tiles for the courier routing lab\n- name: Create the courier routing namespace\n  kubernetes.core.k8s:\n    api_version: v1\n    kind: Namespace\n    name: \"courier-routing-{{ guid }}\"\n    state: present\n\n- name: Create the map tile bucket\n  amazon.aws.s3_bucket:\n    name: \"{{ courier_routing_bucket_name }}\"\n    region: \"{{ aws_region }}\"\n    state: present\n\n- name: Deploy the route optimiser\n  kubernetes.core.k8s:\n    state: present\n    template: route-optimiser.yaml.j2\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_courier_routing/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_courier_routing/defaults/main.yml",
+      "content": "---\n# ocp4_workload_courier_routing defaults\ncourier_routing_bucket_name: \"courier-tiles-{{ guid }}\"\ncourier_routing_optimiser_replicas: 2\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_courier_routing/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_courier_routing/defaults/main.yml",
+      "content": "---\n# ocp4_workload_courier_routing defaults\ncourier_routing_bucket_name: \"courier-tiles-{{ guid }}\"\ncourier_routing_optimiser_replicas: 2\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_courier_routing/defaults/main.yml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "logistics_bu/courier-routing-lab/common.yaml",
+      "content": "---\n# courier-routing-lab: last-mile route optimisation lab on OpenShift\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Courier Routing Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\nworkloads:\n  - ocp4_workload_courier_routing\n\ncourier_routing_optimiser_replicas: 3\n",
+      "file_id": "rhpds/agnosticv@HEAD-logistics_bu/courier-routing-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "logistics_bu/courier-routing-lab/common.yaml",
+      "content": "---\n# courier-routing-lab: last-mile route optimisation lab on OpenShift\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Courier Routing Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\nworkloads:\n  - ocp4_workload_courier_routing\n\ncourier_routing_optimiser_replicas: 3\n",
+      "file_id": "rhpds/agnosticv@main-logistics_bu/courier-routing-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "logistics_bu/courier-routing-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 1d\n  deployer:\n    # testing the tile cache rework before it goes upstream\n    scm_url: https://github.com/tbrandvold/agnosticd-v2.git\n    scm_ref: routing-tiles-wip\n",
+      "file_id": "rhpds/agnosticv@HEAD-logistics_bu/courier-routing-lab/prod.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "logistics_bu/courier-routing-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 1d\n  deployer:\n    # testing the tile cache rework before it goes upstream\n    scm_url: https://github.com/tbrandvold/agnosticd-v2.git\n    scm_ref: routing-tiles-wip\n",
+      "file_id": "rhpds/agnosticv@main-logistics_bu/courier-routing-lab/prod.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "logistics_bu/courier-routing-lab/dev.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: true\n",
+      "file_id": "rhpds/agnosticv@HEAD-logistics_bu/courier-routing-lab/dev.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "logistics_bu/courier-routing-lab/dev.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: true\n",
+      "file_id": "rhpds/agnosticv@main-logistics_bu/courier-routing-lab/dev.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

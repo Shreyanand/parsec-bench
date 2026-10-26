@@ -1,0 +1,96 @@
+{
+  "hosts": [
+    {
+      "name": "crm-batch-07",
+      "type": "Host",
+      "attrs": {
+        "display_name": "crm-batch-07",
+        "host_name": "crm-batch-07",
+        "address": "10.27.14.7",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "crm-batch"
+        ],
+        "last_check": 1796122680,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.51 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "crm-batch-07!jvm-heap",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Batch worker JVM heap",
+        "host_name": "crm-batch-07",
+        "state": 0,
+        "last_check": 1796122620,
+        "last_state_change": 1795511400,
+        "last_check_result": {
+          "output": "JVM OK - heap 2.1 GiB of 6 GiB (35%)",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "crm-batch-07!nightly-export-age",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Nightly CRM export freshness",
+        "host_name": "crm-batch-07",
+        "state": 1,
+        "last_check": 1796122500,
+        "last_state_change": 1796106600,
+        "last_check_result": {
+          "output": "FILE WARNING - /exports/crm/accounts.csv.gz is 29 h old (warn 26 h)",
+          "state": 1,
+          "exit_status": 1
+        },
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "crm-batch-07!tmp-free",
+      "type": "Service",
+      "attrs": {
+        "display_name": "/tmp free space",
+        "host_name": "crm-batch-07",
+        "state": 0,
+        "last_check": 1796122560,
+        "last_state_change": 1794747600,
+        "last_check_result": {
+          "output": "DISK OK - /tmp 22% used",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

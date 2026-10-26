@@ -1,0 +1,56 @@
+{
+  "catalog_items": [
+    {
+      "catalog_item_id": "rhpds/agnosticv-retail_bu/storefront-funnel-lab",
+      "found": true,
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "account": "retail_bu",
+      "directory": "storefront-funnel-lab",
+      "path": "retail_bu/storefront-funnel-lab",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "default_branch": "main",
+      "message": ""
+    }
+  ],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "retail_bu/storefront-funnel-lab/common.yaml",
+      "content": "---\n# storefront-funnel-lab: microservice storefront with checkout-funnel analytics, on OpenShift (AWS)\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Storefront Funnel Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\naws_region: us-west-2\ncontrol_plane_instance_count: 3\ncontrol_plane_instance_type: m6i.xlarge\nworker_instance_count: 3\nworker_instance_type: m6i.2xlarge\ninfra_node_count: 0\nocp4_installer_version: \"4.18\"\n\nworkloads:\n  - ocp4_workload_guardrail\n  - ocp4_workload_storefront\n\n# Admission policy for the lab namespaces (added for the 2026-10 security baseline)\nocp4_workload_guardrail_replicas: 1\nocp4_workload_guardrail_failure_policy: Fail\nocp4_workload_guardrail_node_selector:\n  node-role.kubernetes.io/infra: \"\"\n\nocp4_workload_storefront_services: 4\nocp4_workload_storefront_funnel_events: true\n",
+      "file_id": "rhpds/agnosticv@HEAD-retail_bu/storefront-funnel-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "retail_bu/storefront-funnel-lab/common.yaml",
+      "content": "---\n# storefront-funnel-lab: microservice storefront with checkout-funnel analytics, on OpenShift (AWS)\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Storefront Funnel Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\naws_region: us-west-2\ncontrol_plane_instance_count: 3\ncontrol_plane_instance_type: m6i.xlarge\nworker_instance_count: 3\nworker_instance_type: m6i.2xlarge\ninfra_node_count: 0\nocp4_installer_version: \"4.18\"\n\nworkloads:\n  - ocp4_workload_guardrail\n  - ocp4_workload_storefront\n\n# Admission policy for the lab namespaces (added for the 2026-10 security baseline)\nocp4_workload_guardrail_replicas: 1\nocp4_workload_guardrail_failure_policy: Fail\nocp4_workload_guardrail_node_selector:\n  node-role.kubernetes.io/infra: \"\"\n\nocp4_workload_storefront_services: 4\nocp4_workload_storefront_funnel_events: true\n",
+      "file_id": "rhpds/agnosticv@main-retail_bu/storefront-funnel-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "retail_bu/storefront-funnel-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 1d\n    maximum: 3d\n",
+      "file_id": "rhpds/agnosticv@HEAD-retail_bu/storefront-funnel-lab/prod.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "retail_bu/storefront-funnel-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 1d\n    maximum: 3d\n",
+      "file_id": "rhpds/agnosticv@main-retail_bu/storefront-funnel-lab/prod.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

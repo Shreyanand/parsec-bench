@@ -1,0 +1,306 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "catalog_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CatalogItem"
+      }
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/File"
+      }
+    },
+    "pull_requests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PullRequest"
+      }
+    },
+    "repo_search_results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RepoSearchResult"
+      }
+    },
+    "similar_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SimilarItem"
+      }
+    }
+  },
+  "required": [
+    "catalog_items",
+    "files",
+    "pull_requests",
+    "repo_search_results",
+    "similar_items"
+  ],
+  "$defs": {
+    "CatalogItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "catalog_item_id",
+      "properties": {
+        "account": {
+          "type": "string",
+          "description": "Account directory for the catalog item."
+        },
+        "catalog_item_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for the catalog item."
+        },
+        "default_branch": {
+          "type": "string",
+          "description": "Repository default branch to use as the ref when fetching files."
+        },
+        "directory": {
+          "type": "string",
+          "description": "Catalog item directory name."
+        },
+        "files": {
+          "type": "array",
+          "description": "File names present for an exact catalog item match.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "found": {
+          "type": "boolean",
+          "description": "Whether the catalog item was found exactly."
+        },
+        "message": {
+          "type": "string",
+          "description": "Explanation of the lookup outcome when no exact match exists."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Repository owner containing the catalog item."
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the catalog item within the repository."
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name containing the catalog item."
+        },
+        "similar_items": {
+          "type": "array",
+          "description": "Near-match catalog items returned when no exact match is found.",
+          "items": {}
+        }
+      },
+      "required": [
+        "catalog_item_id",
+        "found"
+      ]
+    },
+    "File": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "file_id",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "File text or a compact directory listing, with secrets redacted."
+        },
+        "file_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for the file record."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Repository owner the content belongs to."
+        },
+        "path": {
+          "type": "string",
+          "description": "Path of the file within the repository."
+        },
+        "ref": {
+          "type": "string",
+          "description": "Git ref the content was read at."
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name the content belongs to."
+        }
+      },
+      "required": [
+        "content",
+        "file_id",
+        "owner",
+        "path",
+        "ref",
+        "repo"
+      ]
+    },
+    "PullRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "pull_request_id",
+      "properties": {
+        "author": {
+          "type": "string",
+          "description": "GitHub login of the pull request author."
+        },
+        "branch": {
+          "type": "string",
+          "description": "Head branch ref for the pull request."
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Timestamp when the pull request was created."
+        },
+        "files": {
+          "type": "array",
+          "description": "Changed file paths associated with the pull request.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "owner": {
+          "type": "string",
+          "description": "Repository owner for the pull request."
+        },
+        "pr_number": {
+          "type": "integer",
+          "description": "Repository-local pull request number."
+        },
+        "pull_request_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for the pull request."
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name for the pull request."
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "closed"
+          ],
+          "description": "Current state of the pull request."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the pull request."
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Timestamp when the pull request was last updated."
+        },
+        "url": {
+          "type": "string",
+          "description": "HTML URL of the pull request."
+        }
+      },
+      "required": [
+        "author",
+        "branch",
+        "created_at",
+        "files",
+        "owner",
+        "pr_number",
+        "pull_request_id",
+        "repo",
+        "state",
+        "title",
+        "updated_at",
+        "url"
+      ]
+    },
+    "RepoSearchResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "repo_search_result_id",
+      "properties": {
+        "matches": {
+          "type": "array",
+          "description": "Matching file and directory paths.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "owner": {
+          "type": "string",
+          "description": "Repository owner that was searched."
+        },
+        "ref": {
+          "type": "string",
+          "description": "Git ref that was searched."
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name that was searched."
+        },
+        "repo_search_result_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for the repo search result."
+        },
+        "search": {
+          "type": "string",
+          "description": "Search text this result answers."
+        },
+        "total_matches": {
+          "type": "integer",
+          "description": "Total number of matches before truncation."
+        },
+        "truncated": {
+          "type": "boolean",
+          "description": "Whether the matches list was capped."
+        }
+      },
+      "required": [
+        "matches",
+        "owner",
+        "ref",
+        "repo",
+        "repo_search_result_id",
+        "search",
+        "total_matches",
+        "truncated"
+      ]
+    },
+    "SimilarItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "similar_item_id",
+      "properties": {
+        "account": {
+          "type": "string",
+          "description": "Account directory associated with the similar catalog item."
+        },
+        "name": {
+          "type": "string",
+          "description": "Directory name of the similar item."
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the similar item."
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository identifier in owner/repo form."
+        },
+        "similar_item_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for the similar item."
+        }
+      },
+      "required": [
+        "account",
+        "name",
+        "path",
+        "repo",
+        "similar_item_id"
+      ]
+    }
+  }
+}

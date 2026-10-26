@@ -1,0 +1,217 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "network_bu/netbox-automation-lab/common.yaml"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+          "ref": "v2.12.0"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "release",
+        "any_of": [
+          "v2.12.0"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which agnosticd-v2 release the item deploys",
+        "rationale": "the catalog item's scm_ref; the instruction does not name it"
+      },
+      {
+        "id": "size",
+        "any_of": [
+          "10Gi",
+          "10 Gi",
+          "10 GiB",
+          "10GiB",
+          "10 gibibytes",
+          "10 GB"
+        ],
+        "ignore_case": true,
+        "asked_by": "How big the database volume is for new orders",
+        "rationale": "the v2.12.0 default; the 60 the catalog asks for is not applied"
+      },
+      {
+        "id": "new-name",
+        "any_of": [
+          "ocp4_workload_netbox_ipam_db_storage_size"
+        ],
+        "ignore_case": true,
+        "asked_by": "Exactly what to put in the catalog item to get 60 GiB",
+        "rationale": "the variable the role reads at v2.12.0"
+      },
+      {
+        "id": "ignored",
+        "any_of": [
+          "no longer read",
+          "not read",
+          "ignored",
+          "has no effect",
+          "no effect",
+          "not honoured",
+          "not honored",
+          "isn't honoured",
+          "isn't honored",
+          "not applied",
+          "isn't applied",
+          "not used",
+          "unused",
+          "does nothing",
+          "dead setting",
+          "silently dropped",
+          "removed",
+          "renamed",
+          "honoured? no",
+          "honored? no",
+          "honoured: no",
+          "honored: no"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the catalog sets ocp4_workload_netbox_ipam_db_storage_gi, and the role's v2.12.0 defaults say that variable is removed and no longer read, so the 60 is not applied.",
+        "asked_by": "whether our 60 GiB setting is honoured",
+        "rationale": "the old name is dead at the new release"
+      },
+      {
+        "id": "line",
+        "any_of": [
+          "line 13",
+          "line #13",
+          "line no. 13",
+          "line number 13",
+          "L13",
+          ":13",
+          "(13)",
+          "line: 13",
+          "lines 10-13",
+          "lines 11-13",
+          "lines 12-13",
+          "lines 10\u201313",
+          "lines 11\u201313",
+          "lines 12\u201313",
+          "13 |"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "ocp4_workload_netbox_ipam_db_storage_size: 10Gi is the 13th line of the role's defaults at v2.12.0.",
+        "asked_by": "Cite the line in the role's defaults that decides it",
+        "rationale": "graded as a required fact rather than a citation line: an honest answer names the defaults file more than once"
+      },
+      {
+        "id": "fix",
+        "any_of": [
+          "db_storage_size: 60Gi",
+          "db_storage_size: \"60Gi\"",
+          "db_storage_size: '60Gi'",
+          "db_storage_size to 60Gi",
+          "db_storage_size = 60Gi",
+          "db_storage_size of 60Gi",
+          "db_storage_size set to 60Gi",
+          "db_storage_size: 60 Gi",
+          "db_storage_size to \"60Gi\"",
+          "db_storage_size=60Gi",
+          "db_storage_size | 60Gi"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the new variable takes a Kubernetes quantity, so 60 GiB is written 60Gi under ocp4_workload_netbox_ipam_db_storage_size.",
+        "asked_by": "Exactly what to put in the catalog item to get 60 GiB",
+        "rationale": "new name and quantity form; re-setting the old name, or a bare 60, does not work"
+      }
+    ],
+    "citations": [
+      {
+        "id": "role-defaults",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+        "asked_by": "Cite the line in the role's defaults",
+        "rationale": "the right owner and repo; rhpds/agnosticd-v2 is the common wrong owner"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "override-applies",
+        "none_of": [
+          "gets the 60 GiB",
+          "get the 60 GiB",
+          "gets 60 GiB",
+          "get 60 GiB",
+          "gets 60Gi",
+          "get 60Gi",
+          "gets a 60",
+          "get a 60",
+          "volume is 60",
+          "volume will be 60",
+          "60 GiB is applied",
+          "60Gi is applied",
+          "60 GiB setting is still honoured",
+          "60 GiB setting is still honored",
+          "override still applies",
+          "override still works",
+          "still takes effect",
+          "still in effect",
+          "already gets 60",
+          "already get 60"
+        ],
+        "ignore_case": true,
+        "rationale": "at v2.12.0 the catalog's variable is dead and the volume is the 10Gi default"
+      },
+      {
+        "id": "raise-old-name",
+        "none_of": [
+          "increase ocp4_workload_netbox_ipam_db_storage_gi",
+          "raise ocp4_workload_netbox_ipam_db_storage_gi",
+          "bump ocp4_workload_netbox_ipam_db_storage_gi",
+          "set ocp4_workload_netbox_ipam_db_storage_gi to",
+          "ocp4_workload_netbox_ipam_db_storage_gi: 80",
+          "ocp4_workload_netbox_ipam_db_storage_gi: 100",
+          "ocp4_workload_netbox_ipam_db_storage_gi: 120",
+          "ocp4_workload_netbox_ipam_db_storage_gi: 90"
+        ],
+        "ignore_case": true,
+        "rationale": "raising the removed variable changes nothing"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

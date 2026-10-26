@@ -1,0 +1,3 @@
+Orders of the vector tile server lab keep failing while the workers launch. On 2026-10-12 a teammate set the worker instance type to c7i.2xlarge in the lab's agnosticv catalog item, but the next order, for GUID n3kdw, failed again on 2026-10-13 in job 509381 on the `east` AAP2 controller. The teammate thinks the controller is still working from a stale copy of the catalog, and wants the project synced and the job relaunched.
+
+Tell me what AWS rejected, which instance type the job actually requested, and why the catalog change did not take effect. Look up the catalog item, read its configuration, cite the line that sets the instance type the job used as `owner/repo:path:line`, and say what to change in the file.

@@ -1,0 +1,39 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "name": "sandbox2291",
+      "account_id": "419283746501",
+      "available": false,
+      "owner": "rrivers",
+      "owner_email": "rrivers@partner.example.com",
+      "zone": "sandbox2291.opentlc.com",
+      "guid": "jbfsq",
+      "envtype": "ocp4-cluster-cnv",
+      "reservation": "",
+      "conan_status": "in-use",
+      "comment": "guid: jbfsq / catalog: agd-v2.ocp4-cluster-cnv.prod",
+      "sandbox_account_id": "sandbox2291"
+    },
+    {
+      "name": "sandbox2292",
+      "account_id": "419283746502",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "zone": "sandbox2292.opentlc.com",
+      "guid": "",
+      "envtype": "",
+      "reservation": "",
+      "conan_status": "available",
+      "comment": "",
+      "sandbox_account_id": "sandbox2292"
+    }
+  ]
+}

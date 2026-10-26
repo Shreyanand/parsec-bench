@@ -1,0 +1,56 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/bastion_provision_key/tasks/main.yml",
+      "content": "---\n# bastion_provision_key: materialise this run's provisioning key inside the\n# execution environment so the later plays can reach the bastion over SSH.\n- name: Create the per-run key directory\n  ansible.builtin.file:\n    path: \"{{ output_dir }}\"\n    state: directory\n    mode: \"0700\"\n\n- name: Write the provisioning private key for this run\n  ansible.builtin.copy:\n    content: \"{{ bastion_provision_key_private }}\"\n    dest: \"{{ output_dir }}/{{ guid }}_provision_key\"\n    # keep it readable for the plays that run after this one\n    mode: \"0644\"\n  no_log: true\n\n- name: Point the bastion connection at the key\n  ansible.builtin.set_fact:\n    ansible_ssh_private_key_file: \"{{ output_dir }}/{{ guid }}_provision_key\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/bastion_provision_key/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/bastion_provision_key/tasks/main.yml",
+      "content": "---\n# bastion_provision_key: materialise this run's provisioning key inside the\n# execution environment so the later plays can reach the bastion over SSH.\n- name: Create the per-run key directory\n  ansible.builtin.file:\n    path: \"{{ output_dir }}\"\n    state: directory\n    mode: \"0700\"\n\n- name: Write the provisioning private key for this run\n  ansible.builtin.copy:\n    content: \"{{ bastion_provision_key_private }}\"\n    dest: \"{{ output_dir }}/{{ guid }}_provision_key\"\n    # keep it readable for the plays that run after this one\n    mode: \"0644\"\n  no_log: true\n\n- name: Point the bastion connection at the key\n  ansible.builtin.set_fact:\n    ansible_ssh_private_key_file: \"{{ output_dir }}/{{ guid }}_provision_key\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/bastion_provision_key/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "5be08d3f71a2c94e60d1b7a83f2c5e19d04a6b7e",
+      "path": "ansible/roles/bastion_provision_key/tasks/main.yml",
+      "content": "---\n# bastion_provision_key: materialise this run's provisioning key inside the\n# execution environment so the later plays can reach the bastion over SSH.\n- name: Create the per-run key directory\n  ansible.builtin.file:\n    path: \"{{ output_dir }}\"\n    state: directory\n    mode: \"0700\"\n\n- name: Write the provisioning private key for this run\n  ansible.builtin.copy:\n    content: \"{{ bastion_provision_key_private }}\"\n    dest: \"{{ output_dir }}/{{ guid }}_provision_key\"\n    # keep it readable for the plays that run after this one\n    mode: \"0644\"\n  no_log: true\n\n- name: Point the bastion connection at the key\n  ansible.builtin.set_fact:\n    ansible_ssh_private_key_file: \"{{ output_dir }}/{{ guid }}_provision_key\"\n",
+      "file_id": "agnosticd/agnosticd-v2@5be08d3f71a2c94e60d1b7a83f2c5e19d04a6b7e-ansible/roles/bastion_provision_key/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/bastion_provision_key/defaults/main.yml",
+      "content": "---\n# bastion_provision_key defaults\nbastion_provision_key_user: ec2-user\nbastion_provision_key_type: ed25519\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/bastion_provision_key/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/bastion_provision_key/defaults/main.yml",
+      "content": "---\n# bastion_provision_key defaults\nbastion_provision_key_user: ec2-user\nbastion_provision_key_type: ed25519\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/bastion_provision_key/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "5be08d3f71a2c94e60d1b7a83f2c5e19d04a6b7e",
+      "path": "ansible/roles/bastion_provision_key/defaults/main.yml",
+      "content": "---\n# bastion_provision_key defaults\nbastion_provision_key_user: ec2-user\nbastion_provision_key_type: ed25519\n",
+      "file_id": "agnosticd/agnosticd-v2@5be08d3f71a2c94e60d1b7a83f2c5e19d04a6b7e-ansible/roles/bastion_provision_key/defaults/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

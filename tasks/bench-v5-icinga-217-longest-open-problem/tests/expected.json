@@ -1,0 +1,120 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_problems"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "oldest",
+        "any_of": [
+          "pg-vacuum-age",
+          "oldest xid age",
+          "Postgres oldest xid"
+        ],
+        "ignore_case": true,
+        "asked_by": "which one has been stuck in its current state for the longest",
+        "rationale": "the problem with the earliest last_state_change (2026-11-13 05:30 UTC)"
+      },
+      {
+        "id": "oldest-since",
+        "any_of": [
+          "2026-11-13",
+          "13 Nov",
+          "Nov 13",
+          "November 13",
+          "13 November",
+          "13/11/2026",
+          "11/13/2026",
+          "13.11.2026"
+        ],
+        "ignore_case": true,
+        "asked_by": "since when",
+        "rationale": "last_state_change 1794547800 is 2026-11-13 05:30 UTC; no other row changed state on the 13th",
+        "derived": true,
+        "note": "Converted from pg-vacuum-age's last_state_change epoch 1794547800 (2026-11-13 05:30 UTC); the seed stores only the epoch."
+      },
+      {
+        "id": "newest",
+        "any_of": [
+          "tomcat-saturation",
+          "Tomcat pool saturation"
+        ],
+        "ignore_case": true,
+        "asked_by": "which is the most recent to go bad",
+        "rationale": "the problem with the latest last_state_change (2026-11-25 06:20 UTC)"
+      }
+    ],
+    "counts": [
+      {
+        "id": "total-problems",
+        "value": 6,
+        "nouns": [
+          "problems",
+          "issues",
+          "alerts",
+          "objects",
+          "open",
+          "non-ok",
+          "entries",
+          "total"
+        ],
+        "window": 5,
+        "asked_by": "How many open problems does Icinga have in total",
+        "rationale": "get_problems returns the DOWN host lims-scan-bru-4 plus five non-OK services; services alone give 5"
+      },
+      {
+        "id": "oldest-days",
+        "value": 12,
+        "nouns": [
+          "days",
+          "day",
+          "d"
+        ],
+        "window": 4,
+        "asked_by": "how many whole days that is",
+        "rationale": "2026-11-25 07:00 minus 2026-11-13 05:30 is 12 days 1.5 hours; derived",
+        "extra_any_of": [
+          "12 days",
+          "twelve days",
+          "12.06 days",
+          "12.1 days",
+          "12d"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "services-only-total",
+        "none_of": [
+          "5 open problems",
+          "five open problems",
+          "5 problems in total",
+          "five problems in total",
+          "total of 5 problems",
+          "total of five problems",
+          "5 problems open",
+          "five problems open"
+        ],
+        "ignore_case": true,
+        "rationale": "counting only the service rows and dropping the DOWN host lims-scan-bru-4, which get_problems also returns"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

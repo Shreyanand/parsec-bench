@@ -1,0 +1,84 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "get_component",
+        "cluster": "kite",
+        "name": "ai-platform-bundle"
+      },
+      "result": {
+        "cluster": "kite",
+        "name": "ai-platform-bundle",
+        "cloud_provider": "none",
+        "env_type": "multi-component",
+        "platform": "rhpds",
+        "expected_instances": [],
+        "definition": {
+          "__meta__": {
+            "components": [
+              {
+                "name": "base",
+                "item": "ai-platform.base-ocp"
+              },
+              {
+                "name": "accelerators",
+                "item": "ai-platform.gpu-nodes"
+              }
+            ],
+            "catalog": {
+              "display_name": "AI Platform Bundle"
+            }
+          }
+        },
+        "scm_ref": "main",
+        "agnosticv_repo": "rhpds/agnosticv",
+        "agnosticv_path": "ai-platform/bundle/common.yaml",
+        "sub_components": [
+          {
+            "name": "base",
+            "item": "ai-platform.base-ocp"
+          },
+          {
+            "name": "accelerators",
+            "item": "ai-platform.gpu-nodes"
+          }
+        ]
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "get_component",
+        "cluster": "kite",
+        "name": "ai-platform.gpu-nodes"
+      },
+      "result": {
+        "cluster": "kite",
+        "name": "ai-platform.gpu-nodes",
+        "cloud_provider": "aws",
+        "env_type": "ocp4-workload-gpu-machineset",
+        "platform": "rhpds",
+        "expected_instances": [
+          {
+            "purpose": "gpu-worker",
+            "instance_type": "g6e.12xlarge",
+            "count": 4
+          }
+        ],
+        "definition": {
+          "cloud_provider": "ec2",
+          "gpu_machineset_instance_type": "g6e.12xlarge",
+          "gpu_machineset_replicas": 4,
+          "nvidia_driver_channel": "v580"
+        },
+        "scm_ref": "main",
+        "agnosticv_repo": "rhpds/agnosticv",
+        "agnosticv_path": "ai-platform/gpu-nodes/common.yaml"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The bundle itself doesn't deploy any machines. On kite, ai-platform-bundle has cloud_provider none and an empty expected_instances list. It is a parent that points at two sub_components: base -> ai-platform.base-ocp, and accelerators -> ai-platform.gpu-nodes.\n\nThe GPU part is ai-platform.gpu-nodes on kite:\n- cloud_provider aws, env_type ocp4-workload-gpu-machineset\n- expected_instances: 4 x g6e.12xlarge, purpose gpu-worker\n- defined in rhpds/agnosticv at ai-platform/gpu-nodes/common.yaml (scm_ref main)\n\nSo each order asks for 4 g6e.12xlarge GPU workers on top of the base cluster. That is the figure for your quota request.\n"
+}

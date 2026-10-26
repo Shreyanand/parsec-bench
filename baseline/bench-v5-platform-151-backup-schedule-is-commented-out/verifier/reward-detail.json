@@ -1,0 +1,78 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_timescale_metrics/defaults/main.yml"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [
+      {
+        "id": "backups-on",
+        "none_of": [
+          "backups are scheduled by default",
+          "backups are enabled by default",
+          "backups are on by default",
+          "backups are configured by default",
+          "backups run by default",
+          "schedules backups by default",
+          "sets up scheduled backups by default",
+          "does set up scheduled",
+          "yes, it does",
+          "backups run every sunday",
+          "backup runs every sunday",
+          "runs a backup every sunday",
+          "weekly backup on sunday",
+          "backups are kept for 14 days",
+          "backups are retained for 14 days",
+          "kept for 14 days",
+          "retained for 14 days",
+          "retention is 14 days",
+          "retention of 14 days"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "would run",
+          "would be kept",
+          "would be retained",
+          "would keep",
+          "would schedule",
+          "would apply",
+          "would take",
+          "if enabled",
+          "once enabled",
+          "when enabled",
+          "if it were enabled",
+          "if they were enabled",
+          "were they enabled",
+          "if re-enabled",
+          "once re-enabled"
+        ],
+        "rationale": "the schedule and retention lines are comments; asserting them as live behaviour is the fabrication this negative task exists to catch"
+      }
+    ],
+    "forbidden_total": 1
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "answer": {
+    "counts": [
+      {
+        "asked_by": "Report the winning provider and its total",
+        "extra_any_of": [
+          "21,900",
+          "$21,900"
+        ],
+        "id": "azure-total",
+        "nouns": [
+          "azure",
+          "total",
+          "USD",
+          "spend"
+        ],
+        "rationale": "extra_any_of carries the comma-grouped form, which is how any real answer writes a five-figure sum -- the digit matcher alone would miss 21,900",
+        "value": 21900,
+        "window": 8
+      },
+      {
+        "asked_by": "give the totals for the other two providers",
+        "extra_any_of": [
+          "12,400",
+          "$12,400"
+        ],
+        "id": "aws-total",
+        "nouns": [
+          "aws",
+          "total"
+        ],
+        "rationale": "proves the AWS call happened",
+        "value": 12400,
+        "window": 8
+      },
+      {
+        "asked_by": "give the totals for the other two providers",
+        "extra_any_of": [
+          "8,150",
+          "$8,150"
+        ],
+        "id": "gcp-total",
+        "nouns": [
+          "gcp",
+          "google",
+          "total"
+        ],
+        "rationale": "proves the GCP call happened",
+        "value": 8150,
+        "window": 8
+      }
+    ],
+    "required": [
+      {
+        "any_of": [
+          "azure"
+        ],
+        "asked_by": "Report the winning provider",
+        "id": "winner",
+        "ignore_case": true,
+        "rationale": "Azure at 21,900 against AWS 12,400 and GCP 8,150. An agent that queries one provider and stops cannot know"
+      },
+      {
+        "any_of": [
+          "Virtual Machines"
+        ],
+        "asked_by": "name the top three services driving that provider's cost",
+        "id": "top-service",
+        "ignore_case": true,
+        "rationale": "the largest Azure service line"
+      },
+      {
+        "any_of": [
+          "Storage"
+        ],
+        "asked_by": "name the top three services driving that provider's cost",
+        "id": "second-service",
+        "ignore_case": true,
+        "rationale": "the second"
+      },
+      {
+        "any_of": [
+          "Bandwidth"
+        ],
+        "asked_by": "name the top three services driving that provider's cost",
+        "id": "third-service",
+        "ignore_case": true,
+        "rationale": "the third. All three are needed, so an any_of on one fact would not do -- each is its own fact"
+      }
+    ]
+  },
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  },
+  "schema": "bench/v4",
+  "tool_calls": {
+    "expected": [
+      {
+        "args": {
+          "account_ids": [
+            "419283746501",
+            "419283746502"
+          ],
+          "end_date": "2026-06-30",
+          "start_date": "2026-06-01"
+        },
+        "name": "query_aws_costs"
+      },
+      {
+        "args": {
+          "end_date": "2026-06-30",
+          "start_date": "2026-06-01"
+        },
+        "name": "query_gcp_costs"
+      },
+      {
+        "args": {
+          "end_date": "2026-06-30",
+          "start_date": "2026-06-01"
+        },
+        "name": "query_azure_costs"
+      }
+    ],
+    "forbidden": [],
+    "match": "unordered-subset"
+  },
+  "weights": {
+    "answer": 0.7,
+    "tool_calls": 0.3
+  }
+}

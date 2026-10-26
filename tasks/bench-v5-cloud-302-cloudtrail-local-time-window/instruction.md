@@ -1,0 +1,1 @@
+Our staging VPN in AWS account 518306274913 stopped working on 2026-09-03 because several security groups were deleted. The Paris team says it happened between 09:00 and 10:30 Paris time that morning. Using CloudTrail, find out who deleted security groups in that account during that window, and how many they deleted.

@@ -1,0 +1,162 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "critical-alpha",
+        "any_of": [
+          "nas-alpha"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which of those matches are CRITICAL",
+        "rationale": "nas-alpha!fs-capacity is state 2 (CRITICAL) in the seed. The host name appears in no instruction; only the cross-host search result surfaces it"
+      },
+      {
+        "id": "critical-charlie",
+        "any_of": [
+          "nas-charlie"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which of those matches are CRITICAL",
+        "rationale": "nas-charlie!fs-capacity is state 2 (CRITICAL). It is also the host carrying the non-matching CRITICAL decoy, so naming it is necessary but not sufficient"
+      }
+    ],
+    "counts": [
+      {
+        "id": "alpha-percent",
+        "value": 96,
+        "nouns": [
+          "percent",
+          "full",
+          "used",
+          "usage",
+          "utilization",
+          "utilisation",
+          "capacity",
+          "critical",
+          "disk",
+          "filesystem",
+          "export",
+          "srv",
+          "filesystems",
+          "volumes",
+          "volume",
+          "respectively",
+          "fill",
+          "alpha"
+        ],
+        "window": 5,
+        "asked_by": "how full is the filesystem behind each critical one",
+        "rationale": "from nas-alpha!fs-capacity's plugin output '96% used'. '%' is not a token for the matcher, so the nouns are the words a correct answer puts beside the number (used, full, percent, the host's own name, the mount path). No other seed output carries 96. Counts are not bound to a host: a swapped pairing still earns both"
+      },
+      {
+        "id": "charlie-percent",
+        "value": 91,
+        "nouns": [
+          "percent",
+          "full",
+          "used",
+          "usage",
+          "utilization",
+          "utilisation",
+          "capacity",
+          "critical",
+          "disk",
+          "filesystem",
+          "export",
+          "srv",
+          "filesystems",
+          "volumes",
+          "volume",
+          "respectively",
+          "fill",
+          "charlie"
+        ],
+        "window": 5,
+        "asked_by": "how full is the filesystem behind each critical one",
+        "rationale": "from nas-charlie!fs-capacity's plugin output '91% used'. The decoy on the same host says 97, the WARNING match 84; neither is 91. Not bound to the host either"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "non-critical-or-non-match-called-critical",
+        "ignore_case": true,
+        "none_of": [
+          "nas-bravo is critical",
+          "nas-bravo is also critical",
+          "nas-bravo!fs-capacity is critical",
+          "nas-bravo!fs-capacity is also critical",
+          "nas-bravo (critical",
+          "nas-bravo!fs-capacity (critical",
+          "nas-bravo: critical",
+          "nas-bravo!fs-capacity: critical",
+          "nas-bravo -- critical",
+          "nas-bravo!fs-capacity -- critical",
+          "nas-bravo — critical",
+          "nas-bravo!fs-capacity — critical",
+          "nas-bravo - critical",
+          "nas-bravo!fs-capacity - critical",
+          "nas-bravo are critical",
+          "nas-bravo are all critical",
+          "all three are critical",
+          "all 3 are critical",
+          "all three matches are critical",
+          "all three services are critical",
+          "all three are in critical",
+          "all three fs-capacity matches are critical",
+          "all three fs-capacity services are critical",
+          "are all critical",
+          "are all in critical",
+          "all of them are critical",
+          "nas-bravo | fs-capacity | critical",
+          "nas-bravo!fs-capacity | critical",
+          "nas-bravo | critical",
+          "inode-usage is one of the",
+          "inode-usage is also one of the",
+          "inode-usage is also a match",
+          "inode-usage also matches",
+          "inode-usage is an affected",
+          "inode-usage is a third"
+        ],
+        "attributed_to": [
+          "not part of",
+          "does not match",
+          "doesn't match",
+          "not a match",
+          "not match",
+          "excluding",
+          "excluded",
+          "outside the search",
+          "not returned by",
+          "not in the search",
+          "not among",
+          "not all",
+          "separate check",
+          "different check",
+          "unrelated"
+        ],
+        "rationale": "two wrong readings, one fact: calling the WARNING match nas-bravo!fs-capacity critical (severity error), or reporting the same-host CRITICAL service nas-charlie!inode-usage, whose name does not contain fs-capacity, as one of the matches (scoping error -- what an agent that answered from get_problems writes). inode-usage really is CRITICAL, so only determiner-bearing membership assertions are forbidden, never its state; the excuses let an honest answer say it is outside the match"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

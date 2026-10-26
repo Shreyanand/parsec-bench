@@ -1,0 +1,168 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 90403
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job",
+          "controller": "west",
+          "job_id": 90403
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ans-bu-wksp-rhel-90"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "sandboxes_gpte/ans-bu-wksp-rhel-90/common.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "sandboxes_gpte/ans-bu-wksp-rhel-90/prod.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "name": "sandboxes-gpte.ans-bu-wksp-rhel-90.prod"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "ans-bu-wksp-rhel-90"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ANS_BU_WKSP_RHEL_90"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "sandboxes_gpte/ans-bu-wksp-rhel-90"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "ans-bu-wksp-rhel-90"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "ans-bu-wksp-rhel-90"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "zt-ansiblebu-agnosticv",
+          "search": "ans-bu-wksp-rhel-90"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "zt-rhelbu-agnosticv",
+          "search": "ans-bu-wksp-rhel-90"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "west",
+          "job_id": 90403,
+          "failed_only": true
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible.cfg",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "main.yml"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "why-missing",
+        "any_of": [
+          "requirements_collections",
+          "not installed",
+          "was not installed",
+          "does not include",
+          "misconfigured",
+          "missing from"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "aap2_fix.py KNOWN_PATTERNS[3] explains this as the collection either not being installed or collections_path not including /runner/requirements_collections; the seeded ansible.cfg points only at /runner/project/collections",
+        "asked_by": "Say why the role it names could not be found, based on the Ansible configuration",
+        "rationale": "the synthesis step: reading the setting is not the same as explaining what it excludes"
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 1,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

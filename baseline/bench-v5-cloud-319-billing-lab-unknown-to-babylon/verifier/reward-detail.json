@@ -1,0 +1,148 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "account_id": "264083917552"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.babylon_guid, p.catalog_id, p.provisioned_at, p.retired_at, p.status, p.current_state, p.desired_state, u.email as user_email, p.ordered_by, p.uuid FROM provisions p LEFT JOIN users u ON p.user_id = u.id WHERE p.sandbox_name = 'sandbox264083917552' OR p.account_id = '264083917552' ORDER BY p.provisioned_at DESC LIMIT 10"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "r5jxe"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "guid": "r5jxe",
+          "namespace": "user-mkowalczyk",
+          "sandbox_comment": "ordered via RHDP catalog 2026-09-29"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_by_guid",
+          "guid": "r5jxe",
+          "earliest": "-30d",
+          "errors_only": false,
+          "max_results": 50
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "r5jxe",
+          "cluster": "east"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "r5jxe",
+          "cluster": "west"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT babylon_guid, sandbox_name, catalog_id, provisioned_at, retired_at, status, current_state, desired_state, ordered_by FROM provisions WHERE babylon_guid = 'r5jxe' LIMIT 5"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "r5jxe",
+          "cluster": "partner0"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "r5jxe",
+          "cluster": "event0"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "264083917552"
+          ],
+          "start_date": "2026-10-05",
+          "end_date": "2026-10-12"
+        }
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "264083917552",
+          "action": "describe_instances"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "ec2-compute-total",
+        "any_of": [
+          "915.25"
+        ],
+        "ignore_case": true,
+        "asked_by": "give me the EC2 compute total for that window",
+        "rationale": "the Amazon Elastic Compute Cloud - Compute item cost for the stored 2026-10-05..2026-10-12 row; the account total is 1,066.45"
+      },
+      {
+        "id": "instance-control",
+        "any_of": [
+          "i-0c4f7a2e91b38d605"
+        ],
+        "ignore_case": true,
+        "asked_by": "which EC2 instances are running in the account in us-east-1",
+        "rationale": "running m6i.8xlarge, tagged guid r5jxe"
+      },
+      {
+        "id": "instance-gpu",
+        "any_of": [
+          "i-07e2b95d1a4c6f830"
+        ],
+        "ignore_case": true,
+        "asked_by": "which EC2 instances are running in the account in us-east-1",
+        "rationale": "running g6.12xlarge, tagged guid r5jxe"
+      }
+    ],
+    "required_total": 7,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

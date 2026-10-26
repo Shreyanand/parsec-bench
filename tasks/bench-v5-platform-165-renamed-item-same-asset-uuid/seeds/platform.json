@@ -1,0 +1,124 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [
+    {
+      "babylon_catalog_item_id": "petrel-edgefleet.ota-lab-emea.prod",
+      "cluster": "petrel",
+      "ci_name": "edgefleet.ota-lab-emea",
+      "display_name": "Edgefleet OTA Lab",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "d2b8e05c-9a63-4f17-b4c8-6e01a7d395f2",
+      "keywords": [
+        "edge",
+        "ota",
+        "emea"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "petrel-edgefleet.ota-updates.prod",
+      "cluster": "petrel",
+      "ci_name": "edgefleet.ota-updates",
+      "display_name": "Edgefleet Over-the-Air Updates",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "5e1c9a47-3b02-4d8e-a6f1-0c7d92b4e813",
+      "keywords": [
+        "edge",
+        "ota"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "petrel-rhel.bootc-lab.prod",
+      "cluster": "petrel",
+      "ci_name": "rhel.bootc-lab",
+      "display_name": "Bootc Lab",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "a90d3f6e-71c4-4b25-8e0a-3d6f52c1b974",
+      "keywords": [
+        "rhel",
+        "bootc"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "tern-edgefleet.ota-lab.prod",
+      "cluster": "tern",
+      "ci_name": "edgefleet.ota-lab",
+      "display_name": "Edgefleet OTA Lab",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "5e1c9a47-3b02-4d8e-a6f1-0c7d92b4e813",
+      "keywords": [
+        "edge",
+        "ota"
+      ]
+    }
+  ],
+  "babylon_components": [],
+  "babylon_deployments": [
+    {
+      "babylon_deployment_id": "petrel-user-hvasquez-redhat-com-edgefleet-ota-lab-q7rbn",
+      "cluster": "petrel",
+      "name": "edgefleet-ota-lab-q7rbn",
+      "namespace": "user-hvasquez-redhat-com",
+      "catalog_item": "edgefleet.ota-lab.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "5e1c9a47-3b02-4d8e-a6f1-0c7d92b4e813",
+      "healthy": true,
+      "ready": true,
+      "state": "started",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "q7rbn",
+        "env_type": "edgefleet-ota-lab"
+      },
+      "lifespan": {
+        "start": "2026-10-27T08:30:00Z",
+        "end": "2026-11-10T08:30:00Z"
+      }
+    },
+    {
+      "babylon_deployment_id": "petrel-user-hvasquez-redhat-com-rhel.bootc-lab-z4mtw",
+      "cluster": "petrel",
+      "name": "rhel.bootc-lab-z4mtw",
+      "namespace": "user-hvasquez-redhat-com",
+      "catalog_item": "rhel.bootc-lab.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "a90d3f6e-71c4-4b25-8e0a-3d6f52c1b974",
+      "healthy": true,
+      "ready": true,
+      "state": "started",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "z4mtw",
+        "env_type": "rhel.bootc-lab"
+      },
+      "lifespan": {
+        "start": "2026-11-02T13:00:00Z",
+        "end": "2026-11-06T13:00:00Z"
+      }
+    }
+  ],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

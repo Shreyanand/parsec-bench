@@ -1,0 +1,158 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "account_id": "645190837226"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_actions",
+          "guid": "q7fwd"
+        }
+      },
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "645190837226"
+          ],
+          "start_date": "2026-09-28",
+          "end_date": "2026-10-05"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "guid",
+        "any_of": [
+          "q7fwd"
+        ],
+        "ignore_case": true,
+        "asked_by": "find the GUID",
+        "rationale": "only the account DB row maps the account to q7fwd; the babylon call depends on it"
+      },
+      {
+        "id": "start-action",
+        "derived": true,
+        "note": "list_anarchy_actions for q7fwd returns a successful start action finished 2026-10-01T07:51:03Z after the successful stop of 2026-09-28; that the lab was started again is read from that row.",
+        "ignore_case": true,
+        "any_of": [
+          "start action",
+          "was started again",
+          "started again",
+          "restarted",
+          "re-started",
+          "started back up",
+          "a start",
+          "action: start",
+          "action start",
+          "| start |",
+          "start on 2026-10-01",
+          "start at 2026-10-01"
+        ],
+        "asked_by": "look at the Babylon lifecycle actions",
+        "rationale": "the later start action exists only in list_anarchy_actions; it is what explains the cost"
+      },
+      {
+        "id": "resume-day",
+        "any_of": [
+          "2026-10-01",
+          "1 October",
+          "October 1",
+          "Oct 1",
+          "10-01"
+        ],
+        "ignore_case": true,
+        "asked_by": "the day compute spend resumed",
+        "rationale": "the start finished 2026-10-01 and the daily series resumes that day"
+      },
+      {
+        "id": "stop-worked",
+        "derived": true,
+        "note": "The stop action for q7fwd has state successful (finished 2026-09-28T18:06:12Z) and the EC2 compute daily series is 0.0 on 2026-09-29 and 2026-09-30, so the agent concludes the stop did not fail; no seed string says so.",
+        "ignore_case": true,
+        "any_of": [
+          "did not fail",
+          "didn't fail",
+          "stop succeeded",
+          "stop worked",
+          "stop completed",
+          "completed successfully",
+          "stop was successful",
+          "stop did work",
+          "stop took effect",
+          "not a failed stop"
+        ],
+        "asked_by": "Did the stop fail",
+        "rationale": "the stop action is successful and compute is 0.00 on 09-29/09-30"
+      },
+      {
+        "id": "compute-total",
+        "any_of": [
+          "1,473.75",
+          "1473.75",
+          "1 473.75"
+        ],
+        "ignore_case": true,
+        "asked_by": "the week's EC2 compute total",
+        "rationale": "the stored SERVICE group amount; total_cost 1,603.95 includes EBS and is a different figure"
+      }
+    ],
+    "counts": [],
+    "forbidden": [
+      {
+        "id": "stop-blamed",
+        "ignore_case": true,
+        "none_of": [
+          "the stop failed",
+          "stop action failed",
+          "stop did not take effect",
+          "stop didn't take effect",
+          "stop never took effect",
+          "stop never completed",
+          "stop did not complete",
+          "stop didn't complete",
+          "never actually stopped",
+          "was never stopped",
+          "were never stopped",
+          "never stopped",
+          "kept running all week",
+          "ran all week",
+          "running the whole week",
+          "running all week",
+          "stop did not work",
+          "stop didn't work",
+          "stop never happened",
+          "orphaned resources",
+          "orphaned instances"
+        ],
+        "attributed_to": [
+          "whether the stop failed",
+          "if the stop failed",
+          "owner's theory that",
+          "owner's assumption that",
+          "owner believes",
+          "not that the stop failed"
+        ],
+        "rationale": "the owner's story invites 'the stop failed / ran all week'; the action history and the 0.00 days refute it"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

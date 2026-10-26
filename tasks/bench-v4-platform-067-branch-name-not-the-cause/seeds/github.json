@@ -1,0 +1,56 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "account": "agd-v2",
+      "directory": "gitops-canary-lab",
+      "path": "agd-v2/gitops-canary-lab/event.yaml",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "event.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "agd-v2-agd-v2/gitops-canary-lab/event.yaml"
+    }
+  ],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "agd-v2/gitops-canary-lab/event.yaml",
+      "content": "---\n# Event stage for gitops-canary-lab.\n# The event runs the deployer from the ApplicationSet progressive-sync work.\n__meta__:\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2\n    scm_ref: feat/appset-progressive-sync\n\npurpose: event\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-agd-v2/gitops-canary-lab/event.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "agd-v2/gitops-canary-lab/event.yaml",
+      "content": "---\n# Event stage for gitops-canary-lab.\n# The event runs the deployer from the ApplicationSet progressive-sync work.\n__meta__:\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2\n    scm_ref: feat/appset-progressive-sync\n\npurpose: event\n",
+      "file_id": "agnosticd/agnosticd-v2@main-agd-v2/gitops-canary-lab/event.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "agd-v2/gitops-canary-lab/common.yaml",
+      "content": "---\nconfig: openshift-workloads\ncloud_provider: none\n\nworkloads:\n- agnosticd.gitops.ocp4_workload_gitops_canary\n\n__meta__:\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2\n    scm_ref: main\n  secrets:\n  - name: canary-lab-repo-hmac\n    vault_path: rhdp-secrets/agd-v2/gitops-canary-lab\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-agd-v2/gitops-canary-lab/common.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "agd-v2/gitops-canary-lab/common.yaml",
+      "content": "---\nconfig: openshift-workloads\ncloud_provider: none\n\nworkloads:\n- agnosticd.gitops.ocp4_workload_gitops_canary\n\n__meta__:\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2\n    scm_ref: main\n  secrets:\n  - name: canary-lab-repo-hmac\n    vault_path: rhdp-secrets/agd-v2/gitops-canary-lab\n",
+      "file_id": "agnosticd/agnosticd-v2@main-agd-v2/gitops-canary-lab/common.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

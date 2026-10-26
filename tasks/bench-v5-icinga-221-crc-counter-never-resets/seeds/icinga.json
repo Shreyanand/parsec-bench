@@ -1,0 +1,113 @@
+{
+  "hosts": [
+    {
+      "name": "ceph-osd-yul-14",
+      "type": "Host",
+      "attrs": {
+        "display_name": "ceph-osd-yul-14",
+        "host_name": "ceph-osd-yul-14",
+        "address": "10.88.14.114",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ceph-osd-yul"
+        ],
+        "last_state_change": 1795260712,
+        "last_check": 1796810289,
+        "last_check_result": {
+          "output": "OK - 10.88.14.114: rta 0.310ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "ceph-osd-yul-14!nic-errors-ens2f1",
+      "type": "Service",
+      "attrs": {
+        "display_name": "NIC error counter ens2f1",
+        "host_name": "ceph-osd-yul-14",
+        "check_command": "rhdp-plugin",
+        "state": 2,
+        "state_type": 1,
+        "last_state_change": 1796271041,
+        "last_check": 1796810113,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "vars": {
+          "plugin": "plugins/net/check_nic_errors.py",
+          "nic": "ens2f1",
+          "counter": "rx_crc_errors"
+        },
+        "last_check_result": {
+          "output": "NIC CRITICAL - ens2f1 rx_crc_errors=1520 (crit 1000)",
+          "performance_data": [
+            "rx_crc_errors=1520c;250;1000;0"
+          ],
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "ceph-osd-yul-14!nic-error-rate-ens2f1",
+      "type": "Service",
+      "attrs": {
+        "display_name": "NIC error rate ens2f1 (15 min)",
+        "host_name": "ceph-osd-yul-14",
+        "check_command": "rhdp-plugin",
+        "state": 0,
+        "state_type": 1,
+        "last_state_change": 1796397907,
+        "last_check": 1796810162,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "vars": {
+          "plugin": "plugins/net/check_nic_error_rate.py",
+          "nic": "ens2f1",
+          "counter": "rx_crc_errors"
+        },
+        "last_check_result": {
+          "output": "NIC_RATE OK - ens2f1 rx_crc_errors +0.0/min over 15 min",
+          "performance_data": [
+            "rx_crc_errors_rate=0.0;5;20;0"
+          ],
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "ceph-osd-yul-14!osd-heartbeat",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Ceph OSD liveness",
+        "host_name": "ceph-osd-yul-14",
+        "check_command": "rhdp-plugin",
+        "state": 0,
+        "state_type": 1,
+        "last_state_change": 1795261229,
+        "last_check": 1796810268,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "vars": {
+          "plugin": "plugins/ceph/check_osd_heartbeat.py"
+        },
+        "last_check_result": {
+          "output": "OSD OK - osd.112 osd.113 osd.114 osd.115 up and in",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

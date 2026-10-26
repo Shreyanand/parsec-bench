@@ -1,0 +1,16 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "pgw-ledger-03"
+      },
+      "result": {
+        "result": "[{\"name\":\"pgw-ledger-03!pg-connections\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"PostgreSQL client connections\",\"host_name\":\"pgw-ledger-03\",\"state\":2,\"state_type\":0,\"check_attempt\":2,\"max_check_attempts\":5,\"check_interval\":300,\"retry_interval\":60,\"last_state\":2,\"last_hard_state\":0,\"last_state_change\":1794994110,\"last_hard_state_change\":1793592600,\"last_check\":1794994170,\"enable_notifications\":true,\"acknowledgement\":0,\"downtime_depth\":0,\"last_check_result\":{\"output\":\"POSTGRES_CONNECTIONS CRITICAL - 188 of 200 client slots in use (94%)\",\"performance_data\":[\"connections=188;170;185;0;200\"],\"state\":2,\"exit_status\":2}}},{\"name\":\"pgw-ledger-03!pg-replication-slot\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"PostgreSQL replication slot lag\",\"host_name\":\"pgw-ledger-03\",\"state\":0,\"state_type\":1,\"check_attempt\":1,\"max_check_attempts\":5,\"check_interval\":300,\"retry_interval\":60,\"last_state_change\":1793289900,\"last_check\":1794994020,\"enable_notifications\":true,\"acknowledgement\":0,\"downtime_depth\":0,\"last_check_result\":{\"output\":\"POSTGRES_SLOT OK - slot ledger_standby retains 41 MB\",\"state\":0,\"exit_status\":0}}},{\"name\":\"pgw-ledger-03!fs-pgdata\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"/var/lib/pgsql free space\",\"host_name\":\"pgw-ledger-03\",\"state\":0,\"state_type\":1,\"check_attempt\":1,\"max_check_attempts\":3,\"check_interval\":600,\"retry_interval\":120,\"last_state_change\":1792572240,\"last_check\":1794993880,\"enable_notifications\":true,\"acknowledgement\":0,\"downtime_depth\":0,\"last_check_result\":{\"output\":\"DISK OK - /var/lib/pgsql 58% used\",\"state\":0,\"exit_status\":0}}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "No - it is not confirmed yet and no notification has gone out.\n\n`pg-connections` on pgw-ledger-03 is CRITICAL (188 of 200 client slots in use, 94%), but it is a SOFT state:\nstate_type is 0 and it is on check attempt 2 of 5 (max_check_attempts 5). Icinga only sends notifications for\nHARD states, and the last hard state is still OK (last_hard_state 0). The problem started at 09:28:30 UTC.\n\nIt needs 3 more failing checks before it reaches attempt 5 and becomes a hard state. While soft it re-checks every\nretry_interval of 60 seconds, so that is about 3 minutes - around 09:33 UTC if the next checks also fail.\n\nSuggestion: no need to wake the DBA this second; watch it for the next ~3 minutes. If it hardens, the on-call\nwill be notified automatically. The other two services on the host (replication slot, /var/lib/pgsql space) are OK."
+}

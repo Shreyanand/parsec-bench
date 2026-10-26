@@ -1,0 +1,98 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 90406
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/configs/zero-touch-base-rhel/default_vars.yml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "path": "ansible/configs/zero-touch-base-rhel/default_vars.yml",
+          "ref": "zero-touch-prod-1.0.6"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "ref": "zero-touch-prod-1.0.6"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "configured-tag",
+        "any_of": [
+          "rhel-9.5-bootc"
+        ],
+        "ignore_case": true,
+        "asked_by": "report the base image tag the configuration actually sets",
+        "rationale": "only a real read of default_vars.yml supplies it"
+      },
+      {
+        "id": "mismatch",
+        "any_of": [
+          "does not match",
+          "differs",
+          "different",
+          "mismatch",
+          "not the same",
+          "9.4",
+          "no -- ",
+          "no, "
+        ],
+        "ignore_case": true,
+        "asked_by": "Say whether that tag matches the one the job reported as missing",
+        "rationale": "the comparison step: the log says rhel-9.4-bootc and the config says rhel-9.5-bootc, so a correct answer states they differ"
+      }
+    ],
+    "citations": [
+      {
+        "id": "default-vars",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/configs/zero-touch-base-rhel/default_vars.yml",
+        "asked_by": "read `ansible/configs/zero-touch-base-rhel/default_vars.yml` from the `agnosticd/agnosticd-v2` repository",
+        "rationale": "keeps the citation habit uniform across shape A"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "version-as-ref-claim",
+        "none_of": [
+          "ref zero-touch-prod-1.0.6",
+          "at zero-touch-prod-1.0.6",
+          "branch zero-touch-prod-1.0.6",
+          "tag zero-touch-prod-1.0.6"
+        ],
+        "ignore_case": true,
+        "rationale": "an agent that treated the catalog item version as a git ref and said so asserts one of these. The bare version string is NOT forbidden: the instruction says the log records it, so quoting it is correct and only claiming it is a ref is wrong"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

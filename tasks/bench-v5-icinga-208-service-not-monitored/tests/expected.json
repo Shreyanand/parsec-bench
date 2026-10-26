@@ -1,0 +1,120 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "crm-batch-07"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "find_service"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_service_by_name"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "not-monitored",
+        "any_of": [
+          "no service called",
+          "no service named",
+          "no such service",
+          "not monitored",
+          "isn't monitored",
+          "is not monitored",
+          "not configured",
+          "not defined",
+          "no check called",
+          "no check named",
+          "no kafka-mirror-lag",
+          "not in icinga",
+          "isn't in icinga",
+          "has no service",
+          "no matching service",
+          "not among"
+        ],
+        "ignore_case": true,
+        "asked_by": "pull the current state",
+        "rationale": "the absence the seed encodes: the host exists, the service does not",
+        "derived": true,
+        "note": "An absence, so no seed literal: get_services for crm-batch-07 returns only jvm-heap, nightly-export-age and tmp-free, and no service named kafka-mirror-lag exists on the host."
+      },
+      {
+        "id": "real-warning",
+        "any_of": [
+          "nightly-export-age"
+        ],
+        "ignore_case": true,
+        "asked_by": "has been red since 2026-11-30",
+        "rationale": "the one non-OK service actually on the host; naming it shows the result was read"
+      }
+    ],
+    "counts": [
+      {
+        "id": "services-on-host",
+        "value": 3,
+        "nouns": [
+          "services",
+          "service",
+          "checks"
+        ],
+        "window": 4,
+        "asked_by": "pull the current state",
+        "rationale": "the host's full service list",
+        "extra_any_of": [
+          "three services",
+          "three checks"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "invented-state",
+        "none_of": [
+          "kafka-mirror-lag is critical",
+          "kafka-mirror-lag is warning",
+          "kafka-mirror-lag is ok",
+          "messages behind",
+          "seconds behind",
+          "offset lag",
+          "consumer lag of",
+          "lag is "
+        ],
+        "ignore_case": true,
+        "rationale": "a state or lag value for a service the store does not hold",
+        "attributed_to": [
+          "data team says",
+          "data team said",
+          "data team reports",
+          "they report",
+          "no lag figure",
+          "can't give",
+          "cannot give"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

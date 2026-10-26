@@ -1,0 +1,109 @@
+{
+ "babylon_anarchy_actions": [],
+ "babylon_anarchy_subjects": [],
+ "babylon_catalog_items": [],
+ "babylon_components": [],
+ "babylon_deployments": [],
+ "babylon_multiworkshops": [],
+ "babylon_resource_pools": [],
+ "babylon_workshops": [],
+ "jobs": [
+  {
+   "job_id": 2817734,
+   "controller": "west",
+   "job_name": "RHDP agd-v2.edge-ai-inference-lab.prod-t3vkb-provision",
+   "template_name": "RHDP agd-v2.edge-ai-inference-lab.prod-provision",
+   "status": "failed",
+   "started": "2026-09-25T16:20:03.000Z",
+   "finished": "2026-09-25T16:31:47.000Z",
+   "duration_seconds": 704,
+   "guid": "t3vkb",
+   "action": "provision",
+   "display_name": "edge-ai-inference-lab",
+   "log": "PLAY [Prepare the bastion] *****************************************\nTASK [Gathering Facts] *********************************************\nok: [bastion.t3vkb.edge-labs.example.net]\n\nTASK [bastion_base : Report root filesystem usage] *****************\nok: [bastion.t3vkb.edge-labs.example.net] => {\"msg\": \"/ 7.8G used of 200G (4%)\"}\n\nPLAY [Install OpenShift] *******************************************\nTASK [ocp4_installer_fetch : Download the openshift-install tarball] *\nchanged: [localhost]\n\nTASK [ocp4_installer_fetch : Extract the openshift-install binary] **\nfatal: [localhost]: FAILED! => {\"changed\": false, \"dest\": \"/tmp/ocp4-installer-t3vkb\", \"msg\": \"Failed to extract openshift-install-linux.tar.gz: [Errno 28] No space left on device: '/tmp/ocp4-installer-t3vkb/openshift-install'\"}\n\nPLAY RECAP *********************************************************\nbastion.t3vkb.edge-labs.example.net : ok=9 changed=3 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0\nlocalhost : ok=4 changed=1 unreachable=0 failed=1 skipped=0 rescued=0 ignored=0\n",
+   "launch_type": "workflow",
+   "job_explanation": "",
+   "env_type": "prod",
+   "cloud_provider": "aws",
+   "failed": true,
+   "id": "west-2817734",
+   "log_original_size": 1049,
+   "log_trimmed_size": 1049
+  }
+ ],
+ "job_events": [],
+ "ocpv_machines": [],
+ "ocpv_machinesets": [],
+ "ocpv_namespaces": [],
+ "ocpv_pvcs": [],
+ "ocpv_storage_classes": [],
+ "ocpv_vms": [],
+ "splunk_aap2_log_entries": [
+  {
+   "splunk_aap2_log_entry_id": "aap2-112-1",
+   "controller": "west",
+   "time": "2026-09-25T16:40:00Z",
+   "level": "ERROR",
+   "logger": "awx.main.tasks",
+   "message": "instance group exec-pool-b: 6 jobs failed since 2026-09-25T00:00:00Z with [Errno 28] No space left on device"
+  },
+  {
+   "splunk_aap2_log_entry_id": "aap2-112-2",
+   "controller": "west",
+   "time": "2026-09-25T16:35:12Z",
+   "level": "WARNING",
+   "logger": "awx.main.dispatch",
+   "message": "capacity check: exec-pool-a /var/lib/containers 38% used; exec-pool-b /var/lib/containers 100% used"
+  },
+  {
+   "splunk_aap2_log_entry_id": "aap2-112-3",
+   "controller": "west",
+   "time": "2026-09-25T16:31:47Z",
+   "level": "WARNING",
+   "logger": "receptor",
+   "message": "node aap-exec-b02.west.rhdp.example.net (exec-pool-b): /var/lib/containers 100% used (0.3 GiB free of 120 GiB); /tmp of each job container is on this volume"
+  },
+  {
+   "splunk_aap2_log_entry_id": "aap2-112-4",
+   "controller": "west",
+   "time": "2026-09-25T15:58:30Z",
+   "level": "WARNING",
+   "logger": "receptor",
+   "message": "node aap-exec-b01.west.rhdp.example.net (exec-pool-b): /var/lib/containers 99% used (0.9 GiB free of 120 GiB)"
+  },
+  {
+   "splunk_aap2_log_entry_id": "aap2-112-5",
+   "controller": "west",
+   "time": "2026-09-25T06:00:04Z",
+   "level": "INFO",
+   "logger": "systemd",
+   "message": "exec-pool-b nodes aap-exec-b01, aap-exec-b02: podman-image-prune.timer inactive since 2026-09-21T06:00:00Z (disabled for maintenance MW-4471, not re-enabled); 212 unused EE images retained"
+  },
+  {
+   "splunk_aap2_log_entry_id": "aap2-112-6",
+   "controller": "west",
+   "time": "2026-09-25T14:12:09Z",
+   "level": "INFO",
+   "logger": "awx.main.tasks",
+   "message": "instance group exec-pool-a: 41 jobs successful since 2026-09-25T00:00:00Z"
+  },
+  {
+   "splunk_aap2_log_entry_id": "aap2-112-7",
+   "controller": "west",
+   "time": "2026-09-25T16:33:00Z",
+   "level": "INFO",
+   "logger": "awx.main.tasks",
+   "message": "instance group exec-pool-b: job capacity 18 of 20 slots free"
+  },
+  {
+   "splunk_aap2_log_entry_id": "aap2-112-8",
+   "controller": "east",
+   "time": "2026-09-25T13:00:00Z",
+   "level": "WARNING",
+   "logger": "receptor",
+   "message": "node aap-exec-b07.east.rhdp.example.net (exec-pool-b): /var/lib/containers 41% used"
+  }
+ ],
+ "splunk_ocp_log_entries": [],
+ "workshops": []
+}

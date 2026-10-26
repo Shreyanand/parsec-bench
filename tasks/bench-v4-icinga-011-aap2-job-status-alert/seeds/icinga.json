@@ -1,0 +1,44 @@
+{
+  "comments": [],
+  "downtimes": [],
+  "hosts": [
+    {
+      "name": "aap2-prod-us-west-2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "AAP2 Cluster aap2-prod-us-west-2",
+        "host_name": "aap2-prod-us-west-2",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "aap2-job-status",
+      "type": "Service",
+      "attrs": {
+        "display_name": "AAP2 Job status",
+        "host_name": "aap2-prod-us-west-2",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "CRITICAL - 7 AAP2 jobs failed in the last window on controller west (threshold 4)",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    }
+  ]
+}

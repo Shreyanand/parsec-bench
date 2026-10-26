@@ -1,0 +1,83 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 90409
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ans-bu-wksp-rhel-91"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "ans-bu-wksp-rhel-91"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "sandboxes_gpte/ans-bu-wksp-rhel-91/common.yaml",
+          "ref": "add-ans-bu-wksp-rhel-91"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "sandboxes_gpte/ans-bu-wksp-rhel-91/prod.yaml",
+          "ref": "add-ans-bu-wksp-rhel-91"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "config-unavailable",
+        "any_of": [
+          "not found",
+          "was not found",
+          "no exact match",
+          "does not exist",
+          "not in the index",
+          "no catalog item",
+          "could not be found",
+          "not present"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the break is lookup_catalog_item returning found:false with near misses, which the bundle models explicitly (SKILL.md:232-234). An absent FILE could not be used: the simulation invents unseeded files -- see the edit log",
+        "asked_by": "say whether the catalog item was found",
+        "rationale": "the chain-break report. An agent that invents plausible configuration instead of saying the file was not there fails this and trips the forbidden list"
+      }
+    ],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

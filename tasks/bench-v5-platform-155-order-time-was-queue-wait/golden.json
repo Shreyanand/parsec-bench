@@ -1,0 +1,94 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job",
+        "controller": "partner0",
+        "job_id": 8217744
+      },
+      "result": {
+        "job_id": 8217744,
+        "job_name": "partner.devspaces-lab.prod t4mzq provision",
+        "status": "successful",
+        "failed": false,
+        "started": "2026-11-05T14:51:37Z",
+        "finished": "2026-11-05T15:19:05Z",
+        "duration_seconds": 1648,
+        "launch_type": "workflow",
+        "job_explanation": "",
+        "template_name": "partner.devspaces-lab.prod",
+        "env_type": "ocp4-cluster",
+        "guid": "t4mzq",
+        "action": "provision",
+        "cloud_provider": "ec2",
+        "display_name": "Dev Spaces Partner Lab",
+        "controller": "partner0"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_splunk",
+      "args": {
+        "action": "search_aap2_logs",
+        "controller": "partner0",
+        "guid": "t4mzq",
+        "earliest": "2026-11-05T00:00:00Z",
+        "latest": "2026-11-06T00:00:00Z"
+      },
+      "result": {
+        "results": [
+          {
+            "time": "2026-11-05T15:19:05Z",
+            "controller": "partner0",
+            "level": "INFO",
+            "logger": "awx.main.dispatch",
+            "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) finished on exnode-lyo-07 with status successful, elapsed 1648.0s"
+          },
+          {
+            "time": "2026-11-05T14:51:37Z",
+            "controller": "partner0",
+            "level": "INFO",
+            "logger": "awx.main.dispatch",
+            "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) started on exnode-lyo-07"
+          },
+          {
+            "time": "2026-11-05T14:51:36Z",
+            "controller": "partner0",
+            "level": "INFO",
+            "logger": "awx.main.scheduler",
+            "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) submitted to execution node exnode-lyo-07 in instance group velo-partner-ee (6 of 144 forks free)"
+          },
+          {
+            "time": "2026-11-05T14:27:45Z",
+            "controller": "partner0",
+            "level": "WARNING",
+            "logger": "awx.main.scheduler",
+            "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) still pending: instance group velo-partner-ee has insufficient capacity (job needs 6 forks, 0 of 144 available; 24 jobs running in the group)"
+          },
+          {
+            "time": "2026-11-05T14:04:13Z",
+            "controller": "partner0",
+            "level": "WARNING",
+            "logger": "awx.main.scheduler",
+            "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) not started: instance group velo-partner-ee has insufficient capacity (job needs 6 forks, 0 of 144 available; 24 jobs running in the group)"
+          },
+          {
+            "time": "2026-11-05T14:04:12Z",
+            "controller": "partner0",
+            "level": "INFO",
+            "logger": "awx.main.scheduler",
+            "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) created with status pending; instance group velo-partner-ee"
+          }
+        ],
+        "result_count": 6,
+        "total_count": 6,
+        "truncated": false,
+        "query": "index=federated:rh_pds-001_aap \"partner0\" \"t4mzq\" | spath | sort -_time",
+        "index": "federated:rh_pds-001_aap"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The playbook was not the slow part. Most of the 75 minutes was spent waiting in the queue.\n\n- **Playbook run time:** job 8217744 on partner0 started at 14:51:37 UTC and finished successfully at 15:19:05 UTC on 2026-11-05: `duration_seconds` 1648, about 27.5 minutes (27 min 28 s). That is inside the 30-minute promise.\n- **Wait before start:** the controller logs show the job was created at 14:04:12 UTC with status pending and only started at 14:51:37, so it waited about 47 minutes (47 min 25 s) before it ran.\n- **Why it waited:** the instance group `velo-partner-ee` had no free capacity. The scheduler logged at 14:04:13 and again at 14:27:45 that the job needed 6 forks but 0 of 144 were available, with 24 jobs already running in that group. It was submitted only when 6 forks freed up at 14:51:36.\n- **Execution node:** `exnode-lyo-07` (instance group velo-partner-ee) ran it.\n\nSo the order took roughly 47 minutes of queueing plus 27.5 minutes of playbook, which matches the ~75 minutes the partner saw. The fix is capacity in velo-partner-ee (or scheduling around the bulk load), not the playbook.\n"
+}

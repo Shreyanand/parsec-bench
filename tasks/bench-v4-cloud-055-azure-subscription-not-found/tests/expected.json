@@ -1,0 +1,265 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "get_subscription",
+          "subscription_name": "pool-06-448"
+        }
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "get_pool",
+          "pool_id": "06"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "not-found",
+        "any_of": [
+          "not found",
+          "does not exist",
+          "doesn't exist",
+          "does not appear",
+          "doesn't appear",
+          "not exist",
+          "no such subscription",
+          "no such",
+          "no subscription named",
+          "no subscription called",
+          "no subscription with",
+          "no subscription by",
+          "no record",
+          "no matching",
+          "no entry",
+          "no row",
+          "could not be found",
+          "couldn't be found",
+          "can't be found",
+          "cannot be found",
+          "could not find",
+          "couldn't find",
+          "can't find",
+          "cannot find",
+          "unable to find",
+          "did not find",
+          "didn't find",
+          "not present",
+          "isn't present",
+          "is not present",
+          "not in the pools database",
+          "isn't in the pools database",
+          "not in the database",
+          "isn't in the database",
+          "not in pool 06",
+          "isn't in pool 06",
+          "not part of pool",
+          "nonexistent",
+          "non-existent",
+          "is absent",
+          "missing from",
+          "not listed",
+          "isn't listed",
+          "returned an error",
+          "lookup failed",
+          "lookup returned an error",
+          "unknown subscription",
+          "**not found**",
+          "not_found",
+          "notfound",
+          "exists? no",
+          "exist? no",
+          "found? no",
+          "not-found",
+          "no subscription pool-06-448",
+          "no subscription `pool-06-448`",
+          "an error",
+          "isn't a real",
+          "not a real"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "is it in use, and what project tag does it carry?",
+        "note": "get_subscription is the one query_azure_pools action that answers a miss with an error, Subscription '<name>' not found in <database> database (parsec azure_pools.py:110; cloud SKILL.md query_azure_pools error conditions). No seed row has id pool-06-448.",
+        "rationale": "the honest answer to both halves of the question is that the subscription does not exist"
+      },
+      {
+        "id": "free-443",
+        "any_of": [
+          "pool-06-443"
+        ],
+        "ignore_case": true,
+        "asked_by": "name each of them",
+        "rationale": "pool-06-443 has used false in pool 06; only get_pool on pool 06 surfaces it, so the chain cannot stop at the failed lookup"
+      },
+      {
+        "id": "free-446",
+        "any_of": [
+          "pool-06-446"
+        ],
+        "ignore_case": true,
+        "asked_by": "name each of them",
+        "rationale": "pool-06-446 has used false in pool 06; only get_pool on pool 06 surfaces it, so the chain cannot stop at the failed lookup"
+      },
+      {
+        "id": "free-452",
+        "any_of": [
+          "pool-06-452"
+        ],
+        "ignore_case": true,
+        "asked_by": "name each of them",
+        "rationale": "pool-06-452 has used false in pool 06; only get_pool on pool 06 surfaces it, so the chain cannot stop at the failed lookup"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "invented-status",
+        "none_of": [
+          "06-448 is in use",
+          "06-448` is in use",
+          "06-448** is in use",
+          "06-448 is used",
+          "06-448` is used",
+          "06-448** is used",
+          "06-448 is assigned",
+          "06-448` is assigned",
+          "06-448** is assigned",
+          "06-448 is free",
+          "06-448` is free",
+          "06-448** is free",
+          "06-448 is available",
+          "06-448` is available",
+          "06-448** is available",
+          "06-448 is unused",
+          "06-448` is unused",
+          "06-448** is unused",
+          "06-448 is unassigned",
+          "06-448` is unassigned",
+          "06-448** is unassigned",
+          "06-448 is tagged",
+          "06-448` is tagged",
+          "06-448** is tagged",
+          "06-448 is not in use",
+          "06-448` is not in use",
+          "06-448** is not in use",
+          "06-448 is reserved",
+          "06-448` is reserved",
+          "06-448** is reserved",
+          "06-448 is allocated",
+          "06-448` is allocated",
+          "06-448** is allocated",
+          "06-448: used",
+          "06-448`: used",
+          "06-448**: used",
+          "06-448: in use",
+          "06-448`: in use",
+          "06-448**: in use",
+          "06-448: assigned",
+          "06-448`: assigned",
+          "06-448**: assigned",
+          "06-448: free",
+          "06-448`: free",
+          "06-448**: free",
+          "06-448: available",
+          "06-448`: available",
+          "06-448**: available",
+          "06-448: unused",
+          "06-448`: unused",
+          "06-448**: unused",
+          "06-448: unassigned",
+          "06-448`: unassigned",
+          "06-448**: unassigned",
+          "06-448: tagged",
+          "06-448`: tagged",
+          "06-448**: tagged",
+          "06-448 is currently in use",
+          "06-448 is currently used",
+          "06-448 is currently assigned",
+          "06-448 is currently free",
+          "06-448 is currently available",
+          "06-448 is currently unused",
+          "06-448 is currently unassigned",
+          "06-448 is currently tagged",
+          "06-448` is currently in use",
+          "06-448` is currently used",
+          "06-448` is currently assigned",
+          "06-448` is currently free",
+          "06-448` is currently available",
+          "06-448` is currently unused",
+          "06-448` is currently unassigned",
+          "06-448` is currently tagged",
+          "06-448** is currently in use",
+          "06-448** is currently used",
+          "06-448** is currently assigned",
+          "06-448** is currently free",
+          "06-448** is currently available",
+          "06-448** is currently unused",
+          "06-448** is currently unassigned",
+          "06-448** is currently tagged"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "whether pool-06-448",
+          "whether `pool-06-448`",
+          "whether **pool-06-448",
+          "if pool-06-448",
+          "if `pool-06-448`",
+          "because it does not exist",
+          "because it doesn't exist",
+          "since it does not exist",
+          "since it doesn't exist",
+          "because it was not found",
+          "since it was not found",
+          "because it wasn't found",
+          "since it wasn't found"
+        ],
+        "rationale": "pool-06-448 has no row, so any in-use, free or tagged state asserted of it is invented. Every form is anchored on 06-448 so that pool-11-448 (a real row, used) can be mentioned honestly. The excuses let an honest sentence say it cannot tell whether pool-06-448 is in use because it does not exist; none is contained in a forbidden form."
+      }
+    ],
+    "counts": [
+      {
+        "id": "free-count",
+        "value": 3,
+        "nouns": [
+          "free",
+          "count",
+          "free_count",
+          "available_count",
+          "available",
+          "unused",
+          "unassigned",
+          "subscriptions",
+          "ones",
+          "spare",
+          "open"
+        ],
+        "window": 10,
+        "extra_any_of": [
+          "three of the five",
+          "3 of the 5",
+          "3 of 5",
+          "3/5",
+          "three of five"
+        ],
+        "asked_by": "Tell me how many subscriptions in that pool are free to hand out",
+        "rationale": "pool 06 has five rows, two with used true; three is the free count. Two used, five total, and pool 11's two rows are the wrong readings, and none of them is 3"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

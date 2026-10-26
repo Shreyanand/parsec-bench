@@ -1,0 +1,99 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "cluster": "prod-us-east-1"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "monitoring/babylon/check_stuck_subjects.py"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "babylon-ocp-prod-us-east-1",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "babylon-ocp-prod-us-east-1"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "babylon-ocp-prod-us-east-1"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "no-suppression",
+        "any_of": [
+          "no comment",
+          "no comments",
+          "not acknowledged",
+          "no downtime",
+          "no downtimes",
+          "nobody has",
+          "no one has",
+          "none scheduled",
+          "no suppression"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "both the comments and downtimes collections are seeded EMPTY, so this is an absence and no seed string can carry it",
+        "asked_by": "check whether anyone has commented on it or scheduled a downtime for it",
+        "rationale": "the two calls the instruction asks for only matter if their result is reported; without this fact an agent can make them and ignore what came back"
+      }
+    ],
+    "required_total": 1,
+    "counts_missed": [
+      {
+        "id": "excess",
+        "value": 9,
+        "nouns": [
+          "exceeds",
+          "over",
+          "above",
+          "more than",
+          "by"
+        ],
+        "window": 6,
+        "asked_by": "say by how much the current value exceeds it",
+        "rationale": "14 stuck against a threshold of 5 is an excess of 9 -- a derived number neither source states, so it cannot be copied"
+      }
+    ],
+    "counts_total": 3,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

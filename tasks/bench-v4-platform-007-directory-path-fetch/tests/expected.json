@@ -1,0 +1,100 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator/tasks/main.yml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "path": "ansible/roles_ocp_workloads"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator/tasks"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "counts": [
+      {
+        "id": "retries",
+        "value": 40,
+        "nouns": [
+          "retries",
+          "attempts",
+          "times"
+        ],
+        "window": 5,
+        "asked_by": "report how many retries the readiness wait allows",
+        "rationale": "only a real read of the task file supplies it"
+      },
+      {
+        "id": "delay",
+        "value": 15,
+        "nouns": [
+          "seconds",
+          "delay",
+          "second"
+        ],
+        "window": 5,
+        "asked_by": "how long it waits between attempts",
+        "rationale": "the second value from the same file; two counts make the answer worth its weight"
+      }
+    ],
+    "citations": [
+      {
+        "id": "task-file",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator/tasks/main.yml",
+        "asked_by": "Find the task file for the `ocp4_workload_pipelines_operator` role",
+        "rationale": "the path is the thing being found, so citing it is the evidence that the search leg happened"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "directory-as-file",
+        "none_of": [
+          "read ansible/roles_ocp_workloads",
+          "fetched ansible/roles_ocp_workloads",
+          "contents of ansible/roles_ocp_workloads"
+        ],
+        "ignore_case": true,
+        "rationale": "an agent that claims to have read the directory itself asserts one of these. The bare directory path is not forbidden -- the instruction names it, so quoting it is correct"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

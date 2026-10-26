@@ -1,0 +1,93 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_multiworkshops",
+          "cluster": "nordic",
+          "namespace": "user-hlindqvist-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_multiworkshop",
+          "cluster": "nordic",
+          "namespace": "user-hlindqvist-redhat-com",
+          "name": "automation-academy-w7"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "failed-workshop",
+        "any_of": [
+          "aa7-windows",
+          "aa7 windows",
+          "aa7_windows",
+          "windows automation"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which of its workshops failed to provision",
+        "rationale": "aa7-windows is the only child of automation-academy-w7 whose provision_count.failed is 1 and whose claim is in provision-error; the Wave 6 decoy's failed child is aa6-network, and no Wave 6 child is a Windows workshop"
+      }
+    ],
+    "counts": [
+      {
+        "id": "child-count",
+        "value": 5,
+        "nouns": [
+          "workshops",
+          "children",
+          "child",
+          "assets",
+          "labs",
+          "total_workshops",
+          "sub-workshops",
+          "subworkshops",
+          "members"
+        ],
+        "window": 10,
+        "asked_by": "How many child workshops does that event have?",
+        "rationale": "get_multiworkshop returns five children (summary.total_workshops 5; asset_count 5 on the list row too); the Wave 6 decoy has 3"
+      },
+      {
+        "id": "failed-job-id",
+        "value": 73419,
+        "nouns": [
+          "job",
+          "jobs",
+          "id",
+          "job_id",
+          "job-id",
+          "jobid",
+          "provision",
+          "provisioning",
+          "aap2",
+          "aap",
+          "tower",
+          "deployerjob",
+          "controller"
+        ],
+        "window": 10,
+        "asked_by": "what is the AAP2 job ID of its failed provision job",
+        "rationale": "tower_jobs.provision.job_id on aa7-windows's claim; the four healthy Wave 7 children carry 73406/73411/73423/73430 and the Wave 6 decoy's failed child 70222"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

@@ -1,0 +1,268 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [
+    {
+      "babylon_workshop_id": "emea-edge-fleet-handson-overflow",
+      "catalog_item": "edge-fleet-handson.prod",
+      "cluster": "emea",
+      "description": "Overflow seats for the edge fleet management hands-on session.",
+      "display_name": "Edge Fleet Management Hands-On (overflow seats)",
+      "lifespan": {
+        "default": "2d",
+        "maximum": "4d"
+      },
+      "multiworkshop": "",
+      "name": "edge-fleet-handson-overflow",
+      "namespace": "user-tnakamura-redhat-com",
+      "open_registration": true,
+      "provision_count": {
+        "ordered": 1,
+        "active": 1,
+        "failed": 0,
+        "retries": 0
+      },
+      "requester": "tnakamura@redhat.com",
+      "resource_claims": [
+        {
+          "name": "edge-fleet-handson-prod-c2v6n",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "edge-fleet-handson",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "edge-fleet-handson.prod-c2v6n",
+              "anarchy_namespace": "babylon-anarchy-edge-fleet-handson",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "c2v6n",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-02.example.com",
+                  "job_id": 64131,
+                  "status": "successful",
+                  "completed": "2026-06-11T10:14:22Z"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resource_claims_count": 1,
+      "user_assignments_count": 1,
+      "user_count": 1,
+      "workshop_id": "fq7wd"
+    },
+    {
+      "babylon_workshop_id": "emea-edge-fleet-handson",
+      "catalog_item": "edge-fleet-handson.prod",
+      "cluster": "emea",
+      "description": "Hands-on session: managing a fleet of edge devices.",
+      "display_name": "Edge Fleet Management Hands-On",
+      "lifespan": {
+        "default": "2d",
+        "maximum": "4d"
+      },
+      "multiworkshop": "",
+      "name": "edge-fleet-handson",
+      "namespace": "user-tnakamura-redhat-com",
+      "open_registration": false,
+      "provision_count": {
+        "ordered": 3,
+        "active": 2,
+        "failed": 1,
+        "retries": 0
+      },
+      "requester": "tnakamura@redhat.com",
+      "resource_claims": [
+        {
+          "name": "edge-fleet-handson-prod-h7k2p",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "edge-fleet-handson",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "edge-fleet-handson.prod-h7k2p",
+              "anarchy_namespace": "babylon-anarchy-edge-fleet-handson",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "h7k2p",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-02.example.com",
+                  "job_id": 64102,
+                  "status": "successful",
+                  "completed": "2026-06-11T08:41:09Z"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "edge-fleet-handson-prod-w9d4x",
+          "state": "provision-error",
+          "healthy": false,
+          "ready": false,
+          "resources": [
+            {
+              "name": "edge-fleet-handson",
+              "healthy": false,
+              "ready": false,
+              "anarchy_subject": "edge-fleet-handson.prod-w9d4x",
+              "anarchy_namespace": "babylon-anarchy-edge-fleet-handson",
+              "current_state": "provision-error",
+              "desired_state": "started",
+              "guid": "w9d4x",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-02.example.com",
+                  "job_id": 64117,
+                  "status": "failed",
+                  "completed": "2026-06-11T08:52:37Z"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "edge-fleet-handson-prod-r5m8t",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "edge-fleet-handson",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "edge-fleet-handson.prod-r5m8t",
+              "anarchy_namespace": "babylon-anarchy-edge-fleet-handson",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "r5m8t",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-02.example.com",
+                  "job_id": 64125,
+                  "status": "successful",
+                  "completed": "2026-06-11T09:03:55Z"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resource_claims_count": 3,
+      "user_assignments_count": 3,
+      "user_count": 3,
+      "workshop_id": "mx3pk"
+    },
+    {
+      "babylon_workshop_id": "apac-edge-fleet-handson-apj",
+      "catalog_item": "edge-fleet-handson.prod",
+      "cluster": "apac",
+      "description": "Hands-on session: managing a fleet of edge devices (APJ delivery).",
+      "display_name": "Edge Fleet Management Hands-On (APJ)",
+      "lifespan": {
+        "default": "2d",
+        "maximum": "4d"
+      },
+      "multiworkshop": "",
+      "name": "edge-fleet-handson-apj",
+      "namespace": "user-tnakamura-redhat-com",
+      "open_registration": true,
+      "provision_count": {
+        "ordered": 2,
+        "active": 1,
+        "failed": 1,
+        "retries": 0
+      },
+      "requester": "tnakamura@redhat.com",
+      "resource_claims": [
+        {
+          "name": "edge-fleet-handson-prod-j3t8b",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "edge-fleet-handson",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "edge-fleet-handson.prod-j3t8b",
+              "anarchy_namespace": "babylon-anarchy-edge-fleet-handson",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "j3t8b",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-02.example.com",
+                  "job_id": 58824,
+                  "status": "successful",
+                  "completed": "2026-05-28T13:20:48Z"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "edge-fleet-handson-prod-p6x1z",
+          "state": "provision-error",
+          "healthy": false,
+          "ready": false,
+          "resources": [
+            {
+              "name": "edge-fleet-handson",
+              "healthy": false,
+              "ready": false,
+              "anarchy_subject": "edge-fleet-handson.prod-p6x1z",
+              "anarchy_namespace": "babylon-anarchy-edge-fleet-handson",
+              "current_state": "provision-error",
+              "desired_state": "started",
+              "guid": "p6x1z",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-02.example.com",
+                  "job_id": 58830,
+                  "status": "failed",
+                  "completed": "2026-05-28T13:31:02Z"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resource_claims_count": 2,
+      "user_assignments_count": 2,
+      "user_count": 2,
+      "workshop_id": "bn5rc"
+    }
+  ],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,256 @@
+{
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "sso-broker-vie-2"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/idm/check_ldap_bind.py"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "ldap-vie-01"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "reschedule_check"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "acknowledge_problem"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "second-server-fine",
+        "any_of": [
+          "never reaches ldap-vie-02",
+          "never gets to ldap-vie-02",
+          "never tries ldap-vie-02",
+          "never reached ldap-vie-02",
+          "never got to ldap-vie-02",
+          "never tried ldap-vie-02",
+          "before it reaches ldap-vie-02",
+          "before it gets to ldap-vie-02",
+          "before reaching ldap-vie-02",
+          "before trying ldap-vie-02",
+          "before it tries ldap-vie-02",
+          "before it can try ldap-vie-02",
+          "before getting to ldap-vie-02",
+          "doesn't reach ldap-vie-02",
+          "does not reach ldap-vie-02",
+          "didn't reach ldap-vie-02",
+          "did not reach ldap-vie-02",
+          "not reach ldap-vie-02",
+          "not get to ldap-vie-02",
+          "ldap-vie-02 is up",
+          "ldap-vie-02 is UP",
+          "ldap-vie-02 (up",
+          "ldap-vie-02: up",
+          "ldap-vie-02 up",
+          "ldap-vie-02 is healthy",
+          "ldap-vie-02 is fine",
+          "ldap-vie-02 is reachable",
+          "ldap-vie-02 is alive",
+          "ldap-vie-02 is online",
+          "ldap-vie-02 responds",
+          "ldap-vie-02 | up",
+          "ldap-vie-02 | 0",
+          "ldap-vie-02 - up",
+          "ldap-vie-02 \u2014 up",
+          "ldap-vie-02 is still up",
+          "ldap-vie-02 remains up"
+        ],
+        "ignore_case": true,
+        "asked_by": "whether LDAP is really down",
+        "rationale": "the healthy replica is UP (get_hosts); the plugin is killed before it is tried",
+        "derived": true,
+        "note": "A synthesis: get_hosts shows ldap-vie-02 with state 0 (UP, PING OK) and the plugin tries ldap-vie-01 first for 40 s, longer than the 30 s check_timeout, so the healthy replica is never reached; the seed holds state 0, not the phrase."
+      },
+      {
+        "id": "replica-retired",
+        "any_of": [
+          "decommission",
+          "retired",
+          "retiring",
+          "chg-60417",
+          "powered off",
+          "powered down",
+          "switched off",
+          "shut down for"
+        ],
+        "ignore_case": true,
+        "asked_by": "why did nobody get paged about it",
+        "rationale": "only the downtime on the dead replica (get_downtimes) says it was retired and powered off on purpose"
+      },
+      {
+        "id": "fix",
+        "any_of": [
+          "remove ldap-vie-01",
+          "drop ldap-vie-01",
+          "take ldap-vie-01 out",
+          "delete ldap-vie-01",
+          "ldap-vie-01 removed",
+          "ldap-vie-01 out of",
+          "without ldap-vie-01",
+          "remove the retired",
+          "remove the dead",
+          "put ldap-vie-02 first",
+          "list ldap-vie-02 first",
+          "move ldap-vie-02 first",
+          "ldap-vie-02 first",
+          "reorder",
+          "re-order",
+          "raise check_timeout",
+          "increase check_timeout",
+          "raise the check_timeout",
+          "increase the check_timeout",
+          "raise the timeout",
+          "increase the timeout",
+          "longer timeout",
+          "longer check_timeout",
+          "bump check_timeout",
+          "bump the timeout",
+          "check_timeout to",
+          "check_timeout above",
+          "check_timeout of at least",
+          "check_timeout >",
+          "check_timeout higher",
+          "higher check_timeout",
+          "larger check_timeout"
+        ],
+        "ignore_case": true,
+        "asked_by": "tell me what has to change for the check to work again",
+        "rationale": "the remedy follows from the serial failover and the 30 s budget",
+        "derived": true,
+        "note": "A recommendation, so no seed literal: vars.ldap_servers lists the retired ldap-vie-01 first, the plugin spends 2 x 20 s on it per run, and check_timeout is 30 s; removing or reordering the server, or raising check_timeout above 40 s, lets it reach ldap-vie-02."
+      }
+    ],
+    "counts": [
+      {
+        "id": "check-timeout",
+        "value": 30,
+        "nouns": [
+          "s",
+          "sec",
+          "secs",
+          "second",
+          "seconds",
+          "timeout",
+          "check_timeout"
+        ],
+        "window": 3,
+        "asked_by": "Work out why the check is UNKNOWN",
+        "rationale": "the service's check_timeout; Icinga kills the plugin at 30 s",
+        "extra_any_of": [
+          "30s",
+          "30-second",
+          "check_timeout: 30",
+          "check_timeout = 30",
+          "check_timeout 30",
+          "check_timeout of 30"
+        ]
+      },
+      {
+        "id": "dead-server-cost",
+        "value": 40,
+        "nouns": [
+          "s",
+          "sec",
+          "secs",
+          "second",
+          "seconds"
+        ],
+        "window": 2,
+        "asked_by": "Work out why the check is UNKNOWN",
+        "rationale": "2 retries x 20 s spent on the dead first server, more than the 30 s budget",
+        "derived": true,
+        "note": "Arithmetic over the script: CONNECT_RETRIES = 2 times CONNECT_TIMEOUT_S = 20 gives 40 s per unreachable server, which no seed literal carries.",
+        "extra_any_of": [
+          "40s",
+          "40-second",
+          "2 x 20",
+          "2 \u00d7 20",
+          "2x20",
+          "2 * 20",
+          "two 20-second",
+          "two 20 s",
+          "two 20s",
+          "twice 20"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "ldap-down",
+        "none_of": [
+          "ldap is down",
+          "ldap is unavailable",
+          "ldap is timing out",
+          "the directory is down",
+          "the directory is unavailable",
+          "idm is down",
+          "ldap outage",
+          "directory outage",
+          "idm outage",
+          "ldap-vie-02 is down",
+          "ldap-vie-02 is also down",
+          "both ldap servers are down",
+          "both servers are down",
+          "both replicas are down",
+          "all ldap servers are down",
+          "page the idm on-call"
+        ],
+        "ignore_case": true,
+        "rationale": "the colleague's reading; ldap-vie-02 is UP and only the check's time budget fails",
+        "attributed_to": [
+          "isn't down",
+          "is not down",
+          "not actually down",
+          "isn't actually down",
+          "isn't really down",
+          "is not really down",
+          "but it isn't",
+          "but it is not"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "search_by_project",
+          "project_tag": "fsi-fraud-demo"
+        }
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "search_by_project",
+          "project_tag": "fsi-fraud-demo-eu"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "sub-pool-14-207",
+        "any_of": [
+          "pool-14-207"
+        ],
+        "ignore_case": true,
+        "asked_by": "which subscription ids are they",
+        "rationale": "pool-14-207 carries one of the two tags in the pools database; only search_by_project returns it"
+      },
+      {
+        "id": "sub-pool-14-212",
+        "any_of": [
+          "pool-14-212"
+        ],
+        "ignore_case": true,
+        "asked_by": "which subscription ids are they",
+        "rationale": "pool-14-212 carries one of the two tags in the pools database; only search_by_project returns it"
+      },
+      {
+        "id": "sub-pool-19-033",
+        "any_of": [
+          "pool-19-033"
+        ],
+        "ignore_case": true,
+        "asked_by": "which subscription ids are they",
+        "rationale": "pool-19-033 carries one of the two tags in the pools database; only search_by_project returns it"
+      },
+      {
+        "id": "sub-pool-19-041",
+        "any_of": [
+          "pool-19-041"
+        ],
+        "ignore_case": true,
+        "asked_by": "which subscription ids are they",
+        "rationale": "pool-19-041 carries one of the two tags in the pools database; only search_by_project returns it"
+      },
+      {
+        "id": "sub-pool-19-046",
+        "any_of": [
+          "pool-19-046"
+        ],
+        "ignore_case": true,
+        "asked_by": "which subscription ids are they",
+        "rationale": "pool-19-046 carries one of the two tags in the pools database; only search_by_project returns it"
+      }
+    ],
+    "counts": [
+      {
+        "id": "count-a",
+        "value": 3,
+        "nouns": [
+          "subscriptions",
+          "fsi-fraud-demo"
+        ],
+        "window": 5,
+        "asked_by": "how many subscriptions carry each of the two tags",
+        "rationale": "three pools-database rows carry fsi-fraud-demo; the roadshow row would make it 4"
+      },
+      {
+        "id": "count-b",
+        "value": 2,
+        "nouns": [
+          "subscriptions",
+          "fsi-fraud-demo-eu"
+        ],
+        "window": 5,
+        "asked_by": "how many subscriptions carry each of the two tags",
+        "rationale": "two rows carry fsi-fraud-demo-eu; needs the second search"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

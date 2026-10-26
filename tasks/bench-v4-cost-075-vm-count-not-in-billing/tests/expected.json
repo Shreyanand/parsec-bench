@@ -1,0 +1,57 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_azure_costs",
+        "args": {
+          "start_date": "2026-08-04",
+          "end_date": "2026-08-17"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [],
+    "counts": [
+      {
+        "id": "compute-window-total",
+        "value": 9786,
+        "nouns": ["compute", "virtual machines", "vm", "vms", "total", "cost", "costs", "window", "spend", "usd", "dollars"],
+        "window": 8,
+        "extra_any_of": ["9,786", "9786.0", "9 786", "9.79k", "9.786k"],
+        "asked_by": "give the compute (Virtual Machines) total",
+        "rationale": "the Virtual Machines meter category's cost for pool-23-618 over 2026-08-04..2026-08-17 (Dasv6 Series 6,034 + Ev5 Series 3,752). Occurs only in the query_azure_costs result, never in the instruction; extra_any_of carries the comma-grouped, decimal and k notations the digit matcher rejects by design"
+      },
+      {
+        "id": "compute-per-day",
+        "value": 699,
+        "nouns": ["day", "daily", "compute", "virtual machines", "vm", "vms", "usd", "dollars", "cost", "average"],
+        "window": 8,
+        "extra_any_of": ["699.0", "$700/day", "$700 per day", "$700 a day", "$700 daily", "$700/d"],
+        "asked_by": "the per-day compute cost",
+        "rationale": "9,786 / 14 days = 699 exactly, by construction of the seed; the instruction states the 14-day inclusive window so the divisor is fixed. Earnable only with the tool-only window total; the subscription-wide rate (11,487 / 14 = 820.50) and the off-by-one rate (9,786 / 13 = 752.77) cannot produce it. The $-prefixed $700 forms accept the two-significant-figure rounding an honest derived rate uses (fix round 1, I1); the $ keeps them from matching inside \"$1700 per day\""
+      },
+      {
+        "id": "subscription-total",
+        "value": 11487,
+        "nouns": ["subscription", "total", "overall", "all services", "cost", "costs", "spend", "window", "usd", "dollars"],
+        "window": 8,
+        "extra_any_of": ["11,487", "11487.0", "11 487", "11.49k", "11.487k"],
+        "asked_by": "the subscription's total cost across all services",
+        "rationale": "pool-23-618's total across Virtual Machines 9,786, Storage 1,288 and Bandwidth 413 for the window, returned as stored (results[].total and total_cost). Tool-only"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

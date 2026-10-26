@@ -1,0 +1,87 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [
+    {
+      "ocpv_namespace_id": "ocpv-quince-sandbox-h2k9w-ws",
+      "cluster": "ocpv-quince",
+      "namespace": "sandbox-h2k9w-ws",
+      "status": "Active"
+    },
+    {
+      "ocpv_namespace_id": "ocpv-sorrel-sandbox-w7t4q-ws",
+      "cluster": "ocpv-sorrel",
+      "namespace": "sandbox-w7t4q-ws",
+      "status": "Active"
+    }
+  ],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [
+    {
+      "ocpv_vm_id": "ocpv-quince/sandbox-h2k9w-ws/workstation-h2k9w",
+      "cluster": "ocpv-quince",
+      "namespace": "sandbox-h2k9w-ws",
+      "name": "workstation-h2k9w",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "cnv-quince-w05",
+      "ip": "10.135.40.61",
+      "vcpus": 4,
+      "memory": "8Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "type": "dataVolume",
+          "dataVolume": "workstation-h2k9w-rootdisk"
+        }
+      ]
+    },
+    {
+      "ocpv_vm_id": "ocpv-sorrel/sandbox-w7t4q-ws/workstation-w7t4q",
+      "cluster": "ocpv-sorrel",
+      "namespace": "sandbox-w7t4q-ws",
+      "name": "workstation-w7t4q",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "cnv-sorrel-w02",
+      "ip": "10.139.8.27",
+      "vcpus": 4,
+      "memory": "8Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "type": "dataVolume",
+          "dataVolume": "workstation-w7t4q-rootdisk"
+        }
+      ]
+    }
+  ],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

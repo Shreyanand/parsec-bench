@@ -1,0 +1,95 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_workshops",
+          "cluster": "siskin",
+          "namespace": "user-mbaptiste-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "siskin"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "broken-workshop",
+        "any_of": [
+          "rhel-compliance-dec",
+          "RHEL Compliance Automation - December cohort",
+          "RHEL Compliance Automation \u2013 December cohort",
+          "RHEL Compliance Automation \u2014 December cohort"
+        ],
+        "ignore_case": true,
+        "asked_by": "which one isn't",
+        "rationale": "its item rhel-sec.compliance-lab.prod is not on siskin; a prefix or substring match on rhel-sec.compliance-lab-v2 hides that"
+      },
+      {
+        "id": "broken-workshop-id",
+        "any_of": [
+          "p8dtj"
+        ],
+        "ignore_case": true,
+        "asked_by": "give me its workshop ID",
+        "rationale": "workshop_id of rhel-compliance-dec; the display-name-renamed rulebook workshop's is r4yhc"
+      }
+    ],
+    "counts": [
+      {
+        "id": "still-fine",
+        "value": 3,
+        "nouns": [
+          "workshops",
+          "workshop",
+          "of them",
+          "fine",
+          "ok",
+          "published",
+          "available",
+          "still",
+          "good",
+          "valid",
+          "backed"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "3 of 4",
+          "3 of the 4",
+          "3 of your 4",
+          "three of four",
+          "three of the four",
+          "three of your four",
+          "3/4",
+          "3 out of 4",
+          "three out of four",
+          "all but one",
+          "all except one",
+          "all but rhel-compliance-dec"
+        ],
+        "asked_by": "How many of them are still fine",
+        "rationale": "camera, image-builds and rulebook-steps resolve by full name; a substring match gives 4, a display-name match gives 2"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

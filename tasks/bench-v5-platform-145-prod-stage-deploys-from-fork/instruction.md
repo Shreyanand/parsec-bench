@@ -1,0 +1,3 @@
+Courier Routing lab orders are failing. The one I care about is job 4408817 on the `partner0` AAP2 controller, GUID h7wfd, from 2026-10-14.
+
+Find the task that failed and the variable it could not resolve. Look up the catalog item and read its configuration to find out which agnosticd source the prod stage deploys from, then read the failing role task file from that same source. If a read fails, say which one and what that leaves unknown; don't fill the gap with guesses. Cite the catalog line that decides which source the prod stage deploys as `owner/repo:path:line`, and tell me what to change.

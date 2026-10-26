@@ -1,0 +1,133 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 693027
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "east",
+          "job_id": 693027,
+          "changed_only": true
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/configs/retail-edge-pos/files/cloud_providers/ec2_cloud_template.j2"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "cfn-error",
+        "any_of": [
+          "Unresolved resource dependencies",
+          "Template format error"
+        ],
+        "ignore_case": true,
+        "asked_by": "why it failed",
+        "rationale": "the literal only the job log (or the failed event) supplies"
+      },
+      {
+        "id": "guard-gap",
+        "any_of": [
+          "outside the guard",
+          "outside that guard",
+          "outside the if",
+          "outside the {% if",
+          "outside the same if",
+          "not inside the if",
+          "not inside the {% if",
+          "not guarded",
+          "unguarded",
+          "outside the conditional",
+          "not wrapped",
+          "move the association inside"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "explain what in it causes the error",
+        "rationale": "the synthesis: the subnet is conditional and its association is not; only the template fetch shows it",
+        "note": "in ec2_cloud_template.j2 PublicSubnetB is defined only inside {% if subnet_count | int > 1 %}, while PublicSubnetBRouteTableAssociation, which refs it, sits after the {% endif %}, and the log prints subnet_count=1."
+      },
+      {
+        "id": "key-pair",
+        "any_of": [
+          "retail-edge-pos-k9fhs-key"
+        ],
+        "ignore_case": true,
+        "asked_by": "what the run had already created",
+        "rationale": "the key pair task is outside the trimmed log's retained tail, so only the changed_only events carry it"
+      },
+      {
+        "id": "bucket",
+        "any_of": [
+          "retail-edge-pos-assets-k9fhs"
+        ],
+        "ignore_case": true,
+        "asked_by": "what the run had already created",
+        "rationale": "same: only the events carry the bucket"
+      }
+    ],
+    "counts": [
+      {
+        "id": "changed-tasks",
+        "value": 3,
+        "nouns": [
+          "changed",
+          "tasks",
+          "changes"
+        ],
+        "window": 4,
+        "asked_by": "how many tasks changed something",
+        "rationale": "event_count of the changed_only read; the log's recap also says changed=3, so this is cheap on purpose"
+      }
+    ],
+    "citations": [
+      {
+        "id": "assoc-line",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/configs/retail-edge-pos/files/cloud_providers/ec2_cloud_template.j2",
+        "line": 38,
+        "asked_by": "cite the offending line as owner/repo:path:line",
+        "rationale": "the line is counted from the seeded template"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "stack-resources",
+        "none_of": [
+          "delete the VPC",
+          "VPC was created",
+          "created the VPC",
+          "delete the stack resources",
+          "subnet was created"
+        ],
+        "ignore_case": true,
+        "rationale": "the stack failed template validation, so nothing in it exists; listing stack resources for cleanup is the unread-events mistake"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

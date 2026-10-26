@@ -1,0 +1,16 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "search": "fs-capacity"
+      },
+      "result": {
+        "result": "[{\"name\":\"nas-alpha!fs-capacity\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Filesystem capacity /srv/export\",\"host_name\":\"nas-alpha\",\"state\":2,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":0,\"groups\":[\"nas-storage\"],\"last_check_result\":{\"output\":\"DISK CRITICAL - /srv/export 96% used\",\"state\":2,\"exit_status\":2}}},{\"name\":\"nas-bravo!fs-capacity\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Filesystem capacity /srv/export\",\"host_name\":\"nas-bravo\",\"state\":1,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":0,\"groups\":[\"nas-storage\"],\"last_check_result\":{\"output\":\"DISK WARNING - /srv/export 84% used\",\"state\":1,\"exit_status\":1}}},{\"name\":\"nas-charlie!fs-capacity\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Filesystem capacity /srv/export\",\"host_name\":\"nas-charlie\",\"state\":2,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":0,\"groups\":[\"nas-storage\"],\"last_check_result\":{\"output\":\"DISK CRITICAL - /srv/export 91% used\",\"state\":2,\"exit_status\":2}}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The search for fs-capacity returned three services, one per host. Two of them are CRITICAL:\n\n- nas-alpha!fs-capacity -- CRITICAL, /srv/export is 96% used.\n- nas-charlie!fs-capacity -- CRITICAL, /srv/export is 91% used.\n\nThe third match, nas-bravo!fs-capacity, is only WARNING at 84% used, so it is not one of the critical ones. nas-alpha is the fullest and the one to free space on first."
+}

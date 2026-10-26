@@ -1,0 +1,151 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 64107
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 64115
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=federated:rh_pds-001_ocp_app sourcetype=\"icinga*\" OR source=\"*icinga*\" \"egress-proxy-02\" | head 50",
+          "earliest": "-7d"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_aap2_logs",
+          "controller": "east",
+          "search_terms": "egress-proxy-02 SSL SSLV3",
+          "earliest": "-7d"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=federated:rh_pds-001_ocp_app sourcetype=\"icinga*\" | head 20",
+          "earliest": "-7d"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=federated:rh_pds-001_ocp_infra \"icinga\" OR \"nagios\" | head 20",
+          "earliest": "-7d"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=federated:rh_pds-001_ocp_app \"egress-proxy-02\" | head 50",
+          "earliest": "-7d"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_problems"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "alert-host",
+        "any_of": [
+          "esxi-r07-n12"
+        ],
+        "ignore_case": true,
+        "asked_by": "tell me which host the alert is on",
+        "rationale": "the host of the only non-OK row get_problems returns. Icinga-only: it is in no job log or event and not in the instruction. It is a different host from proxy-host, which is how the answer carries 'the alert is on another host'"
+      },
+      {
+        "id": "alert-output",
+        "any_of": [
+          "http 500",
+          "http/1.1 500",
+          "http-500",
+          "500 internal server error",
+          "internal server error",
+          "500 server error",
+          "status 500",
+          "code 500",
+          "error 500",
+          "500 error",
+          "500 response",
+          "500 status",
+          "500 from",
+          "(500)",
+          "returned 500",
+          "returns 500",
+          "returning 500",
+          "returned a 500",
+          "returns a 500",
+          "returning a 500",
+          "responded 500",
+          "responded with 500",
+          "responded with a 500",
+          "a 500 ",
+          "a 500.",
+          "a 500,",
+          "a 500;",
+          "a 500)",
+          "with 500 ",
+          "with 500.",
+          "with 500,",
+          "sfcb",
+          "cim provider",
+          "cim sensor",
+          "status: 500",
+          "500s",
+          "-> 500"
+        ],
+        "ignore_case": true,
+        "asked_by": "what its check output says",
+        "rationale": "the distinctive part of the alert's attrs.last_check_result.output: the HTTP 500 / Internal Server Error status, or the CIM provider (sfcb, cim provider, cim sensor). Icinga-only: nothing in either job log or event, nor the instruction, carries a 500 status, 'Internal Server Error', sfcb or cim. Never a bare number"
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 0
+  }
+}

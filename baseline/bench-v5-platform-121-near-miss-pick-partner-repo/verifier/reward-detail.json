@@ -1,0 +1,149 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ansible-lightspeed-coding-lab"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "partner-agnosticv",
+          "path": "partner_ansible/ansible-lightspeed-coding-lab-cnv"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "partner-agnosticv",
+          "search": "ansible-lightspeed-coding-lab-cnv"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "ansible-lightspeed-coding-lab-cnv"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "partner-agnosticv",
+          "search": "lightspeed"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "sandboxes_gpte/ansible-lightspeed-coding-lab-cnv-sandbox"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "ansible-lightspeed-coding-lab-cnv"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ansible-lightspeed-coding-lab-cnv-sandbox"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "lightspeed"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "partner-agnosticv",
+          "path": "partner_ansible/ansible-lightspeed-coding-lab-cnv/common.yaml"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "edition",
+        "any_of": [
+          "ansible-lightspeed-coding-lab-cnv is",
+          "ansible-lightspeed-coding-lab-cnv,",
+          "ansible-lightspeed-coding-lab-cnv (",
+          "ansible-lightspeed-coding-lab-cnv in",
+          "ansible-lightspeed-coding-lab-cnv under",
+          "ansible-lightspeed-coding-lab-cnv.",
+          "partner_ansible/ansible-lightspeed-coding-lab-cnv"
+        ],
+        "ignore_case": true,
+        "asked_by": "Tell me its exact catalog item name",
+        "rationale": "chosen from four similar_items; the forms exclude the -cnv-sandbox name"
+      },
+      {
+        "id": "ocp-version",
+        "any_of": [
+          "openshift 4.17",
+          "ocp 4.17",
+          "ocp4_installer_version: \"4.17\"",
+          "installer version 4.17",
+          "version 4.17",
+          "4.17 cluster"
+        ],
+        "ignore_case": true,
+        "asked_by": "which OpenShift version it installs",
+        "rationale": "only in the partner edition's common.yaml; the other editions say 4.18 and 4.16",
+        "derived": true,
+        "note": "fetch_github_file on rhpds/partner-agnosticv partner_ansible/ansible-lightspeed-coding-lab-cnv/common.yaml returns the line ocp4_installer_version: \"4.17\", which the agent reports as the OpenShift version."
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [
+      {
+        "id": "users",
+        "value": 25,
+        "nouns": [
+          "attendees",
+          "users",
+          "num_users",
+          "seats",
+          "students",
+          "people"
+        ],
+        "window": 5,
+        "asked_by": "how many attendees one order of it hosts",
+        "rationale": "only in the partner edition's common.yaml"
+      }
+    ],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

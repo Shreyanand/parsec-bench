@@ -1,0 +1,40 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "\nSELECT\n    eventTime,\n    userIdentity.arn        AS caller_arn,\n    userIdentity.type       AS identity_type,\n    userIdentity.accountId  AS caller_account,\n    awsRegion,\n    requestParameters,\n    responseElements,\n    errorCode,\n    errorMessage\nFROM cloudtrail_events\nWHERE eventName = 'DeleteSecurityGroup'\n  AND recipientAccountId = '518306274913'\n  AND eventTime >= '2026-09-03T07:00:00Z'\n  AND eventTime <= '2026-09-03T08:30:00Z'\nORDER BY eventTime ASC\n",
+          "max_results": 500
+        }
+      },
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "\nSELECT\n    eventTime,\n    userIdentity,\n    awsRegion,\n    requestParameters,\n    responseElements,\n    errorCode,\n    errorMessage\nFROM cloudtrail_events\nWHERE eventName = 'DeleteSecurityGroup'\n  AND recipientAccountId = '518306274913'\n  AND eventTime >= '2026-09-03T07:00:00Z'\n  AND eventTime <= '2026-09-03T08:30:00Z'\nORDER BY eventTime ASC\n",
+          "max_results": 500
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

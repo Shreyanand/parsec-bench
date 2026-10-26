@@ -1,0 +1,50 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "sso-broker-vie-2"
+      },
+      "result": {
+        "result": "[{\"name\":\"sso-broker-vie-2!ldap-bind\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"IdM LDAP bind\",\"host_name\":\"sso-broker-vie-2\",\"check_command\":\"rhdp-plugin\",\"check_timeout\":30,\"state\":3,\"state_type\":1,\"last_state_change\":1796886739,\"last_check\":1796895668,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true,\"vars\":{\"plugin\":\"plugins/idm/check_ldap_bind.py\",\"ldap_servers\":[\"ldap-vie-01\",\"ldap-vie-02\"],\"bind_dn\":\"uid=svc-sso-vie,cn=sysaccounts,cn=etc,dc=idm,dc=example,dc=net\"},\"last_check_result\":{\"output\":\"<Timeout exceeded.><Terminated by signal 9 (Killed).>\",\"execution_start\":1796895668.004,\"execution_end\":1796895698.011,\"state\":3,\"exit_status\":3}}},{\"name\":\"sso-broker-vie-2!saml-metadata\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"SAML metadata endpoint\",\"host_name\":\"sso-broker-vie-2\",\"check_command\":\"http\",\"state\":0,\"state_type\":1,\"last_state_change\":1795874740,\"last_check\":1796895651,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true,\"vars\":{\"http_uri\":\"/saml/metadata\"},\"last_check_result\":{\"output\":\"HTTP OK: HTTP/1.1 200 OK - 9811 B in 0.046 s\",\"state\":0,\"exit_status\":0}}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "rhdp-monitoring",
+        "path": "plugins/idm/check_ldap_bind.py"
+      },
+      "result": {
+        "content": "#!/usr/bin/env python3\n\"\"\"check_ldap_bind.py - can the SSO broker's service account bind to the IdM directory?\n\nTries the servers in vars.ldap_servers one at a time, in the order they are listed, and\nreports on the first one that accepts the bind. Each server gets CONNECT_RETRIES tries of up\nto CONNECT_TIMEOUT_S seconds each before the plugin moves on to the next one. The plugin\nkeeps no state between runs, so every run begins with the first server in the list.\n\"\"\"\nimport sys\nimport time\n\nimport ldap\n\nCONNECT_TIMEOUT_S = 20\nCONNECT_RETRIES = 2\nBIND_WARN_MS = 500\n\n\ndef try_server(server, bind_dn, password):\n    for _attempt in range(CONNECT_RETRIES):\n        conn = ldap.initialize(f\"ldaps://{server}\")\n        conn.set_option(ldap.OPT_NETWORK_TIMEOUT, CONNECT_TIMEOUT_S)\n        try:\n            start = time.monotonic()\n            conn.simple_bind_s(bind_dn, password)\n            return int((time.monotonic() - start) * 1000)\n        except ldap.SERVER_DOWN:\n            pass\n    return None\n\n\ndef main():\n    servers = sys.argv[1].split(\",\")\n    bind_dn, password = sys.argv[2], sys.argv[3]\n    for server in servers:\n        ms = try_server(server, bind_dn, password)\n        if ms is None:\n            pass\n        else:\n            state = \"WARNING\" if ms > BIND_WARN_MS else \"OK\"\n            print(f\"LDAP {state} - bind to {server} in {ms} ms|bind_ms={ms}ms;{BIND_WARN_MS};;0\")\n            sys.exit(1 if state == \"WARNING\" else 0)\n    print(\"LDAP CRITICAL - no server in \" + \",\".join(servers) + \" accepted the bind\")\n    sys.exit(2)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_hosts",
+        "search": "ldap-vie"
+      },
+      "result": {
+        "result": "[{\"name\":\"ldap-vie-01\",\"type\":\"Host\",\"attrs\":{\"display_name\":\"ldap-vie-01\",\"host_name\":\"ldap-vie-01\",\"address\":\"10.72.9.11\",\"state\":1,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":1,\"groups\":[\"idm-replicas\"],\"last_state_change\":1796886344,\"last_check\":1796895612,\"last_check_result\":{\"output\":\"CRITICAL - 10.72.9.11: rta nan, lost 100%\",\"state\":2,\"exit_status\":2}}},{\"name\":\"ldap-vie-02\",\"type\":\"Host\",\"attrs\":{\"display_name\":\"ldap-vie-02\",\"host_name\":\"ldap-vie-02\",\"address\":\"10.72.9.12\",\"state\":0,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":0,\"groups\":[\"idm-replicas\"],\"last_state_change\":1793640123,\"last_check\":1796895612,\"last_check_result\":{\"output\":\"OK - 10.72.9.12: rta 0.510ms, lost 0%\",\"state\":0,\"exit_status\":0}}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_downtimes",
+        "host": "ldap-vie-01"
+      },
+      "result": {
+        "result": "[{\"name\":\"ldap-vie-01!rhdp-dt-60417\",\"type\":\"Downtime\",\"attrs\":{\"host_name\":\"ldap-vie-01\",\"service_name\":\"\",\"author\":\"okarlsson\",\"comment\":\"CHG-60417: replica retired from the IdM topology, VM powered off ahead of decommission\",\"entry_time\":1796885550,\"start_time\":1796886000,\"end_time\":1798758000,\"fixed\":true,\"duration\":0,\"is_in_effect\":true,\"trigger_time\":1796886000}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "LDAP is not down. The check is UNKNOWN because Icinga kills it before it ever reaches a\nworking directory server.\n\n- `ldap-bind` on sso-broker-vie-2: output `<Timeout exceeded.><Terminated by signal 9 (Killed).>`; the\n  service's `check_timeout` is 30 s and each run lasts exactly 30 s.\n- `plugins/idm/check_ldap_bind.py` tries `vars.ldap_servers` strictly in order\n  (ldap-vie-01, then ldap-vie-02), giving each server CONNECT_RETRIES = 2 attempts of CONNECT_TIMEOUT_S = 20 s.\n  A dead first server therefore costs 2 x 20 = 40 s before ldap-vie-02 is tried, and it starts from\n  the first server on every run.\n- ldap-vie-01 is DOWN (100% packet loss since 07:05 UTC, seven minutes before the check went UNKNOWN).\n  ldap-vie-02 is UP, so the directory is available; the plugin simply never reaches ldap-vie-02 within 30 s.\n- Nobody was paged about ldap-vie-01 because it has been in a fixed host downtime since 07:00 UTC\n  (okarlsson, CHG-60417): the replica was retired from the IdM topology and powered off for\n  decommissioning.\n\nFix: remove ldap-vie-01 from the service's `ldap_servers` (or at least put ldap-vie-02 first). Raising\n`check_timeout` above 40 s plus the bind time would also work, but every run would still waste\n40 s on a retired server.\n"
+}

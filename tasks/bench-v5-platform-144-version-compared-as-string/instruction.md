@@ -1,0 +1,3 @@
+Our Tick Replay lab moved from OpenShift 4.11 to 4.16 between 2026-10-02 and 2026-10-14, and the order on 2026-10-14, job 7731582 on the `east` AAP2 controller, failed while setting up the replay brokers. The previous order, job 7714066 on the same controller on 2026-10-02, ran on OpenShift 4.11 and succeeded. My teammate thinks the 4.16 upgrade broke the role and wants to pin the lab back to 4.11 and relaunch.
+
+Compare the two job logs and read the role's task files that the failing step runs from. Tell me which API the failed order asked for, why the role picked it, the version threshold the role checks, which API the last good order used and why it worked, and what to change in the role.

@@ -1,0 +1,272 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 509381
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "geo_bu/tile-server-lab/common.yaml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "sync_project"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "update_project"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "project_update"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "relaunch_job"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "relaunch"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "arch-mismatch",
+        "any_of": [
+          "arm64",
+          "aarch64",
+          "architecture mismatch",
+          "architectures do not match",
+          "architectures don't match",
+          "architecture does not match",
+          "architecture doesn't match",
+          "does not match the architecture",
+          "doesn't match the architecture",
+          "mismatched architecture",
+          "matching architectures",
+          "Graviton",
+          "ARM-based",
+          "ARM instance",
+          "ARM type"
+        ],
+        "ignore_case": true,
+        "asked_by": "what AWS rejected",
+        "rationale": "the EC2 error the job log carries"
+      },
+      {
+        "id": "effective-type",
+        "any_of": [
+          "c7g.2xlarge"
+        ],
+        "ignore_case": true,
+        "asked_by": "which instance type the job actually requested",
+        "rationale": "the effective value, in the log's sizing line; it is not the value the instruction names"
+      },
+      {
+        "id": "duplicate-key",
+        "any_of": [
+          "duplicate",
+          "twice",
+          "two worker_instance_type",
+          "two definitions",
+          "defined two times",
+          "defined again",
+          "set again",
+          "second worker_instance_type",
+          "another worker_instance_type",
+          "later worker_instance_type",
+          "second definition",
+          "later definition",
+          "second occurrence",
+          "later occurrence",
+          "last occurrence",
+          "last one wins",
+          "last definition wins",
+          "last value wins",
+          "later value wins",
+          "later key wins",
+          "last key wins",
+          "last wins",
+          "later one wins",
+          "overrides the earlier",
+          "overrides the first",
+          "overrides the c7i",
+          "overrides line 16",
+          "overridden by line 29",
+          "overridden by the later",
+          "overridden by the second",
+          "shadowed by",
+          "redefined",
+          "re-defined",
+          "re-declared",
+          "redeclared",
+          "appears again",
+          "two entries",
+          "two lines",
+          "two places",
+          "later one",
+          "later entry",
+          "second entry",
+          "second value",
+          "later value",
+          "parser keeps",
+          "keeps the last",
+          "keeps the later",
+          "keeps the second",
+          "takes the last",
+          "takes the later",
+          "uses the last",
+          "uses the later",
+          "repeats the",
+          "repeated key",
+          "key is repeated",
+          "appears twice"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why the catalog change did not take effect",
+        "rationale": "the synthesis: common.yaml sets the key twice and YAML keeps the last occurrence, so the teammate's edit is overridden in the file itself",
+        "note": "the fetched common.yaml sets worker_instance_type: c7i.2xlarge on line 16 and worker_instance_type: c7g.2xlarge on line 29; a YAML load keeps the last value for a repeated key, which matches the c7g.2xlarge the job log reports."
+      },
+      {
+        "id": "fix",
+        "any_of": [
+          "delete line 29",
+          "remove line 29",
+          "drop line 29",
+          "change line 29",
+          "edit line 29",
+          "delete the second",
+          "remove the second",
+          "drop the second",
+          "delete the later",
+          "remove the later",
+          "drop the later",
+          "delete the old",
+          "remove the old",
+          "drop the old",
+          "delete the stale",
+          "remove the stale",
+          "drop the stale",
+          "remove the duplicate",
+          "delete the duplicate",
+          "drop the duplicate",
+          "keep only one",
+          "only one worker_instance_type",
+          "only one definition",
+          "a single worker_instance_type",
+          "single definition",
+          "remove the c7g",
+          "delete the c7g",
+          "drop the c7g",
+          "remove the cost-review",
+          "delete the cost-review",
+          "remove the cost review",
+          "delete the cost review",
+          "delete that line",
+          "remove that line",
+          "drop that line",
+          "delete this line",
+          "remove this line",
+          "drop this line",
+          "comment out"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "say what to change in the file",
+        "rationale": "the remedy is in the file: one definition of the key",
+        "note": "removing the second worker_instance_type (line 29) leaves the teammate's c7i.2xlarge on line 16 as the only, and so effective, value."
+      },
+      {
+        "id": "effective-line",
+        "any_of": [
+          "line 29",
+          ":29",
+          "L29",
+          "line #29",
+          "line no. 29",
+          "line number 29",
+          "lines 29",
+          "(line 29)"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "line 29 of the fetched common.yaml is the second worker_instance_type, c7g.2xlarge, the value the job log reports; line 16 holds the overridden c7i.2xlarge.",
+        "asked_by": "cite the line that sets the instance type the job used as `owner/repo:path:line`",
+        "rationale": "counted from the seeded common.yaml; the teammate's line (16) is the wrong line, and only the fetch shows either. Graded as a required fact rather than a citation because the verifier's citation matcher reads only the first repo+path occurrence, and an honest answer naturally names the same path for line 16 first."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "stale-copy",
+        "none_of": [
+          "working from a stale copy",
+          "running a stale copy",
+          "using a stale copy",
+          "has a stale copy",
+          "stale cache",
+          "cached copy of the catalog",
+          "old copy of the catalog",
+          "controller did not pick up",
+          "controller didn't pick up",
+          "controller has not picked up",
+          "controller hasn't picked up",
+          "project has not synced",
+          "project hasn't synced",
+          "project is out of sync",
+          "catalog is out of sync",
+          "sync will fix",
+          "syncing will fix",
+          "a sync fixes"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "teammate's theory",
+          "teammate thinks",
+          "teammate suspects",
+          "teammate's suspicion",
+          "stale-copy theory",
+          "theory that the controller"
+        ],
+        "rationale": "the current common.yaml itself yields c7g.2xlarge (its later duplicate key wins), so the controller read the file correctly; a sync or relaunch would fail the same way"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

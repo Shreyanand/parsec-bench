@@ -1,0 +1,155 @@
+{
+  "account_costs": [
+    {
+      "account_id": "419283746501",
+      "items": {
+        "EC2": 6200.0,
+        "S3": 900.0
+      },
+      "total": 7100.0,
+      "account_cost_id": "419283746501"
+    },
+    {
+      "account_id": "419283746502",
+      "items": {
+        "EC2": 4100.0,
+        "EBS": 1200.0
+      },
+      "total": 5300.0,
+      "account_cost_id": "419283746502"
+    }
+  ],
+  "aws_cost_results": [
+    {
+      "aws_cost_result_id": "aws-2026-06",
+      "accounts_queried": 2,
+      "period_id": "p-2026-06",
+      "group_by": "SERVICE",
+      "results": [
+        {
+          "account_id": "419283746501",
+          "items": {
+            "EC2": 6200.0,
+            "S3": 900.0
+          },
+          "total": 7100.0
+        },
+        {
+          "account_id": "419283746502",
+          "items": {
+            "EC2": 4100.0,
+            "EBS": 1200.0
+          },
+          "total": 5300.0
+        }
+      ],
+      "total_cost": 12400.0,
+      "period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      }
+    }
+  ],
+  "azure_cost_results": [
+    {
+      "azure_cost_result_id": "az-2026-06",
+      "source": "cache",
+      "period_id": "p-2026-06",
+      "subscriptions_queried": "all",
+      "results": [
+        {
+          "subscription_name": "pool-01-389",
+          "services": {
+            "Virtual Machines": 14700.0,
+            "Storage": 4300.0,
+            "Bandwidth": 2900.0
+          },
+          "total": 21900.0,
+          "gpu_cost": 9800.0
+        }
+      ],
+      "total_cost": 21900.0,
+      "cache_last_refresh": "2026-07-01T02:00:00Z",
+      "period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      }
+    }
+  ],
+  "azure_service_costs": [
+    {
+      "azure_service_cost_id": "az-vm",
+      "cost": 14700.0,
+      "meter_subcategories": {
+        "NCasT4_v3 Series": 9800.0,
+        "Dsv5 Series": 4900.0
+      }
+    },
+    {
+      "azure_service_cost_id": "az-storage",
+      "cost": 4300.0,
+      "meter_subcategories": {
+        "Premium SSD": 4300.0
+      }
+    },
+    {
+      "azure_service_cost_id": "az-bandwidth",
+      "cost": 2900.0,
+      "meter_subcategories": {
+        "Inter-Region": 2900.0
+      }
+    }
+  ],
+  "azure_subscription_costs": [
+    {
+      "subscription_name": "pool-01-389",
+      "services": {
+        "Virtual Machines": 14700.0,
+        "Storage": 4300.0,
+        "Bandwidth": 2900.0
+      },
+      "total": 21900.0,
+      "gpu_cost": 9800.0,
+      "azure_subscription_cost_id": "pool-01-389"
+    }
+  ],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [
+    {
+      "gcp_cost_result_id": "gcp-2026-06",
+      "period_id": "p-2026-06",
+      "group_by": "SERVICE",
+      "breakdown": [
+        {
+          "name": "Compute Engine",
+          "cost": 6400.0
+        },
+        {
+          "name": "Cloud Storage",
+          "cost": 1100.0
+        },
+        {
+          "name": "Networking",
+          "cost": 650.0
+        }
+      ],
+      "daily_rows": 30,
+      "total_cost": 8150.0,
+      "period": {
+        "period_id": "p-2026-06",
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      }
+    }
+  ],
+  "periods": [
+    {
+      "period_id": "p-2026-06",
+      "start": "2026-06-01",
+      "end": "2026-06-30"
+    }
+  ]
+}

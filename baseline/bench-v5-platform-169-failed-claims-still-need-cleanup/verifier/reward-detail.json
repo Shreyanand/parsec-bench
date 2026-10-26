@@ -1,0 +1,105 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-lmoreau-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-kdasgupta-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-pferreira-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-jnakashima-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-ebrennan-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-sokoye-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-mlindgren-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-hcastillo-redhat-com"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 5,
+    "counts_missed": [
+      {
+        "id": "attendees-holding",
+        "value": 4,
+        "nouns": [
+          "attendees",
+          "namespaces",
+          "people",
+          "users",
+          "participants"
+        ],
+        "window": 4,
+        "asked_by": "how many attendees still hold one",
+        "rationale": "lmoreau, pferreira, jnakashima and ebrennan; mlindgren holds only a personal lab"
+      }
+    ],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

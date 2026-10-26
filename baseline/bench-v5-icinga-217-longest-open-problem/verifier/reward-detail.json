@@ -1,0 +1,51 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_problems"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "oldest-since",
+        "any_of": [
+          "2026-11-13",
+          "13 Nov",
+          "Nov 13",
+          "November 13",
+          "13 November",
+          "13/11/2026",
+          "11/13/2026",
+          "13.11.2026"
+        ],
+        "ignore_case": true,
+        "asked_by": "since when",
+        "rationale": "last_state_change 1794547800 is 2026-11-13 05:30 UTC; no other row changed state on the 13th",
+        "derived": true,
+        "note": "Converted from pg-vacuum-age's last_state_change epoch 1794547800 (2026-11-13 05:30 UTC); the seed stores only the epoch."
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

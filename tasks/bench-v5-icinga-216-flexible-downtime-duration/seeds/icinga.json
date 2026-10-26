@@ -1,0 +1,85 @@
+{
+  "hosts": [
+    {
+      "name": "edi-relay-lis-03",
+      "type": "Host",
+      "attrs": {
+        "display_name": "edi-relay-lis-03",
+        "host_name": "edi-relay-lis-03",
+        "address": "10.140.6.33",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "edi-lis"
+        ],
+        "last_check": 1795273080,
+        "last_check_result": {
+          "output": "OK - 10.140.6.33: rta 0.770ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "edi-relay-lis-03!as2-inbox-files",
+      "type": "Service",
+      "attrs": {
+        "display_name": "AS2 inbox files",
+        "host_name": "edi-relay-lis-03",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_state_change": 1794908640,
+        "last_check": 1795273080,
+        "last_check_result": {
+          "output": "INBOX OK - 14 files waiting",
+          "state": 0,
+          "exit_status": 0,
+          "performance_data": [
+            "files=14;500;2000;0"
+          ]
+        }
+      }
+    }
+  ],
+  "downtimes": [
+    {
+      "name": "edi-relay-lis-03!as2-inbox-files!5d0c7b92-e14a-4f3b-86d2-0a9fe3c71b58",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "edi-relay-lis-03",
+        "service_name": "as2-inbox-files",
+        "author": "fmoreira-adm",
+        "comment": "CHG-58302 AS2 trading-party cert swap; inbound files pile up until each trading party reconnects",
+        "entry_time": 1795192200,
+        "start_time": 1795298400,
+        "end_time": 1795327200,
+        "fixed": false,
+        "duration": 18000,
+        "was_cancelled": false
+      }
+    },
+    {
+      "name": "edi-relay-lis-03!a7e4126d-9b3f-4c08-b5d1-38c0f9e2a6d4",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "edi-relay-lis-03",
+        "service_name": "",
+        "author": "nsilvestre",
+        "comment": "CHG-58411 monthly OS patch run",
+        "entry_time": 1795086300,
+        "start_time": 1795827600,
+        "end_time": 1795834800,
+        "fixed": true,
+        "duration": 7200,
+        "was_cancelled": false
+      }
+    }
+  ],
+  "comments": []
+}

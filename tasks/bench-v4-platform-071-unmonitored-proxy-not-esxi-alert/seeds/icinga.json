@@ -1,0 +1,84 @@
+{
+  "comments": [],
+  "downtimes": [],
+  "hosts": [
+    {
+      "name": "aap-east-util03.ops.example.net",
+      "type": "Host",
+      "attrs": {
+        "display_name": "aap-east-util03.ops.example.net",
+        "host_name": "aap-east-util03.ops.example.net",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "aap-east"
+        ],
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.42 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "esxi-r07-n12.virt.example.net",
+      "type": "Host",
+      "attrs": {
+        "display_name": "esxi-r07-n12.virt.example.net",
+        "host_name": "esxi-r07-n12.virt.example.net",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "vsphere-hosts"
+        ],
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.71 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "aap-east-util03.ops.example.net!disk-root",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Root filesystem",
+        "host_name": "aap-east-util03.ops.example.net",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "DISK OK - free space: / 41 GB (63% inode=91%)",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "esxi-r07-n12.virt.example.net!esxi-health",
+      "type": "Service",
+      "attrs": {
+        "display_name": "ESXi hardware health",
+        "host_name": "esxi-r07-n12.virt.example.net",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "CRITICAL - ESXi health API on esxi-r07-n12.virt.example.net returned HTTP 500 Internal Server Error (CIM provider sfcb-smx_sensor not responding)",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    }
+  ]
+}

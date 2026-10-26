@@ -1,0 +1,234 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_marketplace_agreements",
+        "args": {},
+        "absent_args": [
+          "min_cost"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_aws_account",
+        "args": {}
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "over-corsair",
+        "any_of": [
+          "Corsair Data Mesh"
+        ],
+        "ignore_case": true,
+        "asked_by": "every agreement whose estimated cost is at least 20,000 USD",
+        "rationale": "48,600 USD; only the inventory names it"
+      },
+      {
+        "id": "over-nimbic",
+        "any_of": [
+          "Nimbic Threat Graph"
+        ],
+        "ignore_case": true,
+        "asked_by": "every agreement whose estimated cost is at least 20,000 USD",
+        "rationale": "27,450 USD; only the inventory names it"
+      },
+      {
+        "id": "over-orrery",
+        "any_of": [
+          "Orrery Toggle Flags"
+        ],
+        "ignore_case": true,
+        "asked_by": "every agreement whose estimated cost is at least 20,000 USD",
+        "rationale": "22,080 USD; only the inventory names it"
+      },
+      {
+        "id": "unestimated-glimmer",
+        "any_of": [
+          "Glimmer GPU Notebooks"
+        ],
+        "ignore_case": true,
+        "asked_by": "every agreement that has no cost estimate in the inventory at all",
+        "rationale": "no estimated_cost on the row; a min_cost-filtered query never returns it"
+      },
+      {
+        "id": "unestimated-hexmoor",
+        "any_of": [
+          "Hexmoor Log Shipper"
+        ],
+        "ignore_case": true,
+        "asked_by": "every agreement that has no cost estimate in the inventory at all",
+        "rationale": "no estimated_cost on the row; a min_cost-filtered query never returns it"
+      }
+    ],
+    "counts": [
+      {
+        "id": "over-threshold",
+        "value": 3,
+        "nouns": [
+          "agreements",
+          "contracts",
+          "products",
+          "subscriptions",
+          "or more",
+          "or above",
+          "and above",
+          "at least"
+        ],
+        "window": 5,
+        "asked_by": "How many fall in each group",
+        "rationale": "three rows have estimated_cost >= 20,000; Pallas Coldline Locker at 19,850 is the near miss"
+      },
+      {
+        "id": "unestimated",
+        "value": 2,
+        "nouns": [
+          "no estimate",
+          "no cost estimate",
+          "no estimated cost",
+          "without an estimate",
+          "without a cost estimate",
+          "without estimates",
+          "without cost estimates",
+          "without any estimate",
+          "missing an estimate",
+          "missing a cost estimate",
+          "missing estimates",
+          "unestimated",
+          "lack an estimate",
+          "lack a cost estimate",
+          "lacking an estimate",
+          "estimate",
+          "estimates",
+          "unknown cost",
+          "cost unknown",
+          "Pay-As-You-Go",
+          "usage-based",
+          "metered"
+        ],
+        "window": 5,
+        "asked_by": "How many fall in each group",
+        "rationale": "two rows carry no estimated_cost; an agent that filtered by min_cost sees 0"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "every-row-has-estimate",
+        "ignore_case": true,
+        "none_of": [
+          "every agreement has a cost estimate",
+          "every agreement has an estimate",
+          "all agreements have a cost estimate",
+          "all agreements have an estimate",
+          "all of the agreements have a cost estimate",
+          "all of the agreements have an estimate",
+          "all agreements have estimates",
+          "every agreement in the inventory has",
+          "no agreements without",
+          "no agreements lacking",
+          "no agreements that lack",
+          "no agreements are missing",
+          "no agreement lacks",
+          "no agreement is missing",
+          "none of the agreements lack",
+          "none of the agreements is missing",
+          "none of the agreements are missing",
+          "none without an estimate",
+          "none without a cost estimate",
+          "none lack an estimate",
+          "none are missing an estimate",
+          "found no agreement without",
+          "zero agreements without",
+          "0 agreements without",
+          "every agreement has an estimated cost",
+          "all agreements have an estimated cost",
+          "every agreement returned has",
+          "every agreement the inventory returned has",
+          "every agreement listed has",
+          "every row has an estimate",
+          "every row has a cost estimate",
+          "all of them have an estimate",
+          "all of them have a cost estimate",
+          "all of them have an estimated cost",
+          "with no cost estimate: none",
+          "with no estimate: none",
+          "without an estimate: none",
+          "without a cost estimate: none",
+          "nothing in the second group",
+          "the second group is empty",
+          "the second list is empty",
+          "second list: none",
+          "group 2: none",
+          "second group: none"
+        ],
+        "attributed_to": [
+          "would make it look",
+          "would look as though",
+          "would have hidden",
+          "would hide",
+          "would have dropped",
+          "would drop",
+          "would have left",
+          "silently drops",
+          "silently omits",
+          "silently excludes",
+          "filter drops",
+          "filter excludes",
+          "filter hides",
+          "filter omits"
+        ],
+        "rationale": "the min_cost filter drops rows with no estimated_cost, so an agent that relied on it never sees the two Pay-As-You-Go rows and reports that none lack an estimate; every form asserts that"
+      },
+      {
+        "id": "unestimated-read-as-zero-or-cheap",
+        "ignore_case": true,
+        "none_of": [
+          "estimated cost of $0",
+          "estimated cost of 0",
+          "estimate of $0",
+          "estimate of 0 USD",
+          "estimated at $0",
+          "estimated at 0 USD",
+          "$0 estimate",
+          "0 USD estimate",
+          "costs $0",
+          "cost $0",
+          "$0.00",
+          "Glimmer is below",
+          "Glimmer is under",
+          "Glimmer falls below",
+          "Glimmer falls under",
+          "Glimmer comes in under",
+          "Notebooks is below",
+          "Notebooks is under",
+          "Notebooks falls below",
+          "Notebooks falls under",
+          "Hexmoor is below",
+          "Hexmoor is under",
+          "Hexmoor falls below",
+          "Hexmoor falls under",
+          "Hexmoor comes in under",
+          "Shipper is below",
+          "Shipper is under",
+          "Shipper falls below",
+          "Shipper falls under"
+        ],
+        "rationale": "a missing estimate is unknown, not zero and not under the threshold; the user says these cannot be ruled out"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

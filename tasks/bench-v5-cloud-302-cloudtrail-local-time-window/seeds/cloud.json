@@ -1,0 +1,118 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [
+    {
+      "event_id": "7c1e04a2-5b9d-4f13-a8e6-0d2f9b31c4a7",
+      "account_id": "518306274913",
+      "event_name": "DescribeSecurityGroups",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2026-09-03T07:09:58Z",
+      "username": "rkovacs",
+      "resources": []
+    },
+    {
+      "event_id": "2f8a61d3-9e07-4c5b-b1a4-6e3d7c0f8b52",
+      "account_id": "518306274913",
+      "event_name": "DeleteSecurityGroup",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2026-09-03T07:12:44Z",
+      "username": "rkovacs",
+      "resources": [
+        {
+          "resourceType": "AWS::EC2::SecurityGroup",
+          "resourceName": "sg-0a71c3e94d2b85f16"
+        }
+      ]
+    },
+    {
+      "event_id": "b94d7e10-3a6c-48f2-9d05-c1e8a2b7f364",
+      "account_id": "518306274913",
+      "event_name": "DeleteSecurityGroup",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2026-09-03T07:41:09Z",
+      "username": "rkovacs",
+      "resources": [
+        {
+          "resourceType": "AWS::EC2::SecurityGroup",
+          "resourceName": "sg-05e2b8d71f4c9a360"
+        }
+      ]
+    },
+    {
+      "event_id": "e0c53b9f-7d21-4a86-b3f7-58a91d6e2c0b",
+      "account_id": "518306274913",
+      "event_name": "DeleteSecurityGroup",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2026-09-03T08:06:27Z",
+      "username": "rkovacs",
+      "resources": [
+        {
+          "resourceType": "AWS::EC2::SecurityGroup",
+          "resourceName": "sg-0d93f6a2c17e4b508"
+        }
+      ]
+    },
+    {
+      "event_id": "41a9f2c6-0b8e-4d37-95e1-7f6c3a2d9b18",
+      "account_id": "518306274913",
+      "event_name": "AuthorizeSecurityGroupIngress",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2026-09-03T08:52:15Z",
+      "username": "tbellamy",
+      "resources": [
+        {
+          "resourceType": "AWS::EC2::SecurityGroup",
+          "resourceName": "sg-0c48e1b7d6a29f053"
+        }
+      ]
+    },
+    {
+      "event_id": "9d6b2e83-c4f1-4a09-8e7d-3b5a1f0c6e29",
+      "account_id": "518306274913",
+      "event_name": "DeleteSecurityGroup",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2026-09-03T09:18:52Z",
+      "username": "tbellamy",
+      "resources": [
+        {
+          "resourceType": "AWS::EC2::SecurityGroup",
+          "resourceName": "sg-0f27a9c4e8b13d651"
+        }
+      ]
+    },
+    {
+      "event_id": "c3e7a05d-8f2b-4196-a6d4-0e9b7c3f1a85",
+      "account_id": "518306274913",
+      "event_name": "DeleteSecurityGroup",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2026-09-03T09:57:30Z",
+      "username": "tbellamy",
+      "resources": [
+        {
+          "resourceType": "AWS::EC2::SecurityGroup",
+          "resourceName": "sg-0b6d1e4f93a7c2580"
+        }
+      ]
+    },
+    {
+      "event_id": "5a0f8c2e-1d7b-4e63-9c48-a2b6e9d03f71",
+      "account_id": "518306274931",
+      "event_name": "DeleteSecurityGroup",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2026-09-03T07:30:16Z",
+      "username": "nwiese",
+      "resources": [
+        {
+          "resourceType": "AWS::EC2::SecurityGroup",
+          "resourceName": "sg-08c5f2a1b7e46d93c"
+        }
+      ]
+    }
+  ],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": []
+}

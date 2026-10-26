@@ -1,0 +1,1 @@
+{"type": "result", "subtype": "success", "is_error": false, "result": "The account ID `61840275391` has only 11 digits — AWS account IDs are always **12 digits**. Could you double-check and provide the correct account ID?\n\nIf you have a sandbox name (e.g. `sandbox1234`) instead, I can look up the account ID from that as well."}

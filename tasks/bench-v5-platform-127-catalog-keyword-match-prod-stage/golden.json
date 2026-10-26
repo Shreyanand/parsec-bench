@@ -1,0 +1,49 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "search_catalog",
+        "cluster": "puffin",
+        "search": "service mesh"
+      },
+      "result": {
+        "cluster": "puffin",
+        "items": [
+          {
+            "ci_name": "netsvc.mesh-deep-dive",
+            "display_name": "Service Mesh Deep Dive",
+            "namespace": "babylon-catalog-dev",
+            "stage": "dev",
+            "multiuser": false,
+            "asset_uuid": "b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+            "keywords": [
+              "istio",
+              "envoy",
+              "sidecars"
+            ]
+          },
+          {
+            "ci_name": "netsvc.traffic-mgmt-lab",
+            "display_name": "OpenShift Traffic Management Lab",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "0d9a4e71-c2b5-4f38-8a6d-e15f3b72c904",
+            "keywords": [
+              "service mesh",
+              "istio",
+              "traffic routing",
+              "canary"
+            ]
+          }
+        ],
+        "count": 2,
+        "total_scanned": 5,
+        "truncated": false
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "Yes, there is a production service mesh lab on puffin, but it is not the one with \"Service Mesh\" in its title.\n\nSearching the puffin catalog for \"service mesh\" returns two items:\n\n- OpenShift Traffic Management Lab - ci_name netsvc.traffic-mgmt-lab, namespace babylon-catalog-prod, stage prod, asset UUID 0d9a4e71-c2b5-4f38-8a6d-e15f3b72c904. Its display name doesn't mention service mesh; it matched on its keywords (service mesh, istio, traffic routing, canary). This is the one to order for the customer demo. It is single-user (multiuser: false), so each attendee needs their own order.\n- Service Mesh Deep Dive - ci_name netsvc.mesh-deep-dive, namespace babylon-catalog-dev, stage dev. It is a dev-stage item, so it is not suitable for a customer-facing demo.\n\nSo order netsvc.traffic-mgmt-lab (OpenShift Traffic Management Lab, prod).\n"
+}

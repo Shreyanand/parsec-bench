@@ -1,0 +1,157 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "reservation": "adriatic-summit-2609"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "x4vbn"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "d9kzr"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "event0",
+          "job_id": 5519377
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "a-error",
+        "any_of": [
+          "HostedZoneNotEmpty",
+          "hosted zone contains non-required",
+          "hosted zone is not empty",
+          "zone was not empty",
+          "zone not empty"
+        ],
+        "ignore_case": true,
+        "asked_by": "tell me why the account hasn't come back",
+        "rationale": "only the destroy job's log carries the error"
+      },
+      {
+        "id": "a-zone",
+        "any_of": [
+          "Z0718342JX3NQ8PLW5RTA"
+        ],
+        "ignore_case": true,
+        "asked_by": "tell me why the account hasn't come back",
+        "rationale": "links the failure to the account's own hosted_zone_id from the account db"
+      },
+      {
+        "id": "a-job",
+        "any_of": [
+          "5519377"
+        ],
+        "ignore_case": true,
+        "asked_by": "track down its cleanup (destroy) job in AAP2",
+        "rationale": "found only via find_jobs on the GUID; the account row has no job id"
+      },
+      {
+        "id": "b-no-job",
+        "any_of": [
+          "no cleanup job",
+          "no destroy job",
+          "no job",
+          "returns nothing",
+          "total 0",
+          "no jobs",
+          "never launched",
+          "never ran",
+          "was never run",
+          "zero jobs"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "track down its cleanup (destroy) job in AAP2",
+        "rationale": "the chain break: sandbox7732's GUID matches no job on any controller",
+        "note": "sandbox7732's GUID is d9kzr, and find_jobs for d9kzr returns total 0 with no jobs, so no cleanup (destroy) job exists for that account."
+      },
+      {
+        "id": "b-action",
+        "any_of": [
+          "launch the destroy for d9kzr",
+          "launch a destroy",
+          "launch its destroy",
+          "never launched",
+          "not been launched",
+          "nothing has tried",
+          "never been cleaned",
+          "check its order"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what to do to get each one returned",
+        "rationale": "with no job to fix, the remedy is to start a cleanup, not rerun a failed one",
+        "note": "sandbox7732 is still available false with conan_status in-use and find_jobs for its GUID d9kzr returns no job, so nothing has tried to clean it up and getting it back means launching its destroy."
+      }
+    ],
+    "counts": [
+      {
+        "id": "unreturned",
+        "value": 2,
+        "nouns": [
+          "accounts",
+          "unavailable",
+          "not available",
+          "still",
+          "of the 3",
+          "of 3"
+        ],
+        "window": 5,
+        "asked_by": "which of those accounts are still not available",
+        "rationale": "available: false on two of the three reservation rows",
+        "extra_any_of": [
+          "two of the three",
+          "2 of the 3",
+          "two of three",
+          "2 of 3"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "b-invented-failure",
+        "none_of": [
+          "sandbox7732 failed",
+          "sandbox7732's destroy failed",
+          "sandbox7732's cleanup failed",
+          "destroy of sandbox7732 failed",
+          "d9kzr failed",
+          "d9kzr's destroy failed",
+          "destroy for d9kzr failed",
+          "d9kzr destroy job"
+        ],
+        "ignore_case": true,
+        "rationale": "no job exists for that GUID; any cleanup outcome for it is invented"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_log",
+        "controller": "event0",
+        "job_id": 915738
+      },
+      "result": {
+        "job_id": 915738,
+        "job_name": "RHDP summit_events.summit-mesh-lab.event-t5gwe-1-provision",
+        "status": "failed",
+        "failed": true,
+        "started": "2026-10-05T19:30:21.000Z",
+        "finished": "2026-10-05T19:52:09.000Z",
+        "duration_seconds": 1308,
+        "launch_type": "workflow",
+        "job_explanation": "",
+        "template_name": "RHDP summit_events.summit-mesh-lab.event-provision",
+        "env_type": "event",
+        "guid": "t5gwe",
+        "action": "provision",
+        "cloud_provider": "ec2",
+        "display_name": "summit-mesh-lab",
+        "controller": "event0",
+        "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+        "git_branch": "main",
+        "git_revision": "b8e14f7a0c3d952e6a1f08b4d7c2e95a3f6d0b18",
+        "log": "PLAY [Step 002 Install OpenShift] **********************************************\n\nTASK [Gathering Facts] *********************************************************\nok: [bastion.t5gwe.events.example]\n\nTASK [host_ocp4_installer : Print the requested installer version] *************\ntask path: /runner/project/ansible/roles/host_ocp4_installer/tasks/main.yml:3\nok: [bastion.t5gwe.events.example] => {\"msg\": \"ocp4_installer_version=4.2 installer_url=https://artifacts.labcdn.example/ocp-clients/latest-4.2/openshift-install-linux-el9.tar.gz\"}\n\nTASK [host_ocp4_installer : Download the OpenShift installer] ******************\ntask path: /runner/project/ansible/roles/host_ocp4_installer/tasks/main.yml:8\nfatal: [bastion.t5gwe.events.example]: FAILED! => {\"changed\": false, \"dest\": \"/tmp/openshift-install.tar.gz\", \"msg\": \"Request failed\", \"response\": \"HTTP Error 404: Not Found\", \"status_code\": 404, \"url\": \"https://artifacts.labcdn.example/ocp-clients/latest-4.2/openshift-install-linux-el9.tar.gz\"}\n\nPLAY RECAP *********************************************************************\nbastion.t5gwe.events.example : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0\n",
+        "log_original_size": 1195,
+        "log_trimmed_size": 1195
+      },
+      "is_error": false
+    },
+    {
+      "name": "lookup_catalog_item",
+      "args": {
+        "search": "summit-mesh-lab"
+      },
+      "result": {
+        "found": true,
+        "owner": "rhpds",
+        "repo": "agnosticv",
+        "account": "summit_events",
+        "directory": "summit-mesh-lab",
+        "path": "summit_events/summit-mesh-lab",
+        "files": [
+          "common.yaml",
+          "event.yaml"
+        ],
+        "default_branch": "main"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "agnosticv",
+        "path": "summit_events/summit-mesh-lab/common.yaml"
+      },
+      "result": {
+        "content": "---\n# summit-mesh-lab: service mesh hands-on lab for the October summit\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Summit Service Mesh Lab\n    category: Workshops\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\nocp4_installer_version: 4.20\nocp4_installer_root_url: https://artifacts.labcdn.example/ocp-clients\nworker_instance_count: 2\nworkloads:\n  - ocp4_workload_service_mesh\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "I did not relaunch it. A relaunch would fail identically, and query_aap2 is read-only.\n\nThe download got HTTP 404 for https://artifacts.labcdn.example/ocp-clients/latest-4.2/openshift-install-linux-el9.tar.gz. The job asked for the latest-4.2 installer, not 4.20. 4.2 predates the el9 installer builds, so that file has never existed. The artifact server answered correctly.\n\nThe 4.2 comes from the catalog item. rhpds/agnosticv:summit_events/summit-mesh-lab/common.yaml line 14 reads `ocp4_installer_version: 4.20`, unquoted. YAML parses an unquoted 4.20 as the float 4.2: the trailing zero is lost before Ansible ever sees it. The log's own debug line confirms it: ocp4_installer_version=4.2.\n\nFix: quote it, `ocp4_installer_version: \"4.20\"`. Every relaunch of this item fails the same way until then.\n\nCategory: configuration. Confidence: high.\n"
+}

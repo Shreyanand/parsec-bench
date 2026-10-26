@@ -1,0 +1,78 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "start_date": "2026-03-12"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [],
+    "counts": [
+      {
+        "id": "day-total",
+        "value": 3466,
+        "nouns": [
+          "2026-03-18",
+          "spend",
+          "spent",
+          "total",
+          "cost",
+          "usd",
+          "dollars",
+          "account",
+          "day"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "3,466",
+          "3466.0",
+          "$3466",
+          "3 466",
+          "3.47k",
+          "3.466k"
+        ],
+        "asked_by": "What did the account spend on 2026-03-18",
+        "rationale": "the account's 2026-03-18 spend (EC2 compute 434 + S3 89 + AWS Glue 2,943). It occurs only as the 2026-03-18 daily entry of the window that includes that day; the six-day window's figures (3,109 total, 516-522 a day) cannot produce it. extra_any_of carries the comma-grouped and decimal notations the digit matcher rejects by design"
+      },
+      {
+        "id": "glue-day-cost",
+        "value": 2943,
+        "nouns": [
+          "glue",
+          "2026-03-18",
+          "spend",
+          "cost",
+          "usd",
+          "dollars"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "2,943",
+          "2943.0",
+          "$2943",
+          "2 943",
+          "2.94k",
+          "2.943k"
+        ],
+        "asked_by": "how much did that service cost on that day",
+        "rationale": "the driving service's 2026-03-18 charge. 2,943 occurs in the store only as AWS Glue's single daily entry on 2026-03-18 in the end-exclusive window, so the figure is bound to Glue and to that day by construction; it carries the 'which service drove it' grading too, since a bare service-name fact was guessable (fix round 1). Absent from the [2026-03-12, 2026-03-18) result and the instruction"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

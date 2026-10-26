@@ -1,0 +1,105 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [
+    {
+      "iam_user_id": "iu-316-01",
+      "account_id": "318274950613",
+      "username": "rhdp-audit-ro",
+      "user_id": "AIDA4TQ9W2L7XM3KD8RVE",
+      "created": "2026-03-02T11:00:00Z",
+      "password_last_used": "",
+      "access_keys": []
+    },
+    {
+      "iam_user_id": "iu-316-02",
+      "account_id": "318274950613",
+      "username": "lab-admin-7rq2m",
+      "user_id": "AIDA9NC3H6P1ZB5YF2QWJ",
+      "created": "2026-09-26T08:14:22Z",
+      "password_last_used": "2026-10-07T09:12:40Z",
+      "access_keys": [
+        {
+          "access_key_id": "AKIA9NC3H6P1LBAD7K21",
+          "status": "Active",
+          "created": "2026-09-26T08:15:03Z"
+        },
+        {
+          "access_key_id": "AKIA9NC3H6P1LBAD7K38",
+          "status": "Active",
+          "created": "2026-10-01T16:42:19Z"
+        }
+      ]
+    },
+    {
+      "iam_user_id": "iu-316-03",
+      "account_id": "318274950613",
+      "username": "ci-deployer",
+      "user_id": "AIDA2RX7K4V8MD1GT6ZPS",
+      "created": "2026-09-26T08:20:51Z",
+      "password_last_used": "2026-09-30T17:05:11Z",
+      "access_keys": [
+        {
+          "access_key_id": "AKIA2RX7K4V8CIDP3M05",
+          "status": "Inactive",
+          "created": "2026-09-26T08:21:30Z"
+        }
+      ]
+    },
+    {
+      "iam_user_id": "iu-316-04",
+      "account_id": "318274950744",
+      "username": "lab-admin-w8nkc",
+      "user_id": "AIDA6YB1D9S4QE7HN3KCU",
+      "created": "2026-09-26T08:16:40Z",
+      "password_last_used": "2026-10-08T10:22:05Z",
+      "access_keys": [
+        {
+          "access_key_id": "AKIA6YB1D9S4LBAD9P64",
+          "status": "Active",
+          "created": "2026-09-26T08:17:12Z"
+        }
+      ]
+    }
+  ],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sa-316-9174",
+      "name": "sandbox9174",
+      "account_id": "318274950613",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "",
+      "zone": "sandbox9174.sandbox-pool.example.com",
+      "comment": "returned to pool after tidepool-ws-2609; conan cleanup completed 2026-10-06T03:40:00Z",
+      "conan_status": "clean",
+      "guid": "",
+      "hosted_zone_id": "Z09174LABS",
+      "service_uuid": "",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sa-316-9182",
+      "name": "sandbox9182",
+      "account_id": "318274950744",
+      "available": false,
+      "owner": "tquispe",
+      "owner_email": "tquispe@sandbox-pool.example.com",
+      "envtype": "ansible-net-lab",
+      "reservation": "event",
+      "zone": "sandbox9182.sandbox-pool.example.com",
+      "comment": "tidepool-ws-2609 seat 14",
+      "conan_status": "",
+      "guid": "w8nkc",
+      "hosted_zone_id": "Z09182LABS",
+      "service_uuid": "svc-9182-w8nkc",
+      "annotations": {}
+    }
+  ]
+}

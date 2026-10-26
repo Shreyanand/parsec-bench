@@ -1,0 +1,80 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/main.yml",
+      "content": "---\n# ocp4_workload_guild_seats: one project per workshop seat, then the seat's RoleBindings\n\n- name: Create a project for every seat\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: v1\n      kind: Namespace\n      metadata:\n        name: \"{{ item }}-{{ guid }}\"\n  loop: \"{{ guild_seats_users }}\"\n\n- name: Grant every seat its roles\n  ansible.builtin.include_tasks: seat_access.yml\n  loop: \"{{ guild_seats_users }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/main.yml",
+      "content": "---\n# ocp4_workload_guild_seats: one project per workshop seat, then the seat's RoleBindings\n\n- name: Create a project for every seat\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: v1\n      kind: Namespace\n      metadata:\n        name: \"{{ item }}-{{ guid }}\"\n  loop: \"{{ guild_seats_users }}\"\n\n- name: Grant every seat its roles\n  ansible.builtin.include_tasks: seat_access.yml\n  loop: \"{{ guild_seats_users }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "b47e0d29a6c13f58e2d9a0b71c4f36e8d5a2b90c",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/main.yml",
+      "content": "---\n# ocp4_workload_guild_seats: one project per workshop seat, then the seat's RoleBindings\n\n- name: Create a project for every seat\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: v1\n      kind: Namespace\n      metadata:\n        name: \"{{ item }}-{{ guid }}\"\n  loop: \"{{ guild_seats_users }}\"\n\n- name: Grant every seat its roles\n  ansible.builtin.include_tasks: seat_access.yml\n  loop: \"{{ guild_seats_users }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@b47e0d29a6c13f58e2d9a0b71c4f36e8d5a2b90c-ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/seat_access.yml",
+      "content": "---\n# seat_access.yml: bind one seat's user to every role in guild_seats_roles\n\n- name: Bind the seat user to its roles\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: rbac.authorization.k8s.io/v1\n      kind: RoleBinding\n      metadata:\n        name: \"seat-{{ item }}\"\n        namespace: \"{{ item }}-{{ guid }}\"\n      roleRef:\n        apiGroup: rbac.authorization.k8s.io\n        kind: ClusterRole\n        name: \"{{ item }}\"\n      subjects:\n        - apiGroup: rbac.authorization.k8s.io\n          kind: User\n          name: \"{{ item }}\"\n  loop: \"{{ guild_seats_roles }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/seat_access.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/seat_access.yml",
+      "content": "---\n# seat_access.yml: bind one seat's user to every role in guild_seats_roles\n\n- name: Bind the seat user to its roles\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: rbac.authorization.k8s.io/v1\n      kind: RoleBinding\n      metadata:\n        name: \"seat-{{ item }}\"\n        namespace: \"{{ item }}-{{ guid }}\"\n      roleRef:\n        apiGroup: rbac.authorization.k8s.io\n        kind: ClusterRole\n        name: \"{{ item }}\"\n      subjects:\n        - apiGroup: rbac.authorization.k8s.io\n          kind: User\n          name: \"{{ item }}\"\n  loop: \"{{ guild_seats_roles }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/seat_access.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "b47e0d29a6c13f58e2d9a0b71c4f36e8d5a2b90c",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/seat_access.yml",
+      "content": "---\n# seat_access.yml: bind one seat's user to every role in guild_seats_roles\n\n- name: Bind the seat user to its roles\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: rbac.authorization.k8s.io/v1\n      kind: RoleBinding\n      metadata:\n        name: \"seat-{{ item }}\"\n        namespace: \"{{ item }}-{{ guid }}\"\n      roleRef:\n        apiGroup: rbac.authorization.k8s.io\n        kind: ClusterRole\n        name: \"{{ item }}\"\n      subjects:\n        - apiGroup: rbac.authorization.k8s.io\n          kind: User\n          name: \"{{ item }}\"\n  loop: \"{{ guild_seats_roles }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@b47e0d29a6c13f58e2d9a0b71c4f36e8d5a2b90c-ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/seat_access.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/defaults/main.yml",
+      "content": "---\n# ocp4_workload_guild_seats defaults\nguild_seats_users:\n  - guild-user1\n  - guild-user2\n  - guild-user3\nguild_seats_roles:\n  - edit\n  - view\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_guild_seats/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/defaults/main.yml",
+      "content": "---\n# ocp4_workload_guild_seats defaults\nguild_seats_users:\n  - guild-user1\n  - guild-user2\n  - guild-user3\nguild_seats_roles:\n  - edit\n  - view\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_guild_seats/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "b47e0d29a6c13f58e2d9a0b71c4f36e8d5a2b90c",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/defaults/main.yml",
+      "content": "---\n# ocp4_workload_guild_seats defaults\nguild_seats_users:\n  - guild-user1\n  - guild-user2\n  - guild-user3\nguild_seats_roles:\n  - edit\n  - view\n",
+      "file_id": "agnosticd/agnosticd-v2@b47e0d29a6c13f58e2d9a0b71c4f36e8d5a2b90c-ansible/roles_ocp_workloads/ocp4_workload_guild_seats/defaults/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

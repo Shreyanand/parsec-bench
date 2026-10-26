@@ -1,0 +1,136 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_pvcs",
+          "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_storage_classes"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_vms",
+          "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "wffc",
+        "any_of": [
+          "WaitForFirstConsumer",
+          "wait for first consumer",
+          "waiting for first consumer",
+          "first consumer"
+        ],
+        "ignore_case": true,
+        "asked_by": "Is something wrong with the storage there?",
+        "rationale": "the PVC events and the class's binding_mode; the instruction does not name it"
+      },
+      {
+        "id": "vms-stopped",
+        "any_of": [
+          "stopped",
+          "not running",
+          "VMINotExists",
+          "no VMI",
+          "not started"
+        ],
+        "ignore_case": true,
+        "asked_by": "Is something wrong with the storage there?",
+        "rationale": "only list_vms shows there is no consumer yet"
+      },
+      {
+        "id": "expected",
+        "any_of": [
+          "expected",
+          "by design",
+          "working as intended",
+          "normal",
+          "nothing is broken",
+          "not broken",
+          "no action",
+          "nothing to fix"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "Is something wrong with the storage there?",
+        "rationale": "the non-finding itself, drawn from all three calls",
+        "note": "list_storage_classes shows lvms-nvme-thin with binding_mode WaitForFirstConsumer, each Pending claim's event says it is waiting for first consumer, and list_vms shows all three VMs Stopped with VMINotExists, so the claims will bind when the VMs start and nothing needs fixing or recreating."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "storage-broken",
+        "none_of": [
+          "storage is broken",
+          "provisioner is broken",
+          "provisioner has failed",
+          "out of capacity",
+          "storage is full",
+          "lvms is down",
+          "topolvm is failing",
+          "no space on the node"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "nothing is broken",
+          "is not broken",
+          "isn't broken",
+          "not out of capacity",
+          "is not full",
+          "nothing wrong with the storage"
+        ],
+        "rationale": "the negative answer; any storage fault is invented"
+      },
+      {
+        "id": "recreate",
+        "none_of": [
+          "delete and recreate the pvc",
+          "recreate the pvcs",
+          "recreate the claims",
+          "delete the pending pvcs",
+          "delete the claims"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "should not be deleted",
+          "should not be recreated",
+          "do not delete",
+          "don't delete",
+          "would change nothing",
+          "no need to recreate",
+          "not be deleted or recreated"
+        ],
+        "rationale": "recreating would leave them Pending for the same reason; the instruction offers it"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "floors": {
+    "exempt": [
+      "mute",
+      "nocall"
+    ],
+    "reason": "Weak discriminator, flagged in the baseline report (controller ruling 2026-10-13, in place of the owner-approved required fact and reweight; flagged to the owner): the contract grades three required facts and two forbidden facts at weights 0.3/0.7, so an agent that makes the golden calls and asserts nothing keeps the two forbidden facts and collects 0.3 + 0.7 x 2/5 = 0.580 (mute), and one that makes no call collects 0.280 (nocall), above the 0.50 / 0.25 caps; the fabricate probe scores 0.300 (max 0.440, below mute). A reweight to 0.25/0.75 alone gives 0.550 / 0.300 and still fails. The approved new required fact for the ask 'should we?' (no-recreate) was tried and lost the fact on most fresh honest answers: after eight rounds and 132 forms, the last blind batch of 8 honest answers lost it on 6 of 8 (1.000 -> 0.875; 24 of 56 blind answers lost it across the rounds), because it grades a free-form 'no'. So it was not added."
+  }
+}

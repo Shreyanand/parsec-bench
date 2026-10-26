@@ -1,0 +1,150 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "ptp-grandmaster-osl-2"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "acker",
+        "any_of": [
+          "ichikawa.r",
+          "ichikawa"
+        ],
+        "ignore_case": true,
+        "asked_by": "who put the acknowledgement on it",
+        "rationale": "the entry_type 4 (acknowledgement) comment's author; the later comment is pmbeki's ordinary note"
+      },
+      {
+        "id": "ack-reason",
+        "any_of": [
+          "SR-77140",
+          "GNSS",
+          "antenna",
+          "roof work"
+        ],
+        "ignore_case": true,
+        "asked_by": "what reason they gave",
+        "rationale": "the acknowledgement comment's text"
+      },
+      {
+        "id": "expiry-date",
+        "any_of": [
+          "2026-11-27",
+          "27 Nov",
+          "Nov 27",
+          "November 27",
+          "27 November",
+          "27/11/2026",
+          "11/27/2026",
+          "27.11.2026",
+          "Friday 27"
+        ],
+        "ignore_case": true,
+        "asked_by": "at what UTC date and time it stops holding",
+        "rationale": "expire_time 1795802400 is 2026-11-27 18:00 UTC; no other comment is on the 27th",
+        "derived": true,
+        "note": "Converted from the acknowledgement comment's expire_time epoch 1795802400 (2026-11-27 18:00 UTC); the seed stores only the epoch."
+      },
+      {
+        "id": "expiry-time",
+        "any_of": [
+          "18:00",
+          "18.00",
+          "6:00 pm",
+          "6 pm",
+          "6pm",
+          "6:00pm",
+          "18h00",
+          "1800 UTC",
+          "6 p.m"
+        ],
+        "ignore_case": true,
+        "asked_by": "at what UTC date and time it stops holding",
+        "rationale": "expire_time 1795802400 is 18:00 UTC; no other stored time is 18:00",
+        "derived": true,
+        "note": "Converted from the acknowledgement comment's expire_time epoch 1795802400 (2026-11-27 18:00 UTC); the seed stores only the epoch."
+      },
+      {
+        "id": "other-note",
+        "any_of": [
+          "4.1 us",
+          "4.1us",
+          "4.1 µs",
+          "4.1µs",
+          "4.1 microsecond",
+          "4.1 μs",
+          "held flat",
+          "holding flat",
+          "has held steady",
+          "flat since",
+          "flat after",
+          "stayed flat",
+          "flat ever",
+          "not touching",
+          "leaving it be",
+          "left it alone",
+          "leave it alone",
+          "no action",
+          "not acting",
+          "watching it"
+        ],
+        "ignore_case": true,
+        "asked_by": "anything anyone else has written on that alert",
+        "rationale": "the content of pmbeki's entry_type 1 user comment on ptp-phase-err (phase error jumped to 4.1 us, held flat, watching only)"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-acker",
+        "none_of": [
+          "acknowledged by pmbeki",
+          "pmbeki acknowledged",
+          "pmbeki acked",
+          "acked by pmbeki",
+          "pmbeki put the acknowledgement",
+          "pmbeki set the acknowledgement",
+          "pmbeki's acknowledgement",
+          "pmbeki is the one who acknowledged"
+        ],
+        "ignore_case": true,
+        "rationale": "attributing the acknowledgement to the most recent commenter instead of the entry_type 4 author"
+      },
+      {
+        "id": "no-expiry",
+        "none_of": [
+          "never expires",
+          "no expiry",
+          "no expiration",
+          "without an expiry",
+          "without expiry",
+          "acknowledged indefinitely",
+          "held indefinitely",
+          "until someone removes it",
+          "until it is manually removed",
+          "until manually removed",
+          "sticky acknowledgement"
+        ],
+        "ignore_case": true,
+        "rationale": "the acknowledgement carries expire_time 2026-11-27 18:00 UTC; it lapses by itself"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

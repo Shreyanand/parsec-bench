@@ -1,0 +1,101 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "ptp-grandmaster-osl-2",
+          "filter_expr": "match(\"*ptp-phase-err*\", service.name) || match(\"*ptp*phase*\", service.display_name)",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "ptp-grandmaster-osl-2",
+          "service": "ptp-phase-err"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "expiry-date",
+        "any_of": [
+          "2026-11-27",
+          "27 Nov",
+          "Nov 27",
+          "November 27",
+          "27 November",
+          "27/11/2026",
+          "11/27/2026",
+          "27.11.2026",
+          "Friday 27"
+        ],
+        "ignore_case": true,
+        "asked_by": "at what UTC date and time it stops holding",
+        "rationale": "expire_time 1795802400 is 2026-11-27 18:00 UTC; no other comment is on the 27th",
+        "derived": true,
+        "note": "Converted from the acknowledgement comment's expire_time epoch 1795802400 (2026-11-27 18:00 UTC); the seed stores only the epoch."
+      },
+      {
+        "id": "expiry-time",
+        "any_of": [
+          "18:00",
+          "18.00",
+          "6:00 pm",
+          "6 pm",
+          "6pm",
+          "6:00pm",
+          "18h00",
+          "1800 UTC",
+          "6 p.m"
+        ],
+        "ignore_case": true,
+        "asked_by": "at what UTC date and time it stops holding",
+        "rationale": "expire_time 1795802400 is 18:00 UTC; no other stored time is 18:00",
+        "derived": true,
+        "note": "Converted from the acknowledgement comment's expire_time epoch 1795802400 (2026-11-27 18:00 UTC); the seed stores only the epoch."
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [
+      {
+        "id": "no-expiry",
+        "none_of": [
+          "never expires",
+          "no expiry",
+          "no expiration",
+          "without an expiry",
+          "without expiry",
+          "acknowledged indefinitely",
+          "held indefinitely",
+          "until someone removes it",
+          "until it is manually removed",
+          "until manually removed",
+          "sticky acknowledgement"
+        ],
+        "ignore_case": true,
+        "rationale": "the acknowledgement carries expire_time 2026-11-27 18:00 UTC; it lapses by itself"
+      }
+    ],
+    "forbidden_total": 2
+  }
+}

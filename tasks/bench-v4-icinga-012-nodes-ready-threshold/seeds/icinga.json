@@ -1,0 +1,44 @@
+{
+  "comments": [],
+  "downtimes": [],
+  "hosts": [
+    {
+      "name": "infra-grafana-cluster-us-east-1",
+      "type": "Host",
+      "attrs": {
+        "display_name": "Infra Grafana Cluster us-east-1",
+        "host_name": "infra-grafana-cluster-us-east-1",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "ocp-prod-nodes-ready",
+      "type": "Service",
+      "attrs": {
+        "display_name": "OCP Prod Nodes Ready",
+        "host_name": "infra-grafana-cluster-us-east-1",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "WARNING - 22 of 25 nodes Ready",
+          "state": 1,
+          "exit_status": 1
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "hosts": [
+    {
+      "name": "nfs-home-dub-2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "nfs-home-dub-2",
+        "host_name": "nfs-home-dub-2",
+        "address": "10.205.4.12",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "nfs-home"
+        ],
+        "last_check": 1794995880,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "nfs-home-dub-2!mount-latency",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Mount point stat() latency",
+        "host_name": "nfs-home-dub-2",
+        "state": 2,
+        "check_attempt": 3,
+        "check_command": "mount-latency",
+        "last_state_change": 1794879600,
+        "last_hard_state_change": 1794879960,
+        "last_check": 1794995760,
+        "vars": {
+          "plugin": "plugins/fs/check_mount_latency.sh",
+          "plugin_ref": "v3.4.0",
+          "crit_seconds": 5
+        },
+        "last_check_result": {
+          "output": "MOUNT CRITICAL - /home/autofs/proj stat() took 12.4 s (crit 5 s); /home/users 0.02 s; /srv/scratch 0.03 s",
+          "state": 2,
+          "exit_status": 2
+        },
+        "state_type": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "nfs-home-dub-2!nfsd-threads",
+      "type": "Service",
+      "attrs": {
+        "display_name": "nfsd thread pool",
+        "host_name": "nfs-home-dub-2",
+        "state": 0,
+        "check_attempt": 1,
+        "last_state_change": 1793869200,
+        "last_check": 1794995820,
+        "vars": {
+          "plugin": "plugins/fs/check_nfsd_threads.sh",
+          "plugin_ref": "v3.4.0"
+        },
+        "last_check_result": {
+          "output": "NFSD OK - 9 of 64 threads busy",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    }
+  ],
+  "comments": [
+    {
+      "name": "nfs-home-dub-2!mount-latency!0c7e5a91-3f2b-4d6a-b8e4-71d2a9c05f36",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "nfs-home-dub-2",
+        "service_name": "mount-latency",
+        "author": "hkowalczyk",
+        "entry_type": 1,
+        "persistent": true,
+        "entry_time": 1794752400,
+        "text": "False positive on the autofs indirect mounts - fixed in check_mount_latency.sh on main, it now skips autofs entries instead of stat()ing them and waking the automounter. Should stop alerting."
+      }
+    },
+    {
+      "name": "nfs-home-dub-2!mount-latency!9a41d3e8-6b07-4f2c-a5d9-e2b8c4170f53",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "nfs-home-dub-2",
+        "service_name": "mount-latency",
+        "author": "amensah",
+        "entry_type": 1,
+        "persistent": true,
+        "entry_time": 1794902700,
+        "text": "Back again overnight, same mount (/home/autofs/proj). Users report no slowness on /home/users."
+      }
+    },
+    {
+      "name": "nfs-home-dub-2!5d2f8b1c-a7e3-49d0-8c61-3e94f0b7a2d8",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "nfs-home-dub-2",
+        "service_name": "",
+        "author": "pdesrosiers",
+        "entry_type": 1,
+        "persistent": true,
+        "entry_time": 1794483000,
+        "text": "Kernel 5.14.0-611 rollout for the NFS home servers is planned for 2026-11-25."
+      }
+    }
+  ],
+  "downtimes": []
+}

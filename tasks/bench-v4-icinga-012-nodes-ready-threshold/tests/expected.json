@@ -1,0 +1,113 @@
+{
+  "answer": {
+    "counts": [
+      {
+        "asked_by": "Report the number of nodes the definition expects",
+        "id": "expected-nodes",
+        "nouns": [
+          "nodes",
+          "expects",
+          "expected"
+        ],
+        "rationale": "expectedNodes is in the definition; the alert output also says 'of 25', so this fact alone does not prove the github read -- crit-below does",
+        "value": 25,
+        "window": 6
+      },
+      {
+        "asked_by": "the ready count below which it warns",
+        "id": "warn-below",
+        "nouns": [
+          "warns",
+          "warning",
+          "below",
+          "warnBelowReady"
+        ],
+        "rationale": "warnBelowReady appears only in the definition",
+        "value": 24,
+        "window": 6
+      },
+      {
+        "asked_by": "say how many more nodes would have to go unready before the check turns critical",
+        "id": "margin",
+        "nouns": [
+          "nodes",
+          "more",
+          "further",
+          "additional"
+        ],
+        "rationale": "22 ready now and critBelowReady is 20, so critical needs ready < 20, i.e. 19 or fewer -- three more failures from 22, not two. Derived from both sources and stated by neither, so it cannot be copied.",
+        "value": 3,
+        "window": 6
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-severity",
+        "ignore_case": true,
+        "none_of": [
+          "is critical",
+          "already critical",
+          "CRITICAL state",
+          "in a critical"
+        ],
+        "rationale": "the service is WARNING, not CRITICAL. An agent that escalates on 3 unready nodes without reading the thresholds asserts one of these"
+      }
+    ],
+    "required": [
+      {
+        "any_of": [
+          "20",
+          "critBelowReady"
+        ],
+        "asked_by": "how many more nodes would have to go unready before the check turns critical",
+        "id": "crit-below",
+        "ignore_case": true,
+        "rationale": "critBelowReady appears ONLY in the definition and the margin cannot be computed without it"
+      }
+    ]
+  },
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  },
+  "schema": "bench/v4",
+  "tool_calls": {
+    "expected": [
+      {
+        "args": {
+          "action": "get_services",
+          "detailed": true,
+          "host": "infra-grafana-cluster-us-east-1"
+        },
+        "name": "query_icinga"
+      },
+      {
+        "args": {
+          "owner": "rhpds",
+          "path": "clusters/ocp-prod/monitoring/nodes-ready.yaml",
+          "repo": "rhdp-monitoring"
+        },
+        "name": "fetch_github_file"
+      }
+    ],
+    "forbidden": [
+      {
+        "args": {
+          "action": "search_services"
+        },
+        "name": "query_icinga"
+      },
+      {
+        "args": {
+          "action": "list_alerts"
+        },
+        "name": "query_icinga"
+      }
+    ],
+    "match": "ordered-subsequence"
+  },
+  "weights": {
+    "answer": 0.7,
+    "tool_calls": 0.3
+  }
+}

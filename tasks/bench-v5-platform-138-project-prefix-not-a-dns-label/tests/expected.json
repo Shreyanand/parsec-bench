@@ -1,0 +1,154 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "event0",
+          "job_id": 731608
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "summit_bu/coastal-sre-bootcamp/common.yaml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "refused-name",
+        "any_of": [
+          "Tidewater_Ops-m2wjr-team"
+        ],
+        "ignore_case": true,
+        "asked_by": "which name it refused",
+        "rationale": "the namespace name only the job log supplies"
+      },
+      {
+        "id": "label-rule",
+        "any_of": [
+          "RFC 1123",
+          "RFC1123",
+          "RFC-1123",
+          "DNS-1123",
+          "DNS label",
+          "uppercase",
+          "upper-case",
+          "upper case",
+          "capital",
+          "underscore",
+          "lowercase alphanumeric",
+          "lower case alphanumeric",
+          "lower-case alphanumeric",
+          "lowercase",
+          "lower case",
+          "lower-case",
+          "[a-z0-9]",
+          "\"_\"",
+          "'_'",
+          "`_`",
+          "invalid character",
+          "illegal character",
+          "disallowed character",
+          "not allowed in"
+        ],
+        "ignore_case": true,
+        "asked_by": "why OpenShift won't accept it",
+        "rationale": "the naming rule the 422 message states, or the offending characters it implies"
+      },
+      {
+        "id": "prefix-var",
+        "any_of": [
+          "team_projects_prefix"
+        ],
+        "ignore_case": true,
+        "asked_by": "where that name comes from",
+        "rationale": "the log shows the rendered name only; the variable that carries the bad prefix is named only in the github files"
+      },
+      {
+        "id": "fix-value",
+        "any_of": [
+          "tidewater-ops",
+          "tidewaterops",
+          "lowercase letters, digits and hyphens",
+          "lowercase letters, numbers and hyphens",
+          "lowercase letters and hyphens",
+          "lowercase and hyphens",
+          "lowercase with hyphens",
+          "lowercase with a hyphen",
+          "lowercase, hyphen",
+          "lower-case with hyphens",
+          "all lowercase",
+          "all lower-case",
+          "all lower case",
+          "underscore with a hyphen",
+          "underscore with a dash",
+          "underscore to a hyphen",
+          "underscore to a dash",
+          "underscore for a hyphen",
+          "underscore for a dash",
+          "| lower"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what value to use instead",
+        "rationale": "the remedy: a prefix that makes every rendered name a valid lowercase RFC 1123 label",
+        "note": "the log's 422 message gives the rule (lower case alphanumeric characters or '-') and common.yaml sets team_projects_prefix: Tidewater_Ops; lowercasing it and replacing the underscore with a hyphen (tidewater-ops) satisfies the rule."
+      }
+    ],
+    "citations": [
+      {
+        "id": "prefix-line",
+        "repo": "rhpds/agnosticv",
+        "path": "summit_bu/coastal-sre-bootcamp/common.yaml",
+        "line": 18,
+        "asked_by": "cite that line as `owner/repo:path:line`",
+        "rationale": "the line is counted from the seeded common.yaml; it proves the catalog item, not the role default (which is the valid 'bootcamp'), was read"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-cause",
+        "none_of": [
+          "name is too long",
+          "name was too long",
+          "names are too long",
+          "too long for a namespace",
+          "exceeds 63",
+          "exceeded 63",
+          "longer than 63",
+          "more than 63 characters",
+          "namespace already exists",
+          "namespaces already exist",
+          "project already exists",
+          "lacks permission",
+          "no permission to create",
+          "not allowed to create projects",
+          "not permitted to create projects"
+        ],
+        "ignore_case": true,
+        "rationale": "the 422 is a name-syntax rejection: the names are 25 characters, none existed, and no RBAC error appears; length, a collision or permissions are the plausible misreadings"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

@@ -1,0 +1,1867 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "parsec cloud tools",
+    "version": "1.0.0",
+    "description": "The cloud-inventory tools as parsec implements them, derived from vendor/parsec at 28e2c40. Six tools over five different backends: Azure Cosmos DB (query_azure_pools), the GCP Resource Manager API (query_gcp_projects), CloudTrail Lake (query_cloudtrail), cross-account AWS APIs reached by STS AssumeRole (query_aws_account), and two DynamoDB inventories (query_aws_account_db, query_marketplace_agreements). Request parameters come from each tool's input_schema in src/agent/tool_definitions.py, cross-checked against the implementation signature, which is where the recorded defaults come from -- no input_schema in this group declares a default. Response shapes come from the dict each tool's function actually assembles; where a tool dispatches to per-action helpers with different field sets, each helper's shape is its own schema rather than one schema with everything optional. Pool ids, subscription names, project ids, project tags, sandbox names, account ids, event names, environment types and classifications used as examples are all literals occurring in parsec's own source; none come from a trace export. query_cloudtrail deliberately carries no requestBody example, and the reason is not that no grounded statement exists. Exactly one complete SQL statement occurs on a single line of vendor/parsec: the bare `SELECT * FROM events` a routing smoke test hands the tool (vendor/parsec/tests/test_orchestrator_extended.py:219), which the identifier rule would ground. It is unusable as documentation -- it names `events`, so the `cloudtrail_events` -> event-data-store substitution never fires (src/tools/cloudtrail.py:239-246), and it carries no eventTime bound, so `_inject_partition_key` returns it unchanged (src/tools/cloudtrail.py:45-48, called at :248-249) and CloudTrail Lake rejects a query with no calendarday filter outright (src/tools/cloudtrail.py:30-32). Any faithful statement would have to be composed, hence ungrounded. So the query pattern is documented in the `query` property's description instead, which is prose and asserts no value the simulation could emit.",
+    "x-provenance": {
+      "parsec_pin": "28e2c40",
+      "tool_registry": {
+        "query_azure_pools": "vendor/parsec/src/agent/tool_definitions.py:195-245",
+        "query_gcp_projects": "vendor/parsec/src/agent/tool_definitions.py:246-282",
+        "query_cloudtrail": "vendor/parsec/src/agent/tool_definitions.py:419-452",
+        "query_aws_account": "vendor/parsec/src/agent/tool_definitions.py:453-504",
+        "query_marketplace_agreements": "vendor/parsec/src/agent/tool_definitions.py:505-556",
+        "query_aws_account_db": "vendor/parsec/src/agent/tool_definitions.py:557-613",
+        "x-note": "One entry range per tool, deliberately not the single span 195-613 that encloses them: that span also covers query_aws_pricing, query_cost_monitor and query_aws_capacity_manager, none of which this spec models, and an over-wide range reads as a coverage claim over tools this effort excludes."
+      },
+      "agent_prompt_security": "vendor/parsec/config/prompts/security_agent.md:189-209",
+      "agent_prompt_cost": "vendor/parsec/config/prompts/cost_agent.md:17-19"
+    }
+  },
+  "components": {
+    "schemas": {
+      "PoolUtilization": {
+        "type": "object",
+        "description": "One pool's occupancy counts, accumulated into a defaultdict whose factory sets all three keys to 0 (src/tools/azure_pools.py:38-47), so all three are always present. A subscription counts as in_use when its Cosmos document's `used` field is truthy and as available otherwise (src/tools/azure_pools.py:44-47) -- a missing `used` field therefore counts as available, not as unknown.",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Subscriptions in this pool (src/tools/azure_pools.py:43)."
+          },
+          "in_use": {
+            "type": "integer",
+            "description": "Of those, the ones with a truthy `used` (src/tools/azure_pools.py:45)."
+          },
+          "available": {
+            "type": "integer",
+            "description": "The remainder (src/tools/azure_pools.py:47)."
+          }
+        },
+        "required": [
+          "total",
+          "in_use",
+          "available"
+        ]
+      },
+      "PoolSummary": {
+        "type": "object",
+        "description": "The org-wide roll-up across pools (src/tools/azure_pools.py:55-60). Every count here is over *pool-shaped* documents only: a document whose id does not match `pool-(\\d+)-` is skipped before any accumulation (src/tools/azure_pools.py:40-42), so total_subscriptions is not the container's document count.",
+        "properties": {
+          "total_subscriptions": {
+            "type": "integer",
+            "description": "Summed per-pool totals (src/tools/azure_pools.py:49, :56)."
+          },
+          "in_use": {
+            "type": "integer",
+            "description": "Summed per-pool in_use counts (src/tools/azure_pools.py:50, :57)."
+          },
+          "available": {
+            "type": "integer",
+            "description": "total_subscriptions minus in_use, computed independently of the per-pool `available` values (src/tools/azure_pools.py:58)."
+          },
+          "pool_count": {
+            "type": "integer",
+            "description": "How many distinct pool ids were seen (src/tools/azure_pools.py:59)."
+          }
+        },
+        "required": [
+          "total_subscriptions",
+          "in_use",
+          "available",
+          "pool_count"
+        ]
+      },
+      "PoolSubscription": {
+        "x-primary-key": "azure_subscription_id",
+        "type": "object",
+        "description": "One subscription as it appears inside a `subscriptions` array. These entries are the Cosmos projection `SELECT c.id, c.used, c.projecttag` handed back unmodified (src/tools/azure_pools.py:73, :131), not a dict parsec assembles -- so a document that carries no `used` or `projecttag` field yields an entry with that key simply absent, which is why only `id` is required here. Contrast SubscriptionDetail, which parsec does normalise.",
+        "properties": {
+          "azure_subscription_id": {
+            "type": "string",
+            "description": "Storage identity for the `azure_subscriptions` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "database": {
+            "type": "string",
+            "description": "**Simulation storage scope:** the Cosmos database this subscription document is stored in -- pools, aro or roadshow. parsec never returns it per document: each database is a separate Cosmos container selected by get_cosmos_container(database=...) (src/tools/azure_pools.py:27, :66, :99, :124), so a document's database is where it lives, not a field it carries. Every action reads only the rows whose stored `database` equals the effective request `database` (default `pools`); a row stored under another database is invisible, exactly as a document in another container is. Never echoed inside a subscription entry: the response names the database once, at the top level. Not an enumeration of anything the response emits."
+          },
+          "id": {
+            "type": "string",
+            "description": "The subscription name, e.g. pool-01-273. Also the pool-membership key: _get_pool matches on the prefix `pool-<pool_id>-` (src/tools/azure_pools.py:70) and _list_pools derives the pool id from it (src/tools/azure_pools.py:19-22)."
+          },
+          "used": {
+            "type": "boolean",
+            "description": "Whether the subscription is assigned. Read only for truthiness (src/tools/azure_pools.py:44, :84), never validated as a boolean."
+          },
+          "projecttag": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The RHDP project tag this subscription is assigned to, e.g. sandbox-api (src/agent/tool_definitions.py:229-230). Nullable: nothing here substitutes a value."
+          }
+        },
+        "required": [
+          "id",
+          "azure_subscription_id",
+          "database"
+        ]
+      },
+      "SubscriptionDetail": {
+        "x-primary-key": "azure_subscription_id",
+        "type": "object",
+        "description": "The normalised single-subscription record _get_subscription builds from the full document `SELECT * FROM c WHERE c.id = ...` returns (src/tools/azure_pools.py:104, :113-119). Distinct from PoolSubscription because all three keys are always set here: `used` falls back to False and `projecttag` to null (src/tools/azure_pools.py:117-118). Only these three of the document's fields survive; everything else the document holds is dropped.",
+        "properties": {
+          "azure_subscription_id": {
+            "type": "string",
+            "description": "Storage identity for the `azure_subscriptions` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "database": {
+            "type": "string",
+            "description": "**Simulation storage scope:** the Cosmos database this subscription document is stored in -- pools, aro or roadshow. parsec never returns it per document: each database is a separate Cosmos container selected by get_cosmos_container(database=...) (src/tools/azure_pools.py:27, :66, :99, :124), so a document's database is where it lives, not a field it carries. Every action reads only the rows whose stored `database` equals the effective request `database` (default `pools`); a row stored under another database is invisible, exactly as a document in another container is. Never echoed inside a subscription entry: the response names the database once, at the top level. Not an enumeration of anything the response emits."
+          },
+          "id": {
+            "type": "string",
+            "description": "The subscription name as stored (src/tools/azure_pools.py:116). A KeyError rather than a fallback if the document lacks it, so this one is not defensive."
+          },
+          "used": {
+            "type": "boolean",
+            "description": "False when the document carries no `used` field (src/tools/azure_pools.py:117) -- absence is reported as not-in-use, not as unknown."
+          },
+          "projecttag": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Null when the document carries no `projecttag` (src/tools/azure_pools.py:118)."
+          }
+        },
+        "required": [
+          "id",
+          "used",
+          "projecttag",
+          "azure_subscription_id",
+          "database"
+        ]
+      },
+      "AzurePoolListResult": {
+        "type": "object",
+        "description": "action=list_pools: every pool's occupancy plus an org-wide roll-up (src/tools/azure_pools.py:52-61). Reads only the three-field projection, so no subscription list is returned at all.",
+        "properties": {
+          "database": {
+            "type": "string",
+            "enum": [
+              "pools",
+              "aro",
+              "roadshow"
+            ],
+            "description": "Echo of the requested Cosmos database (src/tools/azure_pools.py:53). Constrained to an enum here, unlike most echoed fields in these specs, because this one *is* an emission guarantee rather than an input contract: query_azure_pools rejects any value outside VALID_DATABASES in-band before dispatching (src/tools/azure_pools.py:12, :156-159), so no other value can reach this field."
+          },
+          "pools": {
+            "type": "object",
+            "description": "Keyed by pool id -- the digits between the two dashes of a subscription name, e.g. 01 (src/tools/azure_pools.py:19-22) -- and sorted by that key (src/tools/azure_pools.py:54).",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/PoolUtilization"
+            }
+          },
+          "summary": {
+            "$ref": "#/components/schemas/PoolSummary"
+          }
+        },
+        "required": [
+          "database",
+          "pools",
+          "summary"
+        ]
+      },
+      "AzurePoolDetail": {
+        "type": "object",
+        "description": "action=get_pool: one pool's subscriptions with their status (src/tools/azure_pools.py:85-93). Note the two counting conventions that differ from this spec's other paginated shapes: `total` is the *full* match count while `subscriptions` is capped at max_results (src/tools/azure_pools.py:88-89), and `truncated` uses a strict `>` (src/tools/azure_pools.py:92) rather than the `>=` that query_gcp_projects, query_aws_account_db and query_marketplace_agreements use -- so a result holding exactly max_results matches reports truncated false here and true there.",
+        "properties": {
+          "database": {
+            "type": "string",
+            "enum": [
+              "pools",
+              "aro",
+              "roadshow"
+            ],
+            "description": "Echo of the requested Cosmos database (src/tools/azure_pools.py:86); see AzurePoolListResult.database for why an enum is justified here."
+          },
+          "pool_id": {
+            "type": "string",
+            "description": "Echo of the requested pool id (src/tools/azure_pools.py:87). Not validated against anything: an id matching no subscription yields an empty `subscriptions` array with zero counts, not an error."
+          },
+          "subscriptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PoolSubscription"
+            },
+            "description": "Sorted by the trailing number of the subscription name, with a name that has none sorting as 0 (src/tools/azure_pools.py:78-82), then capped at max_results (src/tools/azure_pools.py:88)."
+          },
+          "total": {
+            "type": "integer",
+            "description": "All subscriptions whose id starts with `pool-<pool_id>-`, before the cap (src/tools/azure_pools.py:89), so this may exceed the length of `subscriptions`."
+          },
+          "in_use": {
+            "type": "integer",
+            "description": "Of those, the ones with a truthy `used` -- counted over the full match set, not the capped page (src/tools/azure_pools.py:84, :90)."
+          },
+          "available": {
+            "type": "integer",
+            "description": "total minus in_use (src/tools/azure_pools.py:91)."
+          },
+          "truncated": {
+            "type": "boolean",
+            "description": "True only when strictly more matches existed than max_results (src/tools/azure_pools.py:92)."
+          }
+        },
+        "required": [
+          "database",
+          "pool_id",
+          "subscriptions",
+          "total",
+          "in_use",
+          "available",
+          "truncated"
+        ]
+      },
+      "AzureSubscriptionLookup": {
+        "type": "object",
+        "description": "action=get_subscription: one subscription by exact name (src/tools/azure_pools.py:113-120). A name that matches nothing is not this shape -- it is the in-band error envelope (src/tools/azure_pools.py:109-110), which is why `subscription` is required rather than nullable.",
+        "properties": {
+          "database": {
+            "type": "string",
+            "enum": [
+              "pools",
+              "aro",
+              "roadshow"
+            ],
+            "description": "Echo of the requested Cosmos database (src/tools/azure_pools.py:114); see AzurePoolListResult.database."
+          },
+          "subscription": {
+            "$ref": "#/components/schemas/SubscriptionDetail"
+          }
+        },
+        "required": [
+          "database",
+          "subscription"
+        ]
+      },
+      "AzureProjectSearchResult": {
+        "type": "object",
+        "description": "action=search_by_project: every subscription assigned to one project tag (src/tools/azure_pools.py:138-144). The match is exact string equality inside the Cosmos query (src/tools/azure_pools.py:131), not a contains match -- unlike several filters on the two DynamoDB tools in this spec.",
+        "properties": {
+          "database": {
+            "type": "string",
+            "enum": [
+              "pools",
+              "aro",
+              "roadshow"
+            ],
+            "description": "Echo of the requested Cosmos database (src/tools/azure_pools.py:139); see AzurePoolListResult.database."
+          },
+          "project_tag": {
+            "type": "string",
+            "description": "Echo of the requested tag (src/tools/azure_pools.py:140). A tag matching nothing yields an empty array and a count of 0, not an error."
+          },
+          "subscriptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PoolSubscription"
+            },
+            "description": "Sorted by id (src/tools/azure_pools.py:136), then capped at max_results (src/tools/azure_pools.py:141)."
+          },
+          "count": {
+            "type": "integer",
+            "description": "The full match count before the cap (src/tools/azure_pools.py:142), so it may exceed the length of `subscriptions`."
+          },
+          "truncated": {
+            "type": "boolean",
+            "description": "True only when strictly more matches existed than max_results (src/tools/azure_pools.py:143)."
+          }
+        },
+        "required": [
+          "database",
+          "project_tag",
+          "subscriptions",
+          "count",
+          "truncated"
+        ]
+      },
+      "QueryAzurePoolsRequest": {
+        "type": "object",
+        "description": "The tool's declared input_schema (src/agent/tool_definitions.py:205-243). The two defaults recorded below come from the implementation signature (src/tools/azure_pools.py:147-154), not from the input_schema, which declares none -- though the docstrings state both (src/agent/tool_definitions.py:236, :240). Which of the optional parameters is required in practice depends on `action`, and the requirement is enforced in-band rather than by this schema (src/tools/azure_pools.py:168-179).",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "list_pools",
+              "get_pool",
+              "get_subscription",
+              "search_by_project"
+            ],
+            "description": "Which query to run (src/agent/tool_definitions.py:208-217). Each value returns a different response shape. Enforced at run time: an unrecognised value returns the in-band error envelope without touching Cosmos (src/tools/azure_pools.py:182-185)."
+          },
+          "pool_id": {
+            "type": "string",
+            "description": "Pool id for get_pool, e.g. 01 (src/agent/tool_definitions.py:218-221). Required for that action and refused in-band when missing (src/tools/azure_pools.py:168-169). Used as a name prefix, `pool-<pool_id>-`, not as a stored field (src/tools/azure_pools.py:70)."
+          },
+          "subscription_name": {
+            "type": "string",
+            "description": "Subscription name for get_subscription, e.g. pool-01-273 (src/agent/tool_definitions.py:222-225). Required for that action (src/tools/azure_pools.py:173-174) and matched by exact equality (src/tools/azure_pools.py:104)."
+          },
+          "project_tag": {
+            "type": "string",
+            "description": "Project tag for search_by_project, e.g. sandbox-api (src/agent/tool_definitions.py:226-232). Required for that action (src/tools/azure_pools.py:178-179)."
+          },
+          "database": {
+            "type": "string",
+            "enum": [
+              "pools",
+              "aro",
+              "roadshow"
+            ],
+            "default": "pools",
+            "description": "Which Cosmos database to query: the main pool, ARO clusters, or event roadshows (src/agent/tool_definitions.py:233-237, :203). Validated before anything else happens, so this enum is a run-time constraint and not merely a declared contract (src/tools/azure_pools.py:12, :156-159)."
+          },
+          "max_results": {
+            "type": "integer",
+            "default": 100,
+            "description": "Cap on the returned `subscriptions` array for get_pool and search_by_project (src/agent/tool_definitions.py:238-241). Silently clamped to 500 rather than rejected (src/tools/azure_pools.py:13, :161). Ignored by list_pools and get_subscription, which take no such argument (src/tools/azure_pools.py:165, :175)."
+          }
+        },
+        "required": [
+          "action"
+        ]
+      },
+      "GcpProjectSummary": {
+        "x-primary-key": "gcp_project_id",
+        "type": "object",
+        "description": "One project as _list_projects projects it (src/tools/gcp_projects.py:41-49). Built inline in that loop from the Resource Manager search result. Five fields, always all present; `parent` is not among them, which is the one difference from GcpProjectDetail.",
+        "properties": {
+          "gcp_project_id": {
+            "type": "string",
+            "description": "Storage identity for the `gcp_projects` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "project_id": {
+            "type": "string",
+            "description": "The project id, e.g. cluster-4d99p or openenv-2v9r6 (src/agent/tool_definitions.py:249-253)."
+          },
+          "name": {
+            "type": "string",
+            "description": "The project's display name (src/tools/gcp_projects.py:44)."
+          },
+          "state": {
+            "type": "string",
+            "description": "The lifecycle state name as the Resource Manager client reports it (src/tools/gcp_projects.py:38). Deliberately not an enum: parsec neither validates nor maps this value, so the emitted set is the GCP API's own state enumeration, which is wider than the two values the request's state_filter offers. The `state_filter` comparison is case-insensitive on both sides (src/tools/gcp_projects.py:39) but the stored value is whatever the API emitted."
+          },
+          "create_time": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "str() of the API's timestamp, or null when it is falsy (src/tools/gcp_projects.py:46). Not guaranteed to be ISO 8601: it is whatever the client library's timestamp type stringifies to, so treat it as opaque."
+          },
+          "labels": {
+            "type": "object",
+            "description": "The project's labels, always an object -- an empty one when the API reported none (src/tools/gcp_projects.py:47).",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "project_id",
+          "name",
+          "state",
+          "create_time",
+          "labels",
+          "gcp_project_id"
+        ]
+      },
+      "GcpProjectListResult": {
+        "type": "object",
+        "description": "action=list_projects: the projects under the open-envs folder (src/tools/gcp_projects.py:54-61). The state filter is applied client-side, before the cap (src/tools/gcp_projects.py:39-40), so every count below is over the filtered set.",
+        "properties": {
+          "folder_id": {
+            "type": "string",
+            "description": "The folder actually searched. Never empty: the configured value is used only when truthy, and otherwise it falls back to the literal default folder id 178296823511 hard-coded in the module (src/tools/gcp_projects.py:10, :17). So an unconfigured deployment still reports a concrete folder here rather than an empty string, and a reader cannot tell the two apart from this field alone."
+          },
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GcpProjectSummary"
+            },
+            "description": "In whatever order search_projects returned, filtered by state and cut off at max_results (src/tools/gcp_projects.py:34-51). No sort is applied."
+          },
+          "count": {
+            "type": "integer",
+            "description": "len(projects) after filtering and capping (src/tools/gcp_projects.py:57) -- unlike the two Azure pool shapes, this is the returned length, not the full match count, because the loop stops collecting at the cap rather than counting past it."
+          },
+          "active": {
+            "type": "integer",
+            "description": "How many of the returned projects have state exactly ACTIVE (src/tools/gcp_projects.py:53, :58). An exact string comparison, unlike the case-insensitive state_filter test."
+          },
+          "delete_requested": {
+            "type": "integer",
+            "description": "count minus active (src/tools/gcp_projects.py:59). Read the name carefully: it is *every non-ACTIVE state*, not only DELETE_REQUESTED, so any other state the API can report is counted here too."
+          },
+          "truncated": {
+            "type": "boolean",
+            "description": "len(projects) >= max_results (src/tools/gcp_projects.py:60), evaluated after the loop broke at the cap. True whenever the cap was exactly reached, including the case where the folder held exactly max_results matching projects and nothing was actually dropped."
+          }
+        },
+        "required": [
+          "folder_id",
+          "projects",
+          "count",
+          "active",
+          "delete_requested",
+          "truncated"
+        ]
+      },
+      "GcpProjectDetail": {
+        "x-primary-key": "gcp_project_id",
+        "type": "object",
+        "description": "action=get_project: one project by id (src/tools/gcp_projects.py:73-80). GcpProjectSummary's five fields plus `parent`. A project id that does not resolve is not this shape -- the helper catches its own lookup failure and returns the in-band error envelope (src/tools/gcp_projects.py:68-71), which is the only place in this spec where a helper swallows an exception that the tool-level handler would otherwise have reported.",
+        "properties": {
+          "gcp_project_id": {
+            "type": "string",
+            "description": "Storage identity for the `gcp_projects` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "project_id": {
+            "type": "string",
+            "description": "As the API reports it (src/tools/gcp_projects.py:74), not necessarily byte-identical to the requested id."
+          },
+          "name": {
+            "type": "string",
+            "description": "The project's display name (src/tools/gcp_projects.py:75)."
+          },
+          "state": {
+            "type": "string",
+            "description": "The lifecycle state name (src/tools/gcp_projects.py:76). Not an enum, for the reason given on GcpProjectSummary.state."
+          },
+          "create_time": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "str() of the API's timestamp, or null (src/tools/gcp_projects.py:77)."
+          },
+          "labels": {
+            "type": "object",
+            "description": "Always an object, empty when the API reported none (src/tools/gcp_projects.py:78).",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "parent": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The parent resource, or null when falsy (src/tools/gcp_projects.py:79). Present only on this shape -- _list_projects does not project it."
+          }
+        },
+        "required": [
+          "project_id",
+          "name",
+          "state",
+          "create_time",
+          "labels",
+          "parent",
+          "gcp_project_id"
+        ]
+      },
+      "QueryGcpProjectsRequest": {
+        "type": "object",
+        "description": "The tool's declared input_schema (src/agent/tool_definitions.py:255-280). The one default recorded below is the implementation signature's (src/tools/gcp_projects.py:83-87); the input_schema declares none, though its docstring states it (src/agent/tool_definitions.py:277).",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "list_projects",
+              "get_project"
+            ],
+            "description": "Which query to run (src/agent/tool_definitions.py:258-265). Enforced at run time: an unrecognised value returns the in-band error envelope without calling GCP (src/tools/gcp_projects.py:101-102)."
+          },
+          "project_id": {
+            "type": "string",
+            "description": "Project id for get_project, e.g. cluster-4d99p (src/agent/tool_definitions.py:266-269). Required for that action and refused in-band when missing (src/tools/gcp_projects.py:97-98). Looked up as `projects/<project_id>` (src/tools/gcp_projects.py:69)."
+          },
+          "state_filter": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "DELETE_REQUESTED"
+            ],
+            "description": "Restrict list_projects to one lifecycle state (src/agent/tool_definitions.py:270-274). This enum states the declared input contract, not a validated one: the comparison is a case-insensitive equality against whatever the API reported (src/tools/gcp_projects.py:39), so any other state name would simply match nothing rather than be rejected. Omit for all states. Ignored by get_project, which takes no such argument (src/tools/gcp_projects.py:99)."
+          },
+          "max_results": {
+            "type": "integer",
+            "default": 100,
+            "description": "Cap on the returned project list (src/agent/tool_definitions.py:275-278). Silently clamped to 500 (src/tools/gcp_projects.py:11, :90). Ignored by get_project."
+          }
+        },
+        "required": [
+          "action"
+        ]
+      },
+      "CloudTrailQueryResult": {
+        "type": "object",
+        "description": "A finished CloudTrail Lake query's rows (src/tools/cloudtrail.py:209-215). Two success returns, not one: the main assembly and an early return for a query that produced no rows at all (src/tools/cloudtrail.py:175-181). They differ by exactly one key -- the empty return omits `truncated` -- so `truncated` is declared optional here and `required` holds only the four keys both returns set. The rows are the query's own projection, so this schema cannot describe their columns; the tool's own docstring commits to nothing more (src/tools/cloudtrail.py:225-226) and parsec's agent prompt describes rows only as an array of flat dicts (config/prompts/security_agent.md:191-192).",
+        "properties": {
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Column names taken from the *first* returned row, which CloudTrail Lake sends as a header (src/tools/cloudtrail.py:184-185). Empty on the no-rows return (src/tools/cloudtrail.py:177). Order follows the header's cell order, i.e. the query's SELECT list."
+          },
+          "rows": {
+            "type": "array",
+            "description": "The data rows, header excluded (src/tools/cloudtrail.py:189). Each row is flattened from CloudTrail Lake's `[{column: value}, ...]` form into one object per row (src/tools/cloudtrail.py:190-202). Values are strings as the service returned them, with one exception: a `requestParameters` or `responseElements` cell whose value looks like a Java-style map (starts with `{` and contains `=`) is parsed into an object of top-level key/value pairs, both sides trimmed, nesting not handled (src/tools/cloudtrail.py:110-127, :193-199). So the same column can be a string in one response and an object in another. No item schema is declared because the columns are whatever the caller's SQL selected.",
+            "items": {
+              "type": "object"
+            }
+          },
+          "row_count": {
+            "type": "integer",
+            "description": "len(rows) after the 500-row cut, not the number of rows the query matched (src/tools/cloudtrail.py:205-212). 0 on the no-rows return (src/tools/cloudtrail.py:179)."
+          },
+          "bytes_scanned": {
+            "type": "integer",
+            "description": "The finished query's BytesScanned statistic, or 0 when the service reported no QueryStatistics (src/tools/cloudtrail.py:143-144). 0 is therefore not evidence that nothing was scanned."
+          },
+          "truncated": {
+            "type": "boolean",
+            "description": "True when more than 500 data rows came back and the array was cut to 500 (src/tools/cloudtrail.py:16, :205-207). Absent -- not false -- on the no-rows return (src/tools/cloudtrail.py:175-181), which is why it is not required. Note this cap is independent of max_results: max_results bounds what the service is asked for, MAX_ROWS bounds what is returned."
+          }
+        },
+        "required": [
+          "columns",
+          "rows",
+          "row_count",
+          "bytes_scanned"
+        ]
+      },
+      "QueryCloudtrailRequest": {
+        "type": "object",
+        "description": "The tool's declared input_schema (src/agent/tool_definitions.py:432-450). The one default recorded below is the implementation signature's (src/tools/cloudtrail.py:218); the input_schema declares none, though its docstring states it (src/agent/tool_definitions.py:447). This is the only tool in this spec with no `action` parameter.",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "A SELECT statement against CloudTrail Lake, written as `FROM cloudtrail_events`; the tool substitutes the configured event data store id for that table name before running it (src/agent/tool_definitions.py:435-444, substituted at src/tools/cloudtrail.py:241-246). Only SELECT is accepted -- anything else, tested after stripping whitespace and a leading `(`, returns the in-band error envelope (src/tools/cloudtrail.py:230-232). The statement is then rewritten twice more, both silently: a `calendarday` partition-key predicate is derived from each `eventTime` comparison and injected after the first WHERE, and those `eventTime` literals are normalised from ISO form to `YYYY-MM-DD HH:MM:SS` because the backend rejects the `T` separator (src/tools/cloudtrail.py:27-81); and a bare `requestParameters` or `responseElements` used with LIKE is wrapped in CAST(CAST(... AS JSON) AS varchar) (src/tools/cloudtrail.py:93-107). Both rewrites are no-ops when their trigger is absent -- in particular, a query with no `eventTime` comparison gets no `calendarday` predicate and is likely to be rejected by the backend, which is why parsec's own guidance is to always include one (src/agent/tool_definitions.py:427, :442). The key columns and the query pattern parsec documents for this tool are at config/prompts/security_agent.md:36-45 and config/prompts/security_agent.md:167-174; no requestBody example is declared for this operation because a composed SQL statement would be a spec literal that occurs nowhere in vendor/parsec."
+          },
+          "max_results": {
+            "type": "integer",
+            "default": 100,
+            "description": "Rows to ask the service for per page (src/agent/tool_definitions.py:445-448). Silently clamped to 500 rather than rejected (src/tools/cloudtrail.py:16, :255). It bounds both MaxQueryResults and the pagination loop (src/tools/cloudtrail.py:139, :164-168); the returned array is separately cut at 500 (src/tools/cloudtrail.py:205-207)."
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "AwsAccountEnvelope": {
+        "type": "object",
+        "description": "The three keys query_aws_account adds to *whatever* its dispatch returned (src/tools/aws_account.py:449-453). They are assigned onto the returned dict in place, after the fact, so they accompany a success payload and an error dict alike -- an inspection that failed to assume the role still carries account_id, action and region beside its `error`. Only the two errors the tool raises before or outside that assignment lack them: the account-id format rejection (src/tools/aws_account.py:446-447) and the outer exception handler (src/tools/aws_account.py:455-457). parsec's own prompt states the composition the same way -- `{account_id, action, region, ...action-specific fields}` (config/prompts/security_agent.md:194-195). This schema is therefore never a response on its own; every branch of the operation's response composes it with allOf.",
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "Echo of the requested 12-digit account id (src/tools/aws_account.py:450). Guaranteed 12 digits on this shape, because a value failing that test returns the error envelope before dispatch (src/tools/aws_account.py:446-447)."
+          },
+          "action": {
+            "type": "string",
+            "description": "Echo of the requested action (src/tools/aws_account.py:451). Deliberately not an enum: the assignment is verbatim and happens *after* dispatch, so an action outside the input contract is echoed here alongside the `Unknown action` error the dispatcher returned for it (src/tools/aws_account.py:420-422). An enum would assert a guarantee the source does not make. The four values the input contract permits are on QueryAwsAccountRequest.action."
+          },
+          "region": {
+            "type": "string",
+            "description": "Echo of the requested region, defaulting to us-east-1 (src/tools/aws_account.py:430, :452). Unvalidated, and not an enum for the same reason. It reaches only the EC2, CloudTrail and IAM clients; the marketplace client is pinned to us-east-1 regardless of this value (src/tools/aws_account.py:340), so for describe_marketplace this field describes the request, not where the data came from."
+          }
+        },
+        "required": [
+          "account_id",
+          "action",
+          "region"
+        ]
+      },
+      "Ec2Instance": {
+        "x-primary-key": "ec2_instance_id",
+        "type": "object",
+        "description": "One EC2 instance as _describe_instances projects it (src/tools/aws_account.py:136-146). Built inline in that loop over every reservation of every page. All seven keys are always present; three of them substitute an empty value rather than being omitted, so absence is reported as an empty string, not as null.",
+        "properties": {
+          "region": {
+            "type": "string",
+            "description": "AWS region the instance is in -- always the `az` minus its trailing letter, since an availability zone is named region+letter (`ap-south-1b` is in `ap-south-1`). **Simulation storage scope:** `describe_instances` builds a per-region EC2 client from the request's `region`, which defaults to `us-east-1` (vendor/parsec/src/tools/aws_account.py:115-117, :430), and returns only instances in that region. Declared as its own field rather than left to be derived from `az`, because a derivation stated only in prose was not honoured: measured 2026-09-14, a request for `ap-south-1` returned `instances: []` against two instances seeded in `ap-south-1a`/`1b`."
+          },
+          "account_id": {
+            "type": "string",
+            "description": "AWS account this record belongs to. **Simulation storage scope:** every `query_aws_account` action resolves an `account_id` and then reads this collection *within that account*, so a row without it is unreachable and the action returns an empty list. parsec does not repeat the account per record -- it is the request parameter, echoed once at the top of the response -- but the store needs it to know which account a row belongs to. Measured 2026-09-14: with this field absent, describe_instances returned `instances: []` against two seeded instances and list_users returned `users: []` against a seeded user, while marketplace_agreements -- the one account-scoped entity that already declared it -- returned its seeded row correctly."
+          },
+          "ec2_instance_id": {
+            "type": "string",
+            "description": "Storage identity for the `ec2_instances` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "instance_id": {
+            "type": "string",
+            "description": "The instance id (src/tools/aws_account.py:138). Read without a fallback, so a page lacking it raises rather than yielding a partial entry -- and that raise is reported in-band by the tool's outer handler."
+          },
+          "instance_type": {
+            "type": "string",
+            "description": "The instance type, e.g. g4dn.xlarge (src/tools/aws_account.py:139). Also read without a fallback."
+          },
+          "state": {
+            "type": "string",
+            "description": "The instance state name as EC2 reports it (src/tools/aws_account.py:140). Not an enum: parsec neither validates nor maps it, and the request's `filters.state` is passed straight through to EC2 as an instance-state-name filter (src/tools/aws_account.py:123-124), so the emitted set is EC2's, not parsec's."
+          },
+          "launch_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "isoformat() of the API's LaunchTime (src/tools/aws_account.py:141). Read without a fallback, unlike the event and IAM timestamps elsewhere in this tool, which defend against absence."
+          },
+          "az": {
+            "type": "string",
+            "description": "The availability zone, or an empty string when Placement or its AvailabilityZone is absent (src/tools/aws_account.py:142)."
+          },
+          "public_ip": {
+            "type": "string",
+            "description": "The public IPv4 address, or an empty string when the instance has none (src/tools/aws_account.py:143) -- which is the common case for a private instance, so an empty string here is not an error signal."
+          },
+          "tags": {
+            "type": "object",
+            "description": "The instance's tags flattened from the API's [{Key, Value}] list into an object, always present and empty when the instance is untagged (src/tools/aws_account.py:144).",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "instance_id",
+          "instance_type",
+          "state",
+          "launch_time",
+          "az",
+          "public_ip",
+          "tags",
+          "ec2_instance_id",
+          "account_id",
+          "region"
+        ]
+      },
+      "DescribeInstancesResult": {
+        "type": "object",
+        "description": "action=describe_instances (src/tools/aws_account.py:148). One region only -- parsec's own prompt says so and tells the agent to work out which regions to check first (config/prompts/security_agent.md:72-75). There is no truncation flag: the array is cut at 500 while the count is not, so a mismatch between them is the only signal that anything was dropped.",
+        "properties": {
+          "instance_count": {
+            "type": "integer",
+            "description": "Every instance the paginator yielded, before the cut (src/tools/aws_account.py:148)."
+          },
+          "instances": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ec2Instance"
+            },
+            "description": "The first 500 (src/tools/aws_account.py:148), in the API's own order across pages and reservations -- no sort is applied."
+          }
+        },
+        "required": [
+          "instance_count",
+          "instances"
+        ]
+      },
+      "EventResource": {
+        "type": "object",
+        "description": "One resource named by a CloudTrail event, built inline in a list comprehension (src/tools/aws_account.py:175-178). Both keys are always present and both fall back to an empty string.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The API's ResourceType, or an empty string (src/tools/aws_account.py:176)."
+          },
+          "name": {
+            "type": "string",
+            "description": "The API's ResourceName, or an empty string (src/tools/aws_account.py:176)."
+          }
+        },
+        "required": [
+          "type",
+          "name"
+        ]
+      },
+      "AccountCloudTrailEvent": {
+        "type": "object",
+        "description": "One event as _lookup_events projects it (src/tools/aws_account.py:164-179). Distinct from a CloudTrailQueryResult row: this is parsec's own six-field projection of the per-account LookupEvents API, whereas those rows are whatever a caller's SQL selected. Every key is always present, and each of the five scalars falls back to an empty string.",
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "AWS account this record belongs to. **Simulation storage scope:** every `query_aws_account` action resolves an `account_id` and then reads this collection *within that account*, so a row without it is unreachable and the action returns an empty list. parsec does not repeat the account per record -- it is the request parameter, echoed once at the top of the response -- but the store needs it to know which account a row belongs to. Measured 2026-09-14: with this field absent, describe_instances returned `instances: []` against two seeded instances and list_users returned `users: []` against a seeded user, while marketplace_agreements -- the one account-scoped entity that already declared it -- returned its seeded row correctly."
+          },
+          "event_id": {
+            "type": "string",
+            "description": "The API's EventId, or an empty string (src/tools/aws_account.py:166)."
+          },
+          "event_name": {
+            "type": "string",
+            "description": "The API action, e.g. RunInstances (src/tools/aws_account.py:167). Not an enum: it is whatever CloudTrail recorded. The events parsec's own guidance suggests searching for are listed at config/prompts/security_agent.md:47-53."
+          },
+          "event_time": {
+            "type": "string",
+            "description": "isoformat() of the API's EventTime when it has one, otherwise str() of whatever was there -- which is the empty string when the key is absent (src/tools/aws_account.py:168-172). So this is not guaranteed to be a parseable timestamp, and `format: date-time` is deliberately not claimed."
+          },
+          "username": {
+            "type": "string",
+            "description": "The API's Username, or an empty string (src/tools/aws_account.py:173). Absent for many event types, so an empty string here does not mean an anonymous caller."
+          },
+          "event_source": {
+            "type": "string",
+            "description": "The AWS service endpoint that recorded the event, or an empty string (src/tools/aws_account.py:174)."
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventResource"
+            },
+            "description": "The event's resources, always present and empty when the API listed none (src/tools/aws_account.py:175-178)."
+          }
+        },
+        "required": [
+          "event_id",
+          "event_name",
+          "event_time",
+          "username",
+          "event_source",
+          "resources",
+          "account_id"
+        ]
+      },
+      "LookupEventsResult": {
+        "type": "object",
+        "description": "action=lookup_events (src/tools/aws_account.py:182). A single page of at most 50 events, with no pagination and no truncation flag: MaxResults is hard-coded at 50 and lookup_events is called exactly once (src/tools/aws_account.py:155, :162), so event_count can never exceed 50 and a quiet result is indistinguishable from a truncated one. The window is the account's own recent CloudTrail history -- parsec's prompt calls it the last few hours and prefers this over query_cloudtrail for a single account (config/prompts/security_agent.md:76-77, :88-90). No time parameter is exposed at all.",
+        "properties": {
+          "event_count": {
+            "type": "integer",
+            "description": "len(events) (src/tools/aws_account.py:182); at most 50."
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountCloudTrailEvent"
+            },
+            "description": "In the API's own order (src/tools/aws_account.py:163-180); no sort is applied."
+          }
+        },
+        "required": [
+          "event_count",
+          "events"
+        ]
+      },
+      "IamAccessKey": {
+        "type": "object",
+        "description": "One access key of one IAM user, built inline (src/tools/aws_account.py:199-205). All three keys are read without a fallback. Note what is absent by design: no secret material is ever read, only the key id, its status and its creation date.",
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "AWS account this record belongs to. **Simulation storage scope:** every `query_aws_account` action resolves an `account_id` and then reads this collection *within that account*, so a row without it is unreachable and the action returns an empty list. parsec does not repeat the account per record -- it is the request parameter, echoed once at the top of the response -- but the store needs it to know which account a row belongs to. Measured 2026-09-14: with this field absent, describe_instances returned `instances: []` against two seeded instances and list_users returned `users: []` against a seeded user, while marketplace_agreements -- the one account-scoped entity that already declared it -- returned its seeded row correctly."
+          },
+          "access_key_id": {
+            "type": "string",
+            "description": "The access key id (src/tools/aws_account.py:201)."
+          },
+          "status": {
+            "type": "string",
+            "description": "The key's status as IAM reports it (src/tools/aws_account.py:202). Not an enum: parsec passes it through unvalidated, so the emitted set is IAM's."
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "isoformat() of the key's CreateDate (src/tools/aws_account.py:203)."
+          }
+        },
+        "required": [
+          "access_key_id",
+          "status",
+          "created",
+          "account_id"
+        ]
+      },
+      "IamUser": {
+        "x-primary-key": "iam_user_id",
+        "type": "object",
+        "description": "One IAM user as _list_users projects it (src/tools/aws_account.py:209-221). Five keys, always all present.",
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "AWS account this record belongs to. **Simulation storage scope:** every `query_aws_account` action resolves an `account_id` and then reads this collection *within that account*, so a row without it is unreachable and the action returns an empty list. parsec does not repeat the account per record -- it is the request parameter, echoed once at the top of the response -- but the store needs it to know which account a row belongs to. Measured 2026-09-14: with this field absent, describe_instances returned `instances: []` against two seeded instances and list_users returned `users: []` against a seeded user, while marketplace_agreements -- the one account-scoped entity that already declared it -- returned its seeded row correctly."
+          },
+          "iam_user_id": {
+            "type": "string",
+            "description": "Storage identity for the `iam_users` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "username": {
+            "type": "string",
+            "description": "The user name (src/tools/aws_account.py:193, :210), also the key used to fetch the access keys."
+          },
+          "user_id": {
+            "type": "string",
+            "description": "The IAM user id (src/tools/aws_account.py:211)."
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "isoformat() of the user's CreateDate (src/tools/aws_account.py:213)."
+          },
+          "password_last_used": {
+            "type": "string",
+            "description": "isoformat() of PasswordLastUsed when present, otherwise str() of the fallback, i.e. an empty string (src/tools/aws_account.py:214-218). An empty string means the user has never used a console password, which is normal for a service account -- and `format: date-time` is deliberately not claimed for that reason."
+          },
+          "access_keys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IamAccessKey"
+            },
+            "description": "Always present. Empty both when the user has no keys and when the per-user list_access_keys call failed: that ClientError is swallowed and the list left as it stands (src/tools/aws_account.py:196-207), so an empty array is not proof the user has no keys."
+          }
+        },
+        "required": [
+          "username",
+          "user_id",
+          "created",
+          "password_last_used",
+          "access_keys",
+          "iam_user_id",
+          "account_id"
+        ]
+      },
+      "ListUsersResult": {
+        "type": "object",
+        "description": "action=list_users (src/tools/aws_account.py:223). Same shape of cap as describe_instances: the array is cut at 500 while the count is not, and there is no truncation flag.",
+        "properties": {
+          "user_count": {
+            "type": "integer",
+            "description": "Every user the paginator yielded, before the cut (src/tools/aws_account.py:223)."
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IamUser"
+            },
+            "description": "The first 500 (src/tools/aws_account.py:223), in the API's own order."
+          }
+        },
+        "required": [
+          "user_count",
+          "users"
+        ]
+      },
+      "AgreementTerm": {
+        "type": "object",
+        "description": "One accepted term of a marketplace agreement, built inline while walking the GetAgreementTerms response (src/tools/aws_account.py:293-300). Only `type` is always present; the other four are added conditionally from the term's own payload, so a term contributes only the fields it actually declares.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The term's key in the API's acceptedTerms entry (src/tools/aws_account.py:290, :293). The four types the classifier branches on are recurringPaymentTerm, renewalTerm, fixedUpfrontPricingTerm and configurableUpfrontPricingTerm (src/tools/aws_account.py:230-237); any other type still appears here, it just does not affect the classification. Not an enum: the value is the API's map key, unvalidated."
+          },
+          "currency": {
+            "type": "string",
+            "description": "Present only when the term declares currencyCode (src/tools/aws_account.py:294-295)."
+          },
+          "price": {
+            "description": "Present only when the term declares price (src/tools/aws_account.py:296-297). No type is claimed: the value is passed through from the API without conversion, unlike the agreement-level cost which is coerced to a float."
+          },
+          "duration": {
+            "description": "Present only when the term declares durationValue (src/tools/aws_account.py:298-299). Passed through untyped, as with price."
+          },
+          "duration_type": {
+            "type": "string",
+            "description": "The term's durationType, or an empty string. Set only alongside `duration` (src/tools/aws_account.py:300), so it never appears on its own."
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "MarketplaceAgreementDetail": {
+        "x-primary-key": "marketplace_agreement_id",
+        "type": "object",
+        "description": "One agreement as _enrich_agreement returns it (src/tools/aws_account.py:243-331). This schema covers *both* of that function's outcomes, which is why only `status` is required. On the success path the seven keys agreement_id, status, product_id, offer_type, agreement_start, agreement_end and classification are always set (src/tools/aws_account.py:313-321) and the remaining four are added only when their value exists (src/tools/aws_account.py:322-329). On any of the three DescribeAgreement failure paths the entry is just `status` plus an `error` string -- NOT_FOUND, the raw AccessDeniedException or ThrottlingException code, or ERROR_ followed by whatever other code came back (src/tools/aws_account.py:247-254) -- and such an entry still occupies a slot in the enclosing `agreements` array rather than being dropped. `error` is not declared as a property here because this spec models the error envelope inline in each operation's response rather than as a schema field; on this nested shape that means a two-key failure entry is described by prose only, which is a real limitation of that convention.",
+        "properties": {
+          "marketplace_agreement_id": {
+            "type": "string",
+            "description": "Storage identity for the `marketplace_agreements` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "agreement_id": {
+            "type": "string",
+            "description": "The requested agreement id, echoed rather than read back from the API (src/tools/aws_account.py:314). Absent on the failure entries."
+          },
+          "status": {
+            "type": "string",
+            "description": "The agreement's status. Deliberately not an enum, and the value set is wider than it looks: the API's own status, or the literal UNKNOWN when DescribeAgreement returned no status field (src/tools/aws_account.py:256), or -- on the failure entries -- NOT_FOUND, AccessDeniedException, ThrottlingException, or ERROR_<code> for any other error code (src/tools/aws_account.py:247-254). So a caller cannot read this field as an agreement state without first checking whether the entry also carries an `error`. parsec's prompt adds a semantic warning about the API's own value: it may still say ACTIVE after agreement_end has passed (config/prompts/security_agent.md:118-119)."
+          },
+          "product_id": {
+            "type": "string",
+            "description": "The first resource id in the API's proposalSummary, or an empty string when there is none or it is not an object (src/tools/aws_account.py:277-280)."
+          },
+          "offer_type": {
+            "type": "string",
+            "description": "The proposalSummary's offerType, or an empty string (src/tools/aws_account.py:281). Not an enum: unvalidated passthrough."
+          },
+          "agreement_start": {
+            "type": "string",
+            "description": "isoformat() of the API's startTime, or an empty string when absent (src/tools/aws_account.py:269, :271). `format: date-time` is not claimed because of that empty-string case."
+          },
+          "agreement_end": {
+            "type": "string",
+            "description": "isoformat() of the API's endTime, or an empty string when absent (src/tools/aws_account.py:270, :272). Its emptiness is also an input to the classification (src/tools/aws_account.py:310)."
+          },
+          "classification": {
+            "type": "string",
+            "enum": [
+              "SaaS (Auto-Renew)",
+              "SaaS (Auto-Renew Disabled)",
+              "Fixed/Upfront",
+              "Pay-As-You-Go"
+            ],
+            "description": "How parsec classifies the agreement from its term types, cost and end date (src/tools/aws_account.py:226-240, called at src/tools/aws_account.py:309-311). An enum here *is* an emission guarantee, unlike `status` above: the classifier is a closed function over these four literals with an unconditional fall-through to the last one, and parsec computes the value rather than passing it through (src/tools/aws_account.py:19, :231-240). Absent on the failure entries."
+          },
+          "estimated_cost_usd": {
+            "type": "number",
+            "description": "float() of the API's estimatedCharges.agreementValue, rounded to 2 decimal places (src/tools/aws_account.py:261-264, :322-323). Added only when that coercion produced a value, so it is absent -- not zero -- both when the API reported no agreement value and when the value would not parse as a float, since the ValueError and TypeError are suppressed (src/tools/aws_account.py:263)."
+          },
+          "currency": {
+            "type": "string",
+            "description": "The API's estimatedCharges.currencyCode, added only when truthy (src/tools/aws_account.py:265-266, :324-325)."
+          },
+          "auto_renew": {
+            "type": "boolean",
+            "description": "The renewalTerm's configuration.enableAutoRenew, added only when the API supplied it (src/tools/aws_account.py:302-304, :326-327). Absent means unknown, not false -- and it is exactly that three-way distinction the classifier uses, treating only an explicit False as auto-renew-disabled (src/tools/aws_account.py:232-235)."
+          },
+          "terms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AgreementTerm"
+            },
+            "description": "The accepted terms, added only when at least one was collected (src/tools/aws_account.py:328-329). Absent both when the agreement has no terms and when GetAgreementTerms raised a ClientError, which is swallowed (src/tools/aws_account.py:306-307) -- so absence is not evidence of an agreement without terms, and the classification computed alongside it may have been made from an empty term set."
+          }
+        },
+        "required": [
+          "status",
+          "marketplace_agreement_id"
+        ]
+      },
+      "DescribeMarketplaceResult": {
+        "type": "object",
+        "description": "action=describe_marketplace (src/tools/aws_account.py:334-383). Two ways in, and the response does not distinguish them: with filters.agreement_ids the listed ids are enriched directly, one entry each, in the order given (src/tools/aws_account.py:346-350); without it, SearchAgreements discovery runs first and each discovered id is then enriched (src/tools/aws_account.py:353-363). Discovery is documented as unreliable on member accounts, and its ValidationException is reported not as an error but as an empty success carrying a `note` that tells the caller to find ids via query_cloudtrail instead (src/tools/aws_account.py:364-378). There is no cap and no truncation flag on either path.",
+        "properties": {
+          "agreement_count": {
+            "type": "integer",
+            "description": "len(agreements) (src/tools/aws_account.py:350, :383); 0 on the note-bearing return (src/tools/aws_account.py:370). Counts failed enrichment entries too, since those are appended like any other (src/tools/aws_account.py:348-349)."
+          },
+          "agreements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MarketplaceAgreementDetail"
+            },
+            "description": "One entry per requested or discovered agreement id, including entries that are only a status and an error; always empty on the note-bearing return (src/tools/aws_account.py:371). On the discovery path, a summary with no agreementId is skipped entirely (src/tools/aws_account.py:359-361), so this array can be shorter than what SearchAgreements returned."
+          },
+          "note": {
+            "type": "string",
+            "description": "Present only on the SearchAgreements-unsupported return, where it is the fixed guidance string at src/tools/aws_account.py:372-377. The two normal returns set no note at all, so this is not a general caveat about the action."
+          }
+        },
+        "required": [
+          "agreement_count",
+          "agreements"
+        ]
+      },
+      "AccountAccessFailure": {
+        "type": "object",
+        "description": "The two extra keys _execute_action attaches when the role assumption failed and no action ran at all (src/tools/aws_account.py:401-418). Both of its failure returns set both keys, so both are required here; the accompanying `error` is modelled inline in the operation's response, and the envelope's three keys are added on top afterwards. This is not a general error shape: the dispatcher's `Unknown action` return carries neither of these keys (src/tools/aws_account.py:420-422), and neither does anything query_aws_account itself returns.",
+        "properties": {
+          "account_status": {
+            "type": "string",
+            "description": "What the Organizations API says about the account: the literal SUSPENDED on the suspended branch (src/tools/aws_account.py:401-407), otherwise the API's own Status value, or the literal UNKNOWN when that lookup returned nothing (src/tools/aws_account.py:416). UNKNOWN is the value for two different situations -- the account is outside the organization, or DescribeAccount itself failed, since _check_account_status swallows every exception and returns a pair of Nones (src/tools/aws_account.py:55-63). Not an enum: only two of its values are parsec's own."
+          },
+          "account_name": {
+            "type": "string",
+            "description": "The account's name from Organizations, or an empty string when unavailable (src/tools/aws_account.py:408, :417). Note the error *message* uses a different fallback for the same missing value, the literal 'unknown' (src/tools/aws_account.py:404), so message and field disagree on how to say 'not known'."
+          }
+        },
+        "required": [
+          "account_status",
+          "account_name"
+        ]
+      },
+      "QueryAwsAccountRequest": {
+        "type": "object",
+        "description": "The tool's declared input_schema (src/agent/tool_definitions.py:462-502). The one default recorded below is the implementation signature's (src/tools/aws_account.py:430); the input_schema declares none, though its docstring states it (src/agent/tool_definitions.py:487).",
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "The 12-digit member account to inspect (src/agent/tool_definitions.py:465-468). Validated as exactly twelve digits before anything else happens (src/tools/aws_account.py:446-447). Access is by STS AssumeRole into OrganizationAccountAccessRole with an inline read-only session policy, so an account without that role cannot be inspected at all (src/tools/aws_account.py:17, :22-47, :86-101)."
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "describe_instances",
+              "lookup_events",
+              "list_users",
+              "describe_marketplace"
+            ],
+            "description": "Which inspection to run (src/agent/tool_definitions.py:469-484). Each returns a different payload beside the envelope. Enforced at run time, but only after the role has been assumed: an unrecognised value returns the in-band error envelope from the dispatcher (src/tools/aws_account.py:386-391, :420-422), and the envelope's own keys are then added to that error."
+          },
+          "region": {
+            "type": "string",
+            "default": "us-east-1",
+            "description": "Region for the EC2, CloudTrail and IAM clients (src/agent/tool_definitions.py:485-488). Unvalidated and not an enum. describe_instances queries this one region only, which is why parsec's prompt tells the agent to establish which regions matter first (config/prompts/security_agent.md:74-75). It does not apply to describe_marketplace, whose client is pinned to us-east-1 (src/tools/aws_account.py:340)."
+          },
+          "filters": {
+            "type": "object",
+            "description": "Action-specific filters (src/agent/tool_definitions.py:489-500). Declared as a free-form object because that is what the input_schema declares -- no properties, no required keys -- and the implementation reads only the keys each action knows: describe_instances reads `state`, forwarded verbatim as an EC2 instance-state-name filter, and `instance_ids`, forwarded as InstanceIds (src/tools/aws_account.py:122-129); lookup_events reads `event_name`, forwarded as an EventName lookup attribute (src/tools/aws_account.py:156-159); describe_marketplace reads `agreement_ids` and enriches each directly (src/tools/aws_account.py:346-350); list_users reads none (src/tools/aws_account.py:185-187). An unrecognised key is silently ignored rather than rejected. parsec's own advice is to omit `state` for describe_instances so both running and stopped instances are counted (config/prompts/security_agent.md:72-73), and to obtain agreement ids from query_cloudtrail before calling describe_marketplace (config/prompts/security_agent.md:79-80, src/agent/tool_definitions.py:496-498).",
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "account_id",
+          "action"
+        ]
+      },
+      "SandboxAccount": {
+        "x-primary-key": "sandbox_account_id",
+        "type": "object",
+        "description": "One sandbox account record from the DynamoDB `accounts` table (src/tools/aws_accounts.py:14). This is a passthrough shape: _clean_item rebuilds the item with a dict comprehension that drops five keys and keeps every other one unchanged (src/tools/aws_accounts.py:19-35), so parsec assigns no field of it and the drift check cannot reach any of the properties below -- they are declared from parsec's own documentation of the returned record (config/prompts/cost_agent.md:181-184, config/prompts/shared_context.md:80-95) and from the fields the filter code reads (src/tools/aws_accounts.py:47-61, :73-76, :104). `additionalProperties` stays open and `required` is empty because the table's real item shape is DynamoDB's, not parsec's. What parsec *does* guarantee is negative and worth stating: aws_access_key_id, aws_secret_access_key and the three aws:rep: replication-metadata keys are removed from every returned item (src/tools/aws_accounts.py:19-25, :30), which is what its description means by credentials being stripped (src/agent/tool_definitions.py:564).",
+        "properties": {
+          "sandbox_account_id": {
+            "type": "string",
+            "description": "Storage identity for the `sandbox_accounts` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "name": {
+            "type": "string",
+            "description": "The sandbox name, e.g. sandbox4440, and the table's primary key -- the `name` request parameter is a DynamoDB key lookup on it (config/prompts/shared_context.md:81, src/tools/aws_accounts.py:104)."
+          },
+          "account_id": {
+            "type": "string",
+            "description": "The 12-digit AWS account id. Filterable server-side by exact equality (src/tools/aws_accounts.py:75-76)."
+          },
+          "available": {
+            "type": "boolean",
+            "description": "Whether the sandbox is idle rather than in use (config/prompts/shared_context.md:83). Filterable server-side by exact equality, including on false (src/tools/aws_accounts.py:72-73)."
+          },
+          "owner": {
+            "type": "string",
+            "description": "Current owner, empty when the sandbox is available (config/prompts/shared_context.md:84). The `owner` filter reads this field first and falls back to `owner_email` (src/tools/aws_accounts.py:47)."
+          },
+          "owner_email": {
+            "type": "string",
+            "description": "The alternative owner field the same filter reads when `owner` is empty (src/tools/aws_accounts.py:47, config/prompts/shared_context.md:84)."
+          },
+          "zone": {
+            "type": "string",
+            "description": "DNS zone, e.g. sandbox4440.opentlc.com (config/prompts/shared_context.md:85). Filtered client-side by case-insensitive substring (src/tools/aws_accounts.py:50-53)."
+          },
+          "hosted_zone_id": {
+            "type": "string",
+            "description": "Route53 hosted zone id (config/prompts/shared_context.md:86)."
+          },
+          "guid": {
+            "type": "string",
+            "description": "Current provision GUID, present when the sandbox is in use (config/prompts/shared_context.md:87)."
+          },
+          "envtype": {
+            "type": "string",
+            "description": "Environment type being deployed, e.g. ocp4-cluster (config/prompts/shared_context.md:88). Filtered client-side by case-insensitive substring (src/tools/aws_accounts.py:54-57)."
+          },
+          "reservation": {
+            "type": "string",
+            "description": "Reservation type, e.g. event or pgpu-event (config/prompts/shared_context.md:89, src/agent/tool_definitions.py:601-604). Filtered client-side by case-insensitive substring (src/tools/aws_accounts.py:58-61)."
+          },
+          "conan_status": {
+            "type": "string",
+            "description": "Cleanup status (config/prompts/shared_context.md:90)."
+          },
+          "annotations": {
+            "type": "object",
+            "description": "Additional metadata map -- owner, guid, env_type, comment (config/prompts/shared_context.md:91). Returned as the deserialised map, unmodified: the code has an explicit no-op branch documenting that no flattening happens (src/tools/aws_accounts.py:31-34).",
+            "additionalProperties": true
+          },
+          "service_uuid": {
+            "type": "string",
+            "description": "Service UUID (config/prompts/shared_context.md:92)."
+          },
+          "comment": {
+            "type": "string",
+            "description": "Free-text comment, often carrying provisioning-system information (config/prompts/shared_context.md:93). parsec's playbook uses it to resolve the Babylon cluster for a sandbox (config/prompts/security_agent.md:138-141)."
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "sandbox_account_id"
+        ]
+      },
+      "AwsAccountDbResult": {
+        "type": "object",
+        "description": "query_aws_account_db's response (src/tools/aws_accounts.py:87-142), matching what parsec's prompts document (config/prompts/cost_agent.md:181-184, config/prompts/security_agent.md:209). One shape covers three returns that differ only in their values: the direct-key hit or miss (src/tools/aws_accounts.py:103-108), the mid-scan cap (src/tools/aws_accounts.py:127-132), and the exhausted scan (src/tools/aws_accounts.py:138-142). All three set all three keys, so all three are required.",
+        "properties": {
+          "accounts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SandboxAccount"
+            },
+            "description": "The matching records, stripped of credentials. Exactly one on a `name` hit and none on a miss (src/tools/aws_accounts.py:106-108); otherwise every scanned item that passed the server-side filter expression and the client-side substring filters, in DynamoDB scan order across pages, up to max_results (src/tools/aws_accounts.py:119-136). No sort is applied."
+          },
+          "count": {
+            "type": "integer",
+            "description": "len(accounts) (src/tools/aws_accounts.py:129, :140). Not a full match count: the scan stops as soon as the cap is reached, so nothing counts past it."
+          },
+          "truncated": {
+            "type": "boolean",
+            "description": "True only on the mid-scan cap return (src/tools/aws_accounts.py:131), which fires the moment accounts reaches max_results (src/tools/aws_accounts.py:127) -- so it is true even when that item was the last one that would have matched. False on both name-lookup returns and on an exhausted scan (src/tools/aws_accounts.py:107-108, :141)."
+          }
+        },
+        "required": [
+          "accounts",
+          "count",
+          "truncated"
+        ]
+      },
+      "QueryAwsAccountDbRequest": {
+        "type": "object",
+        "description": "The tool's declared input_schema (src/agent/tool_definitions.py:566-611), which declares no required parameter at all -- with none supplied, the tool scans the whole table up to max_results. The one default recorded below is the implementation signature's (src/tools/aws_accounts.py:145-153); the input_schema declares none, though its docstring states it (src/agent/tool_definitions.py:608). Two filter tiers, and the difference is observable: `name`, `account_id` and `available` are exact matches applied by DynamoDB, while `owner`, `zone`, `envtype` and `reservation` are case-insensitive substring matches applied client-side after each page comes back, because DynamoDB's own contains() is case-sensitive (src/tools/aws_accounts.py:38-62, :65-84, :117-126).",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Exact sandbox name, e.g. sandbox4440 (src/agent/tool_definitions.py:569-575). A short-circuit rather than a filter: when supplied it is a DynamoDB key lookup and every other parameter is ignored, including max_results and the substring filters (src/tools/aws_accounts.py:103-108). A name that does not exist returns an empty result, not an error."
+          },
+          "account_id": {
+            "type": "string",
+            "description": "12-digit AWS account id (src/agent/tool_definitions.py:576-579). Applied as a server-side equality condition on a table scan -- not a key lookup, so it still scans (src/tools/aws_accounts.py:75-76)."
+          },
+          "available": {
+            "type": "boolean",
+            "description": "Whether the sandbox is idle (src/agent/tool_definitions.py:580-583). Applied server-side, and tested against None rather than for truthiness, so false is a real filter value and not the same as omitting it (src/tools/aws_accounts.py:72-73)."
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner email, case-insensitive substring (src/agent/tool_definitions.py:584-587). Matched against the item's `owner` field, falling back to `owner_email` when `owner` is empty (src/tools/aws_accounts.py:47-49)."
+          },
+          "zone": {
+            "type": "string",
+            "description": "DNS zone, case-insensitive substring (src/agent/tool_definitions.py:588-591, src/tools/aws_accounts.py:50-53)."
+          },
+          "envtype": {
+            "type": "string",
+            "description": "Environment type, case-insensitive substring, e.g. ocp4-cluster (src/agent/tool_definitions.py:592-598, src/tools/aws_accounts.py:54-57)."
+          },
+          "reservation": {
+            "type": "string",
+            "description": "Reservation type, case-insensitive substring, e.g. event or pgpu-event (src/agent/tool_definitions.py:599-605, src/tools/aws_accounts.py:58-61)."
+          },
+          "max_results": {
+            "type": "integer",
+            "default": 100,
+            "description": "Cap on the returned accounts (src/agent/tool_definitions.py:606-609). Silently clamped to 500 (src/tools/aws_accounts.py:15, :171). Ignored on the `name` path."
+          }
+        },
+        "required": []
+      },
+      "MarketplaceInventoryAgreement": {
+        "x-primary-key": "marketplace_agreement_id",
+        "type": "object",
+        "description": "One record from the pre-enriched `marketplace-agreement-inventory` DynamoDB table (src/tools/marketplace_agreements.py:15). A passthrough shape, like SandboxAccount: _clean_item drops three keys and converts Decimals to floats, keeping every other key unchanged (src/tools/marketplace_agreements.py:20-21, :24-32, :126-129), so parsec assigns no field of it and the drift check cannot reach the properties below. They are declared from parsec's own documentation of the table (config/prompts/security_agent.md:112-116) and from the fields the filter code reads (src/tools/marketplace_agreements.py:47-54, :72-83). `additionalProperties` stays open and `required` is empty. Two negative guarantees do hold: pk, error and term_types are removed from every returned record (src/tools/marketplace_agreements.py:21, :128), and no DynamoDB Decimal survives -- every one becomes a float, recursively through nested maps and lists (src/tools/marketplace_agreements.py:24-32). Do not confuse this with MarketplaceAgreementDetail: that is query_aws_account's live per-account enrichment, this is the inventory's stored record, and they agree on many field names but come from different tools with different guarantees. Notably the cost field is named estimated_cost here and estimated_cost_usd there (src/agent/tool_definitions.py:539, src/tools/aws_account.py:323).",
+        "properties": {
+          "marketplace_agreement_id": {
+            "type": "string",
+            "description": "Storage identity for the `marketplace_agreements` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "agreement_id": {
+            "type": "string",
+            "description": "The marketplace agreement id (config/prompts/security_agent.md:113)."
+          },
+          "account_id": {
+            "type": "string",
+            "description": "The 12-digit owning account id. When supplied as a filter, the query uses the account_id GSI instead of a table scan (src/tools/marketplace_agreements.py:16, :105-123, :154-157)."
+          },
+          "account_name": {
+            "type": "string",
+            "description": "The account's name (config/prompts/security_agent.md:113). Filtered client-side by case-insensitive substring (src/tools/marketplace_agreements.py:72-75)."
+          },
+          "status": {
+            "type": "string",
+            "description": "The agreement's status, e.g. ACTIVE or CLOSED (src/agent/tool_definitions.py:528). No enum: the value is the stored record's, filtered server-side by exact equality and never validated or produced by parsec (src/tools/marketplace_agreements.py:47-48). parsec's prompt warns it can still read ACTIVE after agreement_end has passed (config/prompts/security_agent.md:118-119)."
+          },
+          "product_name": {
+            "type": "string",
+            "description": "The product's name (config/prompts/security_agent.md:114). Filtered client-side by case-insensitive substring (src/tools/marketplace_agreements.py:76-79)."
+          },
+          "product_id": {
+            "type": "string",
+            "description": "The product id (config/prompts/security_agent.md:114)."
+          },
+          "vendor_name": {
+            "type": "string",
+            "description": "The vendor's name. Filterable client-side by case-insensitive substring (src/tools/marketplace_agreements.py:80-83); absent from the prompt's DynamoDB field list, which names no vendor field at all (config/prompts/security_agent.md:112-116). The concept appears only as prose -- `vendors` among the things this inventory answers fast (config/prompts/security_agent.md:107) and `vendor` in the registry's own description of the enrichment (src/agent/tool_definitions.py:512-513) -- so the filter code is the only authority for the field name."
+          },
+          "offer_type": {
+            "type": "string",
+            "description": "The offer type (config/prompts/security_agent.md:114)."
+          },
+          "classification": {
+            "type": "string",
+            "description": "The stored classification, whose four documented values are the same set query_aws_account's classifier produces (src/agent/tool_definitions.py:530-535). No enum, unlike MarketplaceAgreementDetail.classification: here the value is read from the table and filtered by exact equality (src/tools/marketplace_agreements.py:50-51), never computed, so nothing constrains what the table can hold."
+          },
+          "estimated_cost": {
+            "type": "number",
+            "description": "Estimated cost in USD, as a float after Decimal conversion (src/tools/marketplace_agreements.py:24-32). This is the field min_cost compares against, server-side and inclusively (src/agent/tool_definitions.py:539, src/tools/marketplace_agreements.py:53-54)."
+          },
+          "currency": {
+            "type": "string",
+            "description": "The cost's currency (config/prompts/security_agent.md:115)."
+          },
+          "auto_renew": {
+            "type": "boolean",
+            "description": "Whether the subscription auto-renews (config/prompts/security_agent.md:115, src/agent/tool_definitions.py:513)."
+          },
+          "agreement_start": {
+            "type": "string",
+            "description": "The agreement's start (config/prompts/security_agent.md:116). No format claimed: the stored representation is the table's."
+          },
+          "agreement_end": {
+            "type": "string",
+            "description": "The agreement's end (config/prompts/security_agent.md:116), the field parsec's prompt says to compare against today rather than trusting `status`."
+          },
+          "last_updated": {
+            "type": "string",
+            "description": "When the inventory record was last refreshed (config/prompts/security_agent.md:116)."
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "marketplace_agreement_id"
+        ]
+      },
+      "MarketplaceAgreementsResult": {
+        "type": "object",
+        "description": "query_marketplace_agreements' response (src/tools/marketplace_agreements.py:171-175), matching what parsec's prompt documents (config/prompts/security_agent.md:202-203). One return, all three keys always set.",
+        "properties": {
+          "agreements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MarketplaceInventoryAgreement"
+            },
+            "description": "The matching records, cleaned. Collected either from the account_id GSI query or from a full table scan, both paginated to exhaustion first, then filtered client-side and cut at max_results (src/tools/marketplace_agreements.py:87-123, :154-169). No sort is applied."
+          },
+          "count": {
+            "type": "integer",
+            "description": "len(agreements) (src/tools/marketplace_agreements.py:173). Not a full match count -- the collection loop breaks at the cap (src/tools/marketplace_agreements.py:168-169) -- although, unlike query_aws_account_db, the underlying scan or query has already read every page before that loop runs."
+          },
+          "truncated": {
+            "type": "boolean",
+            "description": "len(agreements) >= max_results (src/tools/marketplace_agreements.py:174). True whenever the cap was exactly reached, including when nothing was actually dropped -- the same convention as query_gcp_projects, and the opposite of the strict `>` the Azure pool shapes use."
+          }
+        },
+        "required": [
+          "agreements",
+          "count",
+          "truncated"
+        ]
+      },
+      "QueryMarketplaceAgreementsRequest": {
+        "type": "object",
+        "description": "The tool's declared input_schema (src/agent/tool_definitions.py:515-554), which declares no required parameter -- with none supplied, the whole inventory is scanned up to max_results. The one default recorded below is the implementation signature's (src/tools/marketplace_agreements.py:178-186); the input_schema declares none, though its docstring states it (src/agent/tool_definitions.py:551). Three filter tiers here: account_id selects the access path (GSI query rather than scan), status/classification/min_cost become a DynamoDB filter expression, and account_name/product_name/vendor_name are case-insensitive substring matches applied client-side because DynamoDB's contains() is case-sensitive (src/tools/marketplace_agreements.py:35-62, :65-84, :154-169).",
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "description": "12-digit AWS account id (src/agent/tool_definitions.py:518-521). Unlike every other filter here, this one changes the access path: it becomes a KeyConditionExpression against the account_id GSI instead of a table scan (src/tools/marketplace_agreements.py:16, :105-123, :154-155)."
+          },
+          "account_name": {
+            "type": "string",
+            "description": "Account name, case-insensitive substring (src/agent/tool_definitions.py:522-525, src/tools/marketplace_agreements.py:72-75)."
+          },
+          "status": {
+            "type": "string",
+            "description": "Agreement status, e.g. ACTIVE or CLOSED (src/agent/tool_definitions.py:526-529). Applied server-side by exact, case-sensitive equality (src/tools/marketplace_agreements.py:47-48). Deliberately not an enum: the input_schema declares none, and constraining it here would reject a status the table legitimately holds."
+          },
+          "classification": {
+            "type": "string",
+            "description": "Agreement classification (src/agent/tool_definitions.py:530-535). Applied server-side by exact equality (src/tools/marketplace_agreements.py:50-51). Not an enum for the same reason as `status`, even though the input_schema's description names four values -- 'SaaS (Auto-Renew)', 'SaaS (Auto-Renew Disabled)', 'Fixed/Upfront' and 'Pay-As-You-Go' -- and they are the same four query_aws_account's classifier emits: the declared contract is a free string, nothing validates it, and the stored values are the inventory's."
+          },
+          "min_cost": {
+            "type": "number",
+            "description": "Minimum estimated cost in USD (src/agent/tool_definitions.py:537-540). Applied server-side as an inclusive >= against the record's estimated_cost field, converted through Decimal(str(value)) so a float is compared exactly rather than approximately (src/tools/marketplace_agreements.py:53-54). Tested against None, so 0 is a real filter value."
+          },
+          "product_name": {
+            "type": "string",
+            "description": "Product name, case-insensitive substring (src/agent/tool_definitions.py:541-544, src/tools/marketplace_agreements.py:76-79)."
+          },
+          "vendor_name": {
+            "type": "string",
+            "description": "Vendor name, case-insensitive substring (src/agent/tool_definitions.py:545-548, src/tools/marketplace_agreements.py:80-83)."
+          },
+          "max_results": {
+            "type": "integer",
+            "default": 100,
+            "description": "Cap on the returned agreements (src/agent/tool_definitions.py:549-552). Silently clamped to 500 (src/tools/marketplace_agreements.py:17, :204). It bounds the returned array only: the scan or GSI query has already paginated to exhaustion before the cap is applied (src/tools/marketplace_agreements.py:94-101, :114-121)."
+          }
+        },
+        "required": []
+      }
+    }
+  },
+  "paths": {
+    "/query_azure_pools": {
+      "post": {
+        "operationId": "query_azure_pools",
+        "summary": "Query Azure subscription pool assignments from Cosmos DB",
+        "description": "Four different queries over the RHDP Azure subscription pools held in Cosmos DB, selected by `action`, each returning its own shape: pool-by-pool occupancy, one pool's subscriptions, one subscription's assignment, or every subscription assigned to a project tag. Three databases are addressable -- the main pool, ARO clusters and event roadshows -- and unlike most parameters in this spec that one is validated before anything else runs, which is why the echoed `database` field carries an enum while other echoed fields deliberately do not. Pool membership is derived from the subscription's name (`pool-<id>-<n>`), not from a stored pool field, so a document whose name does not match that pattern is invisible to list_pools entirely. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Read only the `azure_subscriptions` rows whose stored `database` field equals the effective request `database` (`pools` when omitted); a row whose stored `database` is another value does not exist for this request. `database` is a field of every stored row, so this is an exact equality test on that field, never a guess. Pool membership (the `pool-<pool_id>-` prefix of `id`) and occupancy counts are computed from those rows only. RESPONSE KEYS (parsec's, verbatim, src/tools/azure_pools.py): list_pools returns `database`, `pools` (an object keyed by pool id, each value `{total, in_use, available}`) and `summary` (`{total_subscriptions, in_use, available, pool_count}`) -- no subscription names; get_pool returns `database`, `pool_id`, `subscriptions` (each entry `{id, used, projecttag}` as stored), `total`, `in_use`, `available`, `truncated`; get_subscription returns `database` and `subscription` (`{id, used, projecttag}`), or `{\"error\": \"Subscription '<name>' not found in <database> database\"}` when no row in that database has that `id`; search_by_project returns `database`, `project_tag`, `subscriptions`, `count`, `truncated`. Return these key names exactly and never add `azure_subscription_id` or `database` to a subscription entry. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these six store-authoritative operations, so there is no entity for which a record or field may be generated on demand. Only the documented derivations (a count equal to the length of a returned list, a total or in-use count over returned rows) are computed, and only from stored rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:195-245",
+          "implementation": "vendor/parsec/src/tools/azure_pools.py:147",
+          "dispatch": "vendor/parsec/src/tools/azure_pools.py:163-185",
+          "list_pools_response": "vendor/parsec/src/tools/azure_pools.py:52-61",
+          "get_pool_response": "vendor/parsec/src/tools/azure_pools.py:85-93",
+          "get_subscription_response": "vendor/parsec/src/tools/azure_pools.py:113-120",
+          "search_by_project_response": "vendor/parsec/src/tools/azure_pools.py:138-144",
+          "pool_id_derivation": "vendor/parsec/src/tools/azure_pools.py:19-22",
+          "database_validation": "vendor/parsec/src/tools/azure_pools.py:12-16",
+          "agent_prompt": "vendor/parsec/config/prompts/cost_agent.md:18",
+          "example_subscription_name": "vendor/parsec/src/agent/tool_definitions.py:224",
+          "example_project_tag": "vendor/parsec/src/agent/tool_definitions.py:229",
+          "example_pool_id": "vendor/parsec/src/agent/tool_definitions.py:220"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryAzurePoolsRequest"
+              },
+              "examples": {
+                "pool_utilization": {
+                  "summary": "Occupancy of every pool in the main database",
+                  "value": {
+                    "action": "list_pools",
+                    "database": "pools"
+                  }
+                },
+                "one_pool": {
+                  "summary": "The subscriptions in one pool",
+                  "value": {
+                    "action": "get_pool",
+                    "pool_id": "01",
+                    "database": "pools"
+                  }
+                },
+                "one_subscription": {
+                  "summary": "Where one subscription is assigned",
+                  "value": {
+                    "action": "get_subscription",
+                    "subscription_name": "pool-01-273"
+                  }
+                },
+                "by_project_tag": {
+                  "summary": "Every subscription assigned to a project",
+                  "value": {
+                    "action": "search_by_project",
+                    "project_tag": "sandbox-api"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The shape belonging to the requested action, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/AzurePoolListResult"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AzurePoolDetail"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AzureSubscriptionLookup"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AzureProjectSearchResult"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Every failure path the implementation defines returns this shape in-band rather than raising. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state. One caveat on that first sentence for this operation: two statements run before the try block -- the database membership test and the max_results clamp (src/tools/azure_pools.py:156-161) -- so a max_results that cannot be compared to an integer would raise out of the tool instead of returning this shape. Everything from the dispatch onward is caught.",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "One of 'Invalid database ...' (src/tools/azure_pools.py:156-159), 'Unknown action ...' (src/tools/azure_pools.py:182-185), the three per-action missing-argument messages 'pool_id is required for get_pool ...', 'subscription_name is required ...' and 'project_tag is required ...' (src/tools/azure_pools.py:168-179), 'Azure Cosmos not configured' from whichever helper ran (src/tools/azure_pools.py:16, :29, :68, :100, :127), \"Subscription '<name>' not found in <database> database\" -- the one lookup miss reported as an error rather than as an empty result (src/tools/azure_pools.py:109-110) -- or 'Azure pools query failed: ...' with the exception's own text (src/tools/azure_pools.py:187-189)."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query_gcp_projects": {
+      "post": {
+        "operationId": "query_gcp_projects",
+        "summary": "List RHDP-created GCP projects under the open-envs folder",
+        "description": "Two queries over the GCP Resource Manager, selected by `action`: every project under the RHDP open-environments folder, optionally narrowed to one lifecycle state, or one project by id. The list shape adds a folder id and four counts; the detail shape adds `parent` and drops the counts. Note two things a caller can misread: `delete_requested` is computed as count minus the ACTIVE count, so it holds every non-ACTIVE state rather than only DELETE_REQUESTED; and `folder_id` is never empty, because an unconfigured folder falls back to a hard-coded default id. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Read only `gcp_projects`; list counts are computed from stored rows only. RESPONSE KEYS (parsec's, verbatim, src/tools/gcp_projects.py:41-61, :73-80): list_projects returns `folder_id`, `projects` (each element `{project_id, name, state, create_time, labels}`), `count`, `active`, `delete_requested` and `truncated`; get_project returns the one project's `project_id`, `name`, `state`, `create_time`, `labels` and `parent` at the top level. `gcp_project_id` is storage identity and is never echoed. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these six store-authoritative operations, so there is no entity for which a record or field may be generated on demand. Only the documented derivations (a count equal to the length of a returned list, a total or in-use count over returned rows) are computed, and only from stored rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:246-282",
+          "implementation": "vendor/parsec/src/tools/gcp_projects.py:83",
+          "dispatch": "vendor/parsec/src/tools/gcp_projects.py:92-102",
+          "list_response": "vendor/parsec/src/tools/gcp_projects.py:54-61",
+          "list_item": "vendor/parsec/src/tools/gcp_projects.py:41-49",
+          "detail_response": "vendor/parsec/src/tools/gcp_projects.py:73-80",
+          "folder_id_fallback": "vendor/parsec/src/tools/gcp_projects.py:10-17",
+          "agent_prompt": "vendor/parsec/config/prompts/cost_agent.md:19",
+          "example_project_id": "vendor/parsec/src/agent/tool_definitions.py:268"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryGcpProjectsRequest"
+              },
+              "examples": {
+                "active_projects": {
+                  "summary": "Every live project in the folder",
+                  "value": {
+                    "action": "list_projects",
+                    "state_filter": "ACTIVE"
+                  }
+                },
+                "one_project": {
+                  "summary": "One project's state and labels",
+                  "value": {
+                    "action": "get_project",
+                    "project_id": "cluster-4d99p"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The project list, one project's detail, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/GcpProjectListResult"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GcpProjectDetail"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Every failure path the implementation defines returns this shape in-band rather than raising. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state. One caveat on that first sentence for this operation: the max_results clamp runs before the try block (src/tools/gcp_projects.py:90), so a max_results that cannot be compared to an integer would raise out of the tool instead of returning this shape.",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "One of \"project_id is required (e.g. 'cluster-4d99p')\" (src/tools/gcp_projects.py:97-98), 'Unknown action ...' (src/tools/gcp_projects.py:101-102), \"Project '<id>' not found: ...\" -- returned by the helper, which catches its own lookup failure rather than letting the tool-level handler report it (src/tools/gcp_projects.py:68-71) -- or 'GCP projects query failed: ...' with the exception's own text (src/tools/gcp_projects.py:104-106)."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query_cloudtrail": {
+      "post": {
+        "operationId": "query_cloudtrail",
+        "summary": "Run SQL against CloudTrail Lake for org-wide AWS API events",
+        "description": "One SQL query against the organization's CloudTrail Lake event data store, returning the header-derived column names and the parsed data rows. The caller writes `FROM cloudtrail_events` and the tool substitutes the configured data store id; it also rewrites the statement twice more without saying so in the response -- injecting a `calendarday` partition predicate derived from each `eventTime` comparison and normalising those timestamp literals, then CAST-wrapping map columns used with LIKE. Only SELECT is accepted. The query is started asynchronously and polled every 2s up to a 300s budget, so a call can take minutes; a timeout is reported in-band as an error, not as an empty result. This is the only tool in this spec with no `action` parameter, and the only one whose response rows have no schema of their own -- their columns are whatever the caller's SELECT list asked for. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Read only `events`; an event is returned only if it is a stored row. RESPONSE KEYS (parsec's, verbatim, src/tools/cloudtrail.py:175-181, :209-215): a query with matching rows returns `columns`, `rows`, `row_count`, `bytes_scanned` and `truncated`; a query with no matching rows returns `columns` (empty), `rows` (empty), `row_count` 0 and `bytes_scanned`, without `truncated`. A SELECT-list item aliased with AS is named by its alias, in `columns` and as the row key alike. COLUMN-TO-FIELD MAPPING (the store's, not parsec's): stored `events` rows use snake_case field names, and a CloudTrail Lake column named in the SQL refers to a stored field as follows -- `eventTime` is `event_time`, `eventName` is `event_name`, `eventSource` is `event_source`, `eventID` is `event_id`, `recipientAccountId` is `account_id`, `userIdentity.username` is `username`. Evaluate every WHERE predicate and ORDER BY on the stored field its column maps to; a stored event whose mapped fields satisfy every predicate is a matching row, so the result is never empty while such a row is stored. Timestamp comparisons compare instants: a stored `event_time` of 2026-08-11T07:42:19Z satisfies `eventTime >= '2026-08-10 00:00:00' AND eventTime < '2026-08-17 00:00:00'`. Each selected column's value is the mapped stored field's value, unchanged. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these six store-authoritative operations, so there is no entity for which a record or field may be generated on demand. Only the documented derivations (a count equal to the length of a returned list, a total or in-use count over returned rows) are computed, and only from stored rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:419-452",
+          "implementation": "vendor/parsec/src/tools/cloudtrail.py:218",
+          "response_assembly": "vendor/parsec/src/tools/cloudtrail.py:209-215",
+          "empty_response": "vendor/parsec/src/tools/cloudtrail.py:175-181",
+          "row_parsing": "vendor/parsec/src/tools/cloudtrail.py:183-207",
+          "java_map_parsing": "vendor/parsec/src/tools/cloudtrail.py:110-127",
+          "query_rewriting": "vendor/parsec/src/tools/cloudtrail.py:27-107",
+          "polling": "vendor/parsec/src/tools/cloudtrail.py:130-157",
+          "documented_columns": "vendor/parsec/config/prompts/security_agent.md:36-45",
+          "documented_query_pattern": "vendor/parsec/config/prompts/security_agent.md:167-174",
+          "documented_response": "vendor/parsec/config/prompts/security_agent.md:191-192"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryCloudtrailRequest"
+              }
+            }
+          },
+          "description": "No `examples` are declared here, deliberately, and not because vendor/parsec holds no grounded SQL: it holds exactly one complete statement on a single line, the bare `SELECT * FROM events` passed as this tool's argument by a routing smoke test (vendor/parsec/tests/test_orchestrator_extended.py:219). That literal would satisfy the identifier rule and is still the wrong example. It queries `events` rather than the `cloudtrail_events` placeholder the substitution at src/tools/cloudtrail.py:239-246 rewrites, and it carries no eventTime bound, so `_inject_partition_key` returns early and adds no calendarday clause (src/tools/cloudtrail.py:45-48), which the event data store then rejects for want of its partition key (src/tools/cloudtrail.py:30-32). Declaring it here would document usage that cannot work. Any statement that would work must be composed from grounded parts, which the identifier rule cannot ground -- so the choice was prose over either a grounded-but-misleading example or an INVENTED entry keyed by a ~180-character SQL string, and prose carries it: the SELECT-only gate, both silent rewrites and the required eventTime bound are all described here and on the `query` property. The pattern parsec itself teaches the agent, an AcceptAgreementRequest search with an eventTime bound and a DESC ordering, is at config/prompts/security_agent.md:167-174, and the key column names are at config/prompts/security_agent.md:36-45."
+        },
+        "responses": {
+          "200": {
+            "description": "The finished query's rows, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CloudTrailQueryResult"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Every failure path the implementation defines returns this shape in-band rather than raising, and for this operation there is no caveat: the whole body sits inside the try block (src/tools/cloudtrail.py:228-267), including the config read and the session construction. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "One of 'Only SELECT queries are allowed against CloudTrail Lake' (src/tools/cloudtrail.py:230-232, tested after stripping whitespace and a leading parenthesis), 'CloudTrail event data store ID not configured' (src/tools/cloudtrail.py:234-237), 'CloudTrail Lake query <status>: <message>' for a query the service reports as FAILED, CANCELLED or TIMED_OUT (src/tools/cloudtrail.py:146-148), 'CloudTrail Lake query timed out after <n>s. Try narrowing the eventTime range to reduce data scanned.' when the 300s poll budget is exhausted (src/tools/cloudtrail.py:18, :152-157), or 'CloudTrail Lake query failed: ...' with the exception's own text (src/tools/cloudtrail.py:262-267). That last message has two handlers -- a ClientError clause and a bare Exception clause -- whose text is identical, so the distinction is invisible to a caller."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query_aws_account": {
+      "post": {
+        "operationId": "query_aws_account",
+        "summary": "Inspect one AWS member account read-only via cross-account AssumeRole",
+        "description": "Four read-only inspections of a single member account -- EC2 instances, the account's own recent CloudTrail events, IAM users with their access keys, or marketplace agreements -- reached by assuming OrganizationAccountAccessRole with an inline read-only session policy. The response is an envelope plus a per-action payload: query_aws_account assigns account_id, action and region onto whatever the dispatch returned, in place and after the fact (src/tools/aws_account.py:449-453), so those three keys accompany an error dict exactly as they accompany a success payload. Only two errors lack them, both raised outside that assignment: the account-id format rejection and the outer exception handler. A role that cannot be assumed is reported as an error carrying two extra diagnostic keys, account_status and account_name, so a suspended or out-of-organization account is distinguishable from a permissions problem. Region applies to the EC2, CloudTrail and IAM clients only -- the marketplace client is pinned to us-east-1 regardless. FORMAT CHECK FIRST (parsec, src/tools/aws_account.py:446-447): before reading any collection, count the characters of `account_id` one by one. A valid id is exactly 12 characters, each 0-9; 11 or 13 digits are invalid. Unless there are exactly twelve and all are 0-9, return only `{\"error\": \"Invalid AWS account ID: <account_id>. Must be 12 digits.\"}` with no account_id/action/region keys. An id one digit short or long -- including one that equals a stored account id without its leading zero, such as an 11-digit id that a stored 12-digit id ends with -- is invalid: never answer it as that account and never with an empty list. The empty-result rules below apply only to an id that passed this check. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): each action has its own backing collection and must read it. `describe_instances` reads `ec2_instances`, scoped by `account_id` and `region`; `lookup_events` reads `events`; `list_users` reads `iam_users`, scoped by `account_id`; `describe_marketplace` reads `marketplace_agreements`, scoped by `account_id`. `sandbox_accounts` is read only for the role-assumption diagnostics named above and answers none of the four actions. RESPONSE KEYS (parsec's, verbatim, src/tools/aws_account.py:148, :182, :223, :350, :383): describe_instances returns `instance_count` and `instances`; lookup_events returns `event_count` and `events`; list_users returns `user_count` and `users`; describe_marketplace returns `agreement_count` and `agreements` -- each count the length of its list -- and every one of them also carries `account_id`, `action` and `region`. Every element of `instances`, `events`, `users` and `agreements` is the stored row, echoed with EVERY field the element's schema declares -- not a two-field summary. The response examples elsewhere in this document abbreviate for brevity; they are not the field set. Returning an instance without its `instance_type` and `tags`, or an empty `users` array while `iam_users` holds a row for that account, is a defect: an agent asked what kind of instance is running, or who created it, cannot recover a field the tool withheld, and will report a false absence. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these six store-authoritative operations, so there is no entity for which a record or field may be generated on demand. Only the documented derivations (a count equal to the length of a returned list, a total or in-use count over returned rows) are computed, and only from stored rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:453-504",
+          "implementation": "vendor/parsec/src/tools/aws_account.py:427",
+          "envelope_assembly": "vendor/parsec/src/tools/aws_account.py:449-453",
+          "dispatch": "vendor/parsec/src/tools/aws_account.py:386-424",
+          "assume_role": "vendor/parsec/src/tools/aws_account.py:17-47",
+          "describe_instances": "vendor/parsec/src/tools/aws_account.py:115-148",
+          "lookup_events": "vendor/parsec/src/tools/aws_account.py:151-182",
+          "list_users": "vendor/parsec/src/tools/aws_account.py:185-223",
+          "describe_marketplace": "vendor/parsec/src/tools/aws_account.py:334-383",
+          "agreement_enrichment": "vendor/parsec/src/tools/aws_account.py:243-331",
+          "agreement_classification": "vendor/parsec/src/tools/aws_account.py:226-240",
+          "access_failure": "vendor/parsec/src/tools/aws_account.py:394-418",
+          "documented_composition": "vendor/parsec/config/prompts/security_agent.md:194-200",
+          "documented_actions": "vendor/parsec/config/prompts/security_agent.md:71-90",
+          "example_account_id": "vendor/parsec/config/prompts/security_agent.md:96",
+          "example_event_name": "vendor/parsec/src/agent/tool_definitions.py:494"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryAwsAccountRequest"
+              },
+              "examples": {
+                "all_instances": {
+                  "summary": "Every instance in one region, running and stopped",
+                  "value": {
+                    "account_id": "123456789012",
+                    "action": "describe_instances",
+                    "region": "us-east-1"
+                  }
+                },
+                "recent_launches": {
+                  "summary": "The account's own recent launch events",
+                  "value": {
+                    "account_id": "123456789012",
+                    "action": "lookup_events",
+                    "filters": {
+                      "event_name": "RunInstances"
+                    }
+                  }
+                },
+                "iam_users": {
+                  "summary": "IAM users and their access keys",
+                  "value": {
+                    "account_id": "123456789012",
+                    "action": "list_users"
+                  }
+                },
+                "marketplace_discovery": {
+                  "summary": "Marketplace agreements via SearchAgreements discovery",
+                  "value": {
+                    "account_id": "123456789012",
+                    "action": "describe_marketplace"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The envelope composed with the requested action's payload, the access-failure diagnostics, or a bare in-band error. `anyOf` rather than `oneOf`, deliberately: because the envelope's three keys are assigned onto error dicts too (src/tools/aws_account.py:449-453), an error response satisfies both the envelope-plus-error branch and the bare-error branch at once, and `oneOf` -- which demands exactly one matching branch -- would make a perfectly legal error response invalid against this schema. Tightening the bare-error branch to forbid the envelope keys would buy exclusivity by asserting the two shapes are disjoint, which the source says they are not.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/AwsAccountEnvelope"
+                        },
+                        {
+                          "$ref": "#/components/schemas/DescribeInstancesResult"
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/AwsAccountEnvelope"
+                        },
+                        {
+                          "$ref": "#/components/schemas/LookupEventsResult"
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/AwsAccountEnvelope"
+                        },
+                        {
+                          "$ref": "#/components/schemas/ListUsersResult"
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/AwsAccountEnvelope"
+                        },
+                        {
+                          "$ref": "#/components/schemas/DescribeMarketplaceResult"
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/AwsAccountEnvelope"
+                        },
+                        {
+                          "$ref": "#/components/schemas/AccountAccessFailure"
+                        },
+                        {
+                          "type": "object",
+                          "description": "The role-assumption failure's own error text, inlined for the same reason the envelope below is: an error envelope is not domain state and must not become a seedable component schema.",
+                          "properties": {
+                            "error": {
+                              "type": "string",
+                              "description": "Either 'Account <id> (<name>) is suspended/closed. Cannot assume role in suspended accounts.' -- with the literal 'unknown' substituted for an unavailable name, which is not the empty string the account_name field uses for the same absence (src/tools/aws_account.py:401-409) -- or 'Cannot assume role in account <id>. The account may not have OrganizationAccountAccessRole or may not be in our organization.' (src/tools/aws_account.py:410-418)."
+                            }
+                          },
+                          "required": [
+                            "error"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "description": "Every failure path the implementation defines returns this shape in-band rather than raising, and for this operation the whole body sits inside the try block (src/tools/aws_account.py:444-457) -- including the non-ClientError failures of AssumeRole, which the credential helper does not catch (src/tools/aws_account.py:97-101), and the deliberate re-raise of an unhandled marketplace ClientError (src/tools/aws_account.py:381). Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state. This branch covers both the errors that carry the envelope's three keys and the two that do not.",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "One of 'Invalid AWS account ID: <x>. Must be 12 digits.' (src/tools/aws_account.py:446-447, the only error returned before dispatch and therefore without the envelope keys), 'Unknown action: <x>. Valid: [...]' (src/tools/aws_account.py:420-422, which does carry them), 'No marketplace-agreement access in account: ...' for an AccessDenied or Forbidden from SearchAgreements (src/tools/aws_account.py:379-380), the two role-assumption messages described on the branch above, or 'AWS account query failed: ...' with the exception's own text (src/tools/aws_account.py:455-457). Note what is *not* an error here: a SearchAgreements ValidationException is reported as a successful empty result carrying a `note` (src/tools/aws_account.py:364-378), and a per-agreement enrichment failure becomes a two-key entry inside the `agreements` array rather than failing the call (src/tools/aws_account.py:247-254)."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query_aws_account_db": {
+      "post": {
+        "operationId": "query_aws_account_db",
+        "summary": "Query the DynamoDB sandbox account pool for account metadata",
+        "description": "The authoritative sandbox-name to account-id mapping, read from the DynamoDB `accounts` table. parsec's own playbooks call it first for any AWS account lookup because it is a direct key lookup rather than a SQL query (config/prompts/shared_context.md:74-78). Supplying `name` short-circuits everything else into a key lookup; otherwise the table is scanned, with account_id and available applied as server-side conditions and owner, zone, envtype and reservation as case-insensitive substring matches applied client-side after each page. Every returned record is the stored item minus five keys -- two credential fields and three DynamoDB replication-metadata fields -- so the record shape is the table's rather than parsec's, and this spec models it as an open object. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Read only `sandbox_accounts`, matching the requested account. RESPONSE KEYS (parsec's, verbatim, src/tools/aws_accounts.py:103-108, :127-132, :138-142): exactly `accounts`, `count` and `truncated` -- `count` is the length of `accounts`, and there is no `total`, `in_use`, `total_found` or `max_results` key. Each element of `accounts` is the stored row with every stored field except `sandbox_account_id`, which is storage identity and never echoed. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these six store-authoritative operations, so there is no entity for which a record or field may be generated on demand. Only the documented derivations (a count equal to the length of a returned list, a total or in-use count over returned rows) are computed, and only from stored rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:557-613",
+          "implementation": "vendor/parsec/src/tools/aws_accounts.py:145",
+          "response_assembly": "vendor/parsec/src/tools/aws_accounts.py:87-142",
+          "key_lookup": "vendor/parsec/src/tools/aws_accounts.py:103-108",
+          "server_side_filters": "vendor/parsec/src/tools/aws_accounts.py:65-84",
+          "client_side_filters": "vendor/parsec/src/tools/aws_accounts.py:38-62",
+          "credential_stripping": "vendor/parsec/src/tools/aws_accounts.py:19-35",
+          "documented_record": "vendor/parsec/config/prompts/shared_context.md:80-95",
+          "documented_response": "vendor/parsec/config/prompts/cost_agent.md:181-184",
+          "example_sandbox_name": "vendor/parsec/src/agent/tool_definitions.py:572",
+          "example_envtype": "vendor/parsec/src/agent/tool_definitions.py:596"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryAwsAccountDbRequest"
+              },
+              "examples": {
+                "by_name": {
+                  "summary": "One sandbox by name -- a direct key lookup",
+                  "value": {
+                    "name": "sandbox4440"
+                  }
+                },
+                "by_account_id": {
+                  "summary": "Resolve an account id back to its sandbox",
+                  "value": {
+                    "account_id": "123456789012"
+                  }
+                },
+                "idle_clusters": {
+                  "summary": "Idle sandboxes whose environment type matches",
+                  "value": {
+                    "available": true,
+                    "envtype": "ocp4-cluster"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The matching account records, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/AwsAccountDbResult"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Every failure path the implementation defines returns this shape in-band rather than raising, and for this operation there is no caveat: the whole body including the max_results clamp sits inside the try block (src/tools/aws_accounts.py:170-190). Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "Always 'AWS accounts query failed: ...' with the exception's own text -- this operation has exactly one error message, and its two handlers, a ClientError clause and a bare Exception clause, produce identical text (src/tools/aws_accounts.py:185-190). Note what is *not* an error: a `name` that matches nothing returns a successful empty result (src/tools/aws_accounts.py:106-107)."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query_marketplace_agreements": {
+      "post": {
+        "operationId": "query_marketplace_agreements",
+        "summary": "Query the pre-enriched AWS Marketplace agreement inventory",
+        "description": "The org-wide marketplace agreement inventory held in DynamoDB, pre-enriched with account name, product, vendor, classification, cost and auto-renew status, so a question about active subscriptions needs neither a CloudTrail scan nor a per-account inspection. Supplying account_id switches the access path from a table scan to a query against the account_id GSI; status, classification and min_cost become a DynamoDB filter expression; account_name, product_name and vendor_name are case-insensitive substring matches applied client-side. Every returned record is the stored item minus pk, error and term_types, with DynamoDB Decimals converted to floats throughout, so the record shape is the table's rather than parsec's. Do not confuse this with query_aws_account's describe_marketplace action: that reads one account's live Marketplace API and computes its own classification, this reads the stored inventory -- and the two even name the cost field differently. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Read only `marketplace_agreements`, filtered by the request's arguments. RESPONSE KEYS (parsec's, verbatim, src/tools/marketplace_agreements.py:171-175): exactly `agreements`, `count` (the length of `agreements`) and `truncated`. Each element is the stored row with every stored field except `marketplace_agreement_id`, which is storage identity and never echoed. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these six store-authoritative operations, so there is no entity for which a record or field may be generated on demand. Only the documented derivations (a count equal to the length of a returned list, a total or in-use count over returned rows) are computed, and only from stored rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:505-556",
+          "implementation": "vendor/parsec/src/tools/marketplace_agreements.py:178",
+          "response_assembly": "vendor/parsec/src/tools/marketplace_agreements.py:171-175",
+          "gsi_query": "vendor/parsec/src/tools/marketplace_agreements.py:105-123",
+          "table_scan": "vendor/parsec/src/tools/marketplace_agreements.py:87-102",
+          "server_side_filters": "vendor/parsec/src/tools/marketplace_agreements.py:35-62",
+          "client_side_filters": "vendor/parsec/src/tools/marketplace_agreements.py:65-84",
+          "item_cleaning": "vendor/parsec/src/tools/marketplace_agreements.py:20-32",
+          "documented_record": "vendor/parsec/config/prompts/security_agent.md:112-119",
+          "documented_response": "vendor/parsec/config/prompts/security_agent.md:202-203",
+          "example_classification": "vendor/parsec/src/agent/tool_definitions.py:533",
+          "example_status": "vendor/parsec/src/agent/tool_definitions.py:528"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryMarketplaceAgreementsRequest"
+              },
+              "examples": {
+                "one_account": {
+                  "summary": "One account's agreements, via the GSI",
+                  "value": {
+                    "account_id": "123456789012"
+                  }
+                },
+                "expensive_auto_renew": {
+                  "summary": "Auto-renewing SaaS subscriptions above a cost threshold",
+                  "value": {
+                    "classification": "SaaS (Auto-Renew)",
+                    "min_cost": 500
+                  }
+                },
+                "active_only": {
+                  "summary": "Agreements the inventory still records as active",
+                  "value": {
+                    "status": "ACTIVE"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The matching agreement records, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/MarketplaceAgreementsResult"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Every failure path the implementation defines returns this shape in-band rather than raising, and for this operation there is no caveat: the whole body including the max_results clamp sits inside the try block (src/tools/marketplace_agreements.py:203-223). Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "Always 'Marketplace agreements query failed: ...' with the exception's own text -- this operation has exactly one error message, and its two handlers, a ClientError clause and a bare Exception clause, produce identical text (src/tools/marketplace_agreements.py:218-223). A filter that matches nothing is not an error: it returns a successful empty result (src/tools/marketplace_agreements.py:171-175)."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

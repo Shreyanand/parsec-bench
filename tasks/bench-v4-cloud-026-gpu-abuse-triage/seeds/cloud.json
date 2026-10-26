@@ -1,0 +1,88 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [
+    {
+      "instance_id": "i-0a91c4e8b7d2f3016",
+      "instance_type": "g4dn.12xlarge",
+      "state": "running",
+      "launch_time": "2026-06-18T22:41:00Z",
+      "az": "ap-south-1b",
+      "public_ip": "13.232.44.190",
+      "tags": {
+        "Name": "Web-Created-VM",
+        "guid": "vk3np"
+      },
+      "ec2_instance_id": "i-0a91c4e8b7d2f3016",
+      "account_id": "419283746777",
+      "region": "ap-south-1"
+    },
+    {
+      "instance_id": "i-0b72d5f9c8e1a4207",
+      "instance_type": "t3.medium",
+      "state": "running",
+      "launch_time": "2026-06-15T09:00:00Z",
+      "az": "ap-south-1a",
+      "public_ip": "13.232.44.191",
+      "tags": {
+        "Name": "bastion",
+        "guid": "vk3np"
+      },
+      "ec2_instance_id": "i-0b72d5f9c8e1a4207",
+      "account_id": "419283746777",
+      "region": "ap-south-1"
+    }
+  ],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [
+    {
+      "username": "svc-deploy",
+      "user_id": "AIDA4NPQ2XKJ7RTBVMWL3",
+      "created": "2026-06-18T22:38:00Z",
+      "password_last_used": "never",
+      "access_keys": [
+        {
+          "access_key_id": "AKIA7YQ4ZBN2XKJRTVML",
+          "status": "Active",
+          "created": "2026-06-18T22:39:00Z"
+        }
+      ],
+      "iam_user_id": "AIDA4NPQ2XKJ7RTBVMWL3",
+      "account_id": "419283746777"
+    }
+  ],
+  "marketplace_agreements": [
+    {
+      "agreement_id": "agmt-4471902",
+      "account_id": "419283746777",
+      "status": "ACTIVE",
+      "product_name": "GPU Rendering Toolkit",
+      "vendor_name": "unverified-vendor",
+      "offer_type": "public",
+      "classification": "SaaS (Auto-Renew)",
+      "estimated_cost_usd": 4820.0,
+      "currency": "USD",
+      "auto_renew": true,
+      "agreement_start": "2026-06-18T23:02:00Z",
+      "terms": [],
+      "marketplace_agreement_id": "agmt-4471902"
+    }
+  ],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sandbox2410",
+      "name": "sandbox2410",
+      "account_id": "419283746777",
+      "available": false,
+      "guid": "vk3np",
+      "envtype": "ansible-gpte-tower",
+      "owner": "opentlc-mgr",
+      "owner_email": "opentlc-mgr@redhat.com",
+      "zone": "ap-south-1",
+      "conan_status": "in-use",
+      "reservation": "",
+      "comment": "flagged for review"
+    }
+  ]
+}

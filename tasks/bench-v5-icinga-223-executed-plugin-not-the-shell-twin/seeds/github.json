@@ -1,0 +1,191 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "file_id": "rhpds/rhdp-monitoring@HEAD:plugins/jvm/check_fd_usage.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/jvm/check_fd_usage.py",
+      "ref": "HEAD",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_fd_usage.py - open file descriptors of one process, as a share of that process's limit.\n\nCounts the entries in /proc/<pid>/fd for the pid in --pid-file and divides by the process's\nSOFT \"Max open files\" limit, the first number on that line of /proc/<pid>/limits. The hard\nlimit is ignored: the process starts failing with EMFILE when it reaches the soft one.\n\"\"\"\nimport argparse\nimport os\nimport sys\n\nWARN_PCT = 80\nCRIT_PCT = 88\n\n\ndef soft_nofile(pid):\n    with open(f\"/proc/{pid}/limits\") as fh:\n        for line in fh:\n            if line.startswith(\"Max open files\"):\n                return int(line.split()[3])\n    raise RuntimeError(\"no Max open files line\")\n\n\ndef main():\n    ap = argparse.ArgumentParser()\n    ap.add_argument(\"--pid-file\", required=True)\n    ap.add_argument(\"-w\", \"--warning\", type=int, default=WARN_PCT)\n    ap.add_argument(\"-c\", \"--critical\", type=int, default=CRIT_PCT)\n    args = ap.parse_args()\n    pid = int(open(args.pid_file).read().strip())\n    used = len(os.listdir(f\"/proc/{pid}/fd\"))\n    limit = soft_nofile(pid)\n    pct = used * 100 // limit\n    msg = f\"pid {pid} has {used} open files, {pct}% of limit|open_fds={used};;;0\"\n    if pct >= args.critical:\n        print(f\"FD CRITICAL - {msg}\"); sys.exit(2)\n    if pct >= args.warning:\n        print(f\"FD WARNING - {msg}\"); sys.exit(1)\n    print(f\"FD OK - {msg}\"); sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@main:plugins/jvm/check_fd_usage.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/jvm/check_fd_usage.py",
+      "ref": "main",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_fd_usage.py - open file descriptors of one process, as a share of that process's limit.\n\nCounts the entries in /proc/<pid>/fd for the pid in --pid-file and divides by the process's\nSOFT \"Max open files\" limit, the first number on that line of /proc/<pid>/limits. The hard\nlimit is ignored: the process starts failing with EMFILE when it reaches the soft one.\n\"\"\"\nimport argparse\nimport os\nimport sys\n\nWARN_PCT = 80\nCRIT_PCT = 88\n\n\ndef soft_nofile(pid):\n    with open(f\"/proc/{pid}/limits\") as fh:\n        for line in fh:\n            if line.startswith(\"Max open files\"):\n                return int(line.split()[3])\n    raise RuntimeError(\"no Max open files line\")\n\n\ndef main():\n    ap = argparse.ArgumentParser()\n    ap.add_argument(\"--pid-file\", required=True)\n    ap.add_argument(\"-w\", \"--warning\", type=int, default=WARN_PCT)\n    ap.add_argument(\"-c\", \"--critical\", type=int, default=CRIT_PCT)\n    args = ap.parse_args()\n    pid = int(open(args.pid_file).read().strip())\n    used = len(os.listdir(f\"/proc/{pid}/fd\"))\n    limit = soft_nofile(pid)\n    pct = used * 100 // limit\n    msg = f\"pid {pid} has {used} open files, {pct}% of limit|open_fds={used};;;0\"\n    if pct >= args.critical:\n        print(f\"FD CRITICAL - {msg}\"); sys.exit(2)\n    if pct >= args.warning:\n        print(f\"FD WARNING - {msg}\"); sys.exit(1)\n    print(f\"FD OK - {msg}\"); sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@HEAD:plugins/legacy/check_fd_usage.sh",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/legacy/check_fd_usage.sh",
+      "ref": "HEAD",
+      "content": "#!/bin/bash\n# check_fd_usage.sh - file handles allocated across the whole kernel, as a percentage of the\n# kernel maximum, from /proc/sys/fs/file-nr. Takes no process argument.\nWARN=${1:-85}\nCRIT=${2:-95}\nread -r alloc _unused max < /proc/sys/fs/file-nr\npct=$(( alloc * 100 / max ))\nif [ \"$pct\" -ge \"$CRIT\" ]; then echo \"FD CRITICAL - ${pct}% of file handles allocated\"; exit 2; fi\nif [ \"$pct\" -ge \"$WARN\" ]; then echo \"FD WARNING - ${pct}% of file handles allocated\"; exit 1; fi\necho \"FD OK - ${pct}% of file handles allocated\"; exit 0\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@main:plugins/legacy/check_fd_usage.sh",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/legacy/check_fd_usage.sh",
+      "ref": "main",
+      "content": "#!/bin/bash\n# check_fd_usage.sh - file handles allocated across the whole kernel, as a percentage of the\n# kernel maximum, from /proc/sys/fs/file-nr. Takes no process argument.\nWARN=${1:-85}\nCRIT=${2:-95}\nread -r alloc _unused max < /proc/sys/fs/file-nr\npct=$(( alloc * 100 / max ))\nif [ \"$pct\" -ge \"$CRIT\" ]; then echo \"FD CRITICAL - ${pct}% of file handles allocated\"; exit 2; fi\nif [ \"$pct\" -ge \"$WARN\" ]; then echo \"FD WARNING - ${pct}% of file handles allocated\"; exit 1; fi\necho \"FD OK - ${pct}% of file handles allocated\"; exit 0\n"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@HEAD-check_fd_usage",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "search": "check_fd_usage",
+      "matches": [
+        "plugins/jvm/check_fd_usage.py",
+        "plugins/legacy/check_fd_usage.sh"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@main-check_fd_usage",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "search": "check_fd_usage",
+      "matches": [
+        "plugins/jvm/check_fd_usage.py",
+        "plugins/legacy/check_fd_usage.sh"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@HEAD-fd_usage",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "search": "fd_usage",
+      "matches": [
+        "plugins/jvm/check_fd_usage.py",
+        "plugins/legacy/check_fd_usage.sh"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@main-fd_usage",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "search": "fd_usage",
+      "matches": [
+        "plugins/jvm/check_fd_usage.py",
+        "plugins/legacy/check_fd_usage.sh"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@HEAD-check_fd",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "search": "check_fd",
+      "matches": [
+        "plugins/jvm/check_fd_usage.py",
+        "plugins/legacy/check_fd_usage.sh"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@main-check_fd",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "search": "check_fd",
+      "matches": [
+        "plugins/jvm/check_fd_usage.py",
+        "plugins/legacy/check_fd_usage.sh"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@HEAD-fd_usage.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "search": "fd_usage.py",
+      "matches": [
+        "plugins/jvm/check_fd_usage.py"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@main-fd_usage.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "search": "fd_usage.py",
+      "matches": [
+        "plugins/jvm/check_fd_usage.py"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@HEAD-check_fd_usage.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "search": "check_fd_usage.py",
+      "matches": [
+        "plugins/jvm/check_fd_usage.py"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@main-check_fd_usage.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "search": "check_fd_usage.py",
+      "matches": [
+        "plugins/jvm/check_fd_usage.py"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@HEAD-check_fd_usage.sh",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "search": "check_fd_usage.sh",
+      "matches": [
+        "plugins/legacy/check_fd_usage.sh"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@main-check_fd_usage.sh",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "search": "check_fd_usage.sh",
+      "matches": [
+        "plugins/legacy/check_fd_usage.sh"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    }
+  ],
+  "similar_items": []
+}

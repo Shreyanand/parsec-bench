@@ -1,0 +1,1 @@
+{"type": "result", "subtype": "success", "is_error": false, "result": "I didn't quite catch that — could you clarify what you'd like to investigate?\n\n{{choices}}\n- Look up a provision or user\n- Investigate cloud costs\n- Check a failed provision / AAP2 job\n- Investigate a sandbox account\n- Something else\n{{/choices}}"}

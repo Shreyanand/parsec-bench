@@ -1,0 +1,213 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts",
+          "search": "lab-bastion-kx7q2",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "lab-bastion-kx7q2"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts",
+          "search": "kx7q2",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "ocpv-juniper",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts",
+          "search": "ocpv-juniper",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_problems",
+          "filter_expr": "match(\"*kx7q2*\", host.name) || match(\"*ocpv-juniper*\", host.name)"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "lab-bastion-kx7q2",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "lab-bastion-kx7q2"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "ocpv-lab-vms"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "lab-bastion"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "ocpv_namespace"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-scripts",
+          "search": "ocpv"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-scripts",
+          "search": "vm"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_problems",
+          "filter_expr": "match(\"*ocpv-juniper*\", service.host_name) || match(\"*juniper*\", host.name)"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "virt"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_problems",
+          "filter_expr": "match(\"*lab-bastion*\", host.name)"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "lab-showroom-kx7q2"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_vms",
+          "cluster": "ocpv-juniper",
+          "namespace": "sandbox-kx7q2-bastion"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "io-error",
+        "any_of": [
+          "IOError",
+          "I/O error",
+          "IO error",
+          "io-error"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is really wrong",
+        "rationale": "the condition reason; only in the platform row"
+      },
+      {
+        "id": "disk",
+        "any_of": [
+          "rootdisk",
+          "disk",
+          "storage",
+          "volume"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is really wrong",
+        "rationale": "where the I/O error is",
+        "derived": true,
+        "note": "bastion-kx7q2's condition is Paused / IOError with message 'VMI was paused, low-level IO error detected on disk rootdisk', so the fault is in its root disk volume (dataVolume bastion-kx7q2-rootdisk)."
+      },
+      {
+        "id": "other-vm-ok",
+        "any_of": [
+          "showroom-kx7q2 is Running",
+          "showroom-kx7q2 is running",
+          "showroom-kx7q2, is Running",
+          "showroom-kx7q2 (Running",
+          "showroom-kx7q2: Running",
+          "showroom-kx7q2 - Running",
+          "showroom-kx7q2 is fine",
+          "showroom-kx7q2 is healthy",
+          "showroom-kx7q2 is not affected",
+          "showroom-kx7q2 is unaffected",
+          "showroom-kx7q2, is Running and ready"
+        ],
+        "ignore_case": true,
+        "asked_by": "whether the other VM in that lab is affected",
+        "rationale": "the sibling VM row",
+        "derived": true,
+        "note": "list_vms for ocpv-juniper / sandbox-kx7q2-bastion returns a second VM, showroom-kx7q2, with status Running and ready true; the forms pair that VM with its state, which no single seed string does."
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

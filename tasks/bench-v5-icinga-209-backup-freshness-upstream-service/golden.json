@@ -1,0 +1,39 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "pg-archive-01"
+      },
+      "result": {
+        "result": "[{\"name\":\"pg-archive-01!fs-wal-archive\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"/srv/wal-archive free space\",\"host_name\":\"pg-archive-01\",\"state\":0,\"check_attempt\":1,\"last_state_change\":1793707200,\"last_check\":1794976560,\"vars\":{\"plugin\":\"plugins/storage/check_fs_free.sh\",\"mount\":\"/srv/wal-archive\"},\"last_check_result\":{\"output\":\"DISK OK - /srv/wal-archive 47% used\",\"state\":0,\"exit_status\":0},\"state_type\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}},{\"name\":\"pg-archive-01!wal-archive-freshness\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"WAL archive base backup freshness\",\"host_name\":\"pg-archive-01\",\"state\":2,\"check_attempt\":3,\"last_state_change\":1794973200,\"last_hard_state_change\":1794973800,\"last_check\":1794976680,\"vars\":{\"plugin\":\"plugins/storage/check_marker_age.sh\",\"marker\":\"/srv/wal-archive/.last_basebackup\"},\"last_check_result\":{\"output\":\"MARKER CRITICAL - /srv/wal-archive/.last_basebackup is 31 h old (crit 30 h)\",\"state\":2,\"exit_status\":2},\"state_type\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "rhdp-monitoring",
+        "path": "plugins/storage/check_marker_age.sh"
+      },
+      "result": {
+        "content": "#!/bin/bash\n# check_marker_age.sh - age of a marker file that another job touches when it succeeds.\n#\n# On pg-archive-01 the marker /srv/wal-archive/.last_basebackup is written by the nightly\n# pg_basebackup run on the primary, which Icinga monitors as service 'pg-basebackup' on host\n# pg-primary-ord-1. This host only stores the result: a stale marker means the producer did\n# not finish, so look at that service before touching the archive host.\n#\n# usage: check_marker_age.sh MARKER [WARN_HOURS] [CRIT_HOURS]\nset -euo pipefail\n\nMARKER=\"${1:?marker path required}\"\nWARN_HOURS=\"${2:-26}\"\nCRIT_HOURS=\"${3:-30}\"\n\nif [[ ! -e \"$MARKER\" ]]; then\n  echo \"MARKER UNKNOWN - $MARKER does not exist\"; exit 3\nfi\nage_h=$(( ( $(date +%s) - $(stat -c %Y \"$MARKER\") ) / 3600 ))\nif (( age_h >= CRIT_HOURS )); then\n  echo \"MARKER CRITICAL - $MARKER is ${age_h} h old (crit ${CRIT_HOURS} h)\"; exit 2\nelif (( age_h >= WARN_HOURS )); then\n  echo \"MARKER WARNING - $MARKER is ${age_h} h old (warn ${WARN_HOURS} h)\"; exit 1\nfi\necho \"MARKER OK - $MARKER is ${age_h} h old\"; exit 0\n"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "pg-primary-ord-1"
+      },
+      "result": {
+        "result": "[{\"name\":\"pg-primary-ord-1!pg-basebackup\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Nightly pg_basebackup to archive\",\"host_name\":\"pg-primary-ord-1\",\"state\":2,\"check_attempt\":3,\"last_state_change\":1794952320,\"last_hard_state_change\":1794952320,\"last_check\":1794976200,\"last_check_result\":{\"output\":\"BASEBACKUP CRITICAL - last run 2026-11-17 21:40 exited 1: FATAL: number of requested standby connections exceeds max_wal_senders (currently 4)\",\"state\":2,\"exit_status\":2},\"state_type\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}},{\"name\":\"pg-primary-ord-1!pg-replication-lag\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Streaming replica lag\",\"host_name\":\"pg-primary-ord-1\",\"state\":0,\"check_attempt\":1,\"last_state_change\":1794297600,\"last_check\":1794976500,\"last_check_result\":{\"output\":\"PG OK - replica lag 0.4 s\",\"state\":0,\"exit_status\":0},\"state_type\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The archive box is fine; the failure is upstream on the primary.\n\n1. `wal-archive-freshness` on pg-archive-01 is CRITICAL: \"/srv/wal-archive/.last_basebackup is 31 h old (crit 30 h)\".\n   Its vars point to plugins/storage/check_marker_age.sh with that marker. The archive filesystem itself is OK (47% used).\n2. The plugin (rhpds/rhdp-monitoring, plugins/storage/check_marker_age.sh) only measures the age of a marker file. Defaults:\n   warning at 26 hours, critical at 30 hours. Its header says the marker is written by the nightly pg_basebackup on the\n   primary, monitored as service `pg-basebackup` on host pg-primary-ord-1 - so a stale marker means that job did not finish.\n3. On pg-primary-ord-1, `pg-basebackup` is hard CRITICAL since 2026-11-17 21:52 UTC: \"last run 2026-11-17 21:40 exited 1:\n   FATAL: number of requested standby connections exceeds max_wal_senders (currently 4)\".\n\nRoot cause: last night's base backup failed on the primary because max_wal_senders (4) is exhausted, so the marker was not\nrefreshed and its age crossed 30 h. Fix the primary (raise max_wal_senders or free a sender) and run the base backup again;\nthe archive alert will clear when the marker is touched again."
+}

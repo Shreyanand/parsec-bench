@@ -1,0 +1,16 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "search": "objstore-pool"
+      },
+      "result": {
+        "result": "[{\"name\":\"s3gw-ash-1!objstore-pool\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"ZFS pool tank0 usage\",\"host_name\":\"s3gw-ash-1\",\"state\":1,\"state_type\":1,\"check_attempt\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"last_state_change\":1796240400,\"last_check\":1796306880,\"last_check_result\":{\"output\":\"POOL WARNING - tank0 above warning threshold\",\"performance_data\":[\"tank0_used=412GB;400;460;0;500\"],\"state\":1,\"exit_status\":1}}},{\"name\":\"s3gw-ash-2!objstore-pool\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"ZFS pool tank0 usage\",\"host_name\":\"s3gw-ash-2\",\"state\":0,\"state_type\":1,\"check_attempt\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"last_state_change\":1795778100,\"last_check\":1796306820,\"last_check_result\":{\"output\":\"POOL OK - tank0 within limits\",\"performance_data\":[\"tank0_used=318GB;400;460;0;500\"],\"state\":0,\"exit_status\":0}}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "`objstore-pool` runs on two hosts.\n\ns3gw-ash-1 - WARNING (\"POOL WARNING - tank0 above warning threshold\"). The numbers are only in the perfdata:\n`tank0_used=412GB;400;460;0;500`, i.e. 412 GB used, warning at 400 GB, critical at 460 GB, pool size 500 GB.\n- Headroom before CRITICAL: 460 - 412 = 48 GB.\n- In use: 412 / 500 = 82.4% of the pool.\n\ns3gw-ash-2 - OK (\"POOL OK - tank0 within limits\"), 318 GB of 500 GB used (63.6%), 142 GB below its critical line."
+}

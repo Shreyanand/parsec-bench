@@ -1,0 +1,16 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_hosts",
+        "search": "ledger-api"
+      },
+      "result": {
+        "result": "[{\"name\":\"ledger-api-fra\",\"type\":\"Host\",\"attrs\":{\"display_name\":\"ledger-api-fra\",\"host_name\":\"ledger-api-fra\",\"state\":1,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":0,\"groups\":[\"payments-edge\"],\"last_check_result\":{\"output\":\"PING CRITICAL - Time to live exceeded (10.61.4.22)\",\"state\":2,\"exit_status\":2}}},{\"name\":\"ledger-api-lon\",\"type\":\"Host\",\"attrs\":{\"display_name\":\"ledger-api-lon\",\"host_name\":\"ledger-api-lon\",\"state\":0,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":0,\"groups\":[\"payments-edge\"],\"last_check_result\":{\"output\":\"PING OK - Packet loss = 0%, RTA = 0.84 ms\",\"state\":0,\"exit_status\":0}}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The search for ledger-api returns two hosts.\n\n- ledger-api-fra is DOWN. Its last check output is \"PING CRITICAL - Time to live exceeded (10.61.4.22)\", so ping replies are expiring in transit before they reach the host.\n- ledger-api-lon is UP (state 0); its check reports PING OK with 0% packet loss and 0.84 ms RTA."
+}

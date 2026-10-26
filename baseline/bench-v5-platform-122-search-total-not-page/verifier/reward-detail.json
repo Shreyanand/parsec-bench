@@ -1,0 +1,62 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "service_mesh"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_service_mesh_ambient/defaults/main.yml"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "istio-version",
+        "any_of": [
+          "v1.26.2",
+          "1.26.2"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which Istio version does that role install by default",
+        "rationale": "only in the fetched defaults file; no search result carries it"
+      }
+    ],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [
+      {
+        "id": "version-line",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_service_mesh_ambient/defaults/main.yml",
+        "line": 12,
+        "asked_by": "cite the line that sets it",
+        "rationale": "the line number is counted from the seeded file and only reachable by fetching it"
+      }
+    ],
+    "citations_total": 1,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

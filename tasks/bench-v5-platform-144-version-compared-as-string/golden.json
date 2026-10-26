@@ -1,0 +1,95 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_log",
+        "controller": "east",
+        "job_id": 7731582
+      },
+      "result": {
+        "job_id": 7731582,
+        "job_name": "RHDP realtime_bu.tick-replay-lab.prod-w5rcm-1-provision",
+        "status": "failed",
+        "failed": true,
+        "started": "2026-10-14T07:02:36.000Z",
+        "finished": "2026-10-14T07:58:09.000Z",
+        "duration_seconds": 3333,
+        "launch_type": "workflow",
+        "job_explanation": "",
+        "template_name": "RHDP realtime_bu.tick-replay-lab.prod-provision",
+        "env_type": "prod",
+        "guid": "w5rcm",
+        "action": "provision",
+        "cloud_provider": "ec2",
+        "display_name": "tick-replay-lab",
+        "controller": "east",
+        "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+        "git_branch": "main",
+        "git_revision": "69aa2665306612aa6e60cfc4a43cbc55190f3e9e",
+        "log": "PLAY [Deploy the lab workloads] ************************************************\n\nTASK [ocp4_workload_tick_replay : Create the tick replay namespace] *************\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml:3\nchanged: [localhost]\n\nTASK [ocp4_workload_tick_replay : Pick the PodDisruptionBudget API for this cluster] ***\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml:10\nok: [localhost]\n\nTASK [ocp4_workload_tick_replay : Report the PodDisruptionBudget API] ***********\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml:14\nok: [localhost] => {\n    \"msg\": \"PodDisruptionBudget API for OpenShift 4.16: policy/v1beta1\"\n}\n\nTASK [ocp4_workload_tick_replay : Deploy the replay brokers] ********************\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml:18\nchanged: [localhost]\n\nTASK [ocp4_workload_tick_replay : Protect the replay brokers] *******************\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml:23\nincluded: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml for localhost\n\nTASK [ocp4_workload_tick_replay : Create the replay broker disruption budget] ***\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml:3\nfatal: [localhost]: FAILED! => {\"changed\": false, \"msg\": \"Failed to find exact match for policy/v1beta1.PodDisruptionBudget by [kind, name, singularName, shortNames]\"}\n\nPLAY RECAP *********************************************************************\nlocalhost                  : ok=4    changed=2    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0\n",
+        "log_original_size": 1831,
+        "log_trimmed_size": 1831
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_log",
+        "controller": "east",
+        "job_id": 7714066
+      },
+      "result": {
+        "job_id": 7714066,
+        "job_name": "RHDP realtime_bu.tick-replay-lab.prod-b2jxs-1-provision",
+        "status": "successful",
+        "failed": false,
+        "started": "2026-10-02T15:40:12.000Z",
+        "finished": "2026-10-02T16:37:51.000Z",
+        "duration_seconds": 3459,
+        "launch_type": "workflow",
+        "job_explanation": "",
+        "template_name": "RHDP realtime_bu.tick-replay-lab.prod-provision",
+        "env_type": "prod",
+        "guid": "b2jxs",
+        "action": "provision",
+        "cloud_provider": "ec2",
+        "display_name": "tick-replay-lab",
+        "controller": "east",
+        "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+        "git_branch": "main",
+        "git_revision": "42fc1a0fd499c7c1acf260259e547d59824ac2bd",
+        "log": "PLAY [Deploy the lab workloads] ************************************************\n\nTASK [ocp4_workload_tick_replay : Create the tick replay namespace] *************\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml:3\nchanged: [localhost]\n\nTASK [ocp4_workload_tick_replay : Pick the PodDisruptionBudget API for this cluster] ***\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml:10\nok: [localhost]\n\nTASK [ocp4_workload_tick_replay : Report the PodDisruptionBudget API] ***********\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml:14\nok: [localhost] => {\n    \"msg\": \"PodDisruptionBudget API for OpenShift 4.11: policy/v1beta1\"\n}\n\nTASK [ocp4_workload_tick_replay : Deploy the replay brokers] ********************\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml:18\nchanged: [localhost]\n\nTASK [ocp4_workload_tick_replay : Protect the replay brokers] *******************\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml:23\nincluded: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml for localhost\n\nTASK [ocp4_workload_tick_replay : Create the replay broker disruption budget] ***\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml:3\n[WARNING]: policy/v1beta1 PodDisruptionBudget is deprecated in v1.21+, unavailable in v1.25+; use policy/v1 PodDisruptionBudget\nchanged: [localhost] => {\"changed\": true, \"method\": \"create\", \"result\": {\"apiVersion\": \"policy/v1beta1\", \"kind\": \"PodDisruptionBudget\", \"metadata\": {\"name\": \"tick-replay-brokers\", \"namespace\": \"tick-replay-b2jxs\"}, \"spec\": {\"minAvailable\": 2, \"selector\": {\"matchLabels\": {\"app\": \"tick-replay-broker\"}}}}, \"warnings\": [\"policy/v1beta1 PodDisruptionBudget is deprecated in v1.21+, unavailable in v1.25+; use policy/v1 PodDisruptionBudget\"]}\n\nPLAY RECAP *********************************************************************\nlocalhost                  : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0\n",
+        "log_original_size": 2230,
+        "log_trimmed_size": 2230
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "agnosticd",
+        "repo": "agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml"
+      },
+      "result": {
+        "content": "---\n# Keep two of the three replay brokers up through node drains\n- name: Create the replay broker disruption budget\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: \"{{ _tick_replay_pdb_api }}\"\n      kind: PodDisruptionBudget\n      metadata:\n        name: tick-replay-brokers\n        namespace: \"tick-replay-{{ guid }}\"\n      spec:\n        minAvailable: 2\n        selector:\n          matchLabels:\n            app: tick-replay-broker\n"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "agnosticd",
+        "repo": "agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml"
+      },
+      "result": {
+        "content": "---\n# ocp4_workload_tick_replay: market-data tick replay brokers for the replay lab\n- name: Create the tick replay namespace\n  kubernetes.core.k8s:\n    api_version: v1\n    kind: Namespace\n    name: \"tick-replay-{{ guid }}\"\n    state: present\n\n- name: Pick the PodDisruptionBudget API for this cluster\n  ansible.builtin.set_fact:\n    _tick_replay_pdb_api: \"{{ 'policy/v1' if ocp4_cluster_version >= '4.8' else 'policy/v1beta1' }}\"\n\n- name: Report the PodDisruptionBudget API\n  ansible.builtin.debug:\n    msg: \"PodDisruptionBudget API for OpenShift {{ ocp4_cluster_version }}: {{ _tick_replay_pdb_api }}\"\n\n- name: Deploy the replay brokers\n  kubernetes.core.k8s:\n    state: present\n    template: replay-brokers.yaml.j2\n\n- name: Protect the replay brokers\n  ansible.builtin.include_tasks: disruption_budget.yml\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The failed order (job 7731582, OpenShift 4.16) died creating the replay broker PodDisruptionBudget: \"Failed to find exact match for policy/v1beta1.PodDisruptionBudget\". policy/v1beta1 PDBs were removed in Kubernetes 1.25, so a 4.16 cluster does not serve that API at all.\n\nThe role chose policy/v1beta1 itself. tasks/disruption_budget.yml takes apiVersion from _tick_replay_pdb_api, and tasks/main.yml sets it with {{ 'policy/v1' if ocp4_cluster_version >= '4.8' else 'policy/v1beta1' }} (agnosticd/agnosticd-v2:ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml:12). That is a plain string comparison, not a version comparison: '4.16' >= '4.8' is false because '1' sorts before '8', so every 4.1x cluster falls into the policy/v1beta1 branch. The threshold is '4.8'.\n\nThe last good order (job 7714066, OpenShift 4.11) took the same wrong branch: its log reports \"PodDisruptionBudget API for OpenShift 4.11: policy/v1beta1\" and the API server answered with a deprecation warning (deprecated in v1.21+, unavailable in v1.25+). It only worked because 4.11 still served v1beta1. So the 4.16 move did not break the role; it exposed a bug that was already there, and pinning the lab back to 4.11 would only hide it.\n\nFix: compare versions properly, e.g. ocp4_cluster_version is version('4.8', '>='), or simply always use policy/v1, which every supported OpenShift release serves. Then reorder.\n"
+}

@@ -1,0 +1,72 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/files/ledgerpolicy-crd.yaml",
+      "content": "---\napiVersion: apiextensions.k8s.io/v1\nkind: CustomResourceDefinition\nmetadata:\n  name: ledgerpolicies.ledger.fintrack.example\nspec:\n  group: ledger.fintrack.example\n  scope: Namespaced\n  names:\n    plural: ledgerpolicies\n    singular: ledgerpolicy\n    kind: LedgerPolicy\n  versions:\n    - name: v1alpha1\n      served: true\n      storage: true\n      schema:\n        openAPIV3Schema:\n          type: object\n          x-kubernetes-preserve-unknown-fields: true\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/files/ledgerpolicy-crd.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/files/ledgerpolicy-crd.yaml",
+      "content": "---\napiVersion: apiextensions.k8s.io/v1\nkind: CustomResourceDefinition\nmetadata:\n  name: ledgerpolicies.ledger.fintrack.example\nspec:\n  group: ledger.fintrack.example\n  scope: Namespaced\n  names:\n    plural: ledgerpolicies\n    singular: ledgerpolicy\n    kind: LedgerPolicy\n  versions:\n    - name: v1alpha1\n      served: true\n      storage: true\n      schema:\n        openAPIV3Schema:\n          type: object\n          x-kubernetes-preserve-unknown-fields: true\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/files/ledgerpolicy-crd.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "71c0e4b9a2d63f58e1b07c4d9a3e26f8b5d10c97",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/files/ledgerpolicy-crd.yaml",
+      "content": "---\napiVersion: apiextensions.k8s.io/v1beta1\nkind: CustomResourceDefinition\nmetadata:\n  name: ledgerpolicies.ledger.fintrack.example\nspec:\n  group: ledger.fintrack.example\n  version: v1alpha1\n  scope: Namespaced\n  names:\n    plural: ledgerpolicies\n    singular: ledgerpolicy\n    kind: LedgerPolicy\n  validation:\n    openAPIV3Schema:\n      type: object\n",
+      "file_id": "agnosticd/agnosticd-v2@71c0e4b9a2d63f58e1b07c4d9a3e26f8b5d10c97-ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/files/ledgerpolicy-crd.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "release-2026.08",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/files/ledgerpolicy-crd.yaml",
+      "content": "---\napiVersion: apiextensions.k8s.io/v1beta1\nkind: CustomResourceDefinition\nmetadata:\n  name: ledgerpolicies.ledger.fintrack.example\nspec:\n  group: ledger.fintrack.example\n  version: v1alpha1\n  scope: Namespaced\n  names:\n    plural: ledgerpolicies\n    singular: ledgerpolicy\n    kind: LedgerPolicy\n  validation:\n    openAPIV3Schema:\n      type: object\n",
+      "file_id": "agnosticd/agnosticd-v2@release-2026.08-ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/files/ledgerpolicy-crd.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/tasks/workload.yml",
+      "content": "---\n# ocp4_workload_ledger_policy: install the LedgerPolicy CRD\n- name: Create the LedgerPolicy CRD\n  kubernetes.core.k8s:\n    state: present\n    src: ledgerpolicy-crd.yaml\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/tasks/workload.yml",
+      "content": "---\n# ocp4_workload_ledger_policy: install the LedgerPolicy CRD\n- name: Create the LedgerPolicy CRD\n  kubernetes.core.k8s:\n    state: present\n    src: ledgerpolicy-crd.yaml\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "71c0e4b9a2d63f58e1b07c4d9a3e26f8b5d10c97",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/tasks/workload.yml",
+      "content": "---\n# ocp4_workload_ledger_policy: install the LedgerPolicy CRD\n- name: Create the LedgerPolicy CRD\n  kubernetes.core.k8s:\n    state: present\n    src: ledgerpolicy-crd.yaml\n",
+      "file_id": "agnosticd/agnosticd-v2@71c0e4b9a2d63f58e1b07c4d9a3e26f8b5d10c97-ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "release-2026.08",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/tasks/workload.yml",
+      "content": "---\n# ocp4_workload_ledger_policy: install the LedgerPolicy CRD\n- name: Create the LedgerPolicy CRD\n  kubernetes.core.k8s:\n    state: present\n    src: ledgerpolicy-crd.yaml\n",
+      "file_id": "agnosticd/agnosticd-v2@release-2026.08-ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/tasks/workload.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

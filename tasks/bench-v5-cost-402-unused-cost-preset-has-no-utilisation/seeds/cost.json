@@ -1,0 +1,78 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [
+    {
+      "capacity_metric_result_id": "cmr-fam-unused-1001",
+      "capacity_totals_id": "ct-fam-unused-1001",
+      "capacity_window_id": "cw-fam-720h-1001",
+      "metric": "unused_cost",
+      "group_by": "instance-family",
+      "period": {
+        "start": "2026-09-01T06:00:00Z",
+        "end": "2026-10-01T06:00:00Z"
+      },
+      "results": [
+        {
+          "dimension": "p4d",
+          "unused_capacity_hrs": 37.0,
+          "unused_estimated_cost_usd": 1212.49
+        },
+        {
+          "dimension": "g5",
+          "unused_capacity_hrs": 412.6,
+          "unused_estimated_cost_usd": 671.3
+        },
+        {
+          "dimension": "r6i",
+          "unused_capacity_hrs": 1180.4,
+          "unused_estimated_cost_usd": 452.11
+        },
+        {
+          "dimension": "m6i",
+          "unused_capacity_hrs": 1503.2,
+          "unused_estimated_cost_usd": 288.62
+        },
+        {
+          "dimension": "c7g",
+          "unused_capacity_hrs": 905.0,
+          "unused_estimated_cost_usd": 131.38
+        },
+        {
+          "dimension": "t3",
+          "unused_capacity_hrs": 2014.5,
+          "unused_estimated_cost_usd": 91.46
+        }
+      ],
+      "totals": {
+        "capacity_totals_id": "ct-fam-unused-1001",
+        "total_estimated_cost_usd": 0.0,
+        "unused_estimated_cost_usd": 2847.36,
+        "overall_utilization_pct": 0.0,
+        "total_dimensions": 6
+      }
+    }
+  ],
+  "capacity_totals": [
+    {
+      "capacity_totals_id": "ct-fam-unused-1001",
+      "total_estimated_cost_usd": 0.0,
+      "unused_estimated_cost_usd": 2847.36,
+      "overall_utilization_pct": 0.0,
+      "total_dimensions": 6
+    }
+  ],
+  "capacity_windows": [
+    {
+      "capacity_window_id": "cw-fam-720h-1001",
+      "start": "2026-09-01T06:00:00Z",
+      "end": "2026-10-01T06:00:00Z"
+    }
+  ],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": []
+}

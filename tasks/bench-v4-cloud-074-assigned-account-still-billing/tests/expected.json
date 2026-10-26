@@ -1,0 +1,107 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "account_id": "604918372251"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "mz4tq"
+        }
+      },
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "604918372251"
+          ],
+          "start_date": "2026-09-14",
+          "end_date": "2026-09-21"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "subject-name",
+        "any_of": [
+          "labs-emea.rhel-edge-lab.prod.mz4tq"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is the AnarchySubject's name",
+        "rationale": "the name of the only AnarchySubject for the GUID, returned only by list_anarchy_subjects {guid: mz4tq}. Its governor prefix (labs-emea.rhel-edge-lab.prod) occurs nowhere in the account row or the instruction, so the name cannot be composed from the GUID and env type; it also subsumes the GUID, which is not graded separately"
+      },
+      {
+        "id": "subject-state",
+        "any_of": [
+          "destroy-failed",
+          "destroy_failed",
+          "destroy failed",
+          "failed destroy",
+          "failed to destroy",
+          "destroy has failed",
+          "destroy had failed",
+          "destroy-fail",
+          "teardown failed",
+          "teardown has failed",
+          "tear-down failed",
+          "destroy failure",
+          "destroy operation failed",
+          "destroy job failed",
+          "destroy action failed",
+          "destroy attempt failed",
+          "destroy run failed",
+          "destroy process failed"
+        ],
+        "ignore_case": true,
+        "asked_by": "what state is that deployment in",
+        "rationale": "current_state destroy-failed of that subject (parsec's own vocabulary: babylon.py:1061). Only the Babylon result carries it; the decoy and the other subject are 'started'"
+      }
+    ],
+    "counts": [
+      {
+        "id": "top-service-cost",
+        "value": 1148,
+        "nouns": [
+          "ec2",
+          "compute",
+          "elastic",
+          "service",
+          "cost",
+          "spend",
+          "usd",
+          "dollars"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "1,148",
+          "1148.0",
+          "$1148",
+          "1 148",
+          "1.15k",
+          "1.148k"
+        ],
+        "asked_by": "how much did that service cost",
+        "rationale": "Amazon Elastic Compute Cloud - Compute's window cost, the largest item of the account's row. It carries 'which service accounts for most of it' too: there is no bare service-name fact, because EC2 is a guess any model makes for an AWS account (the 073 lesson). 1,148 occurs only as that item's cost"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

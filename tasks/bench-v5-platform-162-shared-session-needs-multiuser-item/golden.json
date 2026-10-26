@@ -1,0 +1,75 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "search_catalog",
+        "cluster": "avocet"
+      },
+      "result": {
+        "cluster": "avocet",
+        "items": [
+          {
+            "ci_name": "ocp.knative-eventing",
+            "display_name": "Knative Eventing Primer",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": true,
+            "asset_uuid": "1d7e4b90-6a2c-4f35-b8e1-93c0a5f27d64",
+            "keywords": [
+              "knative",
+              "eventing",
+              "openshift"
+            ]
+          },
+          {
+            "ci_name": "rhoai.model-serving-lab",
+            "display_name": "OpenShift AI Serving Lab",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": true,
+            "asset_uuid": "8c41f2d7-e05b-4a9c-9f63-2b7d18e4c5a0",
+            "keywords": [
+              "openshift ai",
+              "rhoai",
+              "jupyter",
+              "kserve"
+            ]
+          },
+          {
+            "ci_name": "rhoai.datasci-workshop",
+            "display_name": "Red Hat OpenShift AI Workshop",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "e3a95c18-74fd-4b20-a6c9-5f08d2b913e7",
+            "keywords": [
+              "openshift ai",
+              "rhoai",
+              "workshop",
+              "datasci"
+            ]
+          },
+          {
+            "ci_name": "rhel.image-mode-lab",
+            "display_name": "RHEL Image Mode Lab",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "4b6f0e27-c18a-4d93-87e5-a29d63f10b5c",
+            "keywords": [
+              "rhel",
+              "bootc",
+              "image mode"
+            ]
+          }
+        ],
+        "count": 4,
+        "total_scanned": 4,
+        "truncated": false
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "Order rhoai.model-serving-lab, \"OpenShift AI Serving Lab\" (babylon-catalog-prod, stage prod), asset UUID 8c41f2d7-e05b-4a9c-9f63-2b7d18e4c5a0.\n\nWhat makes it the right one is its multiuser: true flag: it is provisioned once as a single shared environment that all 25 attendees use. The other OpenShift AI item on avocet, rhoai.datasci-workshop (\"Red Hat OpenShift AI Workshop\"), has multiuser: false, so despite its name it gives each person their own environment."
+}

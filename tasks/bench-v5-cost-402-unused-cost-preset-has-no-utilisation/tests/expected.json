@@ -1,0 +1,148 @@
+{
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aws_capacity_manager",
+        "args": {
+          "metric": "unused_cost",
+          "group_by": "instance-family"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "zeros-not-measured",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "not measured",
+          "isn't measured",
+          "never measured",
+          "not requested",
+          "never requested",
+          "does not measure",
+          "doesn't measure",
+          "only requests",
+          "only measures",
+          "placeholder",
+          "not a real reading",
+          "not real values",
+          "not meaningful",
+          "not actual"
+        ],
+        "asked_by": "the organisation's overall reservation utilisation",
+        "rationale": "overall_utilization_pct and total_estimated_cost_usd are 0.0 because the unused_cost preset never requests the total-capacity metrics (api.json CapacityTotals); the agent must say the zeros are not measurements",
+        "note": "The unused_cost preset's totals block reads overall_utilization_pct 0.0 and total_estimated_cost_usd 0.0 although six families carry $2,847.36 of unused cost, so the zeros are unfilled roll-ups of metrics this preset never requests, not measurements."
+      },
+      {
+        "id": "share-not-from-this-call",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "can't give you either",
+          "can't compute",
+          "cannot compute",
+          "can't calculate",
+          "cannot calculate",
+          "can't work out",
+          "cannot work out",
+          "no denominator",
+          "without a total",
+          "without the total",
+          "metric=utilization",
+          "metric: utilization",
+          "utilization preset",
+          "utilisation preset",
+          "utilization metric",
+          "can't give the share",
+          "cannot give the share",
+          "can't give a share",
+          "can't derive",
+          "cannot derive"
+        ],
+        "asked_by": "what fraction of our total ODCR spend the unused part represents",
+        "rationale": "the share needs a total reservation cost this preset does not return",
+        "note": "The only total reservation cost the query returns is total_estimated_cost_usd 0.0, so the share of ODCR spend that is unused has no denominator in this result."
+      }
+    ],
+    "counts": [
+      {
+        "id": "total-unused",
+        "value": 2847,
+        "nouns": [
+          "unused",
+          "total"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "2,847.36",
+          "2847.36"
+        ],
+        "asked_by": "the unused cost for each family and the total",
+        "rationale": "totals.unused_estimated_cost_usd, the one roll-up this preset measures"
+      },
+      {
+        "id": "top-family",
+        "value": 1212,
+        "nouns": [
+          "p4d"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "1,212.49",
+          "1212.49"
+        ],
+        "asked_by": "the unused cost for each family",
+        "rationale": "the worst family's unused cost; binds the figure to p4d"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "zero-utilisation",
+        "ignore_case": true,
+        "none_of": [
+          "0% utilization",
+          "0% utilisation",
+          "0.0% utilization",
+          "0.0% utilisation",
+          "utilization of 0",
+          "utilisation of 0",
+          "utilization is 0",
+          "utilisation is 0",
+          "utilization was 0",
+          "utilisation was 0",
+          "zero utilization",
+          "zero utilisation",
+          "100% wasted",
+          "100% waste",
+          "100% of reservation spend"
+        ],
+        "attributed_to": [
+          "placeholder",
+          "not measured",
+          "isn't measured",
+          "never measured",
+          "never requested",
+          "not requested",
+          "does not measure",
+          "doesn't measure",
+          "would be wrong",
+          "not a real reading"
+        ],
+        "rationale": "the wrong answer reads the preset's 0.0 roll-up as a measured utilisation (or derives 100% waste from the $0 total). A sentence saying the zero is a placeholder / not measured is the honest form"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

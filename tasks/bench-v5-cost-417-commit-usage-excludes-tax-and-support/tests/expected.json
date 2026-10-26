@@ -1,0 +1,157 @@
+{
+  "schema": "bench/v4",
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [],
+          "start_date": "2026-10-01",
+          "end_date": "2026-11-01"
+        }
+      },
+      {
+        "name": "query_azure_costs",
+        "args": {
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-31"
+        }
+      },
+      {
+        "name": "query_gcp_costs",
+        "args": {
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-31"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "aws-usage-only",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "98,114.40",
+          "98114.40",
+          "98,114.4",
+          "98114.4",
+          "98,114",
+          "98.1k",
+          "98.11k"
+        ],
+        "asked_by": "its October usage-only spend",
+        "rationale": "the AWS total includes a Tax line and a support-plan line; usage only is the total minus both",
+        "note": "query_aws_costs total_cost 113,888.97 minus items Tax (8,456.12) and AWS Support (Business) (7,318.45) = 98,114.40, the sum of the five usage services."
+      },
+      {
+        "id": "aws-tax-line",
+        "ignore_case": true,
+        "any_of": [
+          "8,456.12",
+          "8456.12",
+          "8,456"
+        ],
+        "asked_by": "list any tax or support charges you took out",
+        "rationale": "naming the removed Tax amount shows the agent found the line rather than guessing"
+      },
+      {
+        "id": "aws-support-line",
+        "ignore_case": true,
+        "any_of": [
+          "7,318.45",
+          "7318.45",
+          "7,318"
+        ],
+        "asked_by": "list any tax or support charges you took out",
+        "rationale": "the support-plan fee is the second excluded line, easy to miss once Tax is found"
+      },
+      {
+        "id": "azure-usage",
+        "ignore_case": true,
+        "any_of": [
+          "33,903.25",
+          "33903.25",
+          "33,903",
+          "33.9k"
+        ],
+        "asked_by": "For each provider, give me its October usage-only spend",
+        "rationale": "Azure carries no tax or support lines, so its usage-only figure is its total; skipping the call loses it"
+      },
+      {
+        "id": "gcp-usage",
+        "ignore_case": true,
+        "any_of": [
+          "26,362.55",
+          "26362.55",
+          "26,362",
+          "26.4k",
+          "26.36k"
+        ],
+        "asked_by": "For each provider, give me its October usage-only spend",
+        "rationale": "GCP carries no tax or support lines, so its usage-only figure is its total; skipping the call loses it"
+      }
+    ],
+    "counts": [
+      {
+        "id": "three-provider-usage-total",
+        "value": 158380,
+        "nouns": [
+          "total",
+          "usage",
+          "combined"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "158,380.20",
+          "158380.20",
+          "158,380.2",
+          "158,380",
+          "158.38k",
+          "158.4k"
+        ],
+        "asked_by": "the usage-only total across the three providers",
+        "rationale": "the deliverable: 98,114.40 + 33,903.25 + 26,362.55, which only comes out right if both AWS lines are removed",
+        "note": "Derived: AWS usage-only 98,114.40 + Azure 33,903.25 + GCP 26,362.55 = 158,380.20."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "gross-total-as-usage",
+        "ignore_case": true,
+        "none_of": [
+          "174,154.77",
+          "174154.77",
+          "174,154.8",
+          "174,154",
+          "174,155",
+          "174.15k",
+          "174.2k"
+        ],
+        "attributed_to": [
+          "including tax",
+          "with tax and support",
+          "before removing",
+          "before taking out",
+          "gross",
+          "billed total",
+          "billed figure",
+          "still includes",
+          "still has",
+          "not a usage"
+        ],
+        "rationale": "174,154.77 is the three providers' billed totals summed with AWS tax and support still in: the figure the trap produces, stated as the usage total"
+      }
+    ]
+  },
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

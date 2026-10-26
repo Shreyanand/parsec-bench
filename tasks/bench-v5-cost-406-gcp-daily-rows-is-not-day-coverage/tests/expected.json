@@ -1,0 +1,134 @@
+{
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_gcp_costs",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "rows-not-days",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "row count",
+          "number of rows",
+          "rows returned",
+          "rows the bigquery",
+          "bigquery rows",
+          "result rows",
+          "query rows",
+          "not a count of days",
+          "not a day count",
+          "isn't a day count",
+          "not the number of days"
+        ],
+        "asked_by": "How many days of September actually have billing data",
+        "rationale": "daily_rows is len(rows) of the BigQuery result (api.json), the field most likely to be misread as day coverage",
+        "note": "The response's only count is daily_rows 2316, which is far more than September's 30 days, so it is the number of rows the query returned, not a count of days with data."
+      },
+      {
+        "id": "no-per-day-data",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "no per-day",
+          "no daily series",
+          "no daily breakdown",
+          "no day-by-day",
+          "no dates",
+          "no per-date",
+          "not broken down by day",
+          "isn't broken down by day",
+          "whole window",
+          "whole period",
+          "entire window",
+          "can't tell which day",
+          "cannot tell which day",
+          "can't identify the most expensive day",
+          "cannot identify the most expensive day",
+          "doesn't return daily",
+          "does not return daily"
+        ],
+        "asked_by": "which day was the most expensive",
+        "rationale": "the GCP response is a per-service breakdown over the window; unlike query_aws_costs it carries no daily series",
+        "note": "The response carries only a per-service breakdown, daily_rows and total_cost over the whole 2026-09-01 to 2026-09-30 period, with no date-keyed entries, so no most expensive day can be named from it."
+      }
+    ],
+    "counts": [
+      {
+        "id": "month-total",
+        "value": 38904,
+        "nouns": [
+          "total"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "38,904.17",
+          "38904.17"
+        ],
+        "asked_by": "what was the month's total",
+        "rationale": "total_cost as stored"
+      },
+      {
+        "id": "daily-rows",
+        "value": 2316,
+        "nouns": [
+          "rows",
+          "daily_rows"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "2,316"
+        ],
+        "asked_by": "How many days of September actually have billing data",
+        "rationale": "the field must be quoted to be explained; bound to 'rows' so '2,316 days' does not earn it alone"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "coverage-asserted",
+        "ignore_case": true,
+        "none_of": [
+          "all 30 days",
+          "every day of september",
+          "no days are missing",
+          "no days missing",
+          "export is complete",
+          "data for every day",
+          "covers every day",
+          "complete for september",
+          "days are missing",
+          "days were skipped",
+          "days missing from"
+        ],
+        "attributed_to": [
+          "cannot confirm",
+          "can't confirm",
+          "cannot tell whether",
+          "can't tell whether",
+          "no way to confirm",
+          "unable to confirm",
+          "to check for skipped days"
+        ],
+        "rationale": "the wrong answer infers coverage (complete or gappy) from daily_rows; neither is in the response"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

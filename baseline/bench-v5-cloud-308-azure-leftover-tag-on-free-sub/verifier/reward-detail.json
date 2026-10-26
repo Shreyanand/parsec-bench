@@ -1,0 +1,122 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "pool-01-001"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "pool-01-374"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "list_pools"
+        }
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "get_pool",
+          "pool_id": "08"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "tightest-pool",
+        "any_of": [
+          "pool 08",
+          "pool-08",
+          "pool `08`",
+          "pool **08**",
+          "pool_id 08",
+          "pool \"08\"",
+          "pool '08'"
+        ],
+        "ignore_case": true,
+        "asked_by": "which pool has the fewest free subscriptions",
+        "rationale": "list_pools gives 08 available 2, 12 available 4, 15 available 3"
+      },
+      {
+        "id": "free-325",
+        "any_of": [
+          "pool-08-325"
+        ],
+        "ignore_case": true,
+        "asked_by": "which of that pool's subscriptions can I actually hand out",
+        "rationale": "used false and untagged; only get_pool lists it"
+      },
+      {
+        "id": "free-317",
+        "any_of": [
+          "pool-08-317"
+        ],
+        "ignore_case": true,
+        "asked_by": "which of that pool's subscriptions can I actually hand out",
+        "rationale": "used false despite a leftover projecttag; only get_pool lists it"
+      },
+      {
+        "id": "leftover-tag",
+        "derived": true,
+        "note": "get_pool for 08 returns pool-08-317 with used false but projecttag retail-ai-lab, the same tag as the used-true pool-08-322, so the agent infers the tag is left over and that used, not projecttag, marks assignment; no seed string says so.",
+        "ignore_case": true,
+        "any_of": [
+          "leftover",
+          "left over",
+          "left-over",
+          "stale tag",
+          "stale project tag",
+          "still carries",
+          "still tagged",
+          "still has the tag",
+          "still has a tag",
+          "still has the project tag",
+          "tag was never cleared",
+          "tag wasn't cleared",
+          "not cleared",
+          "residual tag"
+        ],
+        "asked_by": "can I actually hand out",
+        "rationale": "explains why a tagged subscription is free: used is the assignment flag"
+      }
+    ],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

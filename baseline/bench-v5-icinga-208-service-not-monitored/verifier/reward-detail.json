@@ -1,0 +1,109 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "crm-batch-07",
+          "filter_expr": "match(\"*kafka*mirror*lag*\", service.name) || match(\"*kafka*mirror*lag*\", service.display_name)",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "crm-batch-07",
+          "service": "kafka-mirror-lag"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts",
+          "search": "crm-batch-07"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_problems"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "not-monitored",
+        "any_of": [
+          "no service called",
+          "no service named",
+          "no such service",
+          "not monitored",
+          "isn't monitored",
+          "is not monitored",
+          "not configured",
+          "not defined",
+          "no check called",
+          "no check named",
+          "no kafka-mirror-lag",
+          "not in icinga",
+          "isn't in icinga",
+          "has no service",
+          "no matching service",
+          "not among"
+        ],
+        "ignore_case": true,
+        "asked_by": "pull the current state",
+        "rationale": "the absence the seed encodes: the host exists, the service does not",
+        "derived": true,
+        "note": "An absence, so no seed literal: get_services for crm-batch-07 returns only jvm-heap, nightly-export-age and tmp-free, and no service named kafka-mirror-lag exists on the host."
+      },
+      {
+        "id": "real-warning",
+        "any_of": [
+          "nightly-export-age"
+        ],
+        "ignore_case": true,
+        "asked_by": "has been red since 2026-11-30",
+        "rationale": "the one non-OK service actually on the host; naming it shows the result was read"
+      }
+    ],
+    "required_total": 2,
+    "counts_missed": [
+      {
+        "id": "services-on-host",
+        "value": 3,
+        "nouns": [
+          "services",
+          "service",
+          "checks"
+        ],
+        "window": 4,
+        "asked_by": "pull the current state",
+        "rationale": "the host's full service list",
+        "extra_any_of": [
+          "three services",
+          "three checks"
+        ]
+      }
+    ],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

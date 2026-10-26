@@ -1,0 +1,281 @@
+{
+  "catalog_items": [
+    {
+      "catalog_item_id": "ci-payments-api-prod",
+      "account": "prod",
+      "default_branch": "main",
+      "directory": "payments-api",
+      "files": [
+        "catalog-info.yaml",
+        "service.yaml",
+        "README.md",
+        "docs/runbook.md"
+      ],
+      "found": true,
+      "owner": "acme-platform",
+      "path": "catalog/prod/payments-api",
+      "repo": "service-catalog"
+    },
+    {
+      "catalog_item_id": "ci-orders-worker-dev",
+      "account": "dev",
+      "default_branch": "main",
+      "directory": "orders-worker",
+      "files": [
+        "catalog-info.yaml",
+        "worker.yaml",
+        "README.md"
+      ],
+      "found": true,
+      "owner": "acme-platform",
+      "path": "catalog/dev/orders-worker",
+      "repo": "service-catalog"
+    },
+    {
+      "catalog_item_id": "ci-paymnts-api-prod-miss",
+      "found": false,
+      "message": "No exact catalog item match found for 'paymnts-api'. Similar items are available.",
+      "similar_items": [
+        "si-payments-api-prod",
+        "si-payments-worker-prod",
+        "si-payment-gateway-prod"
+      ]
+    },
+    {
+      "catalog_item_id": "ci-customer-portal-stage",
+      "account": "stage",
+      "default_branch": "main",
+      "directory": "customer-portal",
+      "files": [
+        "catalog-info.yaml",
+        "app-config.yaml",
+        "README.md"
+      ],
+      "found": true,
+      "owner": "acme-platform",
+      "path": "catalog/stage/customer-portal",
+      "repo": "service-catalog"
+    }
+  ],
+  "files": [
+    {
+      "file_id": "file-service-catalog-main-catalog-prod-payments-api-catalog-info-yaml",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "path": "catalog/prod/payments-api/catalog-info.yaml",
+      "ref": "main",
+      "content": "apiVersion: backstage.io/v1alpha1\nkind: Component\nmetadata:\n  name: payments-api\n  description: Handles payment authorization and capture.\nspec:\n  type: service\n  lifecycle: production\n  owner: team-payments\n"
+    },
+    {
+      "file_id": "file-service-catalog-main-catalog-prod-payments-api-service-yaml",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "path": "catalog/prod/payments-api/service.yaml",
+      "ref": "main",
+      "content": "service:\n  name: payments-api\n  language: go\n  tier: backend\n  pagerduty: payments-primary\n  slack: '#team-payments'\n"
+    },
+    {
+      "file_id": "file-service-catalog-main-catalog-prod-payments-api-readme-md",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "path": "catalog/prod/payments-api/README.md",
+      "ref": "main",
+      "content": "# payments-api\n\nThis service processes payment requests for checkout flows.\n\n## Endpoints\n- POST /authorize\n- POST /capture\n"
+    },
+    {
+      "file_id": "file-service-catalog-main-catalog-prod-payments-api-docs-runbook-md",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "path": "catalog/prod/payments-api/docs/runbook.md",
+      "ref": "main",
+      "content": "# Payments API Runbook\n\n## Alerts\n- High authorization latency\n- Elevated decline rate\n\n## Mitigation\nCheck downstream gateway connectivity and retry queue depth.\n"
+    },
+    {
+      "file_id": "file-service-catalog-main-catalog-dev-orders-worker-catalog-info-yaml",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "path": "catalog/dev/orders-worker/catalog-info.yaml",
+      "ref": "main",
+      "content": "apiVersion: backstage.io/v1alpha1\nkind: Component\nmetadata:\n  name: orders-worker\nspec:\n  type: worker\n  lifecycle: development\n  owner: team-orders\n"
+    },
+    {
+      "file_id": "file-service-catalog-main-catalog-stage-customer-portal-app-config-yaml",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "path": "catalog/stage/customer-portal/app-config.yaml",
+      "ref": "main",
+      "content": "app:\n  name: customer-portal\n  environment: stage\nfeatures:\n  paymentsHistory: true\n  supportChat: false\n"
+    },
+    {
+      "file_id": "file-service-catalog-main-catalog-directory-prod",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "path": "catalog/prod",
+      "ref": "main",
+      "content": "payments-api/\npayments-worker/\npayment-gateway/\ninventory-api/\n"
+    },
+    {
+      "file_id": "file-service-catalog-main-catalog-prod-payments-worker-readme-md",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "path": "catalog/prod/payments-worker/README.md",
+      "ref": "main",
+      "content": "# payments-worker\n\nBackground jobs for settlement and reconciliation.\n"
+    },
+    {
+      "file_id": "file-service-catalog-main-catalog-prod-payment-gateway-catalog-info-yaml",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "path": "catalog/prod/payment-gateway/catalog-info.yaml",
+      "ref": "main",
+      "content": "apiVersion: backstage.io/v1alpha1\nkind: Component\nmetadata:\n  name: payment-gateway\nspec:\n  type: service\n  lifecycle: production\n  owner: team-payments\n"
+    }
+  ],
+  "pull_requests": [
+    {
+      "pull_request_id": "pr-service-catalog-101",
+      "author": "jlee",
+      "branch": "feature/payments-api-timeout-tuning",
+      "created_at": "2026-01-12T09:15:00Z",
+      "files": [
+        "catalog/prod/payments-api/service.yaml",
+        "catalog/prod/payments-api/docs/runbook.md"
+      ],
+      "owner": "acme-platform",
+      "pr_number": 101,
+      "repo": "service-catalog",
+      "state": "open",
+      "title": "Tune payments-api timeout settings and update runbook",
+      "updated_at": "2026-01-13T14:22:00Z",
+      "url": "https://github.com/acme-platform/service-catalog/pull/101"
+    },
+    {
+      "pull_request_id": "pr-service-catalog-98",
+      "author": "msantos",
+      "branch": "docs/payments-api-catalog-refresh",
+      "created_at": "2025-12-20T11:00:00Z",
+      "files": [
+        "catalog/prod/payments-api/catalog-info.yaml",
+        "catalog/prod/payments-api/README.md"
+      ],
+      "owner": "acme-platform",
+      "pr_number": 98,
+      "repo": "service-catalog",
+      "state": "closed",
+      "title": "Refresh payments-api catalog metadata",
+      "updated_at": "2025-12-21T08:40:00Z",
+      "url": "https://github.com/acme-platform/service-catalog/pull/98"
+    },
+    {
+      "pull_request_id": "pr-service-catalog-87",
+      "author": "akhan",
+      "branch": "feature/orders-worker-retries",
+      "created_at": "2025-11-03T16:45:00Z",
+      "files": [
+        "catalog/dev/orders-worker/worker.yaml",
+        "catalog/dev/orders-worker/README.md"
+      ],
+      "owner": "acme-platform",
+      "pr_number": 87,
+      "repo": "service-catalog",
+      "state": "closed",
+      "title": "Improve orders-worker retry handling",
+      "updated_at": "2025-11-05T10:12:00Z",
+      "url": "https://github.com/acme-platform/service-catalog/pull/87"
+    },
+    {
+      "pull_request_id": "pr-service-catalog-105",
+      "author": "rpatel",
+      "branch": "feature/payment-search-cleanup",
+      "created_at": "2026-01-18T07:30:00Z",
+      "files": [
+        "catalog/prod/payment-gateway/catalog-info.yaml",
+        "catalog/prod/payments-worker/README.md"
+      ],
+      "owner": "acme-platform",
+      "pr_number": 105,
+      "repo": "service-catalog",
+      "state": "open",
+      "title": "Cleanup payment service catalog entries",
+      "updated_at": "2026-01-18T12:05:00Z",
+      "url": "https://github.com/acme-platform/service-catalog/pull/105"
+    }
+  ],
+  "repo_search_results": [
+    {
+      "repo_search_result_id": "search-service-catalog-main-payments",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "ref": "main",
+      "search": "payments",
+      "matches": [
+        "catalog/prod/payments-api",
+        "catalog/prod/payments-api/catalog-info.yaml",
+        "catalog/prod/payments-api/service.yaml",
+        "catalog/prod/payments-api/README.md",
+        "catalog/prod/payments-worker",
+        "catalog/prod/payments-worker/README.md"
+      ],
+      "total_matches": 6,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "search-service-catalog-main-payment",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "ref": "main",
+      "search": "payment",
+      "matches": [
+        "catalog/prod/payment-gateway",
+        "catalog/prod/payment-gateway/catalog-info.yaml",
+        "catalog/prod/payments-api",
+        "catalog/prod/payments-worker"
+      ],
+      "total_matches": 4,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "search-service-catalog-main-orders",
+      "owner": "acme-platform",
+      "repo": "service-catalog",
+      "ref": "main",
+      "search": "orders",
+      "matches": [
+        "catalog/dev/orders-worker",
+        "catalog/dev/orders-worker/catalog-info.yaml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    }
+  ],
+  "similar_items": [
+    {
+      "similar_item_id": "si-payments-api-prod",
+      "account": "prod",
+      "name": "payments-api",
+      "path": "catalog/prod/payments-api",
+      "repo": "acme-platform/service-catalog"
+    },
+    {
+      "similar_item_id": "si-payments-worker-prod",
+      "account": "prod",
+      "name": "payments-worker",
+      "path": "catalog/prod/payments-worker",
+      "repo": "acme-platform/service-catalog"
+    },
+    {
+      "similar_item_id": "si-payment-gateway-prod",
+      "account": "prod",
+      "name": "payment-gateway",
+      "path": "catalog/prod/payment-gateway",
+      "repo": "acme-platform/service-catalog"
+    },
+    {
+      "similar_item_id": "si-orders-worker-dev",
+      "account": "dev",
+      "name": "orders-worker",
+      "path": "catalog/dev/orders-worker",
+      "repo": "acme-platform/service-catalog"
+    }
+  ]
+}

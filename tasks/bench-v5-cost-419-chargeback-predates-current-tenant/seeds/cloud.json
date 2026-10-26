@@ -1,0 +1,62 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sbx-6217",
+      "name": "sandbox6217",
+      "account_id": "570284196633",
+      "available": false,
+      "owner": "tnakashima",
+      "owner_email": "tnakashima@example.com",
+      "envtype": "sbx-ocp-gitops",
+      "reservation": "pgitops",
+      "zone": "sandbox6217.sbx.example.com",
+      "comment": "",
+      "conan_status": "in_use",
+      "guid": "w6hcx",
+      "hosted_zone_id": "Z06217W6H0633",
+      "service_uuid": "9c3e5a71-2b48-4d0f-8e6a-71f5c2d9b0e4",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sbx-6230",
+      "name": "sandbox6230",
+      "account_id": "247819305566",
+      "available": false,
+      "owner": "mbeauregard",
+      "owner_email": "mbeauregard@example.com",
+      "envtype": "sbx-ocp-gitops",
+      "reservation": "pgitops",
+      "zone": "sandbox6230.sbx.example.com",
+      "comment": "",
+      "conan_status": "in_use",
+      "guid": "k9prm",
+      "hosted_zone_id": "Z06230K9P5566",
+      "service_uuid": "e04b7d19-6a2c-4f83-b5d1-0c9a3e8f7264",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sbx-6188",
+      "name": "sandbox6188",
+      "account_id": "913562048871",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "pgitops",
+      "zone": "sandbox6188.sbx.example.com",
+      "comment": "",
+      "conan_status": "clean",
+      "guid": "",
+      "hosted_zone_id": "Z06188Q2X8871",
+      "service_uuid": "",
+      "annotations": {}
+    }
+  ]
+}

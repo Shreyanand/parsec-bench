@@ -1,0 +1,104 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "merlin",
+          "namespace": "user-oabara-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "failed-component",
+        "any_of": [
+          "gpu-workers",
+          "gpu workers",
+          "GPU worker"
+        ],
+        "ignore_case": true,
+        "asked_by": "which part",
+        "rationale": "the second subject of the GUID; the deployment row never mentions it"
+      },
+      {
+        "id": "failed-state",
+        "any_of": [
+          "provision-failed"
+        ],
+        "ignore_case": true,
+        "asked_by": "what state it's in",
+        "rationale": "current_state of the gpu-workers subject"
+      },
+      {
+        "id": "job",
+        "any_of": [
+          "5562091"
+        ],
+        "asked_by": "which AAP2 job I should open",
+        "rationale": "tower_jobs.provision of the failed subject, not the base subject's 5561874"
+      }
+    ],
+    "counts": [
+      {
+        "id": "components",
+        "value": 2,
+        "nouns": [
+          "subjects",
+          "AnarchySubjects",
+          "components",
+          "parts"
+        ],
+        "window": 3,
+        "asked_by": "is the lab really healthy?",
+        "rationale": "one GUID, two subjects; the deployment shows one"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "all-healthy",
+        "none_of": [
+          "everything is healthy",
+          "all healthy",
+          "fully healthy",
+          "nothing is wrong",
+          "no problems with the lab",
+          "is working fine",
+          "lab is healthy",
+          "deployment is healthy and ready"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "reports itself",
+          "reports healthy",
+          "portal shows",
+          "looks green",
+          "shows green",
+          "shows as healthy",
+          "deployment row says",
+          "reported as healthy"
+        ],
+        "rationale": "the deployment's health is the first resource's; the GPU component failed"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

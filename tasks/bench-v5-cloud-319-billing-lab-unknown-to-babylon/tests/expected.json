@@ -1,0 +1,244 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "264083917552"
+          ],
+          "start_date": "2026-10-05",
+          "end_date": "2026-10-12"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "account_id": "264083917552"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "r5jxe"
+        }
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "264083917552",
+          "action": "describe_instances"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "ec2-compute-total",
+        "any_of": [
+          "915.25"
+        ],
+        "ignore_case": true,
+        "asked_by": "give me the EC2 compute total for that window",
+        "rationale": "the Amazon Elastic Compute Cloud - Compute item cost for the stored 2026-10-05..2026-10-12 row; the account total is 1,066.45"
+      },
+      {
+        "id": "holder",
+        "any_of": [
+          "mkowalczyk"
+        ],
+        "ignore_case": true,
+        "asked_by": "Who does the sandbox account database say holds the account",
+        "rationale": "owner of sandbox6047 in the account DB; only that call names the person"
+      },
+      {
+        "id": "guid",
+        "any_of": [
+          "r5jxe"
+        ],
+        "ignore_case": true,
+        "asked_by": "which GUID is it assigned to",
+        "rationale": "the account DB row's guid, which the Babylon lookup depends on"
+      },
+      {
+        "id": "no-subject",
+        "derived": true,
+        "note": "list_anarchy_subjects with guid r5jxe and no cluster returns the all-clusters no-match envelope (clusters_searched east and west, subjects [], count 0), so the agent concludes Babylon holds no AnarchySubject for the GUID and there is no state to report.",
+        "any_of": [
+          "no AnarchySubject",
+          "no anarchy subject",
+          "no Babylon AnarchySubject",
+          "no matching AnarchySubject",
+          "no matching subject",
+          "no subject",
+          "no such subject",
+          "0 subjects",
+          "zero subjects",
+          "count: 0",
+          "count 0",
+          "returned no subjects",
+          "returned nothing",
+          "found nothing",
+          "found no",
+          "not found on any",
+          "not found in any",
+          "not on any cluster",
+          "on no cluster",
+          "no cluster has",
+          "none of the clusters",
+          "neither cluster",
+          "no record",
+          "no Babylon record",
+          "not in Babylon",
+          "unknown to Babylon",
+          "does not exist in Babylon",
+          "doesn't exist in Babylon",
+          "does not know",
+          "doesn't know",
+          "has no knowledge",
+          "no state",
+          "no deployment",
+          "no Babylon deployment",
+          "AnarchySubject: none",
+          "AnarchySubject: not found",
+          "subject: none",
+          "subject: not found",
+          "state: n/a",
+          "state: none",
+          "state: unknown"
+        ],
+        "ignore_case": true,
+        "asked_by": "Look up that GUID's Babylon AnarchySubject on whichever cluster it lives",
+        "rationale": "the chain breaks here: there is no subject on any cluster, so no state can be read"
+      },
+      {
+        "id": "no-auto-retire",
+        "derived": true,
+        "note": "With no AnarchySubject for r5jxe on any cluster, no Babylon lifespan or retirement can fire for the running instances, so the agent concludes Babylon will not retire them and the cleanup has to be manual.",
+        "any_of": [
+          "will not retire",
+          "won't retire",
+          "will not be retired",
+          "won't be retired",
+          "cannot retire",
+          "can't retire",
+          "nothing will retire",
+          "nothing in Babylon will",
+          "nothing will clean",
+          "will not clean",
+          "won't clean",
+          "will not be cleaned",
+          "won't be cleaned",
+          "will not destroy",
+          "won't destroy",
+          "will not tear",
+          "won't tear",
+          "no retirement",
+          "no scheduled retirement",
+          "no lifespan",
+          "no automatic",
+          "not automatically",
+          "not be automatically",
+          "never be retired",
+          "never retire",
+          "orphan",
+          "by hand",
+          "manually",
+          "manual cleanup",
+          "manual clean-up",
+          "retire it on its own? no",
+          "retire it on its own: no",
+          "retire on its own: no",
+          "on its own? no",
+          "on its own: no",
+          "auto-retire: no",
+          "auto retire: no",
+          "nothing is scheduled",
+          "nothing scheduled",
+          "not scheduled for retirement",
+          "isn't scheduled",
+          "is not scheduled",
+          "no retirement is scheduled",
+          "no destroy is scheduled",
+          "nothing will destroy",
+          "nothing will tear"
+        ],
+        "ignore_case": true,
+        "asked_by": "will Babylon retire it on its own",
+        "rationale": "the honest consequence of the break: the spend continues until someone acts"
+      },
+      {
+        "id": "instance-control",
+        "any_of": [
+          "i-0c4f7a2e91b38d605"
+        ],
+        "ignore_case": true,
+        "asked_by": "which EC2 instances are running in the account in us-east-1",
+        "rationale": "running m6i.8xlarge, tagged guid r5jxe"
+      },
+      {
+        "id": "instance-gpu",
+        "any_of": [
+          "i-07e2b95d1a4c6f830"
+        ],
+        "ignore_case": true,
+        "asked_by": "which EC2 instances are running in the account in us-east-1",
+        "rationale": "running g6.12xlarge, tagged guid r5jxe"
+      }
+    ],
+    "counts": [],
+    "forbidden": [
+      {
+        "id": "babylon-lifecycle-invented",
+        "ignore_case": true,
+        "none_of": [
+          "Babylon will retire it",
+          "Babylon will retire the",
+          "Babylon will destroy it",
+          "Babylon will destroy the",
+          "Babylon will clean it up",
+          "Babylon will clean up",
+          "Babylon will tear it down",
+          "Babylon will retry",
+          "will be retired automatically",
+          "will be destroyed automatically",
+          "will be cleaned up automatically",
+          "will retire automatically",
+          "will auto-retire",
+          "retire it on its own: yes",
+          "retire it on its own? yes",
+          "on its own: yes",
+          "yes, Babylon will",
+          "is scheduled for retirement",
+          "is scheduled to retire",
+          "is scheduled to be retired",
+          "is scheduled to be destroyed",
+          "its lifespan ends",
+          "lifespan expires on",
+          "the subject is started",
+          "the subject is stopped",
+          "the subject is running",
+          "the AnarchySubject is started",
+          "the AnarchySubject is stopped",
+          "the AnarchySubject is running",
+          "the AnarchySubject is in state"
+        ],
+        "rationale": "Babylon has no AnarchySubject for r5jxe on any cluster, so any reported subject state or automatic retirement is invented; denials (\"Babylon will not retire it\") are no violation"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

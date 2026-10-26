@@ -1,0 +1,211 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [
+    {
+      "ocpv_namespace_id": "ons-118-1",
+      "cluster": "ocpv-cobalt",
+      "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab",
+      "status": "Active"
+    },
+    {
+      "ocpv_namespace_id": "ons-118-2",
+      "cluster": "ocpv-cobalt",
+      "namespace": "sandbox-f4hxk-satellite-lab",
+      "status": "Active"
+    }
+  ],
+  "ocpv_pvcs": [
+    {
+      "ocpv_pvc_id": "opvc-118-0",
+      "cluster": "ocpv-cobalt",
+      "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab",
+      "name": "rhel-ha-node1-rootdisk",
+      "status": "Pending",
+      "storage_class": "lvms-nvme-thin",
+      "size": "40Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteOnce"
+      ],
+      "events": [
+        "WaitForFirstConsumer: waiting for first consumer to be created before binding"
+      ]
+    },
+    {
+      "ocpv_pvc_id": "opvc-118-1",
+      "cluster": "ocpv-cobalt",
+      "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab",
+      "name": "rhel-ha-node2-rootdisk",
+      "status": "Pending",
+      "storage_class": "lvms-nvme-thin",
+      "size": "40Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteOnce"
+      ],
+      "events": [
+        "WaitForFirstConsumer: waiting for first consumer to be created before binding"
+      ]
+    },
+    {
+      "ocpv_pvc_id": "opvc-118-2",
+      "cluster": "ocpv-cobalt",
+      "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab",
+      "name": "rhel-ha-node3-rootdisk",
+      "status": "Pending",
+      "storage_class": "lvms-nvme-thin",
+      "size": "40Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteOnce"
+      ],
+      "events": [
+        "WaitForFirstConsumer: waiting for first consumer to be created before binding"
+      ]
+    },
+    {
+      "ocpv_pvc_id": "opvc-118-9",
+      "cluster": "ocpv-cobalt",
+      "namespace": "sandbox-f4hxk-satellite-lab",
+      "name": "satellite-rootdisk",
+      "status": "Bound",
+      "storage_class": "lvms-nvme-thin",
+      "size": "150Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteOnce"
+      ]
+    }
+  ],
+  "ocpv_storage_classes": [
+    {
+      "ocpv_storage_class_id": "osc-118-1",
+      "cluster": "ocpv-cobalt",
+      "name": "lvms-nvme-thin",
+      "provisioner": "topolvm.io",
+      "reclaim_policy": "Delete",
+      "binding_mode": "WaitForFirstConsumer",
+      "allow_volume_expansion": true,
+      "default": true
+    },
+    {
+      "ocpv_storage_class_id": "osc-118-2",
+      "cluster": "ocpv-cobalt",
+      "name": "nfs-shared-media",
+      "provisioner": "nfs.csi.k8s.io",
+      "reclaim_policy": "Retain",
+      "binding_mode": "Immediate",
+      "allow_volume_expansion": false,
+      "default": false
+    }
+  ],
+  "ocpv_vms": [
+    {
+      "ocpv_vm_id": "ovm-118-0",
+      "cluster": "ocpv-cobalt",
+      "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab",
+      "name": "rhel-ha-node1",
+      "status": "Stopped",
+      "ready": false,
+      "phase": "",
+      "node": "",
+      "ip": "",
+      "vcpus": 2,
+      "memory": "4Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "persistentVolumeClaim": "rhel-ha-node1-rootdisk"
+        }
+      ],
+      "condition": {
+        "type": "Ready",
+        "status": "False",
+        "reason": "VMINotExists",
+        "message": "VMI does not exist"
+      }
+    },
+    {
+      "ocpv_vm_id": "ovm-118-1",
+      "cluster": "ocpv-cobalt",
+      "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab",
+      "name": "rhel-ha-node2",
+      "status": "Stopped",
+      "ready": false,
+      "phase": "",
+      "node": "",
+      "ip": "",
+      "vcpus": 2,
+      "memory": "4Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "persistentVolumeClaim": "rhel-ha-node2-rootdisk"
+        }
+      ],
+      "condition": {
+        "type": "Ready",
+        "status": "False",
+        "reason": "VMINotExists",
+        "message": "VMI does not exist"
+      }
+    },
+    {
+      "ocpv_vm_id": "ovm-118-2",
+      "cluster": "ocpv-cobalt",
+      "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab",
+      "name": "rhel-ha-node3",
+      "status": "Stopped",
+      "ready": false,
+      "phase": "",
+      "node": "",
+      "ip": "",
+      "vcpus": 2,
+      "memory": "4Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "persistentVolumeClaim": "rhel-ha-node3-rootdisk"
+        }
+      ],
+      "condition": {
+        "type": "Ready",
+        "status": "False",
+        "reason": "VMINotExists",
+        "message": "VMI does not exist"
+      }
+    }
+  ],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

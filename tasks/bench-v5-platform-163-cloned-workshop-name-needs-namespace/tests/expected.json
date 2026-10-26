@@ -1,0 +1,116 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_workshops",
+          "cluster": "dunlin",
+          "namespace": "user-tfolau-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_workshop",
+          "cluster": "dunlin",
+          "namespace": "user-tfolau-redhat-com",
+          "name": "ocp-argo-sync-course"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_workshop"
+        },
+        "absent_args": [
+          "namespace"
+        ]
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "guid-c2rlw",
+        "any_of": [
+          "c2rlw"
+        ],
+        "ignore_case": true,
+        "asked_by": "which GUIDs are they",
+        "rationale": "failed seat of the h6pvd workshop; only in get_workshop's resource_claims"
+      },
+      {
+        "id": "guid-f9mpk",
+        "any_of": [
+          "f9mpk"
+        ],
+        "ignore_case": true,
+        "asked_by": "which GUIDs are they",
+        "rationale": "second failed seat; the namesake copy's failed seat is x8kfv"
+      },
+      {
+        "id": "job-5813207",
+        "any_of": [
+          "5813207"
+        ],
+        "ignore_case": true,
+        "asked_by": "which AAP2 job and controller should I open to see why",
+        "rationale": "tower_jobs.provision of c2rlw; the namesake's failed job is 5806638"
+      },
+      {
+        "id": "job-5813244",
+        "any_of": [
+          "5813244"
+        ],
+        "ignore_case": true,
+        "asked_by": "which AAP2 job and controller should I open to see why",
+        "rationale": "tower_jobs.provision of f9mpk"
+      }
+    ],
+    "counts": [
+      {
+        "id": "failed-seats",
+        "value": 2,
+        "nouns": [
+          "seats",
+          "seat",
+          "claims",
+          "resource claims",
+          "environments",
+          "labs",
+          "GUIDs",
+          "attendees",
+          "failed",
+          "failures"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "2 of 5",
+          "2 of the 5",
+          "2/5",
+          "two of five",
+          "two of the five",
+          "2 out of 5",
+          "two out of five"
+        ],
+        "asked_by": "How many seats failed to provision",
+        "rationale": "provision_count.failed 2 of ordered 5 in tfolau's namespace; the cloned copy has 1 of 4"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

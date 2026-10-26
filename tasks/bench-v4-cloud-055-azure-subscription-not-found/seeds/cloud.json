@@ -1,0 +1,18 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [
+    {"azure_subscription_id": "pool-06-441", "id": "pool-06-441", "used": true, "projecttag": "summit-lab-ocpv", "database": "pools"},
+    {"azure_subscription_id": "pool-06-443", "id": "pool-06-443", "used": false, "projecttag": "", "database": "pools"},
+    {"azure_subscription_id": "pool-06-446", "id": "pool-06-446", "used": false, "projecttag": "", "database": "pools"},
+    {"azure_subscription_id": "pool-06-450", "id": "pool-06-450", "used": true, "projecttag": "aap-workshop-east", "database": "pools"},
+    {"azure_subscription_id": "pool-06-452", "id": "pool-06-452", "used": false, "projecttag": "", "database": "pools"},
+    {"azure_subscription_id": "pool-11-448", "id": "pool-11-448", "used": true, "projecttag": "rosa-hcp-demo", "database": "pools"},
+    {"azure_subscription_id": "pool-11-455", "id": "pool-11-455", "used": false, "projecttag": "", "database": "pools"}
+  ],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": []
+}

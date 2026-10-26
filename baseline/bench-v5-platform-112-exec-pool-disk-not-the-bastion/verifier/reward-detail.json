@@ -1,0 +1,369 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 2817734
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "west",
+          "job_id": 2817734,
+          "failed_only": true
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "west",
+          "template_name": "edge-ai-inference-lab",
+          "status": "failed",
+          "created_after": "2026-09-01"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "edge-ai-inference-lab",
+          "status": "failed",
+          "created_after": "2026-09-01"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "edge-ai-inference-lab"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "agd-v2/edge-ai-inference-lab/common.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "agd-v2/edge-ai-inference-lab/prod.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "edge-ai-inference-lab"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "ocp4_installer_fetch"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "agd-v2/edge-ai-inference-lab",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "ocp4_installer_fetch"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_aap2_logs",
+          "controller": "aap2-prod-us-west-2-01.aap.infra.demo.redhat.com",
+          "guid": "t3vkb",
+          "earliest": "2026-09-25T16:00:00",
+          "latest": "2026-09-25T17:00:00",
+          "errors_only": false
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=rh_pds-001_aap \"No space left\" \"edge-ai-inference-lab\" earliest=2026-09-01 latest=now"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=rh_pds-001_aap \"No space left\" earliest=2026-09-01 latest=now | head 50"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "edge-ai-inference-lab",
+          "created_after": "2026-09-01",
+          "max_results": 50
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "west",
+          "status": "failed",
+          "created_after": "2026-09-25",
+          "max_results": 100
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "Edge AI Inference Lab"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "Edge AI Inference Lab"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "edge-ai-inference"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "edge-ai"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ai-inference"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "edge-ai"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT ci.name, ci.display_name, ci.category, ci.provider, COUNT(p.id) AS provision_count, MAX(p.provisioned_at) AS last_provisioned FROM catalog_items ci LEFT JOIN provisions p ON p.catalog_id = ci.id WHERE ci.display_name ILIKE '%edge%ai%' OR ci.display_name ILIKE '%ai%inference%' OR ci.name ILIKE '%edge%ai%' OR ci.name ILIKE '%ai%inference%' GROUP BY ci.id, ci.name, ci.display_name, ci.category, ci.provider ORDER BY last_provisioned DESC NULLS LAST LIMIT 20"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "bastion volume size"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "ai inference"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "search": "edge ai inference"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "edge-ai"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "inference"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "partner-agnosticv",
+          "search": "edge-ai"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "partner-agnosticv",
+          "search": "inference"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "zt-ansiblebu-agnosticv",
+          "search": "inference"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "zt-rhelbu-agnosticv",
+          "search": "inference"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "edge_ai"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_aap2_logs",
+          "controller": "aap2-prod-us-west-2-01.aap.infra.demo.redhat.com",
+          "search_terms": "No space left on device",
+          "errors_only": true,
+          "earliest": "-7d"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_aap2_logs",
+          "controller": "aap2-prod-us-west-2-01.aap.infra.demo.redhat.com",
+          "search_terms": "No space left on device filesystem full disk",
+          "errors_only": false,
+          "earliest": "-14d",
+          "max_results": 100
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=federated:rh_pds-001_aap (\"No space left on device\" OR \"Errno 28\" OR \"disk full\" OR \"filesystem full\" OR \"no space\" OR \"ENOSPC\") earliest=-30d | stats count by host, _time | sort -_time",
+          "max_results": 200
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_by_guid",
+          "guid": "t3vkb",
+          "search_terms": "space device disk full",
+          "earliest": "2026-09-25T16:00:00",
+          "latest": "2026-09-25T17:00:00"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=federated:rh_pds-001_aap (\"No space left on device\" OR \"Errno 28\" OR \"ENOSPC\" OR \"exec-pool-b\") earliest=2026-09-25T00:00:00 latest=2026-09-26T00:00:00 | sort -_time",
+          "max_results": 200
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "west",
+          "status": "failed",
+          "created_after": "2026-09-25T00:00:00",
+          "created_before": "2026-09-26T00:00:00",
+          "max_results": 100
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_aap2_logs",
+          "controller": "west"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "fix-wont-help",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "would not help",
+          "won't help",
+          "wouldn't help",
+          "will not help",
+          "no effect",
+          "would not change",
+          "doesn't help",
+          "does not help",
+          "not help",
+          "already 200",
+          "only 4%",
+          "4% used"
+        ],
+        "asked_by": "whether that change would help",
+        "note": "a judgement over prod.yaml's 200 GiB bastion volume, the bastion's 4% usage and the pool-specific Splunk rows",
+        "rationale": "the operational conclusion: growing the bastion volume touches a disk that is nearly empty and leaves the cause in place"
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

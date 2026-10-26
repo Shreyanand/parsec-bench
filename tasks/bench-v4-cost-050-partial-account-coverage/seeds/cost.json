@@ -1,0 +1,129 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [
+    {
+      "aws_cost_result_id": "acr-2603-service",
+      "accounts_queried": 3,
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2026-03-01",
+        "end": "2026-03-31"
+      },
+      "period_id": "per-aws-2603",
+      "results": [
+        {
+          "account_id": "583920174061",
+          "items": {
+            "Amazon Elastic Compute Cloud - Compute": 4719.0,
+            "Amazon Simple Storage Service": 1105.0,
+            "AmazonCloudWatch": 449.0
+          },
+          "total": 6273.0
+        },
+        {
+          "account_id": "583920174063",
+          "items": {
+            "Amazon Elastic Compute Cloud - Compute": 2812.0,
+            "Elastic Load Balancing": 761.0,
+            "Amazon Simple Storage Service": 384.0
+          },
+          "total": 3957.0
+        }
+      ],
+      "total_cost": 10230.0
+    },
+    {
+      "aws_cost_result_id": "acr-2603-account",
+      "accounts_queried": 3,
+      "group_by": "LINKED_ACCOUNT",
+      "period": {
+        "start": "2026-03-01",
+        "end": "2026-03-31"
+      },
+      "period_id": "per-aws-2603",
+      "results": [
+        {
+          "account_id": "org-wide",
+          "items": {
+            "583920174061": 6273.0,
+            "583920174063": 3957.0
+          },
+          "total": 10230.0
+        }
+      ],
+      "total_cost": 10230.0
+    },
+    {
+      "aws_cost_result_id": "acr-q7k2-service",
+      "accounts_queried": 3,
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2026-03-01",
+        "end": "2026-04-01"
+      },
+      "period_id": "per-aws-q7k2",
+      "results": [
+        {
+          "account_id": "583920174061",
+          "items": {
+            "Amazon Elastic Compute Cloud - Compute": 4719.0,
+            "Amazon Simple Storage Service": 1105.0,
+            "AmazonCloudWatch": 449.0
+          },
+          "total": 6273.0
+        },
+        {
+          "account_id": "583920174063",
+          "items": {
+            "Amazon Elastic Compute Cloud - Compute": 2812.0,
+            "Elastic Load Balancing": 761.0,
+            "Amazon Simple Storage Service": 384.0
+          },
+          "total": 3957.0
+        }
+      ],
+      "total_cost": 10230.0
+    },
+    {
+      "aws_cost_result_id": "acr-q7k2-account",
+      "accounts_queried": 3,
+      "group_by": "LINKED_ACCOUNT",
+      "period": {
+        "start": "2026-03-01",
+        "end": "2026-04-01"
+      },
+      "period_id": "per-aws-q7k2",
+      "results": [
+        {
+          "account_id": "org-wide",
+          "items": {
+            "583920174061": 6273.0,
+            "583920174063": 3957.0
+          },
+          "total": 10230.0
+        }
+      ],
+      "total_cost": 10230.0
+    }
+  ],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-aws-2603",
+      "start": "2026-03-01",
+      "end": "2026-03-31"
+    },
+    {
+      "period_id": "per-aws-q7k2",
+      "start": "2026-03-01",
+      "end": "2026-04-01"
+    }
+  ]
+}

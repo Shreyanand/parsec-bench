@@ -1,0 +1,108 @@
+{
+  "hosts": [
+    {
+      "name": "pgw-ledger-03",
+      "type": "Host",
+      "attrs": {
+        "display_name": "pgw-ledger-03",
+        "host_name": "pgw-ledger-03",
+        "address": "10.72.18.43",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "settlement-postgres"
+        ],
+        "last_check": 1794994150,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.41 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "pgw-ledger-03!pg-connections",
+      "type": "Service",
+      "attrs": {
+        "display_name": "PostgreSQL client connections",
+        "host_name": "pgw-ledger-03",
+        "state": 2,
+        "state_type": 0,
+        "check_attempt": 2,
+        "max_check_attempts": 5,
+        "check_interval": 300,
+        "retry_interval": 60,
+        "last_state": 2,
+        "last_hard_state": 0,
+        "last_state_change": 1794994110,
+        "last_hard_state_change": 1793592600,
+        "last_check": 1794994170,
+        "enable_notifications": true,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_check_result": {
+          "output": "POSTGRES_CONNECTIONS CRITICAL - 188 of 200 client slots in use (94%)",
+          "performance_data": [
+            "connections=188;170;185;0;200"
+          ],
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "pgw-ledger-03!pg-replication-slot",
+      "type": "Service",
+      "attrs": {
+        "display_name": "PostgreSQL replication slot lag",
+        "host_name": "pgw-ledger-03",
+        "state": 0,
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 5,
+        "check_interval": 300,
+        "retry_interval": 60,
+        "last_state_change": 1793289900,
+        "last_check": 1794994020,
+        "enable_notifications": true,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_check_result": {
+          "output": "POSTGRES_SLOT OK - slot ledger_standby retains 41 MB",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "pgw-ledger-03!fs-pgdata",
+      "type": "Service",
+      "attrs": {
+        "display_name": "/var/lib/pgsql free space",
+        "host_name": "pgw-ledger-03",
+        "state": 0,
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 3,
+        "check_interval": 600,
+        "retry_interval": 120,
+        "last_state_change": 1792572240,
+        "last_check": 1794993880,
+        "enable_notifications": true,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_check_result": {
+          "output": "DISK OK - /var/lib/pgsql 58% used",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

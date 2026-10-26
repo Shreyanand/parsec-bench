@@ -1,0 +1,112 @@
+{
+  "answer": {
+    "counts": [
+      {
+        "asked_by": "Report how many problems the worst host has",
+        "id": "worst-host-count",
+        "nouns": [
+          "problems",
+          "alerts",
+          "each"
+        ],
+        "rationale": "three hosts tie on two problems each; the answer has to state the number rather than pick a single winner",
+        "value": 2,
+        "window": 6
+      },
+      {
+        "asked_by": "how many distinct hosts have at least one problem",
+        "id": "host-count",
+        "nouns": [
+          "hosts",
+          "host"
+        ],
+        "rationale": "requires deduplicating host_name across seven rows, which is the aggregation being measured",
+        "value": 4,
+        "window": 6
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "false-single-host",
+        "ignore_case": true,
+        "none_of": [
+          "one host has all",
+          "a single host carries",
+          "all of the problems are on",
+          "only one host"
+        ],
+        "rationale": "the problems are spread over four hosts with a three-way tie at the top. An agent that reports a single worst host asserts one of these"
+      }
+    ],
+    "required": [
+      {
+        "any_of": [
+          "anarchy-stuck-subjects",
+          "Stuck AnarchySubjects",
+          "pod-pools-status",
+          "Pod pools status"
+        ],
+        "asked_by": "name the check that appears on more than one host",
+        "id": "repeated-check",
+        "ignore_case": true,
+        "rationale": "two checks each appear on both Babylon hosts; naming either is correct, and naming one requires having grouped by check rather than by host"
+      },
+      {
+        "any_of": [
+          "across both regions",
+          "babylon hosts",
+          "babylon ocp prod",
+          "both babylon",
+          "both regions",
+          "same check",
+          "same cluster",
+          "same kind of check",
+          "same-check",
+          "same-cluster",
+          "shared check",
+          "shared cluster"
+        ],
+        "asked_by": "say whether there is a common pattern across them",
+        "derived": true,
+        "id": "the-pattern",
+        "ignore_case": true,
+        "note": "the pattern is a synthesis over the problem list, stated by no seed string. Every form asserts a commonality, so an answer that reports the counts and the repeated check without claiming a pattern still misses it. The hyphenated and 'shared' spellings are here because they are the same claim as the spaced and 'same' ones -- a live agent wrote 'same-cluster' and was marked wrong for the punctuation. 'babylon-ocp' is deliberately NOT a form: it is a substring of the seeded host names, so merely listing the hosts would satisfy it.",
+        "rationale": "the judgment the question asks for, and the reason this is not just a counting exercise"
+      }
+    ]
+  },
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  },
+  "schema": "bench/v4",
+  "tool_calls": {
+    "expected": [
+      {
+        "args": {
+          "action": "get_problems"
+        },
+        "name": "query_icinga"
+      }
+    ],
+    "forbidden": [
+      {
+        "args": {
+          "action": "search_services"
+        },
+        "name": "query_icinga"
+      },
+      {
+        "args": {
+          "action": "list_alerts"
+        },
+        "name": "query_icinga"
+      }
+    ],
+    "match": "ordered-subsequence"
+  },
+  "weights": {
+    "answer": 0.8,
+    "tool_calls": 0.2
+  }
+}

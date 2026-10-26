@@ -1,0 +1,168 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "search": "storefront funnel lab"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_actions",
+          "guid": "8840217"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.uuid, p.babylon_guid, p.catalog_id, p.status, p.provisioned_at, p.retired_at, p.sandbox_name, p.account_id, u.email\nFROM provisions p\nJOIN users u ON p.user_id = u.id\nWHERE p.babylon_guid = '8840217'\n   OR p.uuid::text = '8840217'\nORDER BY p.provisioned_at DESC\nLIMIT 10"
+        }
+      },
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "SELECT eventTime, eventName, eventSource, recipientAccountId, userIdentity.arn, errorCode, errorMessage\nFROM cloudtrail_events\nWHERE eventTime > '2026-10-06'\n  AND eventTime < '2026-10-16'\n  AND (errorCode IS NOT NULL OR errorMessage IS NOT NULL)\nORDER BY eventTime DESC\nLIMIT 100"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "search": "storefront"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 8840217
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "retail_bu/storefront-funnel-lab/common.yaml"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {}
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "pod-unschedulable",
+        "ignore_case": true,
+        "any_of": [
+          "FailedScheduling",
+          "Failed Scheduling",
+          "Pending",
+          "didn't match Pod's node affinity",
+          "didn't match the node selector",
+          "did not match the node selector",
+          "didn't match its node selector",
+          "did not match its node selector",
+          "could not be scheduled",
+          "couldn't be scheduled",
+          "cannot be scheduled",
+          "can't be scheduled",
+          "can never be scheduled",
+          "unschedulable",
+          "never scheduled",
+          "not scheduled",
+          "never got scheduled",
+          "no node to run",
+          "no node it can run",
+          "no node could run",
+          "0/6 nodes",
+          "0/1 replicas",
+          "0 of 1 replicas",
+          "zero replicas available",
+          "no replicas available",
+          "no schedulable node",
+          "no eligible node"
+        ],
+        "asked_by": "why that component was not running",
+        "rationale": "why the webhook had no endpoints: its only pod could not be placed. Only in the cluster-side Splunk rows"
+      },
+      {
+        "id": "infra-placement",
+        "ignore_case": true,
+        "any_of": [
+          "infra_node_count",
+          "node-role.kubernetes.io/infra",
+          "ocp4_workload_guardrail_node_selector",
+          "no infra nodes",
+          "no infra node",
+          "zero infra nodes",
+          "0 infra nodes",
+          "no infrastructure nodes",
+          "without infra nodes",
+          "infra node selector",
+          "infra nodeSelector",
+          "infra-node selector"
+        ],
+        "asked_by": "which settings in the item cause it",
+        "rationale": "the placement half of the cause: the controller is pinned to infra nodes and the item builds none. Only in common.yaml"
+      }
+    ],
+    "required_total": 6,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [
+      {
+        "id": "api-server-outage",
+        "ignore_case": true,
+        "none_of": [
+          "API server fell over",
+          "API server crashed",
+          "API server was down",
+          "API server went down",
+          "API server is down",
+          "API server was overloaded",
+          "API server is overloaded",
+          "API server outage",
+          "API server ran out",
+          "control plane was overloaded",
+          "control plane is overloaded",
+          "control-plane nodes are too small",
+          "control plane nodes are too small",
+          "control-plane nodes were too small",
+          "control plane nodes were too small",
+          "undersized control plane",
+          "bigger control-plane nodes will fix",
+          "bigger control-plane nodes would fix",
+          "rebuild the cluster with bigger",
+          "resize the control plane to"
+        ],
+        "rationale": "the decoy the instruction voices: a 500 read as the API server falling over. The API server served every other call in the play"
+      }
+    ],
+    "forbidden_total": 2
+  }
+}

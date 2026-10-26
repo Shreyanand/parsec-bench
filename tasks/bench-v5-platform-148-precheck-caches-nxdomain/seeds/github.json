@@ -1,0 +1,213 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_infra/infra_dns_api_record/tasks/main.yml",
+      "content": "---\n# Publish the cluster API name in the sandbox zone and wait until the VPC resolver\n# returns it; openshift-install aborts if the API name does not resolve.\n\n- name: Check whether the API name is already taken\n  when: infra_dns_api_record_precheck | bool\n  ansible.builtin.set_fact:\n    _api_precheck: \"{{ lookup('community.general.dig', infra_dns_api_record_name,\n                      '@' ~ infra_dns_api_record_resolver, fail_on_error=false) }}\"\n\n- name: Fail if another cluster already owns the API name\n  when:\n    - infra_dns_api_record_precheck | bool\n    - _api_precheck not in ['NXDOMAIN', '']\n  ansible.builtin.fail:\n    msg: \"{{ infra_dns_api_record_name }} already resolves to {{ _api_precheck }}\"\n\n- name: Create the API record\n  amazon.aws.route53:\n    state: present\n    zone: \"{{ infra_dns_api_record_zone }}\"\n    record: \"{{ infra_dns_api_record_name }}\"\n    type: A\n    ttl: \"{{ infra_dns_api_record_ttl }}\"\n    value: \"{{ infra_dns_api_record_target }}\"\n    overwrite: true\n  register: _api_record\n\n- name: Wait for the Route53 change to sync\n  amazon.aws.route53_info:\n    query: change\n    change_id: \"{{ _api_record.change_id }}\"\n  register: _api_change\n  until: _api_change.ChangeInfo.Status == 'INSYNC'\n  retries: 10\n  delay: 3\n\n- name: Wait until the API name resolves\n  ansible.builtin.set_fact:\n    _api_resolved: \"{{ lookup('community.general.dig', infra_dns_api_record_name,\n                       '@' ~ infra_dns_api_record_resolver, fail_on_error=false) }}\"\n  until: _api_resolved not in ['NXDOMAIN', '']\n  retries: \"{{ infra_dns_api_record_wait_retries }}\"\n  delay: \"{{ infra_dns_api_record_wait_delay }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_infra/infra_dns_api_record/tasks/main.yml",
+      "content": "---\n# Publish the cluster API name in the sandbox zone and wait until the VPC resolver\n# returns it; openshift-install aborts if the API name does not resolve.\n\n- name: Check whether the API name is already taken\n  when: infra_dns_api_record_precheck | bool\n  ansible.builtin.set_fact:\n    _api_precheck: \"{{ lookup('community.general.dig', infra_dns_api_record_name,\n                      '@' ~ infra_dns_api_record_resolver, fail_on_error=false) }}\"\n\n- name: Fail if another cluster already owns the API name\n  when:\n    - infra_dns_api_record_precheck | bool\n    - _api_precheck not in ['NXDOMAIN', '']\n  ansible.builtin.fail:\n    msg: \"{{ infra_dns_api_record_name }} already resolves to {{ _api_precheck }}\"\n\n- name: Create the API record\n  amazon.aws.route53:\n    state: present\n    zone: \"{{ infra_dns_api_record_zone }}\"\n    record: \"{{ infra_dns_api_record_name }}\"\n    type: A\n    ttl: \"{{ infra_dns_api_record_ttl }}\"\n    value: \"{{ infra_dns_api_record_target }}\"\n    overwrite: true\n  register: _api_record\n\n- name: Wait for the Route53 change to sync\n  amazon.aws.route53_info:\n    query: change\n    change_id: \"{{ _api_record.change_id }}\"\n  register: _api_change\n  until: _api_change.ChangeInfo.Status == 'INSYNC'\n  retries: 10\n  delay: 3\n\n- name: Wait until the API name resolves\n  ansible.builtin.set_fact:\n    _api_resolved: \"{{ lookup('community.general.dig', infra_dns_api_record_name,\n                       '@' ~ infra_dns_api_record_resolver, fail_on_error=false) }}\"\n  until: _api_resolved not in ['NXDOMAIN', '']\n  retries: \"{{ infra_dns_api_record_wait_retries }}\"\n  delay: \"{{ infra_dns_api_record_wait_delay }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86",
+      "path": "ansible/roles_infra/infra_dns_api_record/tasks/main.yml",
+      "content": "---\n# Publish the cluster API name in the sandbox zone and wait until the VPC resolver\n# returns it; openshift-install aborts if the API name does not resolve.\n\n- name: Check whether the API name is already taken\n  when: infra_dns_api_record_precheck | bool\n  ansible.builtin.set_fact:\n    _api_precheck: \"{{ lookup('community.general.dig', infra_dns_api_record_name,\n                      '@' ~ infra_dns_api_record_resolver, fail_on_error=false) }}\"\n\n- name: Fail if another cluster already owns the API name\n  when:\n    - infra_dns_api_record_precheck | bool\n    - _api_precheck not in ['NXDOMAIN', '']\n  ansible.builtin.fail:\n    msg: \"{{ infra_dns_api_record_name }} already resolves to {{ _api_precheck }}\"\n\n- name: Create the API record\n  amazon.aws.route53:\n    state: present\n    zone: \"{{ infra_dns_api_record_zone }}\"\n    record: \"{{ infra_dns_api_record_name }}\"\n    type: A\n    ttl: \"{{ infra_dns_api_record_ttl }}\"\n    value: \"{{ infra_dns_api_record_target }}\"\n    overwrite: true\n  register: _api_record\n\n- name: Wait for the Route53 change to sync\n  amazon.aws.route53_info:\n    query: change\n    change_id: \"{{ _api_record.change_id }}\"\n  register: _api_change\n  until: _api_change.ChangeInfo.Status == 'INSYNC'\n  retries: 10\n  delay: 3\n\n- name: Wait until the API name resolves\n  ansible.builtin.set_fact:\n    _api_resolved: \"{{ lookup('community.general.dig', infra_dns_api_record_name,\n                       '@' ~ infra_dns_api_record_resolver, fail_on_error=false) }}\"\n  until: _api_resolved not in ['NXDOMAIN', '']\n  retries: \"{{ infra_dns_api_record_wait_retries }}\"\n  delay: \"{{ infra_dns_api_record_wait_delay }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86-ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+      "content": "---\ninfra_dns_api_record_zone: \"{{ sandbox_dns_zone }}\"\ninfra_dns_api_record_name: \"api.cluster-{{ guid }}.{{ sandbox_dns_zone }}\"\ninfra_dns_api_record_ttl: 60\ninfra_dns_api_record_target: \"{{ api_lb_private_ip }}\"\n\n# The VPC's AmazonProvidedDNS address (base of the VPC CIDR + 2)\ninfra_dns_api_record_resolver: \"{{ vpc_dns_resolver_ip }}\"\n\n# Refuse to overwrite an API name another cluster already uses\ninfra_dns_api_record_precheck: true\n\n# How long to wait for the new record to resolve: retries x delay seconds\ninfra_dns_api_record_wait_retries: 20\ninfra_dns_api_record_wait_delay: 15\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_infra/infra_dns_api_record/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+      "content": "---\ninfra_dns_api_record_zone: \"{{ sandbox_dns_zone }}\"\ninfra_dns_api_record_name: \"api.cluster-{{ guid }}.{{ sandbox_dns_zone }}\"\ninfra_dns_api_record_ttl: 60\ninfra_dns_api_record_target: \"{{ api_lb_private_ip }}\"\n\n# The VPC's AmazonProvidedDNS address (base of the VPC CIDR + 2)\ninfra_dns_api_record_resolver: \"{{ vpc_dns_resolver_ip }}\"\n\n# Refuse to overwrite an API name another cluster already uses\ninfra_dns_api_record_precheck: true\n\n# How long to wait for the new record to resolve: retries x delay seconds\ninfra_dns_api_record_wait_retries: 20\ninfra_dns_api_record_wait_delay: 15\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_infra/infra_dns_api_record/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86",
+      "path": "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+      "content": "---\ninfra_dns_api_record_zone: \"{{ sandbox_dns_zone }}\"\ninfra_dns_api_record_name: \"api.cluster-{{ guid }}.{{ sandbox_dns_zone }}\"\ninfra_dns_api_record_ttl: 60\ninfra_dns_api_record_target: \"{{ api_lb_private_ip }}\"\n\n# The VPC's AmazonProvidedDNS address (base of the VPC CIDR + 2)\ninfra_dns_api_record_resolver: \"{{ vpc_dns_resolver_ip }}\"\n\n# Refuse to overwrite an API name another cluster already uses\ninfra_dns_api_record_precheck: true\n\n# How long to wait for the new record to resolve: retries x delay seconds\ninfra_dns_api_record_wait_retries: 20\ninfra_dns_api_record_wait_delay: 15\n",
+      "file_id": "agnosticd/agnosticd-v2@b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86-ansible/roles_infra/infra_dns_api_record/defaults/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD?infra_dns_api_record",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "infra_dns_api_record",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main?infra_dns_api_record",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "infra_dns_api_record",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86?infra_dns_api_record",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86",
+      "search": "infra_dns_api_record",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD?roles_infra/infra_dns_api_record",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "roles_infra/infra_dns_api_record",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main?roles_infra/infra_dns_api_record",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "roles_infra/infra_dns_api_record",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86?roles_infra/infra_dns_api_record",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86",
+      "search": "roles_infra/infra_dns_api_record",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD?ansible/roles_infra/infra_dns_api_record",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "ansible/roles_infra/infra_dns_api_record",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main?ansible/roles_infra/infra_dns_api_record",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "ansible/roles_infra/infra_dns_api_record",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86?ansible/roles_infra/infra_dns_api_record",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86",
+      "search": "ansible/roles_infra/infra_dns_api_record",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD?infra_dns_api_record/",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "infra_dns_api_record/",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main?infra_dns_api_record/",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "infra_dns_api_record/",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "agnosticd/agnosticd-v2@b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86?infra_dns_api_record/",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86",
+      "search": "infra_dns_api_record/",
+      "matches": [
+        "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+        "ansible/roles_infra/infra_dns_api_record/tasks/main.yml"
+      ],
+      "total_matches": 2,
+      "truncated": false
+    }
+  ],
+  "similar_items": []
+}

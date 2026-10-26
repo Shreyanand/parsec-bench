@@ -1,0 +1,64 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sandbox6713",
+      "name": "sandbox6713",
+      "account_id": "583016429773",
+      "available": false,
+      "owner": "pbrennan",
+      "owner_email": "pbrennan@labs.example.net",
+      "envtype": "rhel9-image-builder",
+      "reservation": "",
+      "zone": "sandbox6713.opentlc.com",
+      "comment": "guid: m2hxd / catalog: rhel9.image-builder.prod",
+      "conan_status": "in-use",
+      "guid": "m2hxd",
+      "hosted_zone_id": "Z04HD6713PQRX",
+      "service_uuid": "3c9e1f72-58ab-4d06-b2e1-7a40f9c36d13",
+      "annotations": {
+        "team": "rhel-content"
+      }
+    },
+    {
+      "sandbox_account_id": "sandbox6714",
+      "name": "sandbox6714",
+      "account_id": "583016429774",
+      "available": false,
+      "owner": "",
+      "owner_email": "ifaraday@labs.example.net",
+      "envtype": "ocp4-ai-workshop",
+      "reservation": "",
+      "zone": "sandbox6714.opentlc.com",
+      "comment": "guid: r7tqm / catalog: openshift-ai.workshop.prod",
+      "conan_status": "in-use",
+      "guid": "r7tqm",
+      "hosted_zone_id": "",
+      "service_uuid": "",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sandbox6715",
+      "name": "sandbox6715",
+      "account_id": "583016429775",
+      "available": false,
+      "owner": "cyamada",
+      "owner_email": "cyamada@labs.example.net",
+      "envtype": "ocp4-ai-workshop",
+      "reservation": "",
+      "zone": "sandbox6715.opentlc.com",
+      "comment": "guid: w9kfz / catalog: openshift-ai.workshop.prod",
+      "conan_status": "in-use",
+      "guid": "w9kfz",
+      "hosted_zone_id": "Z09KF6715TWLN",
+      "service_uuid": "a81d5e03-6c2f-4b97-9e14-d05b3f7a2c68",
+      "annotations": {}
+    }
+  ]
+}

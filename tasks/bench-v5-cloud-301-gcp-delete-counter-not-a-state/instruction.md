@@ -1,0 +1,1 @@
+I'm putting together the weekly cleanup report for our GCP open environments (week of 2026-10-12). How many projects in the RHDP open-environments folder are already scheduled for deletion, and which ones? Give me the GUID for each so I can match them against the sandbox records, and flag anything in that folder whose state looks off.

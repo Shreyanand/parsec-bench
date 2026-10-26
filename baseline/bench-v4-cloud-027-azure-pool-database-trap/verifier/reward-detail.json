@@ -1,0 +1,49 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "get_subscription",
+          "database": "pools",
+          "subscription_name": "pool-01-389"
+        }
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "list_pools",
+          "database": "pools"
+        }
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "get_pool",
+          "database": "pools",
+          "pool_id": "01"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

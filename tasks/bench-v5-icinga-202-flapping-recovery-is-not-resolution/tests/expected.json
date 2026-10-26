@@ -1,0 +1,145 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "edge-lb-sjc-2"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_flapping_status"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_history"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "flapping",
+        "any_of": [
+          "flapping",
+          "flaps",
+          "flap"
+        ],
+        "ignore_case": true,
+        "asked_by": "based on what Icinga is telling us",
+        "rationale": "only attrs.flapping / flapping_current say it; the state and output both say OK"
+      },
+      {
+        "id": "keep-open",
+        "any_of": [
+          "not close",
+          "n't close",
+          "keep it open",
+          "keep the incident open",
+          "keep the ticket open",
+          "leave it open",
+          "leave the ticket open",
+          "hold off",
+          "not reasonable",
+          "not safe to close",
+          "would not close",
+          "wouldn't close"
+        ],
+        "ignore_case": true,
+        "asked_by": "Is that reasonable",
+        "rationale": "the verdict the question asks for",
+        "derived": true,
+        "note": "A recommendation, so no seed literal: haproxy-backend-api reports state 0 but flapping true with flapping_current 41.7 above flapping_threshold_high 30.0, so its recovery is not a resolution and the ticket should stay open."
+      },
+      {
+        "id": "notifications-suppressed",
+        "any_of": [
+          "suppress",
+          "will not page",
+          "won't page",
+          "not be notified",
+          "no notifications",
+          "won't notify",
+          "will not notify",
+          "not notify",
+          "won't alert",
+          "will not alert",
+          "not be paged"
+        ],
+        "ignore_case": true,
+        "asked_by": "Is that reasonable based on what Icinga is telling us",
+        "rationale": "Icinga2 suppresses notifications while flapping, so silence is not resolution",
+        "derived": true,
+        "note": "haproxy-backend-api has flapping true (flapping_current 41.7 over flapping_threshold_high 30.0), and Icinga suppresses notifications for a flapping service, so the quiet since its last_notification is not evidence of recovery."
+      },
+      {
+        "id": "other-open",
+        "any_of": [
+          "tls-handshake",
+          "TLS handshake latency"
+        ],
+        "ignore_case": true,
+        "asked_by": "anything else still open on that box",
+        "rationale": "the WARNING sibling; conntrack-table is OK"
+      },
+      {
+        "id": "flap-current",
+        "any_of": [
+          "41.7"
+        ],
+        "ignore_case": true,
+        "asked_by": "what Icinga is telling us",
+        "rationale": "flapping_current; only that field carries it"
+      }
+    ],
+    "counts": [],
+    "forbidden": [
+      {
+        "id": "says-safe-to-close",
+        "none_of": [
+          "safe to close",
+          "fine to close",
+          "ok to close",
+          "okay to close",
+          "go ahead and close",
+          "you can close",
+          "can be closed",
+          "is resolved",
+          "has recovered"
+        ],
+        "ignore_case": true,
+        "rationale": "the reading of state=0 as resolution",
+        "attributed_to": [
+          "not safe to close",
+          "isn't safe to close",
+          "would not close",
+          "wouldn't close",
+          "do not close",
+          "don't close",
+          "looks resolved",
+          "appears resolved",
+          "seems to have recovered",
+          "only looks"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

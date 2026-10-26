@@ -1,0 +1,133 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "summary",
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-15",
+          "providers": "aws"
+        }
+      },
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [],
+          "start_date": "2026-09-01",
+          "end_date": "2026-10-15",
+          "group_by": "SERVICE"
+        }
+      },
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "breakdown",
+          "start_date": "2026-09-01",
+          "end_date": "2026-10-15",
+          "group_by": "LINKED_ACCOUNT",
+          "top_n": 25
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_marketplace_agreements",
+        "args": {}
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "acct-391774208516",
+        "any_of": [
+          "391774208516"
+        ],
+        "ignore_case": true,
+        "asked_by": "on which accounts",
+        "rationale": "391774208516 holds a Brightmoor agreement; only the inventory names it"
+      },
+      {
+        "id": "acct-391774208562",
+        "any_of": [
+          "391774208562"
+        ],
+        "ignore_case": true,
+        "asked_by": "on which accounts",
+        "rationale": "391774208562 holds a Brightmoor agreement; only the inventory names it"
+      },
+      {
+        "id": "acct-457102938841",
+        "any_of": [
+          "457102938841"
+        ],
+        "ignore_case": true,
+        "asked_by": "on which accounts",
+        "rationale": "457102938841 holds a Brightmoor agreement; only the inventory names it"
+      },
+      {
+        "id": "auto-renew-one",
+        "ignore_case": true,
+        "derived": true,
+        "note": "Of the three Brightmoor Analytics rows the tool returns, only agmt-b4w9t2k7x1qe (account 391774208516) has auto_renew true; the count of one is a synthesis over the rows, not a stored field.",
+        "any_of": [
+          "only one auto-renews",
+          "one auto-renews",
+          "only one of them auto-renews",
+          "just one auto-renews",
+          "only the Query Accelerator agreement on 391774208516",
+          "only agmt-b4w9t2k7x1qe",
+          "1 auto-renews",
+          "one of them auto-renews",
+          "one is set to auto-renew",
+          "only one is set to auto-renew",
+          "only one renews automatically",
+          "one renews automatically"
+        ],
+        "asked_by": "Which of them auto-renew",
+        "rationale": "exactly one Brightmoor row has auto_renew true"
+      },
+      {
+        "id": "renewing-agreement",
+        "any_of": [
+          "agmt-b4w9t2k7x1qe",
+          "rhdp-data-eng-01"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which of them auto-renew",
+        "rationale": "identifies which agreement renews (the 391774208516 account is also graded separately)"
+      },
+      {
+        "id": "total",
+        "any_of": [
+          "23,955",
+          "23955",
+          "23 955",
+          "23.955"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "The sum of the three Brightmoor Analytics estimated_cost values in the result, 12480 + 7350 + 4125 = 23955 USD; no single stored field holds it.",
+        "asked_by": "what is their combined estimated cost",
+        "rationale": "sum of the three Brightmoor estimated_cost values; no single stored field holds it"
+      }
+    ],
+    "required_total": 6,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 0
+  }
+}

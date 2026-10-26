@@ -1,0 +1,103 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [
+    {
+      "job_id": 8840217,
+      "controller": "east",
+      "job_name": "RHDP retail_bu.storefront-funnel-lab.prod-h7ctx-1-provision",
+      "template_name": "RHDP retail_bu.storefront-funnel-lab.prod-provision",
+      "status": "failed",
+      "failed": true,
+      "started": "2026-10-06T09:02:15.000Z",
+      "finished": "2026-10-06T09:48:39.000Z",
+      "duration_seconds": 2784,
+      "launch_type": "workflow",
+      "job_explanation": "",
+      "env_type": "prod",
+      "guid": "h7ctx",
+      "action": "provision",
+      "cloud_provider": "ec2",
+      "display_name": "storefront-funnel-lab",
+      "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+      "git_branch": "main",
+      "git_revision": "4d2b8e60f17a93c5b0e4d1f28a6c39e7b5d04a1f",
+      "log": "PLAY [Run the lab workloads] ****************************************\n\nTASK [ocp4_workload_guardrail : Install the guardrail policy controller] ****************************************\nchanged: [localhost] => {\"changed\": true, \"msg\": \"Deployment guardrail-system/guardrail-controller created\"}\n\nTASK [ocp4_workload_guardrail : Register the guardrail admission webhook] ****************************************\nchanged: [localhost] => {\"changed\": true, \"msg\": \"ValidatingWebhookConfiguration guardrail-validating created\"}\n\nTASK [ocp4_workload_storefront : Create the storefront project] ****************************************\nchanged: [localhost] => {\"changed\": true, \"msg\": \"Namespace storefront-h7ctx created\"}\n\nTASK [ocp4_workload_storefront : Create the storefront config maps] ****************************************\nchanged: [localhost] => (item=catalog-config)\nchanged: [localhost] => (item=checkout-config)\n\nTASK [ocp4_workload_storefront : Deploy the storefront services] ****************************************\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_storefront/tasks/workload.yml:31\nfatal: [localhost]: FAILED! => {\"changed\": false, \"error\": 500, \"msg\": \"Failed to create object: Internal error occurred: failed calling webhook \\\"vworkload.guardrail.example.io\\\": failed to call webhook: Post \\\"https://guardrail-webhook.guardrail-system.svc:443/validate-workloads?timeout=10s\\\": no endpoints available for service \\\"guardrail-webhook\\\"\", \"reason\": \"Internal Server Error\", \"status\": 500}\n\nPLAY RECAP ****************************************\nlocalhost                  : ok=12   changed=6    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0\n",
+      "log_original_size": 1701,
+      "log_trimmed_size": 1701,
+      "id": "east-8840217"
+    }
+  ],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [
+    {
+      "splunk_ocp_log_entry_id": "h7ctx-guardrail-1",
+      "time": "2026-10-06T09:47:58Z",
+      "namespace": "guardrail-system",
+      "pod": "guardrail-controller-5c8d7f9b6-r2kqp",
+      "container": "controller",
+      "image": "quay.io/guardrail/controller:v2.3.1",
+      "level": "WARNING",
+      "message": "FailedScheduling: 0/6 nodes are available: 3 node(s) didn't match Pod's node affinity/selector, 3 node(s) had untolerated taint {node-role.kubernetes.io/master: }. preemption: 0/6 nodes are available: 6 Preemption is not helpful for scheduling. (x9 over 6m)",
+      "cluster": "cluster-h7ctx.retail-labs.example.org"
+    },
+    {
+      "splunk_ocp_log_entry_id": "h7ctx-guardrail-2",
+      "time": "2026-10-06T09:46:20Z",
+      "namespace": "guardrail-system",
+      "pod": "guardrail-controller",
+      "container": "",
+      "image": "quay.io/guardrail/controller:v2.3.1",
+      "level": "WARNING",
+      "message": "Deployment guardrail-controller: 0/1 replicas available; Available=False (MinimumReplicasUnavailable)",
+      "cluster": "cluster-h7ctx.retail-labs.example.org"
+    },
+    {
+      "splunk_ocp_log_entry_id": "h7ctx-guardrail-3",
+      "time": "2026-10-06T09:41:12Z",
+      "namespace": "guardrail-system",
+      "pod": "guardrail-controller-5c8d7f9b6-r2kqp",
+      "container": "controller",
+      "image": "quay.io/guardrail/controller:v2.3.1",
+      "level": "WARNING",
+      "message": "FailedScheduling: 0/6 nodes are available: 3 node(s) didn't match Pod's node affinity/selector, 3 node(s) had untolerated taint {node-role.kubernetes.io/master: }. preemption: 0/6 nodes are available: 6 Preemption is not helpful for scheduling.",
+      "cluster": "cluster-h7ctx.retail-labs.example.org"
+    },
+    {
+      "splunk_ocp_log_entry_id": "h7ctx-guardrail-4",
+      "time": "2026-10-06T09:41:10Z",
+      "namespace": "guardrail-system",
+      "pod": "guardrail-controller-5c8d7f9b6",
+      "container": "",
+      "image": "quay.io/guardrail/controller:v2.3.1",
+      "level": "INFO",
+      "message": "SuccessfulCreate: Created pod: guardrail-controller-5c8d7f9b6-r2kqp",
+      "cluster": "cluster-h7ctx.retail-labs.example.org"
+    },
+    {
+      "splunk_ocp_log_entry_id": "h7ctx-guardrail-5",
+      "time": "2026-10-06T09:41:09Z",
+      "namespace": "guardrail-system",
+      "pod": "guardrail-controller",
+      "container": "",
+      "image": "quay.io/guardrail/controller:v2.3.1",
+      "level": "INFO",
+      "message": "ScalingReplicaSet: Scaled up replica set guardrail-controller-5c8d7f9b6 to 1",
+      "cluster": "cluster-h7ctx.retail-labs.example.org"
+    }
+  ],
+  "workshops": []
+}

@@ -1,0 +1,67 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_multiworkshops",
+          "namespace": "user-pmukherjee-redhat-com",
+          "cluster": "heron"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_multiworkshop",
+          "name": "ocp-dev-summit-oct26",
+          "namespace": "user-pmukherjee-redhat-com",
+          "cluster": "heron"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_workshops",
+          "cluster": "heron",
+          "namespace": "user-pmukherjee-redhat-com"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 1,
+    "counts_missed": [
+      {
+        "id": "user-slots",
+        "value": 85,
+        "nouns": [
+          "user",
+          "users",
+          "slots",
+          "user_count",
+          "attendees"
+        ],
+        "window": 4,
+        "asked_by": "how many attendees its workshops are set up for in total",
+        "rationale": "30+30+25 over the three asset workshops only"
+      }
+    ],
+    "counts_total": 3,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

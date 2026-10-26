@@ -1,0 +1,113 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [
+    {
+      "babylon_catalog_item_id": "east-edge-observability-aws",
+      "cluster": "east",
+      "ci_name": "summit-labs.edge-observability-aws",
+      "display_name": "Edge Observability Lab (AWS)",
+      "namespace": "babylon-catalog-event",
+      "stage": "event",
+      "multiuser": true,
+      "asset_uuid": "3f696994-5b7b-4e6f-8056-435d13ca1c00",
+      "keywords": [
+        "rhel",
+        "edge",
+        "observability",
+        "workshop"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "east-edge-observability-gcp",
+      "cluster": "east",
+      "ci_name": "summit-labs.edge-observability-gcp",
+      "display_name": "Edge Observability Lab (GCP)",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": true,
+      "asset_uuid": "2a6fc78f-c065-4f3a-87c4-00d764543bfc",
+      "keywords": [
+        "rhel",
+        "edge",
+        "observability",
+        "workshop"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "east-edge-manager-aws",
+      "cluster": "east",
+      "ci_name": "summit-labs.edge-manager-aws",
+      "display_name": "Edge Manager Fleet Lab (AWS)",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "b6cb7e9c-1088-4a32-ab97-c035968e6027",
+      "keywords": [
+        "rhel",
+        "edge",
+        "fleet"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "east-satellite-patching-aws",
+      "cluster": "east",
+      "ci_name": "sandboxes-gpte.satellite-patching-aws",
+      "display_name": "Satellite Patching Lab (AWS)",
+      "namespace": "babylon-catalog-dev",
+      "stage": "dev",
+      "multiuser": false,
+      "asset_uuid": "123be796-5d67-4e50-b0f0-bb4a0722085c",
+      "keywords": [
+        "satellite",
+        "patching"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "east-satellite-patching-azure",
+      "cluster": "east",
+      "ci_name": "sandboxes-gpte.satellite-patching-azure",
+      "display_name": "Satellite Patching Lab (Azure)",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "79193a2b-543e-4bb0-8b7f-47268d03ba49",
+      "keywords": [
+        "satellite",
+        "patching"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "west-edge-observability-aws",
+      "cluster": "west",
+      "ci_name": "summit-labs.edge-observability-aws",
+      "display_name": "Edge Observability Lab (AWS)",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": true,
+      "asset_uuid": "3f696994-5b7b-4e6f-8056-435d13ca1c00",
+      "keywords": [
+        "rhel",
+        "edge",
+        "observability",
+        "workshop"
+      ]
+    }
+  ],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,1 @@
+Finance is reconciling AWS Marketplace spend for account 731546082913. What is the estimated cost, in US dollars, of that account's Vantorix Log Analytics marketplace agreement? Please give the USD figure from the marketplace agreement inventory so it can go straight into the budget sheet.

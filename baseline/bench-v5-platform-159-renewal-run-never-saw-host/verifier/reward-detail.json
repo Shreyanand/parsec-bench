@@ -1,0 +1,113 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "west",
+          "template_name": "tls-cert-renew",
+          "created_after": "2026-11-17",
+          "created_before": "2026-11-17T06:00:00"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 6702291
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "west",
+          "job_id": 6702291
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "jira-untouched",
+        "any_of": [
+          "does not appear",
+          "doesn't appear",
+          "did not appear",
+          "didn't appear",
+          "not appear",
+          "never ran against",
+          "never touched",
+          "not touched",
+          "wasn't touched",
+          "not in the run",
+          "not part of the run",
+          "not included",
+          "wasn't included",
+          "no events for jira",
+          "no event for jira",
+          "not in the inventory",
+          "not in its inventory",
+          "not in the job's inventory",
+          "not targeted",
+          "wasn't targeted",
+          "never targeted",
+          "absent from",
+          "missing from the run",
+          "missing from the job",
+          "no events at all",
+          "not among the hosts",
+          "isn't in the inventory",
+          "is not in the inventory",
+          "not in the template's inventory",
+          "outside the job's inventory",
+          "was not in the play",
+          "did not run on jira",
+          "didn't run on jira",
+          "never ran on jira"
+        ],
+        "ignore_case": true,
+        "asked_by": "tell me what the job record shows for that host",
+        "rationale": "the break: the run's events name three hosts and not jira-ber-02",
+        "derived": true,
+        "note": "the 13 events of job 6702291 cover wiki-ber-01, conf-ber-03 and git-ber-01; no event names jira-ber-02."
+      },
+      {
+        "id": "jira-expiry",
+        "any_of": [
+          "2026-11-29"
+        ],
+        "ignore_case": true,
+        "asked_by": "give me the expiry date Icinga reports now",
+        "rationale": "jira-ber-02's unrenewed expiry, from its WARNING check output"
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

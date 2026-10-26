@@ -1,0 +1,106 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 372861
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/configs/quantum-sim-lab/pre_software.yml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "pattern-warning",
+        "any_of": [
+          "Could not match supplied host pattern",
+          "no hosts matched"
+        ],
+        "ignore_case": true,
+        "asked_by": "what in the log actually explains it",
+        "rationale": "the warning, not the fatal, is the cause; only the log read supplies it"
+      },
+      {
+        "id": "play-skipped",
+        "any_of": [
+          "never ran",
+          "did not run",
+          "was skipped",
+          "were skipped",
+          "never executed",
+          "matched no hosts"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why the variable was never set",
+        "rationale": "links the skipped play to the missing fact",
+        "note": "the log warns Could not match supplied host pattern, ignoring: bastions, and the play Configure the bastion, the only one whose set_fact defines bastion_ssh_key in pre_software.yml, reports skipping: no hosts matched."
+      },
+      {
+        "id": "group-name",
+        "any_of": [
+          "`bastion` (singular)",
+          "group `bastion`",
+          "group bastion",
+          "bastion group",
+          "group is bastion",
+          "group named bastion",
+          "groups: bastion",
+          "hosts: bastion`",
+          "hosts: bastion so",
+          "hosts: bastion to"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what the fix is",
+        "rationale": "the mismatch between the play's pattern and the inventory group; the pattern is only in the fetched playbook",
+        "note": "add_host puts the bastion in group bastion and the log prints groups=['all', 'ungrouped', 'bastion', 'simulators'], while pre_software.yml's Configure the bastion play targets hosts: bastions, so the fix is to target the bastion group."
+      }
+    ],
+    "citations": [
+      {
+        "id": "hosts-line",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/configs/quantum-sim-lab/pre_software.yml",
+        "line": 12,
+        "asked_by": "cite the line to change as owner/repo:path:line",
+        "rationale": "the line is counted from the seeded playbook"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "default-fix",
+        "none_of": [
+          "add a default",
+          "| default",
+          "default(",
+          "define bastion_ssh_key",
+          "set bastion_ssh_key in the catalog"
+        ],
+        "ignore_case": true,
+        "rationale": "the teammate's proposed fix; it would hide the skipped play rather than fix the pattern"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

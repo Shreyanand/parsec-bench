@@ -1,0 +1,114 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [
+    {
+      "babylon_anarchy_subject_id": "condor-ocp-ai-workshop.b5kzr",
+      "cluster": "condor",
+      "name": "ocp-ai-workshop.b5kzr",
+      "namespace": "babylon-anarchy-ocp-ai-workshop",
+      "governor": "ocp-ai-workshop",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "b5kzr",
+        "env_type": "ocp-ai-workshop"
+      },
+      "requester_email": "mokonkwo@redhat.com",
+      "resource_claim": {
+        "name": "ocp-ai-workshop-b5kzr",
+        "namespace": "user-mokonkwo-redhat-com"
+      },
+      "tower_jobs": {
+        "provision": {
+          "controller": "west",
+          "job_id": 3307115
+        }
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "condor-ocp-ai-workshop.w2hcn",
+      "cluster": "condor",
+      "name": "ocp-ai-workshop.w2hcn",
+      "namespace": "babylon-anarchy-ocp-ai-workshop",
+      "governor": "ocp-ai-workshop",
+      "current_state": "destroyed",
+      "desired_state": "destroyed",
+      "healthy": false,
+      "instance_vars": {
+        "guid": "w2hcn",
+        "env_type": "ocp-ai-workshop"
+      },
+      "requester_email": "tfaleolo@redhat.com",
+      "resource_claim": {
+        "name": "ocp-ai-workshop-w2hcn",
+        "namespace": "user-tfaleolo-redhat-com"
+      },
+      "tower_jobs": {
+        "provision": {
+          "controller": "west",
+          "job_id": 3301964
+        },
+        "destroy": {
+          "controller": "west",
+          "job_id": 3308842
+        }
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "condor-rhel-edge-demo.g7xpm",
+      "cluster": "condor",
+      "name": "rhel-edge-demo.g7xpm",
+      "namespace": "babylon-anarchy-rhel-edge-demo",
+      "governor": "rhel-edge-demo",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "g7xpm",
+        "env_type": "rhel-edge-demo"
+      },
+      "requester_email": "tfaleolo@redhat.com",
+      "resource_claim": {
+        "name": "rhel-edge-demo-g7xpm",
+        "namespace": "user-tfaleolo-redhat-com"
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "condor-ocp-ai-workshop.n4vfd",
+      "cluster": "condor",
+      "name": "ocp-ai-workshop.n4vfd",
+      "namespace": "babylon-anarchy-ocp-ai-workshop",
+      "governor": "ocp-ai-workshop",
+      "current_state": "stopped",
+      "desired_state": "stopped",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "n4vfd",
+        "env_type": "ocp-ai-workshop"
+      },
+      "requester_email": "lperalta@redhat.com",
+      "resource_claim": {
+        "name": "ocp-ai-workshop-n4vfd",
+        "namespace": "user-lperalta-redhat-com"
+      }
+    }
+  ],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,89 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [
+    {
+      "capacity_metric_result_id": "cmr-odcr-org-util-account",
+      "capacity_totals_id": "ct-odcr-org-util",
+      "capacity_window_id": "cw-odcr-168h",
+      "metric": "utilization",
+      "group_by": "account-id",
+      "period": {
+        "capacity_window_id": "cw-odcr-168h",
+        "start": "2026-09-23T06:00:00Z",
+        "end": "2026-09-30T06:00:00Z"
+      },
+      "results": [
+        {
+          "dimension": "731948260354",
+          "avg_utilization_pct": 60.0,
+          "total_capacity_hrs": 2016.0,
+          "unused_capacity_hrs": 806.4,
+          "total_estimated_cost_usd": 1008.0,
+          "unused_estimated_cost_usd": 403.2,
+          "reservation_count": 12
+        },
+        {
+          "dimension": "604215837719",
+          "avg_utilization_pct": 85.0,
+          "total_capacity_hrs": 3360.0,
+          "unused_capacity_hrs": 504.0,
+          "total_estimated_cost_usd": 1680.0,
+          "unused_estimated_cost_usd": 252.0,
+          "reservation_count": 20
+        },
+        {
+          "dimension": "915063482277",
+          "avg_utilization_pct": 60.0,
+          "total_capacity_hrs": 672.0,
+          "unused_capacity_hrs": 268.8,
+          "total_estimated_cost_usd": 336.0,
+          "unused_estimated_cost_usd": 134.4,
+          "reservation_count": 4
+        },
+        {
+          "dimension": "248370615592",
+          "avg_utilization_pct": 90.0,
+          "total_capacity_hrs": 1344.0,
+          "unused_capacity_hrs": 134.4,
+          "total_estimated_cost_usd": 672.0,
+          "unused_estimated_cost_usd": 67.2,
+          "reservation_count": 8
+        }
+      ],
+      "totals": {
+        "capacity_totals_id": "ct-odcr-org-util",
+        "total_estimated_cost_usd": 3696.0,
+        "unused_estimated_cost_usd": 856.8,
+        "overall_utilization_pct": 76.8,
+        "total_dimensions": 4,
+        "transient_excluded": 3,
+        "transient_cost_usd": 386.4
+      }
+    }
+  ],
+  "capacity_totals": [
+    {
+      "capacity_totals_id": "ct-odcr-org-util",
+      "total_estimated_cost_usd": 3696.0,
+      "unused_estimated_cost_usd": 856.8,
+      "overall_utilization_pct": 76.8,
+      "total_dimensions": 4,
+      "transient_excluded": 3,
+      "transient_cost_usd": 386.4
+    }
+  ],
+  "capacity_windows": [
+    {
+      "capacity_window_id": "cw-odcr-168h",
+      "start": "2026-09-23T06:00:00Z",
+      "end": "2026-09-30T06:00:00Z"
+    }
+  ],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": []
+}

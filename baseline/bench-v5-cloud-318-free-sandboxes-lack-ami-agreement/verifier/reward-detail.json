@@ -1,0 +1,129 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "reservation": "tessellate-2611",
+          "available": true,
+          "max_results": 500
+        }
+      },
+      {
+        "name": "query_marketplace_agreements",
+        "args": {
+          "product_name": "Corvane Hardened Netwarden",
+          "status": "ACTIVE"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT name, account_id, available FROM sandbox_pools WHERE pool_id = 44 AND available = true LIMIT 20"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "reservation": "pool-44",
+          "available": true,
+          "max_results": 500
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "pool-44-001"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "zone": "pool-44"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_azure_pools",
+        "args": {}
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "pool-44-free",
+        "any_of": [
+          "6 free",
+          "six free",
+          "6 available",
+          "six available",
+          "6 are free",
+          "six are free",
+          "6 of 8",
+          "six of eight",
+          "6 of its 8",
+          "six of its eight",
+          "6 of the 8",
+          "six of the eight",
+          "6/8",
+          "available: 6",
+          "available 6",
+          "free: 6",
+          "6 unused",
+          "six unused",
+          "6 unassigned",
+          "six unassigned",
+          "6 subscriptions free",
+          "6 subscriptions are free",
+          "6 subscriptions available",
+          "6 subscriptions are available",
+          "6 free subscriptions",
+          "six free subscriptions",
+          "| 6 |",
+          "pool-44-103"
+        ],
+        "ignore_case": true,
+        "asked_by": "Does pool 44 have enough free subscriptions",
+        "rationale": "get_pool (or list_pools) gives 6 of 8 free in pool 44, which covers four seats; the figure, or the free subscription ids, shows the pool was read"
+      },
+      {
+        "id": "expired-8523",
+        "any_of": [
+          "expired",
+          "no longer active",
+          "lapse",
+          "isn't active",
+          "is not active",
+          "not an active",
+          "inactive",
+          "agreement ended",
+          "it ended",
+          "ended on 2026-10-09",
+          "ended 2026-10-09",
+          "ended in October"
+        ],
+        "ignore_case": true,
+        "asked_by": "already hold an active Corvane Hardened Netwarden agreement",
+        "rationale": "the only Corvane agreement on a free sandbox (sandbox8523) has status EXPIRED; reading its presence as coverage is the near-miss"
+      }
+    ],
+    "required_total": 8,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 0
+  }
+}

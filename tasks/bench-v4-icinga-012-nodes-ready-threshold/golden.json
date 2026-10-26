@@ -1,0 +1,29 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "infra-grafana-cluster-us-east-1",
+        "detailed": true
+      },
+      "result": {
+        "result": "[{\"name\":\"ocp-prod-nodes-ready\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"OCP Prod Nodes Ready\",\"host_name\":\"infra-grafana-cluster-us-east-1\",\"state\":1,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":0,\"groups\":[],\"last_check_result\":{\"output\":\"WARNING - 22 of 25 nodes Ready\",\"state\":1,\"exit_status\":1}}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "rhdp-monitoring",
+        "path": "clusters/ocp-prod/monitoring/nodes-ready.yaml"
+      },
+      "result": {
+        "content": "---\n# Icinga GitOps: OCP Prod node readiness\napiVersion: monitoring.rhdp.redhat.com/v1\nkind: CheckDefinition\nmetadata:\n  name: ocp-prod-nodes-ready\nspec:\n  expectedNodes: 25\n  warnBelowReady: 24\n  critBelowReady: 20\n  checkIntervalSeconds: 300\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "ocp-prod-nodes-ready is in a WARNING state, reporting 22 of 25 nodes Ready.\n\nThe check definition expects 25 nodes and warns when the ready count falls below 24, which is why three unready nodes has tripped a warning rather than nothing. Its critical threshold, critBelowReady, is 20.\n\nSo the current ready count of 22 is three above the first critical value: critBelowReady is 20, so critical means 19 or fewer ready, and 3 more nodes would have to go unready before this check turns critical. It is not critical yet, and at a 300-second check interval there is some room before it would be."
+}

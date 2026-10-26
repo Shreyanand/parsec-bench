@@ -1,0 +1,119 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "sandbox4718"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "wq4ke"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "event0",
+          "job_id": 66215
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "job-id",
+        "any_of": [
+          "66215"
+        ],
+        "asked_by": "Tell me the job id and the controller it ran on",
+        "rationale": "the only job whose name carries the account's guid wq4ke. The same-template decoy for guid fn8tj is 66231 on west and sorts first in an unfiltered or template-wide search, so an agent that skipped the guid correlation names 66231 instead"
+      },
+      {
+        "id": "controller",
+        "any_of": [
+          "event0"
+        ],
+        "ignore_case": true,
+        "asked_by": "Tell me the job id and the controller it ran on",
+        "rationale": "the instruction names no controller, so it is only learned from the all-controller find_jobs row. The decoy ran on west and the unrelated job on east"
+      },
+      {
+        "id": "failing-task",
+        "any_of": [
+          "allocate the bastion elastic ip",
+          "bastion elastic ip",
+          "bastion's elastic ip",
+          "elastic ip for the bastion",
+          "bastion eip",
+          "eip for the bastion",
+          "elastic ip allocation",
+          "allocating the elastic ip",
+          "allocating an elastic ip",
+          "allocate an elastic ip",
+          "allocate the elastic ip",
+          "allocate_the_bastion_elastic_ip",
+          "bastion's eip",
+          "bastion elastic-ip",
+          "ip for the bastion",
+          "bastion's public ip",
+          "bastion public ip"
+        ],
+        "ignore_case": true,
+        "asked_by": "which task in the job failed",
+        "rationale": "the runner_on_failed event at counter 43. It exists only in job_events: neither the find_jobs summary nor the job row names a task, and job_explanation is empty, so an agent that stops at the job record cannot state it"
+      },
+      {
+        "id": "cause",
+        "any_of": [
+          "addresslimitexceeded",
+          "address limit",
+          "address quota",
+          "maximum number of addresses",
+          "addresses has been reached",
+          "addresses reached",
+          "elastic ip limit",
+          "elastic ip quota",
+          "elastic ip address limit",
+          "elastic ip address quota",
+          "elastic ips limit",
+          "elastic ip addresses limit",
+          "eip limit",
+          "eip quota",
+          "limit on elastic ip",
+          "limit of elastic ip",
+          "limit for elastic ip",
+          "quota for elastic ip",
+          "quota of elastic ip",
+          "quota on elastic ip",
+          "out of elastic ip",
+          "elastic ip allowance",
+          "maximum number of elastic ip",
+          "maximum number of eip",
+          "eip cap",
+          "elastic ip cap"
+        ],
+        "ignore_case": true,
+        "asked_by": "the error that stopped it",
+        "rationale": "the failed event's error_msg: AllocateAddress refused with AddressLimitExceeded. Like the task, it is only in job_events; the decoy's error is a route-admission timeout"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 418627
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "controller": "east",
+          "job_id": 418655
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles/render_farm_nodes/tasks/main.yml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "ami-rejected",
+        "any_of": [
+          "InvalidAMIID",
+          "ami-0c7d41e9b25f83a16]' does not exist",
+          "ami-0c7d41e9b25f83a16 does not exist",
+          "ami-0c7d41e9b25f83a16 doesn't exist",
+          "AMI not found",
+          "AMI was not found",
+          "AMI is not found",
+          "AMI does not exist",
+          "AMI doesn't exist",
+          "image does not exist",
+          "image doesn't exist",
+          "image not found",
+          "image was not found",
+          "could not find the AMI",
+          "couldn't find the AMI",
+          "unknown AMI",
+          "no such AMI",
+          "no image with that ID",
+          "image id does not exist",
+          "image id doesn't exist",
+          "does not exist",
+          "doesn't exist",
+          "NotFound"
+        ],
+        "ignore_case": true,
+        "asked_by": "what AWS rejected in the failed run",
+        "rationale": "the RunInstances error only the failed job's log carries"
+      },
+      {
+        "id": "failed-region",
+        "any_of": [
+          "eu-central-1",
+          "Frankfurt"
+        ],
+        "ignore_case": true,
+        "asked_by": "which AWS region each of the two jobs deployed to",
+        "rationale": "only the failed job's log shows its region (the debug line before the launch)"
+      },
+      {
+        "id": "good-region",
+        "any_of": [
+          "us-east-1",
+          "N. Virginia",
+          "Northern Virginia"
+        ],
+        "ignore_case": true,
+        "asked_by": "which AWS region each of the two jobs deployed to",
+        "rationale": "only the successful job's log shows its region; an agent that never reads job 418655 cannot state it"
+      },
+      {
+        "id": "regional-ami",
+        "any_of": [
+          "hard-coded",
+          "hardcoded",
+          "hard coded",
+          "region-specific",
+          "region specific",
+          "regional",
+          "specific to a region",
+          "specific to one region",
+          "specific to each region",
+          "specific to us-east-1",
+          "exists only in us-east-1",
+          "only exists in us-east-1",
+          "only in us-east-1",
+          "only valid in us-east-1",
+          "per region",
+          "per-region",
+          "differ by region",
+          "differs by region",
+          "differ between regions",
+          "differ per region",
+          "different in each region",
+          "different ID in each region",
+          "different ID per region",
+          "different IDs in different regions",
+          "unique to a region",
+          "region-scoped",
+          "scoped to a region",
+          "scoped to one region",
+          "not available in eu-central-1",
+          "not present in eu-central-1",
+          "does not exist in eu-central-1",
+          "doesn't exist in eu-central-1",
+          "not exist in eu-central-1",
+          "no such image in eu-central-1",
+          "not in eu-central-1",
+          "belongs to us-east-1",
+          "registered in us-east-1",
+          "lives in us-east-1",
+          "a us-east-1 AMI",
+          "a us-east-1 image",
+          "the us-east-1 ID",
+          "us-east-1 image ID",
+          "us-east-1 AMI ID",
+          "us-east-1 ID",
+          "inside the region",
+          "within the region",
+          "within one region",
+          "in one region",
+          "in a single region",
+          "where the image was registered",
+          "where it was registered",
+          "literal AMI",
+          "literal ID",
+          "literal image",
+          "a literal",
+          "pins image_id",
+          "pinned",
+          "only valid in",
+          "only meaningful in",
+          "only means something in",
+          "only works in",
+          "per-region resource",
+          "regional resource"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why identical code worked for one order and not the other",
+        "rationale": "the synthesis: the fetched task pins one literal AMI ID while the region varies per order; AMI IDs exist per region",
+        "note": "the task file sets image_id to a literal AMI ID and region to aws_region; the successful job launched that ID in us-east-1 while the failed job, in eu-central-1, got InvalidAMIID.NotFound for the same ID, because an AMI ID names an image in one region only."
+      },
+      {
+        "id": "fix",
+        "any_of": [
+          "ec2_ami_info",
+          "per-region map",
+          "per region map",
+          "region map",
+          "map of AMI",
+          "mapping of AMI",
+          "mapping per region",
+          "map keyed by region",
+          "dictionary keyed by region",
+          "dict keyed by region",
+          "keyed by region",
+          "keyed on region",
+          "keyed by aws_region",
+          "look up the AMI",
+          "look the AMI up",
+          "lookup of the AMI",
+          "AMI lookup",
+          "lookup for the AMI",
+          "resolve the AMI",
+          "resolve the image",
+          "query the AMI",
+          "find the AMI by name",
+          "by name",
+          "name filter",
+          "filter on the image name",
+          "filters",
+          "copy the AMI",
+          "copy the image",
+          "copy-image",
+          "copy_image",
+          "ec2_ami_copy",
+          "SSM parameter",
+          "ssm_parameter",
+          "aws_ssm",
+          "parameterize",
+          "parametrize",
+          "make the AMI a variable",
+          "make image_id a variable",
+          "variable per region"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "how that task should change",
+        "rationale": "the remedy belongs in the task: select the image per region instead of one literal ID",
+        "note": "the fetched task hard-codes one AMI ID; the remedy is any per-region resolution (an ec2_ami_info lookup by name, a region-keyed map, an SSM public parameter, or copying the image to each region and selecting by aws_region)."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "ami-retired",
+        "none_of": [
+          "AMI was deregistered",
+          "AMI has been deregistered",
+          "AMI had been deregistered",
+          "image was deregistered",
+          "image has been deregistered",
+          "AMI was deleted",
+          "AMI has been deleted",
+          "AMI had been deleted",
+          "image was deleted",
+          "image has been deleted",
+          "AMI was removed",
+          "AMI has been removed",
+          "AMI is deprecated",
+          "AMI was deprecated",
+          "AMI has expired",
+          "AMI expired"
+        ],
+        "ignore_case": true,
+        "rationale": "the successful job launched the same AMI ID in us-east-1 more than two hours after the failure, so the image was not retired; the failure is the region"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

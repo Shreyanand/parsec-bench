@@ -1,0 +1,24 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "path": "clusters/ocp-prod/monitoring/nodes-ready.yaml",
+      "content": "---\n# Icinga GitOps: OCP Prod node readiness\napiVersion: monitoring.rhdp.redhat.com/v1\nkind: CheckDefinition\nmetadata:\n  name: ocp-prod-nodes-ready\nspec:\n  expectedNodes: 25\n  warnBelowReady: 24\n  critBelowReady: 20\n  checkIntervalSeconds: 300\n",
+      "file_id": "rhpds/rhdp-monitoring@main-clusters/ocp-prod/monitoring/nodes-ready.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "path": "clusters/ocp-prod/monitoring/nodes-ready.yaml",
+      "content": "---\n# Icinga GitOps: OCP Prod node readiness\napiVersion: monitoring.rhdp.redhat.com/v1\nkind: CheckDefinition\nmetadata:\n  name: ocp-prod-nodes-ready\nspec:\n  expectedNodes: 25\n  warnBelowReady: 24\n  critBelowReady: 20\n  checkIntervalSeconds: 300\n",
+      "file_id": "rhpds/rhdp-monitoring@HEAD-clusters/ocp-prod/monitoring/nodes-ready.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

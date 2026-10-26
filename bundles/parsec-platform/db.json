@@ -1,0 +1,1039 @@
+{
+  "babylon_anarchy_actions": [
+    {
+      "action": "provision",
+      "after": "2026-01-15T09:00:00Z",
+      "babylon_anarchy_action_id": "baa-001",
+      "cluster": "babylon-prod",
+      "finished": "2026-01-15T09:18:00Z",
+      "governor": "standard",
+      "name": "provision-guid-1001",
+      "namespace": "user-alice",
+      "state": "complete",
+      "subject_name": "guid-1001",
+      "subject_namespace": "user-alice"
+    },
+    {
+      "action": "provision",
+      "after": "2026-02-10T14:00:00Z",
+      "babylon_anarchy_action_id": "baa-002",
+      "cluster": "babylon-prod",
+      "finished": "",
+      "governor": "standard",
+      "name": "provision-guid-1002",
+      "namespace": "user-bob",
+      "state": "running",
+      "subject_name": "guid-1002",
+      "subject_namespace": "user-bob"
+    },
+    {
+      "action": "destroy",
+      "after": "2026-02-11T08:00:00Z",
+      "babylon_anarchy_action_id": "baa-003",
+      "cluster": "babylon-prod",
+      "finished": "",
+      "governor": "cleanup",
+      "name": "destroy-guid-1003",
+      "namespace": "user-carol",
+      "state": "pending",
+      "subject_name": "guid-1003",
+      "subject_namespace": "user-carol"
+    }
+  ],
+  "babylon_anarchy_subjects": [
+    {
+      "babylon_anarchy_subject_id": "bas-001",
+      "cluster": "babylon-prod",
+      "current_state": "provisioned",
+      "desired_state": "provisioned",
+      "governor": "standard",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "guid-1001",
+        "student_name": "alice",
+        "workshop": "rhel-ai-lab"
+      },
+      "name": "guid-1001",
+      "namespace": "user-alice",
+      "requester_email": "alice@example.com",
+      "resource_claim": {
+        "name": "deployment-guid-1001",
+        "namespace": "user-alice"
+      },
+      "tower_jobs": {
+        "provision": 4101,
+        "destroy": 4102
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "bas-002",
+      "cluster": "babylon-prod",
+      "current_state": "provisioning",
+      "desired_state": "provisioned",
+      "governor": "standard",
+      "healthy": false,
+      "instance_vars": {
+        "guid": "guid-1002",
+        "owner": "bob",
+        "purpose": "demo"
+      },
+      "name": "guid-1002",
+      "namespace": "user-bob",
+      "requester_email": "bob@example.com",
+      "resource_claim": {
+        "name": "deployment-guid-1002",
+        "namespace": "user-bob"
+      },
+      "tower_jobs": {
+        "provision": 4103
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "bas-003",
+      "cluster": "babylon-prod",
+      "current_state": "error",
+      "desired_state": "destroyed",
+      "governor": "cleanup",
+      "healthy": false,
+      "instance_vars": {
+        "guid": "guid-1003",
+        "owner": "carol",
+        "reason": "teardown failure"
+      },
+      "name": "guid-1003",
+      "namespace": "user-carol",
+      "requester_email": "carol@example.com",
+      "resource_claim": {
+        "name": "deployment-guid-1003",
+        "namespace": "user-carol"
+      },
+      "tower_jobs": {
+        "destroy": 4104
+      }
+    }
+  ],
+  "babylon_catalog_items": [
+    {
+      "asset_uuid": "asset-uuid-001",
+      "babylon_catalog_item_id": "bci-001",
+      "ci_name": "rhel-ai-lab",
+      "cluster": "babylon-prod",
+      "display_name": "RHEL AI Lab",
+      "keywords": [
+        "rhel",
+        "ai",
+        "lab",
+        "training"
+      ],
+      "multiuser": true,
+      "namespace": "catalog",
+      "stage": "prod"
+    },
+    {
+      "asset_uuid": "asset-uuid-002",
+      "babylon_catalog_item_id": "bci-002",
+      "ci_name": "openshift-virt-lab",
+      "cluster": "babylon-prod",
+      "display_name": "OpenShift Virtualization Lab",
+      "keywords": [
+        "openshift",
+        "virtualization",
+        "kubevirt"
+      ],
+      "multiuser": false,
+      "namespace": "catalog",
+      "stage": "prod"
+    },
+    {
+      "asset_uuid": "asset-uuid-003",
+      "babylon_catalog_item_id": "bci-003",
+      "cluster": "babylon-stage",
+      "display_name": "Ansible Automation Workshop",
+      "keywords": [
+        "ansible",
+        "automation",
+        "workshop"
+      ],
+      "multiuser": true,
+      "namespace": "catalog",
+      "stage": "stage",
+      "ci_name": "ansible-automation-workshop"
+    }
+  ],
+  "babylon_components": [
+    {
+      "agnosticv_path": "configs/rhel-ai-lab",
+      "agnosticv_repo": "https://github.com/redhat-cop/agnosticd.git",
+      "babylon_component_id": "bcmp-001",
+      "cloud_provider": "aws",
+      "cluster": "babylon-prod",
+      "definition": {
+        "name": "rhel-ai-lab",
+        "roles": [
+          "bastion",
+          "student"
+        ],
+        "version": "1.2.0"
+      },
+      "env_type": "rhel-ai-lab",
+      "expected_instances": [
+        "bastion",
+        "studentvm"
+      ],
+      "name": "rhel-ai-lab",
+      "platform": "agnosticd",
+      "scm_ref": "main",
+      "scm_url": "https://github.com/redhat-cop/agnosticd.git",
+      "sub_components": [
+        "network",
+        "bastion"
+      ]
+    },
+    {
+      "agnosticv_path": "configs/openshift-virt-lab",
+      "agnosticv_repo": "https://github.com/redhat-cop/agnosticd.git",
+      "babylon_component_id": "bcmp-002",
+      "cloud_provider": "aws",
+      "cluster": "babylon-prod",
+      "definition": {
+        "name": "openshift-virt-lab",
+        "roles": [
+          "cluster",
+          "vm"
+        ],
+        "version": "2.0.1"
+      },
+      "env_type": "openshift-virt-lab",
+      "expected_instances": [
+        "cluster",
+        "vm"
+      ],
+      "name": "openshift-virt-lab",
+      "platform": "agnosticd",
+      "scm_ref": "release-2.0",
+      "scm_url": "https://github.com/redhat-cop/agnosticd.git",
+      "sub_components": [
+        "cluster",
+        "storage"
+      ]
+    },
+    {
+      "agnosticv_path": "configs/ansible-automation-workshop",
+      "agnosticv_repo": "https://github.com/redhat-cop/agnosticd.git",
+      "babylon_component_id": "bcmp-003",
+      "cloud_provider": "azure",
+      "cluster": "babylon-stage",
+      "definition": {
+        "name": "ansible-automation-workshop",
+        "roles": [
+          "control",
+          "managed"
+        ],
+        "version": "0.9.5"
+      },
+      "env_type": "ansible-automation-workshop",
+      "expected_instances": [
+        "control",
+        "managed1",
+        "managed2"
+      ],
+      "name": "ansible-automation-workshop",
+      "platform": "agnosticd",
+      "scm_ref": "develop",
+      "scm_url": "https://github.com/redhat-cop/agnosticd.git",
+      "sub_components": [
+        "control",
+        "managed"
+      ]
+    }
+  ],
+  "babylon_deployments": [
+    {
+      "asset_uuid": "asset-uuid-001",
+      "babylon_deployment_id": "bd-001",
+      "catalog_item": "rhel-ai-lab",
+      "catalog_namespace": "catalog",
+      "cluster": "babylon-prod",
+      "current_state": "provisioned",
+      "desired_state": "provisioned",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "guid-1001",
+        "student_name": "alice",
+        "region": "us-east-2"
+      },
+      "lifespan": {
+        "default": "8h",
+        "maximum": "24h",
+        "end": "2026-01-15T17:00:00Z"
+      },
+      "name": "deployment-guid-1001",
+      "namespace": "user-alice",
+      "ready": true,
+      "state": "ready"
+    },
+    {
+      "asset_uuid": "asset-uuid-002",
+      "babylon_deployment_id": "bd-002",
+      "catalog_item": "openshift-virt-lab",
+      "catalog_namespace": "catalog",
+      "cluster": "babylon-prod",
+      "current_state": "provisioning",
+      "desired_state": "provisioned",
+      "healthy": false,
+      "instance_vars": {
+        "guid": "guid-1002",
+        "owner": "bob",
+        "region": "us-west-2"
+      },
+      "lifespan": {
+        "default": "4h",
+        "maximum": "12h",
+        "end": "2026-02-10T18:00:00Z"
+      },
+      "name": "deployment-guid-1002",
+      "namespace": "user-bob",
+      "ready": false,
+      "state": "provisioning"
+    },
+    {
+      "asset_uuid": "asset-uuid-003",
+      "babylon_deployment_id": "bd-003",
+      "catalog_item": "ansible-automation-workshop",
+      "catalog_namespace": "catalog",
+      "cluster": "babylon-stage",
+      "current_state": "error",
+      "desired_state": "destroyed",
+      "healthy": false,
+      "instance_vars": {
+        "guid": "guid-1003",
+        "owner": "carol"
+      },
+      "lifespan": {
+        "default": "6h",
+        "maximum": "12h",
+        "end": "2026-02-11T20:00:00Z"
+      },
+      "name": "deployment-guid-1003",
+      "namespace": "user-carol",
+      "ready": false,
+      "state": "error"
+    }
+  ],
+  "babylon_multiworkshops": [
+    {
+      "asset_count": 2,
+      "assets": [
+        "asset-uuid-001",
+        "asset-uuid-003"
+      ],
+      "babylon_multiworkshop_id": "bmw-001",
+      "cluster": "babylon-prod",
+      "display_name": "AI Enablement Bootcamp",
+      "end_date": "2026-03-12",
+      "name": "mw-ai-bootcamp",
+      "namespace": "events",
+      "number_seats": 40,
+      "purpose": "Hands-on enablement for field teams",
+      "start_date": "2026-03-10"
+    },
+    {
+      "asset_count": 1,
+      "assets": [
+        "asset-uuid-002"
+      ],
+      "babylon_multiworkshop_id": "bmw-002",
+      "cluster": "babylon-prod",
+      "display_name": "Virtualization Deep Dive",
+      "end_date": "2026-04-06",
+      "name": "mw-virt-deepdive",
+      "namespace": "events",
+      "number_seats": 20,
+      "purpose": "Troubleshooting and operations workshop",
+      "start_date": "2026-04-05"
+    }
+  ],
+  "babylon_resource_pools": [
+    {
+      "babylon_resource_pool_id": "brp-001",
+      "cluster": "babylon-prod",
+      "lifespan": {
+        "default": "8h",
+        "maximum": "24h"
+      },
+      "max_unready": 1,
+      "min_available": 3,
+      "name": "pool-rhel-ai-lab",
+      "namespace": "resource-pools",
+      "provider_name": "aws",
+      "resource_handle_count": 5,
+      "resource_name": "rhel-ai-lab"
+    },
+    {
+      "babylon_resource_pool_id": "brp-002",
+      "cluster": "babylon-prod",
+      "lifespan": {
+        "default": "4h",
+        "maximum": "12h"
+      },
+      "max_unready": 2,
+      "min_available": 2,
+      "name": "pool-openshift-virt",
+      "namespace": "resource-pools",
+      "provider_name": "aws",
+      "resource_handle_count": 3,
+      "resource_name": "openshift-virt-lab"
+    },
+    {
+      "babylon_resource_pool_id": "brp-003",
+      "cluster": "babylon-stage",
+      "lifespan": {
+        "default": "6h",
+        "maximum": "12h"
+      },
+      "max_unready": 1,
+      "min_available": 1,
+      "name": "pool-aap-workshop",
+      "namespace": "resource-pools",
+      "provider_name": "azure",
+      "resource_handle_count": 2,
+      "resource_name": "ansible-automation-workshop"
+    }
+  ],
+  "babylon_workshops": [
+    {
+      "babylon_workshop_id": "bw-001",
+      "catalog_item": "rhel-ai-lab",
+      "cluster": "babylon-prod",
+      "description": "Instructor-led AI lab with shared event resources.",
+      "display_name": "AI Lab - Morning Session",
+      "lifespan": {
+        "default": "8h",
+        "maximum": "24h"
+      },
+      "multiworkshop": "mw-ai-bootcamp",
+      "name": "workshop-ai-morning",
+      "namespace": "events",
+      "open_registration": true,
+      "provision_count": {
+        "ready": 18,
+        "provisioning": 2,
+        "error": 0
+      },
+      "requester": "events-admin@example.com",
+      "resource_claims": [
+        {
+          "name": "deployment-guid-1001",
+          "namespace": "user-alice"
+        },
+        {
+          "name": "deployment-guid-1002",
+          "namespace": "user-bob"
+        }
+      ],
+      "resource_claims_count": 20,
+      "user_assignments_count": 18,
+      "user_count": 20,
+      "workshop_id": "ws-ai-001"
+    },
+    {
+      "babylon_workshop_id": "bw-002",
+      "catalog_item": "ansible-automation-workshop",
+      "cluster": "babylon-prod",
+      "description": "Automation workshop for partner enablement.",
+      "display_name": "Automation Workshop - Afternoon",
+      "lifespan": {
+        "default": "6h",
+        "maximum": "12h"
+      },
+      "multiworkshop": "mw-ai-bootcamp",
+      "name": "workshop-auto-afternoon",
+      "namespace": "events",
+      "open_registration": false,
+      "provision_count": {
+        "ready": 14,
+        "provisioning": 1,
+        "error": 1
+      },
+      "requester": "partner-manager@example.com",
+      "resource_claims": [
+        {
+          "name": "deployment-guid-1003",
+          "namespace": "user-carol"
+        }
+      ],
+      "resource_claims_count": 16,
+      "user_assignments_count": 15,
+      "user_count": 16,
+      "workshop_id": "ws-auto-001"
+    },
+    {
+      "babylon_workshop_id": "bw-003",
+      "catalog_item": "openshift-virt-lab",
+      "cluster": "babylon-prod",
+      "description": "Virtualization troubleshooting lab.",
+      "display_name": "Virtualization Deep Dive Lab",
+      "lifespan": {
+        "default": "4h",
+        "maximum": "12h"
+      },
+      "multiworkshop": "mw-virt-deepdive",
+      "name": "workshop-virt-main",
+      "namespace": "events",
+      "open_registration": true,
+      "provision_count": {
+        "ready": 8,
+        "provisioning": 1,
+        "error": 1
+      },
+      "requester": "virt-admin@example.com",
+      "resource_claims": [
+        {
+          "name": "deployment-guid-1002",
+          "namespace": "user-bob"
+        }
+      ],
+      "resource_claims_count": 10,
+      "user_assignments_count": 9,
+      "user_count": 10,
+      "workshop_id": "ws-virt-001"
+    }
+  ],
+  "jobs": [
+    {
+      "action": "provision",
+      "cloud_provider": "aws",
+      "completeJob": "complete-4101",
+      "completed": "2026-01-15T09:18:00Z",
+      "controller": "east",
+      "deployerJob": "deployer-4101",
+      "display_name": "Provision RHEL AI Lab for alice",
+      "duration_seconds": 1080,
+      "env_type": "rhel-ai-lab",
+      "failed": false,
+      "finished": "2026-01-15T09:18:00Z",
+      "git_branch": "main",
+      "git_revision": "a1b2c3d4",
+      "git_url": "https://github.com/redhat-cop/agnosticd.git",
+      "guid": "guid-1001",
+      "id": "job-4101",
+      "job_explanation": "",
+      "job_id": 4101,
+      "job_name": "provision-guid-1001",
+      "launch_type": "manual",
+      "log": "PLAY RECAP: all tasks completed successfully",
+      "log_original_size": 20480,
+      "log_trimmed_size": 5120,
+      "started": "2026-01-15T09:00:00Z",
+      "status": "successful",
+      "template_name": "babylon-provision",
+      "towerHost": "east.example.internal"
+    },
+    {
+      "action": "provision",
+      "cloud_provider": "aws",
+      "completeJob": "",
+      "completed": "",
+      "controller": "west",
+      "deployerJob": "deployer-4103",
+      "display_name": "Provision OpenShift Virt Lab for bob",
+      "duration_seconds": 742,
+      "env_type": "openshift-virt-lab",
+      "failed": true,
+      "finished": "2026-02-10T14:12:22Z",
+      "git_branch": "release-2.0",
+      "git_revision": "deadbeef",
+      "git_url": "https://github.com/redhat-cop/agnosticd.git",
+      "guid": "guid-1002",
+      "id": "job-4103",
+      "job_explanation": "Task failed while waiting for PVC to bind",
+      "job_id": 4103,
+      "job_name": "provision-guid-1002",
+      "launch_type": "callback",
+      "log": "TASK [Wait for PVC] failed: timeout waiting for claim data-disk-01 to bind",
+      "log_original_size": 35612,
+      "log_trimmed_size": 8192,
+      "started": "2026-02-10T14:00:00Z",
+      "status": "failed",
+      "template_name": "babylon-provision",
+      "towerHost": "west.example.internal"
+    },
+    {
+      "action": "destroy",
+      "cloud_provider": "azure",
+      "completeJob": "",
+      "completed": "",
+      "controller": "partner0",
+      "deployerJob": "",
+      "display_name": "Destroy Automation Workshop for carol",
+      "duration_seconds": 95,
+      "env_type": "ansible-automation-workshop",
+      "failed": false,
+      "finished": "",
+      "git_branch": "develop",
+      "git_revision": "f00dbabe",
+      "git_url": "https://github.com/redhat-cop/agnosticd.git",
+      "guid": "guid-1003",
+      "id": "job-4104",
+      "job_explanation": "",
+      "job_id": 4104,
+      "job_name": "destroy-guid-1003",
+      "launch_type": "scheduled",
+      "started": "2026-02-11T08:00:00Z",
+      "status": "running",
+      "template_name": "babylon-destroy",
+      "towerHost": "partner0.example.internal"
+    }
+  ],
+  "job_events": [
+    {
+      "changed": false,
+      "controller": "west",
+      "counter": 1,
+      "error_msg": "",
+      "event": "playbook_on_start",
+      "event_key": "4103-1",
+      "failed": false,
+      "host": "localhost",
+      "job_event_id": "je-4103-001",
+      "job_id": 4103,
+      "play": "Provision environment",
+      "role": "",
+      "stdout": "PLAY [Provision environment]",
+      "task": "Start playbook"
+    },
+    {
+      "changed": true,
+      "controller": "west",
+      "counter": 12,
+      "error_msg": "",
+      "event": "runner_on_ok",
+      "event_key": "4103-12",
+      "failed": false,
+      "host": "bastion.example.internal",
+      "job_event_id": "je-4103-012",
+      "job_id": 4103,
+      "play": "Provision environment",
+      "role": "storage",
+      "stdout": "ok: [bastion] => created pvc manifest",
+      "task": "Create PVC manifest"
+    },
+    {
+      "changed": false,
+      "controller": "west",
+      "counter": 18,
+      "error_msg": "timed out waiting for the condition",
+      "event": "runner_on_failed",
+      "event_key": "4103-18",
+      "failed": true,
+      "host": "bastion.example.internal",
+      "job_event_id": "je-4103-018",
+      "job_id": 4103,
+      "play": "Provision environment",
+      "role": "storage",
+      "stdout": "fatal: [bastion]: FAILED! => {\"msg\": \"timed out waiting for the condition\"}",
+      "task": "Wait for PVC to bind"
+    },
+    {
+      "changed": false,
+      "controller": "east",
+      "counter": 20,
+      "error_msg": "",
+      "event": "runner_on_ok",
+      "event_key": "4101-20",
+      "failed": false,
+      "host": "bastion.example.internal",
+      "job_event_id": "je-4101-020",
+      "job_id": 4101,
+      "play": "Provision environment",
+      "role": "studentvm",
+      "stdout": "ok: [bastion] => environment ready",
+      "task": "Finalize deployment"
+    },
+    {
+      "changed": false,
+      "controller": "partner0",
+      "counter": 3,
+      "error_msg": "",
+      "event": "runner_on_ok",
+      "event_key": "4104-3",
+      "failed": false,
+      "host": "localhost",
+      "job_event_id": "je-4104-003",
+      "job_id": 4104,
+      "play": "Destroy environment",
+      "role": "cleanup",
+      "stdout": "ok: [localhost] => teardown started",
+      "task": "Mark resources for deletion"
+    }
+  ],
+  "ocpv_machines": [
+    {
+      "cluster": "ocpv-east",
+      "name": "worker-0-abcde",
+      "namespace": "virt-lab-bob",
+      "node": "worker-0-abcde",
+      "ocpv_machine_id": "om-001",
+      "phase": "Running",
+      "provider_id": "aws:///us-west-2a/i-0abc123"
+    },
+    {
+      "cluster": "ocpv-east",
+      "name": "worker-1-fghij",
+      "namespace": "virt-lab-bob",
+      "node": "worker-1-fghij",
+      "ocpv_machine_id": "om-002",
+      "phase": "Provisioned",
+      "provider_id": "aws:///us-west-2b/i-0def456"
+    },
+    {
+      "cluster": "ocpv-east",
+      "name": "infra-0-klmno",
+      "namespace": "virt-shared",
+      "node": "infra-0-klmno",
+      "ocpv_machine_id": "om-003",
+      "phase": "Running",
+      "provider_id": "aws:///us-west-2c/i-0ghi789"
+    }
+  ],
+  "ocpv_machinesets": [
+    {
+      "available_replicas": 2,
+      "cluster": "ocpv-east",
+      "name": "virt-lab-workers",
+      "namespace": "virt-lab-bob",
+      "ocpv_machineset_id": "oms-001",
+      "ready_replicas": 2,
+      "replicas": 2
+    },
+    {
+      "available_replicas": 1,
+      "cluster": "ocpv-east",
+      "name": "virt-shared-infra",
+      "namespace": "virt-shared",
+      "ocpv_machineset_id": "oms-002",
+      "ready_replicas": 1,
+      "replicas": 1
+    }
+  ],
+  "ocpv_namespaces": [
+    {
+      "cluster": "ocpv-east",
+      "namespace": "virt-lab-bob",
+      "ocpv_namespace_id": "ons-001",
+      "status": "Active"
+    },
+    {
+      "cluster": "ocpv-east",
+      "namespace": "virt-shared",
+      "ocpv_namespace_id": "ons-002",
+      "status": "Active"
+    },
+    {
+      "cluster": "ocpv-east",
+      "namespace": "virt-lab-alice",
+      "ocpv_namespace_id": "ons-003",
+      "status": "Active"
+    }
+  ],
+  "ocpv_pvcs": [
+    {
+      "access_modes": [
+        "ReadWriteOnce"
+      ],
+      "cluster": "ocpv-east",
+      "events": [
+        "ProvisioningFailed: waiting for volume provisioning",
+        "ExternalProvisioning: waiting for a volume to be created"
+      ],
+      "name": "data-disk-01",
+      "namespace": "virt-lab-bob",
+      "ocpv_pvc_id": "opvc-001",
+      "size": "100Gi",
+      "status": "Pending",
+      "storage_class": "ocs-external-storagecluster-ceph-rbd",
+      "volume_mode": "Filesystem"
+    },
+    {
+      "access_modes": [
+        "ReadWriteOnce"
+      ],
+      "cluster": "ocpv-east",
+      "name": "rootdisk-vm01",
+      "namespace": "virt-lab-bob",
+      "ocpv_pvc_id": "opvc-002",
+      "size": "40Gi",
+      "status": "Bound",
+      "storage_class": "gp3-csi",
+      "volume_mode": "Filesystem"
+    },
+    {
+      "access_modes": [
+        "ReadWriteMany"
+      ],
+      "cluster": "ocpv-east",
+      "name": "shared-content",
+      "namespace": "virt-shared",
+      "ocpv_pvc_id": "opvc-003",
+      "size": "200Gi",
+      "status": "Bound",
+      "storage_class": "ocs-external-storagecluster-cephfs",
+      "volume_mode": "Filesystem"
+    }
+  ],
+  "ocpv_storage_classes": [
+    {
+      "allow_volume_expansion": true,
+      "binding_mode": "WaitForFirstConsumer",
+      "cluster": "ocpv-east",
+      "default": true,
+      "name": "gp3-csi",
+      "ocpv_storage_class_id": "osc-001",
+      "provisioner": "ebs.csi.aws.com",
+      "reclaim_policy": "Delete"
+    },
+    {
+      "allow_volume_expansion": true,
+      "binding_mode": "Immediate",
+      "cluster": "ocpv-east",
+      "default": false,
+      "name": "ocs-external-storagecluster-ceph-rbd",
+      "ocpv_storage_class_id": "osc-002",
+      "provisioner": "openshift-storage.rbd.csi.ceph.com",
+      "reclaim_policy": "Delete"
+    },
+    {
+      "allow_volume_expansion": true,
+      "binding_mode": "Immediate",
+      "cluster": "ocpv-east",
+      "default": false,
+      "name": "ocs-external-storagecluster-cephfs",
+      "ocpv_storage_class_id": "osc-003",
+      "provisioner": "openshift-storage.cephfs.csi.ceph.com",
+      "reclaim_policy": "Delete"
+    }
+  ],
+  "ocpv_vms": [
+    {
+      "cluster": "ocpv-east",
+      "condition": {
+        "reason": "Unschedulable",
+        "message": "PVC data-disk-01 is not bound",
+        "type": "Ready"
+      },
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        },
+        {
+          "name": "datadisk",
+          "bus": "virtio"
+        }
+      ],
+      "ip": "10.10.20.15",
+      "memory": "8Gi",
+      "name": "virt-student-01",
+      "namespace": "virt-lab-bob",
+      "node": "worker-0-abcde",
+      "ocpv_vm_id": "ovm-001",
+      "phase": "Pending",
+      "ready": false,
+      "status": "Provisioning",
+      "vcpus": 4,
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "persistentVolumeClaim": "rootdisk-vm01"
+        },
+        {
+          "name": "datadisk",
+          "persistentVolumeClaim": "data-disk-01"
+        }
+      ]
+    },
+    {
+      "cluster": "ocpv-east",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        }
+      ],
+      "ip": "10.10.20.16",
+      "memory": "4Gi",
+      "name": "virt-student-02",
+      "namespace": "virt-lab-bob",
+      "node": "worker-1-fghij",
+      "ocpv_vm_id": "ovm-002",
+      "phase": "Running",
+      "ready": true,
+      "status": "Running",
+      "vcpus": 2,
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "persistentVolumeClaim": "rootdisk-vm01"
+        }
+      ]
+    },
+    {
+      "cluster": "ocpv-east",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        }
+      ],
+      "ip": "10.10.30.10",
+      "memory": "16Gi",
+      "name": "content-server",
+      "namespace": "virt-shared",
+      "node": "infra-0-klmno",
+      "ocpv_vm_id": "ovm-003",
+      "phase": "Running",
+      "ready": true,
+      "status": "Running",
+      "vcpus": 4,
+      "volumes": [
+        {
+          "name": "shared-content",
+          "persistentVolumeClaim": "shared-content"
+        }
+      ]
+    }
+  ],
+  "splunk_aap2_log_entries": [
+    {
+      "controller": "west.example.internal",
+      "level": "ERROR",
+      "logger": "awx.main.tasks.jobs",
+      "message": "Job 4103 failed while waiting for PVC to bind for guid-1002",
+      "playbook": "provision.yml",
+      "role": "storage",
+      "splunk_aap2_log_entry_id": "saap-001",
+      "stdout": "fatal: [bastion]: FAILED! => timed out waiting for the condition",
+      "task": "Wait for PVC to bind",
+      "task_action": "k8s_info",
+      "time": "2026-02-10T14:12:22Z"
+    },
+    {
+      "controller": "west.example.internal",
+      "level": "INFO",
+      "logger": "awx.analytics.job_events",
+      "message": "Task Create PVC manifest completed for job 4103",
+      "playbook": "provision.yml",
+      "role": "storage",
+      "splunk_aap2_log_entry_id": "saap-002",
+      "stdout": "ok: [bastion] => created pvc manifest",
+      "task": "Create PVC manifest",
+      "task_action": "k8s",
+      "time": "2026-02-10T14:05:11Z"
+    },
+    {
+      "controller": "east.example.internal",
+      "level": "INFO",
+      "logger": "awx.main.tasks.jobs",
+      "message": "Job 4101 completed successfully for guid-1001",
+      "playbook": "provision.yml",
+      "role": "studentvm",
+      "splunk_aap2_log_entry_id": "saap-003",
+      "stdout": "PLAY RECAP all tasks ok",
+      "task": "Finalize deployment",
+      "task_action": "debug",
+      "time": "2026-01-15T09:18:00Z"
+    }
+  ],
+  "splunk_ocp_log_entries": [
+    {
+      "cluster": "ocpv-east",
+      "container": "virt-controller",
+      "image": "quay.io/kubevirt/virt-controller:v1.2.0",
+      "level": "ERROR",
+      "message": "PVC data-disk-01 in namespace virt-lab-bob is not bound; VM virt-student-01 cannot start",
+      "namespace": "virt-lab-bob",
+      "pod": "virt-controller-6d9f7d7b8f-abc12",
+      "splunk_ocp_log_entry_id": "socp-001",
+      "time": "2026-02-10T14:11:58Z"
+    },
+    {
+      "cluster": "ocpv-east",
+      "container": "csi-rbdplugin",
+      "image": "quay.io/cephcsi/cephcsi:v3.9.0",
+      "level": "WARN",
+      "message": "Provisioning volume for claim virt-lab-bob/data-disk-01 is delayed due to backend timeout",
+      "namespace": "virt-lab-bob",
+      "pod": "csi-rbdplugin-provisioner-0",
+      "splunk_ocp_log_entry_id": "socp-002",
+      "time": "2026-02-10T14:10:44Z"
+    },
+    {
+      "cluster": "ocpv-east",
+      "container": "virt-launcher",
+      "image": "quay.io/kubevirt/virt-launcher:v1.2.0",
+      "level": "INFO",
+      "message": "Virtual machine virt-student-02 is running",
+      "namespace": "virt-lab-bob",
+      "pod": "virt-launcher-virt-student-02-xyz99",
+      "splunk_ocp_log_entry_id": "socp-003",
+      "time": "2026-02-10T14:09:00Z"
+    }
+  ],
+  "workshops": [
+    {
+      "catalog_item": "rhel-ai-lab",
+      "display_name": "AI Lab - Morning Session",
+      "name": "workshop-ai-morning",
+      "provision_count": {
+        "ready": 18,
+        "provisioning": 2,
+        "error": 0
+      },
+      "resource_claims": [
+        {
+          "name": "deployment-guid-1001",
+          "namespace": "user-alice"
+        },
+        {
+          "name": "deployment-guid-1002",
+          "namespace": "user-bob"
+        }
+      ],
+      "workshop_id": "ws-ai-001"
+    },
+    {
+      "catalog_item": "ansible-automation-workshop",
+      "display_name": "Automation Workshop - Afternoon",
+      "name": "workshop-auto-afternoon",
+      "provision_count": {
+        "ready": 14,
+        "provisioning": 1,
+        "error": 1
+      },
+      "resource_claims": [
+        {
+          "name": "deployment-guid-1003",
+          "namespace": "user-carol"
+        }
+      ],
+      "workshop_id": "ws-auto-001"
+    },
+    {
+      "catalog_item": "openshift-virt-lab",
+      "display_name": "Virtualization Deep Dive Lab",
+      "name": "workshop-virt-main",
+      "provision_count": {
+        "ready": 8,
+        "provisioning": 1,
+        "error": 1
+      },
+      "resource_claims": [
+        {
+          "name": "deployment-guid-1002",
+          "namespace": "user-bob"
+        }
+      ],
+      "workshop_id": "ws-virt-001"
+    }
+  ]
+}

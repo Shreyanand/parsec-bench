@@ -1,0 +1,247 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [
+    {
+      "babylon_multiworkshop_id": "egret-aap-reseller-day-lis-1203",
+      "cluster": "egret",
+      "namespace": "user-ivasquez-redhat-com",
+      "name": "aap-reseller-day-lis-1203",
+      "display_name": "AAP Reseller Day - Lisbon",
+      "number_seats": 36,
+      "start_date": "2026-12-03",
+      "end_date": "2026-12-04",
+      "purpose": "Reseller technical day",
+      "assets": [
+        {
+          "name": "controller-as-code",
+          "display_name": "Controller as Code",
+          "key": "controller-as-code",
+          "type": "Workshop",
+          "namespace": "user-ivasquez-redhat-com",
+          "workshop_id": "m8rqe"
+        },
+        {
+          "name": "rulebook-starter",
+          "display_name": "Rulebook Starter",
+          "key": "rulebook-starter",
+          "type": "Workshop",
+          "namespace": "user-ivasquez-redhat-com",
+          "workshop_id": "t4ckz"
+        },
+        {
+          "name": "collection-trust",
+          "display_name": "Collection Trust Primer",
+          "key": "collection-trust",
+          "type": "Workshop",
+          "namespace": "user-ivasquez-redhat-com",
+          "workshop_id": "w2gyh"
+        }
+      ],
+      "asset_count": 3
+    },
+    {
+      "babylon_multiworkshop_id": "plover-aap-reseller-day-mad-1119",
+      "cluster": "plover",
+      "namespace": "user-ivasquez-redhat-com",
+      "name": "aap-reseller-day-mad-1119",
+      "display_name": "AAP Reseller Day - Madrid",
+      "number_seats": 40,
+      "start_date": "2026-11-19",
+      "end_date": "2026-11-20",
+      "purpose": "Reseller technical day",
+      "assets": [
+        {
+          "name": "rulebook-starter",
+          "display_name": "Rulebook Starter",
+          "key": "rulebook-starter",
+          "type": "Workshop",
+          "namespace": "user-ivasquez-redhat-com",
+          "workshop_id": "z7hbu"
+        },
+        {
+          "name": "controller-as-code",
+          "display_name": "Controller as Code",
+          "key": "controller-as-code",
+          "type": "Workshop",
+          "namespace": "user-ivasquez-redhat-com",
+          "workshop_id": "n3fdx"
+        }
+      ],
+      "asset_count": 2
+    }
+  ],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [
+    {
+      "babylon_workshop_id": "egret-rdl-collection-trust",
+      "cluster": "egret",
+      "namespace": "user-ivasquez-redhat-com",
+      "name": "rdl-collection-trust",
+      "display_name": "Collection Trust Primer",
+      "catalog_item": "aap.collection-trust.prod",
+      "workshop_id": "w2gyh",
+      "multiworkshop": "aap-reseller-day-lis-1203",
+      "description": "Lab: verify collections before use. Reseller Day Lisbon.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-12-03T08:00:00Z",
+        "end": "2026-12-04T18:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 0,
+        "active": 0,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 12,
+      "user_assignments_count": 0,
+      "resource_claims_count": 0,
+      "resource_claims": []
+    },
+    {
+      "babylon_workshop_id": "egret-rdl-controller-as-code",
+      "cluster": "egret",
+      "namespace": "user-ivasquez-redhat-com",
+      "name": "rdl-controller-as-code",
+      "display_name": "Controller as Code",
+      "catalog_item": "aap.controller-as-code.prod",
+      "workshop_id": "m8rqe",
+      "multiworkshop": "aap-reseller-day-lis-1203",
+      "description": "Lab: keep controller objects in Git. Reseller Day Lisbon.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-12-03T08:00:00Z",
+        "end": "2026-12-04T18:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 0,
+        "active": 0,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 12,
+      "user_assignments_count": 0,
+      "resource_claims_count": 0,
+      "resource_claims": []
+    },
+    {
+      "babylon_workshop_id": "egret-rdl-rulebook-starter",
+      "cluster": "egret",
+      "namespace": "user-ivasquez-redhat-com",
+      "name": "rdl-rulebook-starter",
+      "display_name": "Rulebook Starter",
+      "catalog_item": "aap.rulebook-starter.prod",
+      "workshop_id": "t4ckz",
+      "multiworkshop": "aap-reseller-day-lis-1203",
+      "description": "Lab: write a first rulebook. Reseller Day Lisbon.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-12-03T08:00:00Z",
+        "end": "2026-12-04T18:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 0,
+        "active": 0,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 12,
+      "user_assignments_count": 0,
+      "resource_claims_count": 0,
+      "resource_claims": []
+    },
+    {
+      "babylon_workshop_id": "egret-rdl-hackathon-sandbox",
+      "cluster": "egret",
+      "namespace": "user-ivasquez-redhat-com",
+      "name": "rdl-hackathon-sandbox",
+      "display_name": "Reseller Hackathon Sandbox",
+      "catalog_item": "aap.sandbox-open.prod",
+      "workshop_id": "j5nfa",
+      "multiworkshop": "",
+      "description": "Open sandbox for the afternoon hackathon; not on the Reseller Day agenda.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-12-03T08:00:00Z",
+        "end": "2026-12-04T18:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 0,
+        "active": 0,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 8,
+      "user_assignments_count": 0,
+      "resource_claims_count": 0,
+      "resource_claims": []
+    },
+    {
+      "babylon_workshop_id": "plover-rdm-rulebook-starter",
+      "cluster": "plover",
+      "namespace": "user-ivasquez-redhat-com",
+      "name": "rdm-rulebook-starter",
+      "display_name": "Rulebook Starter",
+      "catalog_item": "aap.rulebook-starter.prod",
+      "workshop_id": "z7hbu",
+      "multiworkshop": "aap-reseller-day-mad-1119",
+      "description": "Lab: write a first rulebook. Reseller Day Madrid.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-11-19T08:00:00Z",
+        "end": "2026-11-20T18:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 0,
+        "active": 0,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 20,
+      "user_assignments_count": 0,
+      "resource_claims_count": 0,
+      "resource_claims": []
+    },
+    {
+      "babylon_workshop_id": "plover-rdm-controller-as-code",
+      "cluster": "plover",
+      "namespace": "user-ivasquez-redhat-com",
+      "name": "rdm-controller-as-code",
+      "display_name": "Controller as Code",
+      "catalog_item": "aap.controller-as-code.prod",
+      "workshop_id": "n3fdx",
+      "multiworkshop": "aap-reseller-day-mad-1119",
+      "description": "Lab: keep controller objects in Git. Reseller Day Madrid.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-11-19T08:00:00Z",
+        "end": "2026-11-20T18:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 0,
+        "active": 0,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 20,
+      "user_assignments_count": 0,
+      "resource_claims_count": 0,
+      "resource_claims": []
+    }
+  ],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

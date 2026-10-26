@@ -1,0 +1,264 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "condor"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "condor",
+          "name": "netauto.fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "heron"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "heron",
+          "name": "netauto.fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "kite"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "kite",
+          "name": "netauto.fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "puffin"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "puffin",
+          "name": "netauto.fundamentals-ng"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "outlier-ref",
+        "any_of": [
+          "v2.9.4",
+          "2.9.4"
+        ],
+        "asked_by": "the source revision (scm_ref) it builds from",
+        "rationale": "only heron's component carries it; reachable only through get_component on heron"
+      },
+      {
+        "id": "majority-ref",
+        "any_of": [
+          "v3.2.0",
+          "3.2.0"
+        ],
+        "asked_by": "what the rest are on",
+        "rationale": "condor, kite and puffin"
+      },
+      {
+        "id": "puffin-name",
+        "any_of": [
+          "netauto.fundamentals-ng",
+          "fundamentals-ng"
+        ],
+        "ignore_case": true,
+        "asked_by": "the catalog item name",
+        "rationale": "puffin's item was renamed; only its search result gives the name get_component needs"
+      }
+    ],
+    "counts": [
+      {
+        "id": "clusters-on-majority",
+        "value": 3,
+        "nouns": [
+          "clusters",
+          "of the four",
+          "of four"
+        ],
+        "window": 3,
+        "asked_by": "what the rest are on",
+        "rationale": "condor, kite, puffin on v3.2.0"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "instructor-as-item",
+        "none_of": [
+          "condor is on v3.3.0-rc1",
+          "condor are on v3.3.0-rc1",
+          "condor builds from v3.3.0-rc1",
+          "condor builds it from v3.3.0-rc1",
+          "condor uses v3.3.0-rc1",
+          "condor runs v3.3.0-rc1",
+          "condor: v3.3.0-rc1",
+          "condor | netauto.fundamentals | v3.3.0-rc1",
+          "heron is on v3.3.0-rc1",
+          "heron are on v3.3.0-rc1",
+          "heron builds from v3.3.0-rc1",
+          "heron builds it from v3.3.0-rc1",
+          "heron uses v3.3.0-rc1",
+          "heron runs v3.3.0-rc1",
+          "heron: v3.3.0-rc1",
+          "heron | netauto.fundamentals | v3.3.0-rc1",
+          "kite is on v3.3.0-rc1",
+          "kite are on v3.3.0-rc1",
+          "kite builds from v3.3.0-rc1",
+          "kite builds it from v3.3.0-rc1",
+          "kite uses v3.3.0-rc1",
+          "kite runs v3.3.0-rc1",
+          "kite: v3.3.0-rc1",
+          "kite | netauto.fundamentals | v3.3.0-rc1",
+          "puffin is on v3.3.0-rc1",
+          "puffin are on v3.3.0-rc1",
+          "puffin builds from v3.3.0-rc1",
+          "puffin builds it from v3.3.0-rc1",
+          "puffin uses v3.3.0-rc1",
+          "puffin runs v3.3.0-rc1",
+          "puffin: v3.3.0-rc1",
+          "puffin | netauto.fundamentals | v3.3.0-rc1",
+          "netauto.fundamentals | v3.3.0-rc1",
+          "netauto.fundamentals is on v3.3.0-rc1",
+          "netauto.fundamentals builds from v3.3.0-rc1",
+          "netauto.fundamentals: v3.3.0-rc1",
+          "Network Automation Fundamentals is on v3.3.0-rc1",
+          "Network Automation Fundamentals builds from v3.3.0-rc1",
+          "student lab is on v3.3.0-rc1",
+          "student lab builds from v3.3.0-rc1",
+          "student lab: v3.3.0-rc1",
+          "rest are on v3.3.0-rc1",
+          "others are on v3.3.0-rc1",
+          "other three are on v3.3.0-rc1",
+          "all four are on v3.3.0-rc1",
+          "majority is on v3.3.0-rc1",
+          "condor is on 3.3.0-rc1",
+          "condor are on 3.3.0-rc1",
+          "condor builds from 3.3.0-rc1",
+          "condor builds it from 3.3.0-rc1",
+          "condor uses 3.3.0-rc1",
+          "condor runs 3.3.0-rc1",
+          "condor: 3.3.0-rc1",
+          "condor | netauto.fundamentals | 3.3.0-rc1",
+          "heron is on 3.3.0-rc1",
+          "heron are on 3.3.0-rc1",
+          "heron builds from 3.3.0-rc1",
+          "heron builds it from 3.3.0-rc1",
+          "heron uses 3.3.0-rc1",
+          "heron runs 3.3.0-rc1",
+          "heron: 3.3.0-rc1",
+          "heron | netauto.fundamentals | 3.3.0-rc1",
+          "kite is on 3.3.0-rc1",
+          "kite are on 3.3.0-rc1",
+          "kite builds from 3.3.0-rc1",
+          "kite builds it from 3.3.0-rc1",
+          "kite uses 3.3.0-rc1",
+          "kite runs 3.3.0-rc1",
+          "kite: 3.3.0-rc1",
+          "kite | netauto.fundamentals | 3.3.0-rc1",
+          "puffin is on 3.3.0-rc1",
+          "puffin are on 3.3.0-rc1",
+          "puffin builds from 3.3.0-rc1",
+          "puffin builds it from 3.3.0-rc1",
+          "puffin uses 3.3.0-rc1",
+          "puffin runs 3.3.0-rc1",
+          "puffin: 3.3.0-rc1",
+          "puffin | netauto.fundamentals | 3.3.0-rc1",
+          "netauto.fundamentals | 3.3.0-rc1",
+          "netauto.fundamentals is on 3.3.0-rc1",
+          "netauto.fundamentals builds from 3.3.0-rc1",
+          "netauto.fundamentals: 3.3.0-rc1",
+          "Network Automation Fundamentals is on 3.3.0-rc1",
+          "Network Automation Fundamentals builds from 3.3.0-rc1",
+          "student lab is on 3.3.0-rc1",
+          "student lab builds from 3.3.0-rc1",
+          "student lab: 3.3.0-rc1",
+          "rest are on 3.3.0-rc1",
+          "others are on 3.3.0-rc1",
+          "other three are on 3.3.0-rc1",
+          "all four are on 3.3.0-rc1",
+          "majority is on 3.3.0-rc1",
+          "condor uses netauto/fundamentals-instructor/common.yaml",
+          "condor is defined in netauto/fundamentals-instructor/common.yaml",
+          "heron uses netauto/fundamentals-instructor/common.yaml",
+          "heron is defined in netauto/fundamentals-instructor/common.yaml",
+          "kite uses netauto/fundamentals-instructor/common.yaml",
+          "kite is defined in netauto/fundamentals-instructor/common.yaml",
+          "puffin uses netauto/fundamentals-instructor/common.yaml",
+          "puffin is defined in netauto/fundamentals-instructor/common.yaml",
+          "netauto.fundamentals uses netauto/fundamentals-instructor/common.yaml",
+          "netauto.fundamentals is defined in netauto/fundamentals-instructor/common.yaml",
+          "student lab uses netauto/fundamentals-instructor/common.yaml",
+          "student lab is defined in netauto/fundamentals-instructor/common.yaml",
+          "all four use netauto/fundamentals-instructor/common.yaml",
+          "across all four: aws, agnosticv path netauto/fundamentals-instructor/common.yaml",
+          "3.3.0-rc1 and v2.",
+          "3.3.0-rc1 and 2.9",
+          "3.3.0-rc1, v2.",
+          "3.3.0-rc1, 2.9",
+          "3.3.0-rc1 / v2.",
+          "3.3.0-rc1 / 2.9",
+          "3.3.0-rc1 vs v2.",
+          "3.3.0-rc1 vs 2.9",
+          "3.3.0-rc1 vs. v2.",
+          "3.3.0-rc1 vs. 2.9",
+          "3.3.0-rc1 versus v2.",
+          "3.3.0-rc1 versus 2.9",
+          ".9.4 instead of v3.3.0-rc1",
+          ".9.4 rather than v3.3.0-rc1",
+          ".9.4 vs v3.3.0-rc1",
+          ".9.4 versus v3.3.0-rc1",
+          ".9.4 instead of 3.3.0-rc1",
+          ".9.4 rather than 3.3.0-rc1",
+          ".9.4 vs 3.3.0-rc1",
+          ".9.4 versus 3.3.0-rc1"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "Instructor Edition",
+          "instructor item",
+          "instructor variant",
+          "instructor-edition",
+          "netauto.fundamentals-instructor"
+        ],
+        "rationale": "the Instructor Edition's ref or path reported as the student lab's"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

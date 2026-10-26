@@ -1,0 +1,117 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 90404
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "cloud_provider_openshift_cnv",
+          "path": "roles/create_inventory/tasks/main.yml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "cloud_provider_openshift_cnv"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "error-message",
+        "any_of": [
+          "configuration string is not in JSON format",
+          "not in JSON format"
+        ],
+        "ignore_case": true,
+        "asked_by": "report the message the failing task returned",
+        "rationale": "the literal only a real log read supplies"
+      },
+      {
+        "id": "dict-literal",
+        "any_of": [
+          "python dict",
+          "dict literal",
+          "single quote",
+          "single-quoted",
+          "not valid json",
+          "python literal"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "aap2_fix.py KNOWN_PATTERNS[2] explains this as a Python dict literal string piped through to_json, which in ansible-core 2.19+ yields a quoted string rather than a JSON object; the seeded task passes \"{'cores': 4, 'memory': '16Gi'}\", single-quoted",
+        "asked_by": "explain what is wrong with the value being passed through the `to_json` filter",
+        "rationale": "the synthesis step: quoting the error does not say what about the value is wrong"
+      },
+      {
+        "id": "the-fix",
+        "any_of": [
+          "yaml dict",
+          "proper yaml",
+          "yaml mapping",
+          "real dict",
+          "actual dict",
+          "as a mapping",
+          "native yaml"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "KNOWN_PATTERNS[2]'s before/after pair is '{{ python_dict_string | to_json }}' -> '{{ proper_yaml_dict | to_json }}', i.e. convert the literal to a real YAML dict",
+        "asked_by": "state the change that fixes it",
+        "rationale": "the recommendation the playbook requires"
+      }
+    ],
+    "citations": [
+      {
+        "id": "role-task",
+        "repo": "agnosticd/cloud_provider_openshift_cnv",
+        "path": "roles/create_inventory/tasks/main.yml",
+        "asked_by": "Cite the file you read as `owner/repo:path`",
+        "rationale": "the repo is deliberately NOT agnosticd-v2: this pattern's fix lives in the CNV cloud-provider collection, and an agent that reaches for the usual content repo cites the wrong one"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-known-pattern",
+        "none_of": [
+          "InvalidClientTokenId",
+          "--private-data-dir",
+          "was not found",
+          "worker stream"
+        ],
+        "ignore_case": true,
+        "rationale": "the signatures of aap2_fix.py's four OTHER KNOWN_PATTERNS; none appears in either seed"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

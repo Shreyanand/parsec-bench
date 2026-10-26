@@ -1,0 +1,86 @@
+{
+  "hosts": [
+    {
+      "name": "ci-runner-pool-b",
+      "type": "Host",
+      "attrs": {
+        "display_name": "ci-runner-pool-b",
+        "host_name": "ci-runner-pool-b",
+        "address": "10.77.31.2",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ci-runners"
+        ],
+        "last_check": 1796810280,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "ci-runner-pool-b!queue-wait",
+      "type": "Service",
+      "attrs": {
+        "display_name": "CI job queue wait (p90)",
+        "host_name": "ci-runner-pool-b",
+        "state": 2,
+        "check_attempt": 3,
+        "check_command": "ci-queue-wait",
+        "last_state_change": 1796746800,
+        "last_hard_state_change": 1796747400,
+        "last_check": 1796810100,
+        "vars": {
+          "plugin": "plugins/ci/check_queue_wait.py",
+          "runner_pool": "pool-b"
+        },
+        "last_check_result": {
+          "output": "QUEUE_WAIT CRITICAL - p90 job wait 310 s over 15 min (crit 240 s)",
+          "performance_data": [
+            "p90_wait=310s;120;240;0"
+          ],
+          "state": 2,
+          "exit_status": 2
+        },
+        "state_type": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "ci-runner-pool-b!runner-heartbeat",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Runner heartbeats",
+        "host_name": "ci-runner-pool-b",
+        "state": 0,
+        "check_attempt": 1,
+        "last_state_change": 1796112000,
+        "last_check": 1796810220,
+        "vars": {
+          "plugin": "plugins/ci/check_heartbeat.py"
+        },
+        "last_check_result": {
+          "output": "HEARTBEAT OK - 24 of 24 runners reported in the last 60 s",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

@@ -1,0 +1,163 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "puffin"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "prod-item",
+        "any_of": [
+          "netsvc.traffic-mgmt-lab",
+          "traffic-mgmt-lab",
+          "Traffic Management Lab"
+        ],
+        "ignore_case": true,
+        "asked_by": "Tell me the catalog item name",
+        "rationale": "matches the search only through keywords; its display name never says service mesh"
+      },
+      {
+        "id": "asset-uuid",
+        "any_of": [
+          "0d9a4e71-c2b5-4f38-8a6d-e15f3b72c904"
+        ],
+        "ignore_case": true,
+        "asked_by": "its asset UUID so I can fill in the order form",
+        "rationale": "the prod item's own UUID, not the dev item's or kite's twin"
+      },
+      {
+        "id": "deep-dive-is-dev",
+        "any_of": [
+          "dev stage",
+          "dev-stage",
+          "stage dev",
+          "stage: dev",
+          "stage is dev",
+          "development stage",
+          "babylon-catalog-dev",
+          "stage `dev`",
+          "dev catalog"
+        ],
+        "ignore_case": true,
+        "asked_by": "It has to be a production-stage item, not something still in development",
+        "rationale": "the obvious title match is stage dev; saying so is why it is passed over"
+      },
+      {
+        "id": "single-user",
+        "any_of": [
+          "multiuser false",
+          "multiuser: false",
+          "multiuser is false",
+          "not multi-user",
+          "not multiuser",
+          "single-user",
+          "single user",
+          "one user per order",
+          "isn't multi-user",
+          "is not multi-user"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "search_catalog returns netsvc.traffic-mgmt-lab with multiuser false (a boolean, so no seed string reads 'single-user'), which means one order serves one person and each attendee needs their own.",
+        "asked_by": "Can a single order of that lab be shared by all of them, or does each person need their own?",
+        "rationale": "multiuser false on the prod item; Gateway API Introduction is the multiuser one"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "recommend-dev-item",
+        "none_of": [
+          "order the Service Mesh Deep Dive",
+          "order Service Mesh Deep Dive",
+          "use the Service Mesh Deep Dive",
+          "recommend the Service Mesh Deep Dive",
+          "recommend Service Mesh Deep Dive",
+          "go with the Service Mesh Deep Dive",
+          "go with Service Mesh Deep Dive",
+          "order netsvc.mesh-deep-dive",
+          "use netsvc.mesh-deep-dive",
+          "use b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "use UUID b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "use asset UUID b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "use the asset UUID b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "use asset_uuid b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "order b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "order with b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "order using b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "enter b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "fill in b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "order form: b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "order form is b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "order form, use b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "UUID to use is b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "UUID to use: b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "UUID for the order form is b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "UUID for the order form: b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "UUID for your order form is b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "UUID for your order form: b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "UUID for the order is b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "UUID for your order is b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "UUID you need is b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "UUID you want is b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+          "use e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "use UUID e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "use asset UUID e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "use the asset UUID e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "use asset_uuid e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "order e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "order with e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "order using e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "enter e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "fill in e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "order form: e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "order form is e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "order form, use e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "UUID to use is e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "UUID to use: e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "UUID for the order form is e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "UUID for the order form: e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "UUID for your order form is e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "UUID for your order form: e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "UUID for the order is e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "UUID for your order is e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "UUID you need is e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+          "UUID you want is e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "not suitable",
+          "not production",
+          "not for customer",
+          "do not order",
+          "don't order",
+          "would not order",
+          "wouldn't order",
+          "do not use",
+          "don't use",
+          "would not use",
+          "wouldn't use",
+          "not recommend",
+          "not the one to order"
+        ],
+        "rationale": "the display-name match is a dev item on puffin (its prod twin lives on kite); recommending it or quoting its UUID for the order is the trap"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "roles/babylon_anarchy_governor/defaults/main.yaml",
+      "content": "---\n# babylon_anarchy_governor defaults\n#\n# Execution environment selection. This still reads the pre-migration schema:\n# ansible_control_plane.secret named the controller credential, and the EE was\n# derived from it. Nothing in this file changed.\nbabylon_anarchy_governor_control_plane_secret: \"{{ ansible_control_plane.secret }}\"\nbabylon_anarchy_governor_ee_name: \"{{ babylon_anarchy_governor_control_plane_secret }}-ee\"\n\nbabylon_anarchy_governor_job_timeout: 3600\n",
+      "file_id": "rhpds/agnosticv@HEAD-roles/babylon_anarchy_governor/defaults/main.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "includes/ansible_control_plane.yaml",
+      "content": "---\n# ansible control plane, post-migration schema (PR 19034).\n# ansible_control_plane.type and .secret are gone. Controllers are now a list\n# and selection is explicit.\nansible_controllers:\n  - hostname: aap2-east.example.internal\n    credential: aap2-east-cred\n  - hostname: aap2-west.example.internal\n    credential: aap2-west-cred\nansible_controller_select_mode: round_robin\n",
+      "file_id": "rhpds/agnosticv@HEAD-includes/ansible_control_plane.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "roles/babylon_anarchy_governor/defaults/main.yaml",
+      "content": "---\n# babylon_anarchy_governor defaults\n#\n# Execution environment selection. This still reads the pre-migration schema:\n# ansible_control_plane.secret named the controller credential, and the EE was\n# derived from it. Nothing in this file changed.\nbabylon_anarchy_governor_control_plane_secret: \"{{ ansible_control_plane.secret }}\"\nbabylon_anarchy_governor_ee_name: \"{{ babylon_anarchy_governor_control_plane_secret }}-ee\"\n\nbabylon_anarchy_governor_job_timeout: 3600\n",
+      "file_id": "rhpds/agnosticv@main-roles/babylon_anarchy_governor/defaults/main.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "includes/ansible_control_plane.yaml",
+      "content": "---\n# ansible control plane, post-migration schema (PR 19034).\n# ansible_control_plane.type and .secret are gone. Controllers are now a list\n# and selection is explicit.\nansible_controllers:\n  - hostname: aap2-east.example.internal\n    credential: aap2-east-cred\n  - hostname: aap2-west.example.internal\n    credential: aap2-west-cred\nansible_controller_select_mode: round_robin\n",
+      "file_id": "rhpds/agnosticv@main-includes/ansible_control_plane.yaml"
+    }
+  ],
+  "pull_requests": [
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "pr_number": 19034,
+      "title": "Migrate ansible_control_plane to ansible_controllers list",
+      "branch": "ansible-controllers-schema",
+      "state": "closed",
+      "author": "opentlc-mgr",
+      "url": "https://github.com/rhpds/agnosticv/pull/19034",
+      "created_at": "2026-06-25T17:41:00Z",
+      "updated_at": "2026-06-25T18:29:12Z",
+      "files": [
+        "includes/ansible_control_plane.yaml",
+        "roles/babylon_anarchy_governor/defaults/main.yaml"
+      ],
+      "pull_request_id": "rhpds-agnosticv-pr-19034"
+    }
+  ],
+  "repo_search_results": [],
+  "similar_items": []
+}

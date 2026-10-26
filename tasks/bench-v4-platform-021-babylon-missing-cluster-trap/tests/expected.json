@@ -1,0 +1,81 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "west",
+          "name": "ocp4-workload-adv-dev-suite"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component"
+        },
+        "absent_args": [
+          "cluster",
+          "sandbox_comment"
+        ]
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog"
+        },
+        "absent_args": [
+          "cluster",
+          "sandbox_comment"
+        ]
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "default-lifespan",
+        "any_of": [
+          "4h",
+          "4 hours",
+          "four hours"
+        ],
+        "ignore_case": true,
+        "asked_by": "Report the component's default lifespan",
+        "rationale": "from the component definition object"
+      },
+      {
+        "id": "max-lifespan",
+        "any_of": [
+          "24h",
+          "24 hours",
+          "twenty-four hours"
+        ],
+        "ignore_case": true,
+        "asked_by": "and its maximum lifespan",
+        "rationale": "the second value from the same nested object, so both have to be read out of `definition` rather than one being guessed"
+      },
+      {
+        "id": "agnosticv-path",
+        "any_of": [
+          "agd-v2/ocp4-workload-adv-dev-suite"
+        ],
+        "ignore_case": true,
+        "asked_by": "say which agnosticv path it is defined from",
+        "rationale": "a third field of the same record; unguessable, since the account prefix is not derivable from the component name"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.4,
+    "answer": 0.6
+  }
+}

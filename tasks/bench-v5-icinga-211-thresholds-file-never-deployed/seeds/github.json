@@ -1,0 +1,113 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "file_id": "rhpds/rhdp-monitoring@HEAD:plugins/ci/check_queue_wait.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/ci/check_queue_wait.py",
+      "ref": "HEAD",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_queue_wait.py - p90 time CI jobs wait for a runner, over the last 15 minutes.\n\nThresholds are read from queue_wait.yaml next to this file (deployed from rhpds/rhdp-monitoring\ntogether with the plugin). Each pool has its own entry. If the file is absent the built-in\ndefaults below are used, and nothing in the output says so.\n\"\"\"\nimport sys\nfrom pathlib import Path\n\nimport yaml\n\nfrom ci_metrics import p90_wait_seconds\n\nCONFIG = Path(__file__).with_name(\"queue_wait.yaml\")\nDEFAULT_WARN_S = 120\nDEFAULT_CRIT_S = 240\n\n\ndef thresholds(pool):\n    if not CONFIG.exists():\n        return DEFAULT_WARN_S, DEFAULT_CRIT_S\n    conf = yaml.safe_load(CONFIG.read_text())[\"pools\"][pool]\n    return conf[\"warn_seconds\"], conf[\"crit_seconds\"]\n\n\ndef main():\n    pool = sys.argv[1]\n    warn, crit = thresholds(pool)\n    wait = p90_wait_seconds(pool, minutes=15)\n    perf = f\"p90_wait={wait}s;{warn};{crit};0\"\n    if wait > crit:\n        print(f\"QUEUE_WAIT CRITICAL - p90 job wait {wait} s over 15 min (crit {crit} s)|{perf}\"); sys.exit(2)\n    if wait > warn:\n        print(f\"QUEUE_WAIT WARNING - p90 job wait {wait} s over 15 min (warn {warn} s)|{perf}\"); sys.exit(1)\n    print(f\"QUEUE_WAIT OK - p90 job wait {wait} s over 15 min|{perf}\"); sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@main:plugins/ci/check_queue_wait.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/ci/check_queue_wait.py",
+      "ref": "main",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_queue_wait.py - p90 time CI jobs wait for a runner, over the last 15 minutes.\n\nThresholds are read from queue_wait.yaml next to this file (deployed from rhpds/rhdp-monitoring\ntogether with the plugin). Each pool has its own entry. If the file is absent the built-in\ndefaults below are used, and nothing in the output says so.\n\"\"\"\nimport sys\nfrom pathlib import Path\n\nimport yaml\n\nfrom ci_metrics import p90_wait_seconds\n\nCONFIG = Path(__file__).with_name(\"queue_wait.yaml\")\nDEFAULT_WARN_S = 120\nDEFAULT_CRIT_S = 240\n\n\ndef thresholds(pool):\n    if not CONFIG.exists():\n        return DEFAULT_WARN_S, DEFAULT_CRIT_S\n    conf = yaml.safe_load(CONFIG.read_text())[\"pools\"][pool]\n    return conf[\"warn_seconds\"], conf[\"crit_seconds\"]\n\n\ndef main():\n    pool = sys.argv[1]\n    warn, crit = thresholds(pool)\n    wait = p90_wait_seconds(pool, minutes=15)\n    perf = f\"p90_wait={wait}s;{warn};{crit};0\"\n    if wait > crit:\n        print(f\"QUEUE_WAIT CRITICAL - p90 job wait {wait} s over 15 min (crit {crit} s)|{perf}\"); sys.exit(2)\n    if wait > warn:\n        print(f\"QUEUE_WAIT WARNING - p90 job wait {wait} s over 15 min (warn {warn} s)|{perf}\"); sys.exit(1)\n    print(f\"QUEUE_WAIT OK - p90 job wait {wait} s over 15 min|{perf}\"); sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@HEAD:plugins/ci/queue_wait.yaml.example",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/ci/queue_wait.yaml.example",
+      "ref": "HEAD",
+      "content": "# Copy to queue_wait.yaml and adjust per pool. check_queue_wait.py falls back to\n# 120 s / 240 s when queue_wait.yaml is missing.\npools:\n  pool-a:\n    warn_seconds: 300\n    crit_seconds: 600\n  pool-b:   # large integration jobs; long waits are normal during the nightly batch\n    warn_seconds: 600\n    crit_seconds: 900\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@main:plugins/ci/queue_wait.yaml.example",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/ci/queue_wait.yaml.example",
+      "ref": "main",
+      "content": "# Copy to queue_wait.yaml and adjust per pool. check_queue_wait.py falls back to\n# 120 s / 240 s when queue_wait.yaml is missing.\npools:\n  pool-a:\n    warn_seconds: 300\n    crit_seconds: 600\n  pool-b:   # large integration jobs; long waits are normal during the nightly batch\n    warn_seconds: 600\n    crit_seconds: 900\n"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@HEAD-queue_wait.yaml",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "search": "queue_wait.yaml",
+      "matches": [
+        "plugins/ci/queue_wait.yaml.example"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@main-queue_wait.yaml",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "search": "queue_wait.yaml",
+      "matches": [
+        "plugins/ci/queue_wait.yaml.example"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@HEAD-queue_wait",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "search": "queue_wait",
+      "matches": [
+        "plugins/ci/queue_wait.yaml.example"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@main-queue_wait",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "search": "queue_wait",
+      "matches": [
+        "plugins/ci/queue_wait.yaml.example"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@HEAD-plugins/ci/queue_wait.yaml",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "search": "plugins/ci/queue_wait.yaml",
+      "matches": [
+        "plugins/ci/queue_wait.yaml.example"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rhpds/rhdp-monitoring@main-plugins/ci/queue_wait.yaml",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "search": "plugins/ci/queue_wait.yaml",
+      "matches": [
+        "plugins/ci/queue_wait.yaml.example"
+      ],
+      "total_matches": 1,
+      "truncated": false
+    }
+  ],
+  "similar_items": []
+}

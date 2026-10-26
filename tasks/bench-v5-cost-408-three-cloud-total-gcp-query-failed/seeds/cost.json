@@ -1,0 +1,243 @@
+{
+  "account_costs": [
+    {
+      "account_id": "org-wide",
+      "items": {
+        "Amazon Elastic Compute Cloud - Compute": 98402.18,
+        "Amazon Relational Database Service": 31775.9,
+        "Amazon Simple Storage Service": 18240.07,
+        "Amazon Elastic Kubernetes Service": 14606.25,
+        "AWS Data Transfer": 12980.0,
+        "AmazonCloudWatch": 8222.0
+      },
+      "total": 184226.4,
+      "account_cost_id": "ac-w2k-2608-orgwide"
+    }
+  ],
+  "aws_cost_results": [
+    {
+      "aws_cost_result_id": "acr-w2k-2608-svc",
+      "accounts_queried": 1,
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2026-08-01",
+        "end": "2026-09-01"
+      },
+      "period_id": "per-aws-w2k-2608",
+      "results": [
+        {
+          "account_id": "org-wide",
+          "items": {
+            "Amazon Elastic Compute Cloud - Compute": 98402.18,
+            "Amazon Relational Database Service": 31775.9,
+            "Amazon Simple Storage Service": 18240.07,
+            "Amazon Elastic Kubernetes Service": 14606.25,
+            "AWS Data Transfer": 12980.0,
+            "AmazonCloudWatch": 8222.0
+          },
+          "total": 184226.4
+        }
+      ],
+      "total_cost": 184226.4
+    }
+  ],
+  "azure_cost_results": [
+    {
+      "azure_cost_result_id": "azr-w2k-2608",
+      "period_id": "per-cal-w2k-2608",
+      "source": "cache",
+      "subscriptions_queried": "all",
+      "period": {
+        "start": "2026-08-01",
+        "end": "2026-08-31"
+      },
+      "cache_last_refresh": "2026-09-02T03:40:00Z",
+      "results": [
+        {
+          "subscription_name": "pool-11-930",
+          "services": {
+            "Virtual Machines": {
+              "cost": 24517.5,
+              "meter_subcategories": {
+                "Dsv5 Series": 18402.3,
+                "Ev5 Series": 6115.2
+              }
+            },
+            "Storage": {
+              "cost": 2881.4,
+              "meter_subcategories": {
+                "Premium SSD Managed Disks": 2881.4
+              }
+            }
+          },
+          "total": 27398.9,
+          "gpu_cost": 0.0
+        },
+        {
+          "subscription_name": "pool-11-931",
+          "services": {
+            "Virtual Machines": {
+              "cost": 12744.85,
+              "meter_subcategories": {
+                "Fsv2 Series": 12744.85
+              }
+            },
+            "Storage": {
+              "cost": 1903.0,
+              "meter_subcategories": {
+                "Hot LRS": 1903.0
+              }
+            }
+          },
+          "total": 14647.85,
+          "gpu_cost": 0.0
+        },
+        {
+          "subscription_name": "pool-29-044",
+          "services": {
+            "Virtual Machines": {
+              "cost": 9630.0,
+              "meter_subcategories": {
+                "NCasT4_v3 Series": 9630.0
+              }
+            },
+            "Bandwidth": {
+              "cost": 1242.0,
+              "meter_subcategories": {
+                "Inter Region": 1242.0
+              }
+            }
+          },
+          "total": 10872.0,
+          "gpu_cost": 9630.0
+        }
+      ],
+      "total_cost": 52918.75
+    }
+  ],
+  "azure_service_costs": [
+    {
+      "azure_service_cost_id": "azsc-w2k-pool-11-930-virtual-machines",
+      "cost": 24517.5,
+      "meter_subcategories": {
+        "Dsv5 Series": 18402.3,
+        "Ev5 Series": 6115.2
+      }
+    },
+    {
+      "azure_service_cost_id": "azsc-w2k-pool-11-930-storage",
+      "cost": 2881.4,
+      "meter_subcategories": {
+        "Premium SSD Managed Disks": 2881.4
+      }
+    },
+    {
+      "azure_service_cost_id": "azsc-w2k-pool-11-931-virtual-machines",
+      "cost": 12744.85,
+      "meter_subcategories": {
+        "Fsv2 Series": 12744.85
+      }
+    },
+    {
+      "azure_service_cost_id": "azsc-w2k-pool-11-931-storage",
+      "cost": 1903.0,
+      "meter_subcategories": {
+        "Hot LRS": 1903.0
+      }
+    },
+    {
+      "azure_service_cost_id": "azsc-w2k-pool-29-044-virtual-machines",
+      "cost": 9630.0,
+      "meter_subcategories": {
+        "NCasT4_v3 Series": 9630.0
+      }
+    },
+    {
+      "azure_service_cost_id": "azsc-w2k-pool-29-044-bandwidth",
+      "cost": 1242.0,
+      "meter_subcategories": {
+        "Inter Region": 1242.0
+      }
+    }
+  ],
+  "azure_subscription_costs": [
+    {
+      "subscription_name": "pool-11-930",
+      "services": {
+        "Virtual Machines": {
+          "cost": 24517.5,
+          "meter_subcategories": {
+            "Dsv5 Series": 18402.3,
+            "Ev5 Series": 6115.2
+          }
+        },
+        "Storage": {
+          "cost": 2881.4,
+          "meter_subcategories": {
+            "Premium SSD Managed Disks": 2881.4
+          }
+        }
+      },
+      "total": 27398.9,
+      "gpu_cost": 0.0,
+      "azure_subscription_cost_id": "azsc-w2k-pool-11-930"
+    },
+    {
+      "subscription_name": "pool-11-931",
+      "services": {
+        "Virtual Machines": {
+          "cost": 12744.85,
+          "meter_subcategories": {
+            "Fsv2 Series": 12744.85
+          }
+        },
+        "Storage": {
+          "cost": 1903.0,
+          "meter_subcategories": {
+            "Hot LRS": 1903.0
+          }
+        }
+      },
+      "total": 14647.85,
+      "gpu_cost": 0.0,
+      "azure_subscription_cost_id": "azsc-w2k-pool-11-931"
+    },
+    {
+      "subscription_name": "pool-29-044",
+      "services": {
+        "Virtual Machines": {
+          "cost": 9630.0,
+          "meter_subcategories": {
+            "NCasT4_v3 Series": 9630.0
+          }
+        },
+        "Bandwidth": {
+          "cost": 1242.0,
+          "meter_subcategories": {
+            "Inter Region": 1242.0
+          }
+        }
+      },
+      "total": 10872.0,
+      "gpu_cost": 9630.0,
+      "azure_subscription_cost_id": "azsc-w2k-pool-29-044"
+    }
+  ],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-aws-w2k-2608",
+      "start": "2026-08-01",
+      "end": "2026-09-01"
+    },
+    {
+      "period_id": "per-cal-w2k-2608",
+      "start": "2026-08-01",
+      "end": "2026-08-31"
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_ocpv_cluster",
+      "args": {
+        "action": "find_namespace",
+        "cluster": "ocpv-infra01",
+        "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+      },
+      "result": {
+        "cluster": "ocpv-infra01",
+        "namespace": "sandbox-tk8vn-ocp4-cluster-cnv",
+        "status": "Active"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_ocpv_cluster",
+      "args": {
+        "action": "list_vms",
+        "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+      },
+      "result": {
+        "cluster": "ocpv-infra01",
+        "namespace": "sandbox-tk8vn-ocp4-cluster-cnv",
+        "vms": [
+          {
+            "name": "bastion",
+            "status": "Running",
+            "ready": true,
+            "phase": "Running",
+            "node": "cnv-worker-03",
+            "ip": "10.128.4.21",
+            "vcpus": 2,
+            "memory": "8Gi",
+            "disks": [
+              {
+                "name": "rootdisk",
+                "size": "60Gi"
+              }
+            ],
+            "volumes": [
+              {
+                "name": "rootdisk",
+                "type": "dataVolume"
+              }
+            ]
+          },
+          {
+            "name": "master-0",
+            "status": "Running",
+            "ready": true,
+            "phase": "Running",
+            "node": "cnv-worker-01",
+            "ip": "10.128.4.22",
+            "vcpus": 8,
+            "memory": "32Gi",
+            "disks": [
+              {
+                "name": "rootdisk",
+                "size": "120Gi"
+              }
+            ],
+            "volumes": [
+              {
+                "name": "rootdisk",
+                "type": "dataVolume"
+              }
+            ]
+          },
+          {
+            "name": "worker-0",
+            "status": "Stopped",
+            "ready": false,
+            "phase": "Succeeded",
+            "node": "",
+            "ip": "",
+            "vcpus": 8,
+            "memory": "32Gi",
+            "disks": [
+              {
+                "name": "rootdisk",
+                "size": "120Gi"
+              }
+            ],
+            "volumes": [
+              {
+                "name": "rootdisk",
+                "type": "dataVolume"
+              }
+            ]
+          }
+        ],
+        "count": 3
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_ocpv_cluster",
+      "args": {
+        "action": "list_pvcs",
+        "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+      },
+      "result": {
+        "cluster": "ocpv-infra01",
+        "namespace": "sandbox-tk8vn-ocp4-cluster-cnv",
+        "pvcs": [
+          {
+            "name": "bastion-rootdisk",
+            "status": "Bound",
+            "storage_class": "ocs-storagecluster-ceph-rbd",
+            "size": "60Gi",
+            "volume_mode": "Block",
+            "access_modes": [
+              "ReadWriteOnce"
+            ]
+          },
+          {
+            "name": "master-0-rootdisk",
+            "status": "Bound",
+            "storage_class": "ocs-storagecluster-ceph-rbd",
+            "size": "120Gi",
+            "volume_mode": "Block",
+            "access_modes": [
+              "ReadWriteOnce"
+            ]
+          },
+          {
+            "name": "worker-0-rootdisk",
+            "status": "Pending",
+            "storage_class": "ocs-storagecluster-ceph-rbd",
+            "size": "120Gi",
+            "volume_mode": "Block",
+            "access_modes": [
+              "ReadWriteOnce"
+            ]
+          }
+        ],
+        "count": 3,
+        "pending_count": 1
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The sandbox namespace for GUID tk8vn on ocpv-infra01 is sandbox-tk8vn-ocp4-cluster-cnv, and it is Active.\n\nThere are 3 VMs in it. Two are healthy -- bastion and master-0, both Running and Ready on cnv-worker-03 and cnv-worker-01. The one that is not up is worker-0: its status is Stopped, it is not Ready, and it has no node or IP assigned.\n\nThe PVCs explain why. bastion-rootdisk and master-0-rootdisk are both Bound, but worker-0-rootdisk is Pending -- a 120Gi ReadWriteOnce Block volume on ocs-storagecluster-ceph-rbd that never bound. A VM whose root volume is unbound cannot start, so the storage is the thing to fix rather than the VM."
+}

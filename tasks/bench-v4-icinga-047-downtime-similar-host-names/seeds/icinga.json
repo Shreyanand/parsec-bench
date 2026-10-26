@@ -1,0 +1,80 @@
+{
+  "comments": [],
+  "downtimes": [
+    {
+      "name": "checkout-web-canary!c05e9a3b-2f71-48d6-a4e2-6b90d13f87a5",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "checkout-web-canary",
+        "service_name": "",
+        "author": "obanerjee",
+        "comment": "Soak test of build 7.3.0 on the canary pool; synthetic traffic only, expect alert noise.",
+        "entry_time": 1795797600.0,
+        "start_time": 1796198400.0,
+        "end_time": 1796371200.0,
+        "fixed": true,
+        "duration": 0.0,
+        "was_cancelled": false
+      }
+    },
+    {
+      "name": "checkout-web!7d2c41e8-95ab-4f0e-b3c6-1e8f0a57d924",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "checkout-web",
+        "service_name": "",
+        "author": "ikarlsson",
+        "comment": "Database failover rehearsal - checkout writes are paused while the DBA team switches primaries.",
+        "entry_time": 1794301920.0,
+        "start_time": 1794661200.0,
+        "end_time": 1794675600.0,
+        "fixed": true,
+        "duration": 0.0,
+        "was_cancelled": false
+      }
+    }
+  ],
+  "hosts": [
+    {
+      "name": "checkout-web",
+      "type": "Host",
+      "attrs": {
+        "display_name": "checkout-web",
+        "host_name": "checkout-web",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 1,
+        "groups": [
+          "checkout"
+        ],
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.61 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "checkout-web-canary",
+      "type": "Host",
+      "attrs": {
+        "display_name": "checkout-web-canary",
+        "host_name": "checkout-web-canary",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 1,
+        "groups": [
+          "checkout"
+        ],
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.61 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": []
+}

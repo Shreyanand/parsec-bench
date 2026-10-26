@@ -1,0 +1,232 @@
+{
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "pgsql-rep-ams-07"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/db/check_pg_standby_lag.py"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "icinga-sat-ams-2"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_endpoints"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_zones"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "runs-on-satellite",
+        "any_of": [
+          "icinga-sat-ams-2"
+        ],
+        "ignore_case": true,
+        "asked_by": "which machine actually runs the check",
+        "rationale": "the service's command_endpoint and check_source; not the database host"
+      },
+      {
+        "id": "local-socket",
+        "any_of": [
+          "local socket",
+          "/var/run/postgresql",
+          "unix socket",
+          "local postgresql",
+          "local postgres",
+          "local server",
+          "local database",
+          "local instance",
+          "localhost",
+          "its own postgres",
+          "its own postgresql",
+          "own local",
+          "satellite's own",
+          "satellite's postgres",
+          "satellite's postgresql",
+          "satellite's local",
+          "on the satellite itself",
+          "runs locally",
+          "connects locally",
+          "no --host",
+          "no host option",
+          "pghost"
+        ],
+        "ignore_case": true,
+        "asked_by": "which PostgreSQL server does it read",
+        "rationale": "the script: it connects only to the PostgreSQL local to wherever it runs"
+      },
+      {
+        "id": "ido-primary",
+        "any_of": [
+          "icinga_ido",
+          "ido database",
+          "ido db",
+          "ido backend",
+          "ido postgres",
+          "ido server",
+          "pg-ido",
+          "the ido"
+        ],
+        "ignore_case": true,
+        "asked_by": "which PostgreSQL server does it read",
+        "rationale": "only the satellite's own services (call 3) say what its local PostgreSQL is: the IDO backend"
+      },
+      {
+        "id": "not-in-recovery-zero",
+        "any_of": [
+          "not in recovery",
+          "isn't in recovery",
+          "out of recovery",
+          "pg_is_in_recovery",
+          "is a primary",
+          "a primary",
+          "returns lag 0",
+          "is the primary",
+          "a primary server",
+          "not a standby",
+          "isn't a standby",
+          "is not a standby",
+          "not a replica",
+          "isn't a replica",
+          "is not a replica",
+          "not a hot standby",
+          "hard-coded 0",
+          "hardcoded 0",
+          "returns 0",
+          "reports 0 s for",
+          "always 0",
+          "always reports 0"
+        ],
+        "ignore_case": true,
+        "asked_by": "Explain where that 0 s comes from",
+        "rationale": "the script returns 0 whenever the server it reaches is not in recovery"
+      },
+      {
+        "id": "real-lag-unknown",
+        "any_of": [
+          "unknown",
+          "not measured",
+          "isn't measured",
+          "is not measured",
+          "not being measured",
+          "isn't being measured",
+          "nothing measures",
+          "nothing in icinga measures",
+          "no check measures",
+          "not being monitored",
+          "isn't being monitored",
+          "is not being monitored",
+          "unmonitored",
+          "can't tell what",
+          "cannot tell what",
+          "can't tell how",
+          "cannot tell how",
+          "can't tell the",
+          "cannot tell the",
+          "can't tell you",
+          "cannot tell you",
+          "can't say what",
+          "cannot say what",
+          "can't say how",
+          "cannot say how",
+          "no way of knowing",
+          "impossible to tell",
+          "can't know",
+          "cannot know",
+          "can't be determined",
+          "cannot be determined",
+          "can't be known",
+          "cannot be known",
+          "no measurement",
+          "no data",
+          "don't know",
+          "do not know",
+          "not known",
+          "no reading",
+          "no figure",
+          "real lag: n/a",
+          "lag: n/a",
+          "not available from icinga",
+          "isn't available from icinga",
+          "icinga has no",
+          "icinga doesn't have",
+          "icinga does not have"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is the standby's real replay lag",
+        "rationale": "the honest answer is that no check measures the standby",
+        "derived": true,
+        "note": "An absence: the only lag check on the host runs on the satellite and reads the satellite's local primary (IDO), so no stored row carries the standby's own lag."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "standby-in-sync",
+        "none_of": [
+          "standby is in sync",
+          "standby is up to date",
+          "standby is up-to-date",
+          "replica is in sync",
+          "replica is up to date",
+          "standby is caught up",
+          "replica is caught up",
+          "standby has no lag",
+          "replica has no lag",
+          "standby is not lagging",
+          "replica is not lagging",
+          "standby's replay lag is 0",
+          "standby replay lag is 0",
+          "replication is healthy",
+          "replication is fine",
+          "lag on pgsql-rep-ams-07 is 0"
+        ],
+        "ignore_case": true,
+        "rationale": "taking the satellite-local 0 s as the standby's lag",
+        "attributed_to": [
+          "but it isn't",
+          "but it is not",
+          "isn't actually in sync",
+          "is not actually in sync",
+          "not necessarily in sync",
+          "isn't necessarily in sync"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

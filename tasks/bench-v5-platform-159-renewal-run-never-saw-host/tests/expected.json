@@ -1,0 +1,168 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "west",
+          "job_id": 6702291
+        }
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "jira-untouched",
+        "any_of": [
+          "does not appear",
+          "doesn't appear",
+          "did not appear",
+          "didn't appear",
+          "not appear",
+          "never ran against",
+          "never touched",
+          "not touched",
+          "wasn't touched",
+          "not in the run",
+          "not part of the run",
+          "not included",
+          "wasn't included",
+          "no events for jira",
+          "no event for jira",
+          "not in the inventory",
+          "not in its inventory",
+          "not in the job's inventory",
+          "not targeted",
+          "wasn't targeted",
+          "never targeted",
+          "absent from",
+          "missing from the run",
+          "missing from the job",
+          "no events at all",
+          "not among the hosts",
+          "isn't in the inventory",
+          "is not in the inventory",
+          "not in the template's inventory",
+          "outside the job's inventory",
+          "was not in the play",
+          "did not run on jira",
+          "didn't run on jira",
+          "never ran on jira"
+        ],
+        "ignore_case": true,
+        "asked_by": "tell me what the job record shows for that host",
+        "rationale": "the break: the run's events name three hosts and not jira-ber-02",
+        "derived": true,
+        "note": "the 13 events of job 6702291 cover wiki-ber-01, conf-ber-03 and git-ber-01; no event names jira-ber-02."
+      },
+      {
+        "id": "wiki-expiry",
+        "any_of": [
+          "2027-02-15"
+        ],
+        "ignore_case": true,
+        "asked_by": "give me the expiry date Icinga reports now",
+        "rationale": "wiki-ber-01's renewed expiry, from its OK check output"
+      },
+      {
+        "id": "jira-expiry",
+        "any_of": [
+          "2026-11-29"
+        ],
+        "ignore_case": true,
+        "asked_by": "give me the expiry date Icinga reports now",
+        "rationale": "jira-ber-02's unrenewed expiry, from its WARNING check output"
+      },
+      {
+        "id": "job-id",
+        "any_of": [
+          "6702291"
+        ],
+        "ignore_case": true,
+        "asked_by": "Did the run of 2026-11-17 renew both certificates",
+        "rationale": "the run in question, found by find_jobs on the template"
+      },
+      {
+        "id": "fix",
+        "any_of": [
+          "inventory",
+          "manually",
+          "manual renewal",
+          "renew it by hand",
+          "targeted",
+          "--limit",
+          "limit to jira",
+          "add jira-ber-02",
+          "include jira-ber-02",
+          "run the template against",
+          "run the template for jira",
+          "run it against jira"
+        ],
+        "ignore_case": true,
+        "asked_by": "what has to happen before its certificate expires",
+        "rationale": "jira-ber-02 has to be renewed outside this run and brought into the job's scope",
+        "derived": true,
+        "note": "the run never targets jira-ber-02, so the next scheduled run will not renew it either; the certificate has to be renewed by a targeted or manual run and the host added to the job's inventory."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "both-renewed",
+        "none_of": [
+          "both certificates were renewed",
+          "both certs were renewed",
+          "renewed both",
+          "both were renewed",
+          "both have been renewed",
+          "jira-ber-02 was renewed",
+          "renewed jira-ber-02",
+          "jira-ber-02 has been renewed",
+          "the job renewed jira",
+          "renewed the certificate on jira",
+          "jira-ber-02's certificate was renewed"
+        ],
+        "ignore_case": true,
+        "rationale": "only wiki-ber-01 was renewed; jira-ber-02 is still due on 2026-11-29"
+      },
+      {
+        "id": "invented-failure",
+        "none_of": [
+          "failed on jira-ber-02",
+          "renewal failed on jira",
+          "renewal failed for jira",
+          "jira-ber-02 was unreachable",
+          "jira-ber-02 is unreachable",
+          "the renewal task failed",
+          "the job failed on jira"
+        ],
+        "ignore_case": true,
+        "rationale": "no event names jira-ber-02, so no failure or skip on it can be read from the job"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  }
+}

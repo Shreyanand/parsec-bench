@@ -1,0 +1,217 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [
+    {
+      "marketplace_agreement_id": "mpa-315-01",
+      "account_id": "415820937164",
+      "account_name": "data-platform-prod",
+      "agreement_id": "agmt-3hq7x2v9m4kd",
+      "product_name": "Corsair Data Mesh",
+      "product_id": "prod-cdm4e81a",
+      "vendor_name": "Tidewell Analytica",
+      "agreement_start": "2026-02-03T00:00:00Z",
+      "agreement_end": "2027-02-02T00:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "offer_type": "PrivateOffer",
+      "terms": [
+        {
+          "type": "RecurringPaymentTerm"
+        },
+        {
+          "type": "RenewalTerm"
+        }
+      ],
+      "last_updated": "2026-10-14T05:17:00Z",
+      "estimated_cost": 48600.0,
+      "estimated_cost_usd": 48600.0
+    },
+    {
+      "marketplace_agreement_id": "mpa-315-02",
+      "account_id": "590362718405",
+      "account_name": "ml-research",
+      "agreement_id": "agmt-5wn1c8t3r6zb",
+      "product_name": "Nimbic Threat Graph",
+      "product_id": "prod-ntg09c3f",
+      "vendor_name": "Nimbic Security",
+      "agreement_start": "2026-04-17T00:00:00Z",
+      "agreement_end": "2027-04-16T00:00:00Z",
+      "auto_renew": false,
+      "status": "ACTIVE",
+      "classification": "Fixed/Upfront",
+      "currency": "USD",
+      "offer_type": "PrivateOffer",
+      "terms": [
+        {
+          "type": "PaymentScheduleTerm"
+        }
+      ],
+      "last_updated": "2026-10-14T05:17:00Z",
+      "estimated_cost": 27450.0,
+      "estimated_cost_usd": 27450.0
+    },
+    {
+      "marketplace_agreement_id": "mpa-315-03",
+      "account_id": "415820937164",
+      "account_name": "data-platform-prod",
+      "agreement_id": "agmt-8kd4p0f7j2sy",
+      "product_name": "Orrery Toggle Flags",
+      "product_id": "prod-off27b5d",
+      "vendor_name": "Orrery Labs",
+      "agreement_start": "2026-06-09T00:00:00Z",
+      "agreement_end": "2027-06-08T00:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "RecurringPaymentTerm"
+        },
+        {
+          "type": "RenewalTerm"
+        }
+      ],
+      "last_updated": "2026-10-14T05:17:00Z",
+      "estimated_cost": 22080.0,
+      "estimated_cost_usd": 22080.0
+    },
+    {
+      "marketplace_agreement_id": "mpa-315-04",
+      "account_id": "738105294620",
+      "account_name": "edge-labs",
+      "agreement_id": "agmt-a2m9g5w1x7qe",
+      "product_name": "Pallas Coldline Locker",
+      "product_id": "prod-pbv81e2c",
+      "vendor_name": "Pallas Data",
+      "agreement_start": "2026-03-13T00:00:00Z",
+      "agreement_end": "2027-03-12T00:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "offer_type": "PrivateOffer",
+      "terms": [
+        {
+          "type": "RecurringPaymentTerm"
+        },
+        {
+          "type": "RenewalTerm"
+        }
+      ],
+      "last_updated": "2026-10-14T05:17:00Z",
+      "estimated_cost": 19850.0,
+      "estimated_cost_usd": 19850.0
+    },
+    {
+      "marketplace_agreement_id": "mpa-315-05",
+      "account_id": "862045173390",
+      "account_name": "shared-services",
+      "agreement_id": "agmt-c6t3b8n0v4hu",
+      "product_name": "Quaystone SIEM Connector",
+      "product_id": "prod-qsc5d07a",
+      "vendor_name": "Quaystone",
+      "agreement_start": "2026-01-22T00:00:00Z",
+      "agreement_end": "2027-01-21T00:00:00Z",
+      "auto_renew": false,
+      "status": "ACTIVE",
+      "classification": "Fixed/Upfront",
+      "currency": "USD",
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "PaymentScheduleTerm"
+        }
+      ],
+      "last_updated": "2026-10-14T05:17:00Z",
+      "estimated_cost": 6300.0,
+      "estimated_cost_usd": 6300.0
+    },
+    {
+      "marketplace_agreement_id": "mpa-315-06",
+      "account_id": "590362718405",
+      "account_name": "ml-research",
+      "agreement_id": "agmt-f9r2k6d1y5ma",
+      "product_name": "Glimmer GPU Notebooks",
+      "product_id": "prod-ggn3a96e",
+      "vendor_name": "Glimmer AI",
+      "agreement_start": "2026-07-07T00:00:00Z",
+      "agreement_end": "2027-07-06T00:00:00Z",
+      "auto_renew": false,
+      "status": "ACTIVE",
+      "classification": "Pay-As-You-Go",
+      "currency": "USD",
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "ValidityTerm"
+        },
+        {
+          "type": "SupportTerm"
+        }
+      ],
+      "last_updated": "2026-10-14T05:17:00Z"
+    },
+    {
+      "marketplace_agreement_id": "mpa-315-07",
+      "account_id": "862045173390",
+      "account_name": "shared-services",
+      "agreement_id": "agmt-j4x8s0h3c7wp",
+      "product_name": "Hexmoor Log Shipper",
+      "product_id": "prod-hls72f4b",
+      "vendor_name": "Hexmoor",
+      "agreement_start": "2026-05-19T00:00:00Z",
+      "agreement_end": "2027-05-18T00:00:00Z",
+      "auto_renew": false,
+      "status": "ACTIVE",
+      "classification": "Pay-As-You-Go",
+      "currency": "USD",
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "ValidityTerm"
+        },
+        {
+          "type": "SupportTerm"
+        }
+      ],
+      "last_updated": "2026-10-14T05:17:00Z"
+    },
+    {
+      "marketplace_agreement_id": "mpa-315-08",
+      "account_id": "738105294620",
+      "account_name": "edge-labs",
+      "agreement_id": "agmt-q1v5e9z2b8ln",
+      "product_name": "Wrenlake Tollhouse",
+      "product_id": "prod-wag60d1c",
+      "vendor_name": "Wrenlake",
+      "agreement_start": "2026-08-21T00:00:00Z",
+      "agreement_end": "2027-08-20T00:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "RecurringPaymentTerm"
+        },
+        {
+          "type": "RenewalTerm"
+        }
+      ],
+      "last_updated": "2026-10-14T05:17:00Z",
+      "estimated_cost": 3120.0,
+      "estimated_cost_usd": 3120.0
+    }
+  ],
+  "sandbox_accounts": []
+}

@@ -1,0 +1,116 @@
+{
+  "comments": [],
+  "downtimes": [],
+  "hosts": [
+    {
+      "name": "aap2-prod-us-west-2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "AAP2 Cluster aap2-prod-us-west-2",
+        "host_name": "aap2-prod-us-west-2",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "aap2-prod-us-east-2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "AAP2 Cluster aap2-prod-us-east-2",
+        "host_name": "aap2-prod-us-east-2",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "babylon-ocp-prod-us-east-1",
+      "type": "Host",
+      "attrs": {
+        "display_name": "Babylon OCP Prod us-east-1",
+        "host_name": "babylon-ocp-prod-us-east-1",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "aap2-prod-us-west-2!cert-expiry",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Certificate expiry",
+        "host_name": "aap2-prod-us-west-2",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "WARNING - controller certificate expires in 19 days",
+          "state": 1,
+          "exit_status": 1
+        }
+      }
+    },
+    {
+      "name": "aap2-prod-us-east-2!cert-expiry",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Certificate expiry",
+        "host_name": "aap2-prod-us-east-2",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "CRITICAL - controller certificate expires in 4 days",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "babylon-ocp-prod-us-east-1!cert-expiry",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Certificate expiry",
+        "host_name": "babylon-ocp-prod-us-east-1",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "OK - certificate valid for 214 days",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ]
+}

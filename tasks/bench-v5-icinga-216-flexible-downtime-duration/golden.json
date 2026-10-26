@@ -1,0 +1,16 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_downtimes",
+        "host": "edi-relay-lis-03"
+      },
+      "result": {
+        "result": "[{\"name\":\"edi-relay-lis-03!as2-inbox-files!5d0c7b92-e14a-4f3b-86d2-0a9fe3c71b58\",\"type\":\"Downtime\",\"attrs\":{\"host_name\":\"edi-relay-lis-03\",\"service_name\":\"as2-inbox-files\",\"author\":\"fmoreira-adm\",\"comment\":\"CHG-58302 AS2 trading-party cert swap; inbound files pile up until each trading party reconnects\",\"entry_time\":1795192200,\"start_time\":1795298400,\"end_time\":1795327200,\"fixed\":false,\"duration\":18000,\"was_cancelled\":false}},{\"name\":\"edi-relay-lis-03!a7e4126d-9b3f-4c08-b5d1-38c0f9e2a6d4\",\"type\":\"Downtime\",\"attrs\":{\"host_name\":\"edi-relay-lis-03\",\"service_name\":\"\",\"author\":\"nsilvestre\",\"comment\":\"CHG-58411 monthly OS patch run\",\"entry_time\":1795086300,\"start_time\":1795827600,\"end_time\":1795834800,\"fixed\":true,\"duration\":7200,\"was_cancelled\":false}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The as2-inbox-files downtime on edi-relay-lis-03 (CHG-58302, scheduled by fmoreira-adm) is a flexible downtime (fixed: false), not a fixed one.\n\n- It can begin any time between 2026-11-21 22:00 UTC and 2026-11-22 06:00 UTC; it only starts when the service actually goes into a problem state inside that window; it has not started yet.\n- Once it starts it lasts duration = 18000 s, i.e. 5 hours of muted alerts - not the whole 8-hour window.\n\nThe other downtime on the host is unrelated: a fixed host downtime by nsilvestre for CHG-58411 OS patching on 2026-11-28 01:00-03:00 UTC."
+}

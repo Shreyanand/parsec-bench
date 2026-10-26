@@ -1,0 +1,137 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "babylon-ocp-prod-us-east-1",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "babylon-ocp-prod-us-east-1"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "babylon-ocp-prod-us-east-1"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "monitoring/babylon/check_stuck_subjects.py"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "search_services"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "list_alerts"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "counts": [
+      {
+        "id": "crit-threshold",
+        "value": 5,
+        "nouns": [
+          "threshold",
+          "CRIT_COUNT",
+          "critical"
+        ],
+        "window": 6,
+        "asked_by": "report the critical threshold it uses",
+        "rationale": "CRIT_COUNT comes from the check script, and it also appears in the alert output -- so this fact alone does not prove the github leg happened; warn-threshold does"
+      },
+      {
+        "id": "warn-threshold",
+        "value": 3,
+        "nouns": [
+          "warning",
+          "WARN_COUNT",
+          "warn"
+        ],
+        "window": 6,
+        "asked_by": "Read it and report the critical threshold it uses",
+        "rationale": "WARN_COUNT appears ONLY in the script, never in the alert output, so it is the fact that proves the file was actually read"
+      },
+      {
+        "id": "excess",
+        "value": 9,
+        "nouns": [
+          "exceeds",
+          "over",
+          "above",
+          "more than",
+          "by"
+        ],
+        "window": 6,
+        "asked_by": "say by how much the current value exceeds it",
+        "rationale": "14 stuck against a threshold of 5 is an excess of 9 -- a derived number neither source states, so it cannot be copied"
+      }
+    ],
+    "required": [
+      {
+        "id": "no-suppression",
+        "any_of": [
+          "no comment",
+          "no comments",
+          "not acknowledged",
+          "no downtime",
+          "no downtimes",
+          "nobody has",
+          "no one has",
+          "none scheduled",
+          "no suppression"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "both the comments and downtimes collections are seeded EMPTY, so this is an absence and no seed string can carry it",
+        "asked_by": "check whether anyone has commented on it or scheduled a downtime for it",
+        "rationale": "the two calls the instruction asks for only matter if their result is reported; without this fact an agent can make them and ignore what came back"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "invented-suppression",
+        "none_of": [
+          "has been acknowledged",
+          "is acknowledged",
+          "in a scheduled downtime",
+          "downtime is active",
+          "already acknowledged"
+        ],
+        "ignore_case": true,
+        "rationale": "the service is neither acknowledged nor in downtime. An agent that assumes a CRITICAL this old must have been suppressed asserts one of these"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

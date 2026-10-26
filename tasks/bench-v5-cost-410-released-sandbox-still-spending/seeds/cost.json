@@ -1,0 +1,237 @@
+{
+  "account_costs": [
+    {
+      "account_id": "362917450183",
+      "items": {
+        "Amazon Elastic Compute Cloud - Compute": {
+          "cost": 6626.9,
+          "daily": [
+            {
+              "date": "2026-09-07",
+              "cost": 1452.3
+            },
+            {
+              "date": "2026-09-08",
+              "cost": 1448.9
+            },
+            {
+              "date": "2026-09-09",
+              "cost": 1455.1
+            },
+            {
+              "date": "2026-09-10",
+              "cost": 1021.6
+            },
+            {
+              "date": "2026-09-11",
+              "cost": 312.4
+            },
+            {
+              "date": "2026-09-12",
+              "cost": 311.85
+            },
+            {
+              "date": "2026-09-13",
+              "cost": 312.1
+            },
+            {
+              "date": "2026-09-14",
+              "cost": 312.65
+            }
+          ]
+        },
+        "EC2 - Other": {
+          "cost": 391.9,
+          "daily": [
+            {
+              "date": "2026-09-07",
+              "cost": 58.2
+            },
+            {
+              "date": "2026-09-08",
+              "cost": 58.2
+            },
+            {
+              "date": "2026-09-09",
+              "cost": 58.2
+            },
+            {
+              "date": "2026-09-10",
+              "cost": 52.1
+            },
+            {
+              "date": "2026-09-11",
+              "cost": 41.3
+            },
+            {
+              "date": "2026-09-12",
+              "cost": 41.3
+            },
+            {
+              "date": "2026-09-13",
+              "cost": 41.3
+            },
+            {
+              "date": "2026-09-14",
+              "cost": 41.3
+            }
+          ]
+        },
+        "Amazon Simple Storage Service": {
+          "cost": 22.4,
+          "daily": [
+            {
+              "date": "2026-09-07",
+              "cost": 6.1
+            },
+            {
+              "date": "2026-09-08",
+              "cost": 6.1
+            },
+            {
+              "date": "2026-09-09",
+              "cost": 6.2
+            },
+            {
+              "date": "2026-09-10",
+              "cost": 4.0
+            }
+          ]
+        }
+      },
+      "total": 7041.2,
+      "account_cost_id": "ac-k3p-0915"
+    }
+  ],
+  "aws_cost_results": [
+    {
+      "aws_cost_result_id": "acr-k3p-0915-svc",
+      "accounts_queried": 1,
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2026-09-07",
+        "end": "2026-09-15"
+      },
+      "period_id": "per-aws-k3p-0915",
+      "results": [
+        {
+          "account_id": "362917450183",
+          "items": {
+            "Amazon Elastic Compute Cloud - Compute": {
+              "cost": 6626.9,
+              "daily": [
+                {
+                  "date": "2026-09-07",
+                  "cost": 1452.3
+                },
+                {
+                  "date": "2026-09-08",
+                  "cost": 1448.9
+                },
+                {
+                  "date": "2026-09-09",
+                  "cost": 1455.1
+                },
+                {
+                  "date": "2026-09-10",
+                  "cost": 1021.6
+                },
+                {
+                  "date": "2026-09-11",
+                  "cost": 312.4
+                },
+                {
+                  "date": "2026-09-12",
+                  "cost": 311.85
+                },
+                {
+                  "date": "2026-09-13",
+                  "cost": 312.1
+                },
+                {
+                  "date": "2026-09-14",
+                  "cost": 312.65
+                }
+              ]
+            },
+            "EC2 - Other": {
+              "cost": 391.9,
+              "daily": [
+                {
+                  "date": "2026-09-07",
+                  "cost": 58.2
+                },
+                {
+                  "date": "2026-09-08",
+                  "cost": 58.2
+                },
+                {
+                  "date": "2026-09-09",
+                  "cost": 58.2
+                },
+                {
+                  "date": "2026-09-10",
+                  "cost": 52.1
+                },
+                {
+                  "date": "2026-09-11",
+                  "cost": 41.3
+                },
+                {
+                  "date": "2026-09-12",
+                  "cost": 41.3
+                },
+                {
+                  "date": "2026-09-13",
+                  "cost": 41.3
+                },
+                {
+                  "date": "2026-09-14",
+                  "cost": 41.3
+                }
+              ]
+            },
+            "Amazon Simple Storage Service": {
+              "cost": 22.4,
+              "daily": [
+                {
+                  "date": "2026-09-07",
+                  "cost": 6.1
+                },
+                {
+                  "date": "2026-09-08",
+                  "cost": 6.1
+                },
+                {
+                  "date": "2026-09-09",
+                  "cost": 6.2
+                },
+                {
+                  "date": "2026-09-10",
+                  "cost": 4.0
+                }
+              ]
+            }
+          },
+          "total": 7041.2
+        }
+      ],
+      "total_cost": 7041.2
+    }
+  ],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-aws-k3p-0915",
+      "start": "2026-09-07",
+      "end": "2026-09-15"
+    }
+  ]
+}

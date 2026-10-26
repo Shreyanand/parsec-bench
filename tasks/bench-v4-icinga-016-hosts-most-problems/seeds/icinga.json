@@ -1,0 +1,206 @@
+{
+  "comments": [],
+  "downtimes": [],
+  "hosts": [
+    {
+      "name": "babylon-ocp-prod-us-east-1",
+      "type": "Host",
+      "attrs": {
+        "display_name": "Babylon OCP Prod us-east-1",
+        "host_name": "babylon-ocp-prod-us-east-1",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "babylon-ocp-prod-us-west-1",
+      "type": "Host",
+      "attrs": {
+        "display_name": "Babylon OCP Prod us-west-1",
+        "host_name": "babylon-ocp-prod-us-west-1",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "aap2-prod-us-west-2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "AAP2 Cluster aap2-prod-us-west-2",
+        "host_name": "aap2-prod-us-west-2",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "generic-rhdp",
+      "type": "Host",
+      "attrs": {
+        "display_name": "Generic RHDP",
+        "host_name": "generic-rhdp",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "babylon-ocp-prod-us-east-1!anarchy-stuck-subjects",
+      "type": "Service",
+      "attrs": {
+        "display_name": "[Anarchy] Stuck AnarchySubjects",
+        "host_name": "babylon-ocp-prod-us-east-1",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "CRITICAL - 14 AnarchySubjects stuck in provision-pending",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "babylon-ocp-prod-us-east-1!pod-pools-status",
+      "type": "Service",
+      "attrs": {
+        "display_name": "[Reporting] Pod pools status",
+        "host_name": "babylon-ocp-prod-us-east-1",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "CRITICAL - 3 resource pools below minimum available",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "babylon-ocp-prod-us-west-1!anarchy-stuck-subjects",
+      "type": "Service",
+      "attrs": {
+        "display_name": "[Anarchy] Stuck AnarchySubjects",
+        "host_name": "babylon-ocp-prod-us-west-1",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "CRITICAL - 6 AnarchySubjects stuck in provision-pending",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "babylon-ocp-prod-us-west-1!pod-pools-status",
+      "type": "Service",
+      "attrs": {
+        "display_name": "[Reporting] Pod pools status",
+        "host_name": "babylon-ocp-prod-us-west-1",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "WARNING - 1 resource pool below minimum available",
+          "state": 1,
+          "exit_status": 1
+        }
+      }
+    },
+    {
+      "name": "aap2-prod-us-west-2!aap2-job-status",
+      "type": "Service",
+      "attrs": {
+        "display_name": "AAP2 Job status",
+        "host_name": "aap2-prod-us-west-2",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "WARNING - 3 AAP2 jobs failed in the last window",
+          "state": 1,
+          "exit_status": 1
+        }
+      }
+    },
+    {
+      "name": "aap2-prod-us-west-2!cert-expiry",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Certificate expiry",
+        "host_name": "aap2-prod-us-west-2",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "WARNING - controller certificate expires in 19 days",
+          "state": 1,
+          "exit_status": 1
+        }
+      }
+    },
+    {
+      "name": "generic-rhdp!babylon-schema-yaml-diff",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Babylon Schema YAML Diff",
+        "host_name": "generic-rhdp",
+        "state": 3,
+        "state_type": 1,
+        "acknowledgement": 1,
+        "downtime_depth": 1,
+        "groups": [],
+        "last_check_result": {
+          "output": "UNKNOWN - GitHub API 401 Unauthorized",
+          "state": 3,
+          "exit_status": 3
+        }
+      }
+    }
+  ]
+}

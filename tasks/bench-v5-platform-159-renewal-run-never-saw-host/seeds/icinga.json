@@ -1,0 +1,107 @@
+{
+  "comments": [],
+  "downtimes": [],
+  "hosts": [],
+  "services": [
+    {
+      "name": "jira-ber-02!https",
+      "type": "Service",
+      "attrs": {
+        "display_name": "HTTPS",
+        "host_name": "jira-ber-02",
+        "state": 0,
+        "enable_active_checks": true,
+        "check_interval": 21600,
+        "last_state_change": 1788348000,
+        "last_check": 1794898800,
+        "last_check_result": {
+          "output": "HTTP OK: HTTP/1.1 200 OK - 18421 bytes in 0.212 second response time",
+          "state": 0,
+          "exit_status": 0,
+          "execution_end": 1794898800
+        },
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "jira-ber-02!https-cert-validity",
+      "type": "Service",
+      "attrs": {
+        "display_name": "HTTPS certificate validity",
+        "host_name": "jira-ber-02",
+        "state": 1,
+        "enable_active_checks": true,
+        "check_interval": 21600,
+        "last_state_change": 1793365200,
+        "last_check": 1794898800,
+        "last_check_result": {
+          "output": "SSL WARNING - Certificate 'jira-ber-02.corp.example.net' expires in 12 days (2026-11-29 08:15 +0000).",
+          "state": 1,
+          "exit_status": 1,
+          "execution_end": 1794898800
+        },
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "wiki-ber-01!https",
+      "type": "Service",
+      "attrs": {
+        "display_name": "HTTPS",
+        "host_name": "wiki-ber-01",
+        "state": 0,
+        "enable_active_checks": true,
+        "check_interval": 21600,
+        "last_state_change": 1787130300,
+        "last_check": 1794898800,
+        "last_check_result": {
+          "output": "HTTP OK: HTTP/1.1 200 OK - 9634 bytes in 0.087 second response time",
+          "state": 0,
+          "exit_status": 0,
+          "execution_end": 1794898800
+        },
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "wiki-ber-01!https-cert-validity",
+      "type": "Service",
+      "attrs": {
+        "display_name": "HTTPS certificate validity",
+        "host_name": "wiki-ber-01",
+        "state": 0,
+        "enable_active_checks": true,
+        "check_interval": 21600,
+        "last_state_change": 1794877200,
+        "last_check": 1794898800,
+        "last_check_result": {
+          "output": "SSL OK - Certificate 'wiki-ber-01.corp.example.net' will expire on 2027-02-15 10:42 +0000.",
+          "state": 0,
+          "exit_status": 0,
+          "execution_end": 1794898800
+        },
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    }
+  ]
+}

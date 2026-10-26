@@ -1,0 +1,116 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "mq-relay-ams-1"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "not-covered",
+        "any_of": [
+          "no downtime is in effect",
+          "not covered",
+          "isn't covered",
+          "no active downtime",
+          "no downtime covers",
+          "nothing covers",
+          "not in a downtime",
+          "not in downtime",
+          "no downtime is active",
+          "no downtime currently",
+          "neither covers",
+          "neither is in effect",
+          "none is in effect",
+          "neither is active",
+          "not in a maintenance window",
+          "pages are legitimate"
+        ],
+        "ignore_case": true,
+        "asked_by": "is one actually covering it at this moment",
+        "rationale": "the window vs 'now' comparison; both rows say is_in_effect false",
+        "derived": true,
+        "note": "Both downtime rows have is_in_effect false: the host downtime ended at end_time 1794952800 (2026-11-17 22:00 UTC) and the amqp-queue-depth one starts at start_time 1795204800 (2026-11-20 20:00 UTC), so neither covers 2026-11-18 09:30 UTC."
+      },
+      {
+        "id": "expired-end",
+        "any_of": [
+          "2026-11-17 22:00",
+          "22:00 UTC on 2026-11-17",
+          "17 Nov",
+          "Nov 17",
+          "November 17",
+          "2026-11-17",
+          "22:00 yesterday",
+          "22:00 UTC yesterday"
+        ],
+        "ignore_case": true,
+        "asked_by": "when it runs",
+        "rationale": "the expired window's date; not in the instruction",
+        "derived": true,
+        "note": "The seed carries the time as epoch seconds: rvoskuijlen's downtime has end_time 1794952800, which is 2026-11-17 22:00 UTC."
+      },
+      {
+        "id": "future-start",
+        "any_of": [
+          "2026-11-20",
+          "Nov 20",
+          "20 Nov",
+          "November 20"
+        ],
+        "ignore_case": true,
+        "asked_by": "when it runs",
+        "rationale": "the future window's date",
+        "derived": true,
+        "note": "The seed carries the time as epoch seconds: tsalonen's downtime has start_time 1795204800, which is 2026-11-20 20:00 UTC."
+      },
+      {
+        "id": "hours-since-end",
+        "any_of": [
+          "11.5 hours",
+          "11.5 h",
+          "11 and a half hours",
+          "eleven and a half hours",
+          "11h30",
+          "11 h 30",
+          "11:30 ago",
+          "11.5h",
+          "11.5 hrs",
+          "11.5-hour",
+          "11 hours 30 minutes",
+          "11 hours and 30 minutes",
+          "11h 30m",
+          "11.5"
+        ],
+        "ignore_case": true,
+        "asked_by": "at this moment",
+        "rationale": "09:30 minus 22:00 the previous day; derived",
+        "derived": true,
+        "note": "Computed: the expired downtime's end_time 1794952800 is 2026-11-17 22:00 UTC, 11.5 hours before the 2026-11-18 09:30 UTC the instruction states."
+      }
+    ],
+    "required_total": 6,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

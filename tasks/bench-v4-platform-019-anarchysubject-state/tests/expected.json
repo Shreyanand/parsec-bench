@@ -1,0 +1,98 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "cluster": "east"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "east",
+          "name": "ocp4-cluster"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects"
+        },
+        "absent_args": [
+          "cluster",
+          "sandbox_comment",
+          "guid"
+        ]
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component"
+        },
+        "absent_args": [
+          "cluster",
+          "sandbox_comment"
+        ]
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "current-state",
+        "any_of": [
+          "provision-failed"
+        ],
+        "ignore_case": true,
+        "asked_by": "report its current state",
+        "rationale": "the subject's actual state; the other seeded subject is 'started', so naming that is a wrong-record error"
+      },
+      {
+        "id": "desired-state",
+        "any_of": [
+          "started"
+        ],
+        "ignore_case": true,
+        "asked_by": "and its desired state",
+        "rationale": "the gap between current and desired is the finding, and it needs both halves"
+      },
+      {
+        "id": "cloud-provider",
+        "any_of": [
+          "openshift_cnv"
+        ],
+        "ignore_case": true,
+        "asked_by": "which cloud provider it uses",
+        "rationale": "from the component definition, so the second call cannot be skipped"
+      }
+    ],
+    "counts": [
+      {
+        "id": "expected-instances",
+        "value": 5,
+        "nouns": [
+          "instances",
+          "instance"
+        ],
+        "window": 6,
+        "asked_by": "report how many instances that component expects",
+        "rationale": "the length of expected_instances, which the component record carries as a list rather than a number -- so the count has to be derived, not copied"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

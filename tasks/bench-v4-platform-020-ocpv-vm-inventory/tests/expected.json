@@ -1,0 +1,84 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "find_namespace",
+          "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_vms",
+          "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_pvcs",
+          "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "counts": [
+      {
+        "id": "vm-count",
+        "value": 3,
+        "nouns": [
+          "VMs",
+          "VM",
+          "machines",
+          "virtual machines"
+        ],
+        "window": 6,
+        "asked_by": "Report how many VMs there are",
+        "rationale": "the length of the list_vms result"
+      }
+    ],
+    "required": [
+      {
+        "id": "stopped-vm",
+        "any_of": [
+          "worker-0"
+        ],
+        "ignore_case": true,
+        "asked_by": "name the one that is not running",
+        "rationale": "two of the three are Running; naming a running VM is a wrong-record error"
+      },
+      {
+        "id": "vm-status",
+        "any_of": [
+          "Stopped"
+        ],
+        "ignore_case": true,
+        "asked_by": "and give its status",
+        "rationale": "the VM's own status field"
+      },
+      {
+        "id": "pvc-state",
+        "any_of": [
+          "Pending"
+        ],
+        "ignore_case": true,
+        "asked_by": "say what state its PVC is in",
+        "rationale": "from list_pvcs, so the third call cannot be skipped -- and it is the actual explanation: the VM cannot start because its volume never bound"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

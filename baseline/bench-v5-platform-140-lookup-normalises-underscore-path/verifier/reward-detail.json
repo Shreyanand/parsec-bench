@@ -1,0 +1,128 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 663920
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "f4nqz"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "retrieval_lab"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "retrieval_lab",
+          "state": "all"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "knowledge_bu/retrieval-lab",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "knowledge_bu",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "retrieval"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "knowledge_bu"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "knowledge_bu",
+          "state": "closed"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [
+      {
+        "id": "gone-or-glitch",
+        "none_of": [
+          "item was deleted",
+          "item has been deleted",
+          "item was removed",
+          "item has been removed",
+          "deleted in the cleanup",
+          "removed in the cleanup",
+          "deleted during the cleanup",
+          "removed during the cleanup",
+          "item no longer exists",
+          "item is gone",
+          "transient GitHub",
+          "temporary GitHub",
+          "GitHub glitch",
+          "GitHub hiccup",
+          "GitHub was down",
+          "GitHub outage"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "colleague's theory",
+          "colleague thinks",
+          "colleague believes",
+          "colleague is sure",
+          "colleague's claim",
+          "colleague suspects",
+          "colleague's suspicion"
+        ],
+        "rationale": "the item exists (found: true) under a hyphenated name and the stat failed on a literal underscore path; a deletion or a transient GitHub fault is the wrong cause, and a relaunch would fail identically"
+      }
+    ],
+    "forbidden_total": 1
+  }
+}

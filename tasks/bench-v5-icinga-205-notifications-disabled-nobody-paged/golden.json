@@ -1,0 +1,16 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "sso-idp-fra-01"
+      },
+      "result": {
+        "result": "[{\"name\":\"sso-idp-fra-01!ldap-bind-latency\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"LDAP bind latency\",\"host_name\":\"sso-idp-fra-01\",\"state\":1,\"check_attempt\":3,\"enable_notifications\":true,\"last_state_change\":1795036440,\"last_hard_state_change\":1795036560,\"last_notification\":1795036560,\"last_check\":1795067820,\"last_check_result\":{\"output\":\"LDAP WARNING - bind took 840 ms (warn 500 ms)\",\"state\":1,\"exit_status\":1},\"state_type\":1,\"max_check_attempts\":3,\"check_interval\":300,\"retry_interval\":60,\"acknowledgement\":0,\"downtime_depth\":0}},{\"name\":\"sso-idp-fra-01!oidc-discovery\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"OIDC discovery document\",\"host_name\":\"sso-idp-fra-01\",\"state\":0,\"check_attempt\":1,\"enable_notifications\":true,\"last_state_change\":1793608200,\"last_notification\":1793608200,\"last_check\":1795067880,\"last_check_result\":{\"output\":\"HTTP OK - /.well-known/openid-configuration 200 in 0.041 s\",\"state\":0,\"exit_status\":0},\"state_type\":1,\"max_check_attempts\":3,\"check_interval\":300,\"retry_interval\":60,\"acknowledgement\":0,\"downtime_depth\":0}},{\"name\":\"sso-idp-fra-01!saml-cert-chain\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"SAML signing certificate chain\",\"host_name\":\"sso-idp-fra-01\",\"state\":2,\"check_attempt\":3,\"enable_notifications\":false,\"last_state_change\":1794999360,\"last_hard_state_change\":1794999600,\"last_notification\":0,\"last_check\":1795067760,\"last_check_result\":{\"output\":\"SAML CRITICAL - signing chain incomplete: intermediate 'Bittern Issuing CA G3' missing from IdP metadata\",\"state\":2,\"exit_status\":2},\"state_type\":1,\"max_check_attempts\":3,\"check_interval\":300,\"retry_interval\":60,\"acknowledgement\":0,\"downtime_depth\":0}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "Icinga stayed silent because notifications are disabled on that one service: `saml-cert-chain` has\nenable_notifications = false, and its last_notification is 0, so it has never sent a notification for this\nproblem. Nothing else was suppressing it - acknowledgement is 0 and downtime_depth is 0.\n\nIt went CRITICAL at 2026-11-18 10:56 UTC and became a HARD CRITICAL at 11:00 UTC (last_hard_state_change),\nso at 06:00 UTC on 2026-11-19 it had been hard CRITICAL for 19 hours. Output: \"SAML CRITICAL - signing chain\nincomplete: intermediate 'Bittern Issuing CA G3' missing from IdP metadata\".\n\nThe overnight page the engineer did get was for `ldap-bind-latency` (WARNING, notifications enabled, notified at\n21:16 UTC), which is why their pager clearly works. Fix: re-enable notifications on saml-cert-chain (and find out\nwho disabled them and why), then fix the missing intermediate in the IdP metadata."
+}

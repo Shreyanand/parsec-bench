@@ -1,0 +1,58 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.4,
+    "answer": 0.6
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "fulmar",
+          "namespace": "user-tkariuki-redhat-com",
+          "name": "ocp4-etcd-perf-lab-k3dzr"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ocp4-etcd-perf-lab"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "fulmar",
+          "name": "ocp4.etcd-perf-lab.prod"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "perfscale/ocp4-etcd-perf-lab/catalog_item.yml",
+          "ref": "development"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 0
+  }
+}

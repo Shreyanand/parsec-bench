@@ -1,0 +1,313 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "search_catalog",
+        "cluster": "condor",
+        "search": "Network Automation Fundamentals"
+      },
+      "result": {
+        "cluster": "condor",
+        "items": [
+          {
+            "ci_name": "netauto.fundamentals",
+            "display_name": "Network Automation Fundamentals",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "a51c8e03-7d2f-4b96-9e14-c08b3f6d2a75",
+            "keywords": [
+              "ansible",
+              "network automation"
+            ]
+          },
+          {
+            "ci_name": "netauto.fundamentals-instructor",
+            "display_name": "Network Automation Fundamentals - Instructor Edition",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "f02a7c9e-81d4-4b30-a5e6-2c9f0d7b31a0",
+            "keywords": [
+              "ansible",
+              "instructor"
+            ]
+          }
+        ],
+        "count": 2,
+        "total_scanned": 3,
+        "truncated": false
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "get_component",
+        "cluster": "condor",
+        "name": "netauto.fundamentals"
+      },
+      "result": {
+        "cluster": "condor",
+        "name": "netauto.fundamentals",
+        "cloud_provider": "aws",
+        "env_type": "network-automation",
+        "platform": "rhpds",
+        "expected_instances": [
+          {
+            "purpose": "bastion",
+            "instance_type": "t3a.xlarge",
+            "count": 1
+          },
+          {
+            "purpose": "router",
+            "instance_type": "c6i.large",
+            "count": 4
+          }
+        ],
+        "definition": {
+          "scm_ref": "v3.2.0",
+          "router_image": "cisco-c8000v"
+        },
+        "scm_url": "https://github.com/rhpds/netauto-labs.git",
+        "scm_ref": "v3.2.0",
+        "agnosticv_repo": "rhpds/agnosticv",
+        "agnosticv_path": "netauto/fundamentals/common.yaml"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "search_catalog",
+        "cluster": "heron",
+        "search": "Network Automation Fundamentals"
+      },
+      "result": {
+        "cluster": "heron",
+        "items": [
+          {
+            "ci_name": "netauto.fundamentals",
+            "display_name": "Network Automation Fundamentals",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "4e9d1b70-2a63-4c58-b7f1-0d85e3a9c642",
+            "keywords": [
+              "ansible",
+              "network automation"
+            ]
+          },
+          {
+            "ci_name": "netauto.fundamentals-instructor",
+            "display_name": "Network Automation Fundamentals - Instructor Edition",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "f12a7c9e-81d4-4b30-a5e6-2c9f0d7b31a1",
+            "keywords": [
+              "ansible",
+              "instructor"
+            ]
+          }
+        ],
+        "count": 2,
+        "total_scanned": 3,
+        "truncated": false
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "get_component",
+        "cluster": "heron",
+        "name": "netauto.fundamentals"
+      },
+      "result": {
+        "cluster": "heron",
+        "name": "netauto.fundamentals",
+        "cloud_provider": "aws",
+        "env_type": "network-automation",
+        "platform": "rhpds",
+        "expected_instances": [
+          {
+            "purpose": "bastion",
+            "instance_type": "t3a.xlarge",
+            "count": 1
+          },
+          {
+            "purpose": "router",
+            "instance_type": "c6i.large",
+            "count": 4
+          }
+        ],
+        "definition": {
+          "scm_ref": "v2.9.4",
+          "router_image": "cisco-c8000v"
+        },
+        "scm_url": "https://github.com/rhpds/netauto-labs.git",
+        "scm_ref": "v2.9.4",
+        "agnosticv_repo": "rhpds/agnosticv",
+        "agnosticv_path": "netauto/fundamentals/common.yaml"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "search_catalog",
+        "cluster": "kite",
+        "search": "Network Automation Fundamentals"
+      },
+      "result": {
+        "cluster": "kite",
+        "items": [
+          {
+            "ci_name": "netauto.fundamentals",
+            "display_name": "Network Automation Fundamentals",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "d7302f9a-5b1e-48c4-a6d3-91f0c2e7b584",
+            "keywords": [
+              "ansible",
+              "network automation"
+            ]
+          },
+          {
+            "ci_name": "netauto.fundamentals-instructor",
+            "display_name": "Network Automation Fundamentals - Instructor Edition",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "f22a7c9e-81d4-4b30-a5e6-2c9f0d7b31a2",
+            "keywords": [
+              "ansible",
+              "instructor"
+            ]
+          }
+        ],
+        "count": 2,
+        "total_scanned": 3,
+        "truncated": false
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "get_component",
+        "cluster": "kite",
+        "name": "netauto.fundamentals"
+      },
+      "result": {
+        "cluster": "kite",
+        "name": "netauto.fundamentals",
+        "cloud_provider": "aws",
+        "env_type": "network-automation",
+        "platform": "rhpds",
+        "expected_instances": [
+          {
+            "purpose": "bastion",
+            "instance_type": "t3a.xlarge",
+            "count": 1
+          },
+          {
+            "purpose": "router",
+            "instance_type": "c6i.large",
+            "count": 4
+          }
+        ],
+        "definition": {
+          "scm_ref": "v3.2.0",
+          "router_image": "cisco-c8000v"
+        },
+        "scm_url": "https://github.com/rhpds/netauto-labs.git",
+        "scm_ref": "v3.2.0",
+        "agnosticv_repo": "rhpds/agnosticv",
+        "agnosticv_path": "netauto/fundamentals/common.yaml"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "search_catalog",
+        "cluster": "puffin",
+        "search": "Network Automation Fundamentals"
+      },
+      "result": {
+        "cluster": "puffin",
+        "items": [
+          {
+            "ci_name": "netauto.fundamentals-ng",
+            "display_name": "Network Automation Fundamentals",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "8c16a4d2-e05b-4f73-9a28-36d7b1f0e9c3",
+            "keywords": [
+              "ansible",
+              "network automation"
+            ]
+          },
+          {
+            "ci_name": "netauto.fundamentals-instructor",
+            "display_name": "Network Automation Fundamentals - Instructor Edition",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "f32a7c9e-81d4-4b30-a5e6-2c9f0d7b31a3",
+            "keywords": [
+              "ansible",
+              "instructor"
+            ]
+          }
+        ],
+        "count": 2,
+        "total_scanned": 3,
+        "truncated": false
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "get_component",
+        "cluster": "puffin",
+        "name": "netauto.fundamentals-ng"
+      },
+      "result": {
+        "cluster": "puffin",
+        "name": "netauto.fundamentals-ng",
+        "cloud_provider": "aws",
+        "env_type": "network-automation",
+        "platform": "rhpds",
+        "expected_instances": [
+          {
+            "purpose": "bastion",
+            "instance_type": "t3a.xlarge",
+            "count": 1
+          },
+          {
+            "purpose": "router",
+            "instance_type": "c6i.large",
+            "count": 4
+          }
+        ],
+        "definition": {
+          "scm_ref": "v3.2.0",
+          "router_image": "cisco-c8000v"
+        },
+        "scm_url": "https://github.com/rhpds/netauto-labs.git",
+        "scm_ref": "v3.2.0",
+        "agnosticv_repo": "rhpds/agnosticv",
+        "agnosticv_path": "netauto/fundamentals/common.yaml"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "heron is the odd one out.\n\n\"Network Automation Fundamentals\" (the student lab, not the Instructor Edition) on each cluster:\n\n| cluster | ci_name | scm_ref |\n|---|---|---|\n| condor | netauto.fundamentals | v3.2.0 |\n| heron | netauto.fundamentals | v2.9.4 |\n| kite | netauto.fundamentals | v3.2.0 |\n| puffin | netauto.fundamentals-ng | v3.2.0 |\n\n3 clusters (condor, kite, puffin) build it from v3.2.0 of https://github.com/rhpds/netauto-labs.git. heron's component still points at v2.9.4. Everything else matches across all four: aws, agnosticv path netauto/fundamentals/common.yaml, and the same expected instances.\n\nOn puffin the catalog item is named netauto.fundamentals-ng, so its component lookup has to use that name. Each catalog also lists a separate Instructor Edition item (netauto.fundamentals-instructor). That is a different item and was left out of the comparison.\n"
+}

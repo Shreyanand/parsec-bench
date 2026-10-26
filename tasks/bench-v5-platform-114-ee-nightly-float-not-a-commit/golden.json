@@ -1,0 +1,66 @@
+{
+ "tool_calls": [
+  {
+   "name": "query_aap2",
+   "args": {
+    "action": "get_job_log",
+    "controller": "east",
+    "job_id": 5530918
+   },
+   "result": {
+    "job_id": 5530918,
+    "job_name": "RHDP agd-v2.devspaces-workshop.prod-h6ztr-provision",
+    "status": "failed",
+    "failed": true,
+    "started": "2026-10-03T09:41:05.000Z",
+    "finished": "2026-10-03T10:06:33.000Z",
+    "duration_seconds": 1528,
+    "launch_type": "workflow",
+    "job_explanation": "",
+    "template_name": "RHDP agd-v2.devspaces-workshop.prod-provision",
+    "env_type": "prod",
+    "guid": "h6ztr",
+    "action": "provision",
+    "cloud_provider": "aws",
+    "display_name": "devspaces-workshop",
+    "controller": "east",
+    "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+    "git_branch": "main",
+    "git_revision": "e41d07a9b2c6",
+    "log": "PLAY [Runtime information] *****************************************\nTASK [runtime_info : Report the execution environment] *************\nok: [localhost] => {\"msg\": \"EE quay.io/rhpds/ee-rhdp-multicloud:latest (built 2026-10-03T03:10:22Z from github.com/rhpds/ee-rhdp-multicloud@main); collections: amazon.aws 8.2.1, kubernetes.core 5.1.0, rhdp.openshift_helpers 4.0.0\"}\n\nPLAY [Install workloads] *******************************************\nTASK [ocp4_wait_for_api : Wait for the cluster API to answer] ******\nFAILED - RETRYING: [localhost]: Wait for the cluster API to answer (20 retries left).\nFAILED - RETRYING: [localhost]: Wait for the cluster API to answer (19 retries left).\nok: [localhost]\n\nTASK [ocp4_workload_devspaces : Install the Dev Spaces operator] ***\nfatal: [localhost]: FAILED! => {\"changed\": false, \"msg\": \"Unsupported parameters for (rhdp.openshift_helpers.operator_install) module: install_timeout. Supported parameters include: catalog_source, channel, name, namespace, starting_csv, timeout.\"}\n\nPLAY RECAP *********************************************************\nlocalhost : ok=38 changed=12 unreachable=0 failed=1 skipped=4 rescued=0 ignored=0\n",
+    "log_original_size": 1168,
+    "log_trimmed_size": 1168
+   },
+   "is_error": false
+  },
+  {
+   "name": "search_github_repo",
+   "args": {
+    "owner": "rhpds",
+    "repo": "ee-rhdp-multicloud",
+    "search": "openshift_helpers"
+   },
+   "result": {
+    "matches": [
+     "requirements.yml"
+    ],
+    "total_matches": 1,
+    "truncated": false
+   },
+   "is_error": false
+  },
+  {
+   "name": "fetch_github_file",
+   "args": {
+    "owner": "rhpds",
+    "repo": "ee-rhdp-multicloud",
+    "path": "requirements.yml"
+   },
+   "result": {
+    "content": "---\n# Collections baked into quay.io/rhpds/ee-rhdp-multicloud.\n# The image is rebuilt nightly at 03:10 UTC from main and pushed as :latest\n# (.github/workflows/nightly.yml); catalog items use :latest.\ncollections:\n  - name: amazon.aws\n    version: \">=8.0.0,<9.0.0\"\n  - name: kubernetes.core\n    version: \">=5.0.0,<6.0.0\"\n  - name: rhdp.openshift_helpers\n    version: \">=3.2.0\"\n  - name: community.general\n    version: \">=9.0.0,<10.0.0\"\n"
+   },
+   "is_error": false
+  }
+ ],
+ "answer": "Nothing in agnosticd changed, so bisecting will find nothing. The runtime changed under the same code.\n\n**What broke.** Job 5530918 failed in `ocp4_workload_devspaces : Install the Dev Spaces operator`: `Unsupported parameters for (rhdp.openshift_helpers.operator_install) module: install_timeout` -- the module now accepts `timeout` instead. The earlier \"Wait for the cluster API\" retries recovered (ok after two retries) and are not involved.\n\n**Same code.** The failing job ran agnosticd revision `e41d07a9b2c6`, the same revision as the good run 5528440.\n\n**What changed.** The job's runtime line shows EE `quay.io/rhpds/ee-rhdp-multicloud:latest`, built 2026-10-03T03:10:22Z from `rhpds/ee-rhdp-multicloud@main` -- after the good run -- carrying `rhdp.openshift_helpers 4.0.0`. The EE's `requirements.yml` pins amazon.aws, kubernetes.core and community.general below their next major, but lists `rhdp.openshift_helpers` as `>=3.2.0` with no upper bound. The image is rebuilt nightly at 03:10 UTC and pushed as `:latest`, which catalog items use, so the nightly build picked up the 4.0.0 major release, which dropped the `install_timeout` parameter the role still passes.\n\n**Fix.** Short term, pin the EE back to the previous image digest (or cap `rhdp.openshift_helpers` at `<4.0.0` and rebuild). Then update the role to use `timeout`, and stop consuming a floating `:latest` EE for production items.\n"
+}

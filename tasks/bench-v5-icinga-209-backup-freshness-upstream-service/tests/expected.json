@@ -1,0 +1,132 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "pg-archive-01"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/storage/check_marker_age.sh"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "pg-primary-ord-1"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "upstream-service",
+        "any_of": [
+          "pg-basebackup",
+          "pg_basebackup",
+          "base backup"
+        ],
+        "ignore_case": true,
+        "asked_by": "follow it to whatever is really broken",
+        "rationale": "named only by the script and the primary's services"
+      },
+      {
+        "id": "upstream-host",
+        "any_of": [
+          "pg-primary-ord-1"
+        ],
+        "ignore_case": true,
+        "asked_by": "whatever is really broken",
+        "rationale": "the host the script points to"
+      },
+      {
+        "id": "real-cause",
+        "any_of": [
+          "max_wal_senders",
+          "standby connections",
+          "wal senders",
+          "wal_senders"
+        ],
+        "ignore_case": true,
+        "asked_by": "whatever is really broken",
+        "rationale": "only in the third call's output, so it proves the chain was followed"
+      },
+      {
+        "id": "failure-start",
+        "any_of": [
+          "2026-11-17 21:52",
+          "21:52",
+          "2026-11-17 21:40",
+          "21:40 UTC on 2026-11-17",
+          "21:40 on 2026-11-17",
+          "Nov 17",
+          "17 Nov",
+          "2026-11-17"
+        ],
+        "ignore_case": true,
+        "asked_by": "when the real failure started",
+        "rationale": "the upstream service's state change / last run"
+      }
+    ],
+    "counts": [
+      {
+        "id": "warn-hours",
+        "value": 26,
+        "nouns": [
+          "hours",
+          "h",
+          "warning",
+          "warn"
+        ],
+        "window": 4,
+        "asked_by": "the plugin's warning threshold",
+        "rationale": "WARN_HOURS default; appears only in the script",
+        "extra_any_of": [
+          "26 h",
+          "26h",
+          "26 hours"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "blames-archive",
+        "none_of": [
+          "archive disk is full",
+          "disk is full",
+          "out of space",
+          "archive host is broken",
+          "restart the archive"
+        ],
+        "ignore_case": true,
+        "rationale": "the single-hop reading: blame the host that alerts",
+        "attributed_to": [
+          "archive box is fine",
+          "archive host is fine",
+          "not the archive",
+          "is not full",
+          "isn't full",
+          "not out of space"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

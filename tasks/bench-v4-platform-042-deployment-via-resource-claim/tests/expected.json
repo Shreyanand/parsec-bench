@@ -1,0 +1,292 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "cluster": "west",
+          "guid": "tq4hm"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "west",
+          "namespace": "user-rortiz-redhat-com",
+          "name": "ansible-lightspeed-lab-tq4hm"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "name": "ansible-lightspeed-lab.tq4hm"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "namespace": "babylon-anarchy-ansible-lightspeed-lab"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "deployment-not-healthy",
+        "any_of": [
+          "not healthy",
+          "not yet healthy",
+          "not currently healthy",
+          "isn't healthy",
+          "is not healthy",
+          "nor healthy",
+          "neither healthy",
+          "healthy: false",
+          "healthy=false",
+          "healthy = false",
+          "healthy false",
+          "healthy is false",
+          "healthy flag is false",
+          "healthy flag false",
+          "healthy\": false",
+          "healthy` is `false",
+          "healthy`: `false",
+          "healthy`=`false",
+          "healthy | false",
+          "healthy | no",
+          "healthy: no",
+          "healthy:** false",
+          "healthy: **false**",
+          "healthy: `false`",
+          "healthy is set to false",
+          "healthy reports false",
+          "healthy` = `false",
+          "healthy` false",
+          "healthy \u2192 false",
+          "healthy -> false",
+          "healthy (false)",
+          "healthy` (`false`)",
+          "healthy: (false)",
+          "healthy? no",
+          "healthy?** no",
+          "healthy? \u2014 no",
+          "healthy \u2014 no",
+          "healthy - no",
+          "healthy: \u2717",
+          "healthy: \u274c",
+          "unhealthy",
+          "healthy and ready are both false",
+          "healthy and ready both false",
+          "both healthy and ready are false",
+          "healthy and ready flags are both false",
+          "healthy and ready are false",
+          "healthy/ready: false",
+          "healthy/ready are both false",
+          "healthy/ready both false",
+          "healthy and ready: false",
+          "healthy and ready = false",
+          "both false",
+          "false for both",
+          "healthy**: false",
+          "healthy`: false",
+          "healthy` = false",
+          "healthy is `false`",
+          "healthy` is false",
+          "healthy \u2014 false",
+          "healthy? false",
+          "healthy: **no**",
+          "healthy**: no",
+          "health: false",
+          "healthy as false",
+          "both set to false",
+          "false | false",
+          "not reached a healthy",
+          "not in a healthy state",
+          "hasn't reached a healthy",
+          "health status: false"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "tell me whether it is healthy",
+        "note": "the seeded deployment row has healthy: false; an answer states it as a negation (not healthy, unhealthy) or as the flag value, neither of which is one literal in the seed",
+        "rationale": "the claim-backed deployment has healthy: false; the subject row says healthy: true and the decoy deployment at the subject's own name and namespace says healthy: true, so only the get_deployment on the resource_claim coordinates yields this"
+      },
+      {
+        "id": "deployment-not-ready",
+        "any_of": [
+          "not ready",
+          "not yet ready",
+          "not currently ready",
+          "isn't ready",
+          "is not ready",
+          "nor ready",
+          "neither ready",
+          "ready: false",
+          "ready=false",
+          "ready = false",
+          "ready false",
+          "ready is false",
+          "ready flag is false",
+          "ready flag false",
+          "ready\": false",
+          "ready` is `false",
+          "ready`: `false",
+          "ready`=`false",
+          "ready | false",
+          "ready | no",
+          "ready: no",
+          "ready:** false",
+          "ready: **false**",
+          "ready: `false`",
+          "ready is set to false",
+          "ready reports false",
+          "ready` = `false",
+          "ready` false",
+          "ready \u2192 false",
+          "ready -> false",
+          "ready (false)",
+          "ready` (`false`)",
+          "ready: (false)",
+          "ready? no",
+          "ready?** no",
+          "ready? \u2014 no",
+          "ready \u2014 no",
+          "ready - no",
+          "ready: \u2717",
+          "ready: \u274c",
+          "unready",
+          "never became ready",
+          "never got ready",
+          "healthy and ready are both false",
+          "healthy and ready both false",
+          "both healthy and ready are false",
+          "healthy and ready flags are both false",
+          "healthy and ready are false",
+          "healthy/ready: false",
+          "healthy/ready are both false",
+          "healthy/ready both false",
+          "healthy and ready: false",
+          "healthy and ready = false",
+          "both false",
+          "false for both",
+          "ready**: false",
+          "ready`: false",
+          "ready` = false",
+          "ready is `false`",
+          "ready` is false",
+          "ready \u2014 false",
+          "ready? false",
+          "ready: **no**",
+          "ready**: no",
+          "readiness: false",
+          "ready as false",
+          "both set to false",
+          "false | false",
+          "not become ready",
+          "hasn't become ready",
+          "not reached a ready",
+          "not in a ready state",
+          "hasn't reached a healthy or ready"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "whether it is ready",
+        "note": "the seeded deployment row has ready: false; an answer states it as a negation (not ready) or as the flag value",
+        "rationale": "the claim-backed deployment has ready: false; the subject row carries no readiness and the decoy deployment says ready: true"
+      },
+      {
+        "id": "catalog-item",
+        "any_of": [
+          "ansible-lightspeed-lab.prod"
+        ],
+        "ignore_case": true,
+        "asked_by": "which catalog item it was ordered from",
+        "rationale": "only the claim-backed deployment row carries catalog_item ansible-lightspeed-lab.prod; the subject row has only the governor ansible-lightspeed-lab and the decoy deployment says ansible-lightspeed-lab.event"
+      },
+      {
+        "id": "asset-uuid",
+        "any_of": [
+          "c41e7b2a-5d93-4f08-b6a1-7e2d90f3c58d"
+        ],
+        "ignore_case": true,
+        "asked_by": "the asset UUID it carries",
+        "rationale": "the claim-backed deployment's asset_uuid; the decoy carries 8d0f3e61-... and the subject row none"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "deployment-declared-healthy",
+        "ignore_case": true,
+        "none_of": [
+          "deployment is healthy",
+          "deployment is ready",
+          "claim is healthy",
+          "claim is ready",
+          "-tq4hm is healthy",
+          "-tq4hm is ready",
+          "tq4hm is ready",
+          "is both healthy and ready",
+          "yes, it is healthy",
+          "yes, it's healthy",
+          "yes, healthy",
+          "yes - healthy",
+          "yes \u2014 healthy",
+          "ready: true",
+          "ready=true",
+          "ready = true",
+          "ready | true",
+          "ready | yes",
+          "ready: yes",
+          "ready:** true",
+          "ready: **true**",
+          "ready: `true`",
+          "ready` is `true",
+          "ready is true",
+          "is healthy and ready",
+          "'s healthy and ready",
+          "healthy and ready: yes",
+          "healthy and ready: true",
+          "deployment was healthy",
+          "deployment was ready",
+          "claim was healthy",
+          "claim was ready",
+          "was healthy and ready",
+          "was both healthy and ready"
+        ],
+        "attributed_to": [
+          "once ",
+          "until ",
+          "when ",
+          " if ",
+          "wait",
+          "after ",
+          "should",
+          "expected to",
+          " unless",
+          " would",
+          "false",
+          "healthy?",
+          "ready?"
+        ],
+        "rationale": "the decoy reading: the ResourceClaim stored at the subject's own name and namespace is healthy and ready, so an agent that looks the deployment up by the subject's identity reports a healthy lab. Precision over recall (hazard 8): forms are anchored to the deployment/claim, to the claim's -tq4hm name, or are an affirmative yes or a true flag value; none sits inside its negation (not healthy, isn't ready, is not both healthy and ready). Bare healthy: true is absent because the subject row honestly carries healthy: true. attributed_to excuses conditional and remediation sentences (once/until/when/if/unless/would/should/wait/after) and any sentence stating a false flag, because 'the deployment is healthy: false' contains 'deployment is healthy'; the cost is that a fabricator sentence carrying one of those words is not caught and ties mute"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

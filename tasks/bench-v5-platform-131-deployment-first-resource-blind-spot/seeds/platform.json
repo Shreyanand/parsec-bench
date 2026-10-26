@@ -1,0 +1,138 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [
+    {
+      "babylon_anarchy_subject_id": "merlin-rhoai-gpu-bundle.f3nlx",
+      "cluster": "merlin",
+      "name": "rhoai-gpu-bundle.f3nlx",
+      "namespace": "babylon-anarchy-rhoai-gpu-bundle",
+      "governor": "rhoai-gpu-bundle",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "f3nlx",
+        "env_type": "rhoai-gpu-bundle",
+        "cloud_provider": "aws"
+      },
+      "requester_email": "oabara@redhat.com",
+      "resource_claim": {
+        "name": "rhoai-gpu-bundle-f3nlx",
+        "namespace": "user-oabara-redhat-com"
+      },
+      "tower_jobs": {
+        "provision": {
+          "controller": "west",
+          "job_id": 5561874
+        }
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "merlin-rhoai-gpu-bundle-gpu-workers.f3nlx",
+      "cluster": "merlin",
+      "name": "rhoai-gpu-bundle-gpu-workers.f3nlx",
+      "namespace": "babylon-anarchy-rhoai-gpu-bundle-gpu-workers",
+      "governor": "rhoai-gpu-bundle-gpu-workers",
+      "current_state": "provision-failed",
+      "desired_state": "started",
+      "healthy": false,
+      "instance_vars": {
+        "guid": "f3nlx",
+        "env_type": "rhoai-gpu-bundle-gpu-workers",
+        "cloud_provider": "aws"
+      },
+      "requester_email": "oabara@redhat.com",
+      "resource_claim": {
+        "name": "rhoai-gpu-bundle-f3nlx",
+        "namespace": "user-oabara-redhat-com"
+      },
+      "tower_jobs": {
+        "provision": {
+          "controller": "west",
+          "job_id": 5562091
+        }
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "merlin-ansible-basics.c8wrk",
+      "cluster": "merlin",
+      "name": "ansible-basics.c8wrk",
+      "namespace": "babylon-anarchy-ansible-basics",
+      "governor": "ansible-basics",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "c8wrk",
+        "env_type": "ansible-basics"
+      },
+      "requester_email": "oabara@redhat.com",
+      "resource_claim": {
+        "name": "ansible-basics-c8wrk",
+        "namespace": "user-oabara-redhat-com"
+      }
+    }
+  ],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [
+    {
+      "babylon_deployment_id": "merlin-user-oabara-redhat-com-ansible-basics-c8wrk",
+      "cluster": "merlin",
+      "name": "ansible-basics-c8wrk",
+      "namespace": "user-oabara-redhat-com",
+      "catalog_item": "ansible-basics.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "3b7d0e52-8a19-4f6c-b2e4-91c5d07a6f38",
+      "healthy": true,
+      "ready": true,
+      "state": "started",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "c8wrk",
+        "env_type": "ansible-basics"
+      },
+      "lifespan": {
+        "start": "2026-10-09T14:00:00Z",
+        "end": "2026-10-16T14:00:00Z"
+      }
+    },
+    {
+      "babylon_deployment_id": "merlin-user-oabara-redhat-com-rhoai-gpu-bundle-f3nlx",
+      "cluster": "merlin",
+      "name": "rhoai-gpu-bundle-f3nlx",
+      "namespace": "user-oabara-redhat-com",
+      "catalog_item": "rhoai-gpu-bundle.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "9f42c6a1-07de-4b53-a8f9-6e1b3d250c7a",
+      "healthy": true,
+      "ready": true,
+      "state": "started",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "f3nlx",
+        "env_type": "rhoai-gpu-bundle"
+      },
+      "lifespan": {
+        "start": "2026-10-09T14:00:00Z",
+        "end": "2026-10-19T14:00:00Z"
+      }
+    }
+  ],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

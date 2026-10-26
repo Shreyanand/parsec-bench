@@ -1,0 +1,176 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [
+    {
+      "name": "larch-6qz4t-master-0",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-12-201.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2a/i-0a41d7c3e9b2f5618",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-master-0"
+    },
+    {
+      "name": "larch-6qz4t-master-1",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-140-77.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2b/i-0c93e5b1f7a4d2086",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-master-1"
+    },
+    {
+      "name": "larch-6qz4t-master-2",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-171-19.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2c/i-0e27b9d4a1c6f3850",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-master-2"
+    },
+    {
+      "name": "larch-6qz4t-worker-us-east-2a-7m2kq",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-23-144.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2a/i-04f8c2a6e1b9d3570",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-worker-us-east-2a-7m2kq"
+    },
+    {
+      "name": "larch-6qz4t-worker-us-east-2a-bx9pd",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-31-62.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2a/i-09d1e7b3c5a2f4086",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-worker-us-east-2a-bx9pd"
+    },
+    {
+      "name": "larch-6qz4t-worker-us-east-2a-r4hwz",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-8-233.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2a/i-0f5a3c9e7d1b2468a",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-worker-us-east-2a-r4hwz"
+    },
+    {
+      "name": "larch-6qz4t-worker-us-east-2b-d8nfl",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-152-9.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2b/i-02b7e4d9a6c1f3058",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-worker-us-east-2b-d8nfl"
+    },
+    {
+      "name": "larch-6qz4t-worker-us-east-2b-k3tqs",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-133-188.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2b/i-06c3f1a8e5d2b9047",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-worker-us-east-2b-k3tqs"
+    },
+    {
+      "name": "larch-6qz4t-worker-us-east-2b-w6vye",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-159-41.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2b/i-0d8e2b5f9c3a7164b",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-worker-us-east-2b-w6vye"
+    },
+    {
+      "name": "larch-6qz4t-gpu-us-east-2b-h7qvd",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-148-37.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2b/i-0b6d2f8e4c1a9735e",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-gpu-us-east-2b-h7qvd"
+    },
+    {
+      "name": "larch-6qz4t-worker-us-east-2c-c5jgm",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-180-126.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2c/i-03a9d6c2f8e1b5074",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-worker-us-east-2c-c5jgm"
+    },
+    {
+      "name": "larch-6qz4t-worker-us-east-2c-p2xrn",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-191-53.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2c/i-07e1b4a9d3c6f2805",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-worker-us-east-2c-p2xrn"
+    },
+    {
+      "name": "larch-6qz4t-worker-us-east-2c-t9lbh",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "ip-10-0-166-240.us-east-2.compute.internal",
+      "provider_id": "aws:///us-east-2c/i-0c2f7e9a5b8d1463f",
+      "cluster": "ocpv-larch",
+      "ocpv_machine_id": "ocpv-larch-larch-6qz4t-worker-us-east-2c-t9lbh"
+    }
+  ],
+  "ocpv_machinesets": [
+    {
+      "name": "larch-6qz4t-worker-us-east-2a",
+      "namespace": "openshift-machine-api",
+      "replicas": 3,
+      "ready_replicas": 3,
+      "available_replicas": 3,
+      "cluster": "ocpv-larch",
+      "ocpv_machineset_id": "ocpv-larch-larch-6qz4t-worker-us-east-2a"
+    },
+    {
+      "name": "larch-6qz4t-worker-us-east-2b",
+      "namespace": "openshift-machine-api",
+      "replicas": 3,
+      "ready_replicas": 3,
+      "available_replicas": 3,
+      "cluster": "ocpv-larch",
+      "ocpv_machineset_id": "ocpv-larch-larch-6qz4t-worker-us-east-2b"
+    },
+    {
+      "name": "larch-6qz4t-worker-us-east-2c",
+      "namespace": "openshift-machine-api",
+      "replicas": 3,
+      "ready_replicas": 3,
+      "available_replicas": 3,
+      "cluster": "ocpv-larch",
+      "ocpv_machineset_id": "ocpv-larch-larch-6qz4t-worker-us-east-2c"
+    },
+    {
+      "name": "larch-6qz4t-gpu-us-east-2b",
+      "namespace": "openshift-machine-api",
+      "replicas": 1,
+      "ready_replicas": 1,
+      "available_replicas": 1,
+      "cluster": "ocpv-larch",
+      "ocpv_machineset_id": "ocpv-larch-larch-6qz4t-gpu-us-east-2b"
+    }
+  ],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,101 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 560291
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/defaults/main.yml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "resolution-failed",
+        "any_of": [
+          "no operators found in channel stable-3.2",
+          "ResolutionFailed",
+          "constraints not satisfiable"
+        ],
+        "ignore_case": true,
+        "asked_by": "report what the operator subscription reported",
+        "rationale": "the literal only the job log supplies"
+      },
+      {
+        "id": "channel-var",
+        "any_of": [
+          "quarry_streams_channel"
+        ],
+        "ignore_case": true,
+        "asked_by": "which variable pins the value that is wrong",
+        "rationale": "the log shows the channel value but not the variable; only the defaults fetch names it"
+      },
+      {
+        "id": "available-channel",
+        "any_of": [
+          "stable-3.5",
+          "stable-3.4"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what it should be set to instead",
+        "rationale": "the replacement comes from the package-manifest task output in the log, joined to the variable from the file",
+        "note": "the job log's packagemanifest read returned the package's channels as \"stable-3.4 stable-3.5\", and the subscription asked for stable-3.2, which is not among them."
+      }
+    ],
+    "citations": [
+      {
+        "id": "channel-line",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/defaults/main.yml",
+        "line": 9,
+        "asked_by": "cite it as owner/repo:path:line",
+        "rationale": "the line number is counted from the seeded defaults file"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "olm-blamed",
+        "none_of": [
+          "catalog source is down",
+          "catalog source was down",
+          "OLM is broken",
+          "OLM was broken",
+          "marketplace outage"
+        ],
+        "ignore_case": true,
+        "rationale": "the catalog answered and listed the package; blaming OLM or the catalog is the plausible wrong reading of ResolutionFailed"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

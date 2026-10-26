@@ -1,0 +1,72 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml",
+      "content": "---\n# ocp4_workload_tick_replay: market-data tick replay brokers for the replay lab\n- name: Create the tick replay namespace\n  kubernetes.core.k8s:\n    api_version: v1\n    kind: Namespace\n    name: \"tick-replay-{{ guid }}\"\n    state: present\n\n- name: Pick the PodDisruptionBudget API for this cluster\n  ansible.builtin.set_fact:\n    _tick_replay_pdb_api: \"{{ 'policy/v1' if ocp4_cluster_version >= '4.8' else 'policy/v1beta1' }}\"\n\n- name: Report the PodDisruptionBudget API\n  ansible.builtin.debug:\n    msg: \"PodDisruptionBudget API for OpenShift {{ ocp4_cluster_version }}: {{ _tick_replay_pdb_api }}\"\n\n- name: Deploy the replay brokers\n  kubernetes.core.k8s:\n    state: present\n    template: replay-brokers.yaml.j2\n\n- name: Protect the replay brokers\n  ansible.builtin.include_tasks: disruption_budget.yml\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml",
+      "content": "---\n# ocp4_workload_tick_replay: market-data tick replay brokers for the replay lab\n- name: Create the tick replay namespace\n  kubernetes.core.k8s:\n    api_version: v1\n    kind: Namespace\n    name: \"tick-replay-{{ guid }}\"\n    state: present\n\n- name: Pick the PodDisruptionBudget API for this cluster\n  ansible.builtin.set_fact:\n    _tick_replay_pdb_api: \"{{ 'policy/v1' if ocp4_cluster_version >= '4.8' else 'policy/v1beta1' }}\"\n\n- name: Report the PodDisruptionBudget API\n  ansible.builtin.debug:\n    msg: \"PodDisruptionBudget API for OpenShift {{ ocp4_cluster_version }}: {{ _tick_replay_pdb_api }}\"\n\n- name: Deploy the replay brokers\n  kubernetes.core.k8s:\n    state: present\n    template: replay-brokers.yaml.j2\n\n- name: Protect the replay brokers\n  ansible.builtin.include_tasks: disruption_budget.yml\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "69aa2665306612aa6e60cfc4a43cbc55190f3e9e",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml",
+      "content": "---\n# ocp4_workload_tick_replay: market-data tick replay brokers for the replay lab\n- name: Create the tick replay namespace\n  kubernetes.core.k8s:\n    api_version: v1\n    kind: Namespace\n    name: \"tick-replay-{{ guid }}\"\n    state: present\n\n- name: Pick the PodDisruptionBudget API for this cluster\n  ansible.builtin.set_fact:\n    _tick_replay_pdb_api: \"{{ 'policy/v1' if ocp4_cluster_version >= '4.8' else 'policy/v1beta1' }}\"\n\n- name: Report the PodDisruptionBudget API\n  ansible.builtin.debug:\n    msg: \"PodDisruptionBudget API for OpenShift {{ ocp4_cluster_version }}: {{ _tick_replay_pdb_api }}\"\n\n- name: Deploy the replay brokers\n  kubernetes.core.k8s:\n    state: present\n    template: replay-brokers.yaml.j2\n\n- name: Protect the replay brokers\n  ansible.builtin.include_tasks: disruption_budget.yml\n",
+      "file_id": "agnosticd/agnosticd-v2@69aa2665306612aa6e60cfc4a43cbc55190f3e9e-ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "42fc1a0fd499c7c1acf260259e547d59824ac2bd",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml",
+      "content": "---\n# ocp4_workload_tick_replay: market-data tick replay brokers for the replay lab\n- name: Create the tick replay namespace\n  kubernetes.core.k8s:\n    api_version: v1\n    kind: Namespace\n    name: \"tick-replay-{{ guid }}\"\n    state: present\n\n- name: Pick the PodDisruptionBudget API for this cluster\n  ansible.builtin.set_fact:\n    _tick_replay_pdb_api: \"{{ 'policy/v1' if ocp4_cluster_version >= '4.8' else 'policy/v1beta1' }}\"\n\n- name: Report the PodDisruptionBudget API\n  ansible.builtin.debug:\n    msg: \"PodDisruptionBudget API for OpenShift {{ ocp4_cluster_version }}: {{ _tick_replay_pdb_api }}\"\n\n- name: Deploy the replay brokers\n  kubernetes.core.k8s:\n    state: present\n    template: replay-brokers.yaml.j2\n\n- name: Protect the replay brokers\n  ansible.builtin.include_tasks: disruption_budget.yml\n",
+      "file_id": "agnosticd/agnosticd-v2@42fc1a0fd499c7c1acf260259e547d59824ac2bd-ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml",
+      "content": "---\n# Keep two of the three replay brokers up through node drains\n- name: Create the replay broker disruption budget\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: \"{{ _tick_replay_pdb_api }}\"\n      kind: PodDisruptionBudget\n      metadata:\n        name: tick-replay-brokers\n        namespace: \"tick-replay-{{ guid }}\"\n      spec:\n        minAvailable: 2\n        selector:\n          matchLabels:\n            app: tick-replay-broker\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml",
+      "content": "---\n# Keep two of the three replay brokers up through node drains\n- name: Create the replay broker disruption budget\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: \"{{ _tick_replay_pdb_api }}\"\n      kind: PodDisruptionBudget\n      metadata:\n        name: tick-replay-brokers\n        namespace: \"tick-replay-{{ guid }}\"\n      spec:\n        minAvailable: 2\n        selector:\n          matchLabels:\n            app: tick-replay-broker\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "69aa2665306612aa6e60cfc4a43cbc55190f3e9e",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml",
+      "content": "---\n# Keep two of the three replay brokers up through node drains\n- name: Create the replay broker disruption budget\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: \"{{ _tick_replay_pdb_api }}\"\n      kind: PodDisruptionBudget\n      metadata:\n        name: tick-replay-brokers\n        namespace: \"tick-replay-{{ guid }}\"\n      spec:\n        minAvailable: 2\n        selector:\n          matchLabels:\n            app: tick-replay-broker\n",
+      "file_id": "agnosticd/agnosticd-v2@69aa2665306612aa6e60cfc4a43cbc55190f3e9e-ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "42fc1a0fd499c7c1acf260259e547d59824ac2bd",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml",
+      "content": "---\n# Keep two of the three replay brokers up through node drains\n- name: Create the replay broker disruption budget\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: \"{{ _tick_replay_pdb_api }}\"\n      kind: PodDisruptionBudget\n      metadata:\n        name: tick-replay-brokers\n        namespace: \"tick-replay-{{ guid }}\"\n      spec:\n        minAvailable: 2\n        selector:\n          matchLabels:\n            app: tick-replay-broker\n",
+      "file_id": "agnosticd/agnosticd-v2@42fc1a0fd499c7c1acf260259e547d59824ac2bd-ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

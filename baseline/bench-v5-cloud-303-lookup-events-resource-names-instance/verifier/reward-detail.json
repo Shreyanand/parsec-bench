@@ -1,0 +1,81 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "\nSELECT\n  eventTime,\n  eventName,\n  awsRegion,\n  recipientAccountId,\n  userIdentity.arn,\n  userIdentity.type,\n  userIdentity.accountId,\n  userIdentity.sessionContext.sessionIssuer.arn AS sessionIssuerArn,\n  userIdentity.sessionContext.sessionIssuer.userName AS sessionIssuerUserName,\n  sourceIPAddress,\n  userAgent,\n  requestParameters,\n  responseElements,\n  errorCode,\n  errorMessage\nFROM cloudtrail_events\nWHERE eventName = 'StopInstances'\n  AND recipientAccountId = '702945318664'\n  AND eventTime > '2026-09-25T17:00:00Z'\n  AND eventTime < '2026-09-26T06:00:00Z'\nORDER BY eventTime ASC\n"
+        }
+      },
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "\nSELECT *\nFROM cloudtrail_events\nWHERE eventName = 'StopInstances'\n  AND recipientAccountId = '702945318664'\n  AND eventTime > '2026-09-25T17:00:00Z'\n  AND eventTime < '2026-09-26T06:00:00Z'\nORDER BY eventTime ASC\n"
+        }
+      },
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "\nSELECT\n  eventTime,\n  eventName,\n  eventSource,\n  awsRegion,\n  recipientAccountId,\n  userIdentity,\n  sourceIPAddress,\n  userAgent,\n  requestParameters,\n  responseElements,\n  errorCode,\n  errorMessage,\n  eventID\nFROM cloudtrail_events\nWHERE eventID = 'a17f4d2c-8e05-4b93-b6a8-2c51e9f07d3b'\n  AND eventTime > '2026-09-25T17:00:00Z'\n  AND eventTime < '2026-09-26T06:00:00Z'\n"
+        }
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "702945318664",
+          "action": "lookup_events",
+          "filters": {
+            "event_name": "StopInstances"
+          }
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "scheduler-other-instances",
+        "derived": true,
+        "note": "The lookup_events result shows the two sched-nightly StopInstances events (20:00:04Z and 20:00:06Z) naming only other instances in their resources, while i-0e3b7a91c24d58f06 had already been stopped by mfontaine at 17:52:11Z; that the scheduler did not stop it is a synthesis from the resources field, not a seed string.",
+        "ignore_case": true,
+        "any_of": [
+          "other instances",
+          "different instances",
+          "did not include",
+          "didn't include",
+          "did not touch",
+          "didn't touch",
+          "not in its resources",
+          "not in their resources",
+          "only names",
+          "names only",
+          "already stopped",
+          "already been stopped",
+          "not the scheduler",
+          "wasn't the scheduler",
+          "was not the scheduler",
+          "not the nightly"
+        ],
+        "asked_by": "Before we do that: who actually stopped this instance",
+        "rationale": "addresses the teammate's theory from the resources field rather than from event order"
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

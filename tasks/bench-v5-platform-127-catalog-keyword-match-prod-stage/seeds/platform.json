@@ -1,0 +1,112 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [
+    {
+      "babylon_catalog_item_id": "puffin-babylon-catalog-prod-netsvc.gateway-api-intro",
+      "cluster": "puffin",
+      "ci_name": "netsvc.gateway-api-intro",
+      "display_name": "Gateway API Introduction",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": true,
+      "asset_uuid": "5e0c7a12-93d4-4b8e-a1f6-2c47d9b0e381",
+      "keywords": [
+        "ingress",
+        "gateway api",
+        "routes"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "puffin-babylon-catalog-dev-netsvc.mesh-deep-dive",
+      "cluster": "puffin",
+      "ci_name": "netsvc.mesh-deep-dive",
+      "display_name": "Service Mesh Deep Dive",
+      "namespace": "babylon-catalog-dev",
+      "stage": "dev",
+      "multiuser": false,
+      "asset_uuid": "b83f2d6e-41a7-4c09-9e5b-7d1a06c4f29e",
+      "keywords": [
+        "istio",
+        "envoy",
+        "sidecars"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "puffin-babylon-catalog-prod-netsvc.traffic-mgmt-lab",
+      "cluster": "puffin",
+      "ci_name": "netsvc.traffic-mgmt-lab",
+      "display_name": "OpenShift Traffic Management Lab",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "0d9a4e71-c2b5-4f38-8a6d-e15f3b72c904",
+      "keywords": [
+        "service mesh",
+        "istio",
+        "traffic routing",
+        "canary"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "puffin-babylon-catalog-prod-devtools.pipelines-basics",
+      "cluster": "puffin",
+      "ci_name": "devtools.pipelines-basics",
+      "display_name": "Tekton Pipelines Basics",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": true,
+      "asset_uuid": "7a2c91f0-5d38-4e6b-b4a7-93e0c1d85f26",
+      "keywords": [
+        "ci/cd",
+        "tekton",
+        "pipelines"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "puffin-babylon-catalog-event-devtools.gitops-workshop",
+      "cluster": "puffin",
+      "ci_name": "devtools.gitops-workshop",
+      "display_name": "GitOps Workshop",
+      "namespace": "babylon-catalog-event",
+      "stage": "event",
+      "multiuser": true,
+      "asset_uuid": "c46e0b9d-2f71-48a5-9d3c-58b7a2e1f04d",
+      "keywords": [
+        "argo cd",
+        "gitops"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "kite-babylon-catalog-prod-netsvc.mesh-deep-dive",
+      "cluster": "kite",
+      "ci_name": "netsvc.mesh-deep-dive",
+      "display_name": "Service Mesh Deep Dive",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "e1f7c3a8-6b20-4d95-8c4e-0a39f5d7b612",
+      "keywords": [
+        "istio",
+        "envoy",
+        "sidecars"
+      ]
+    }
+  ],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

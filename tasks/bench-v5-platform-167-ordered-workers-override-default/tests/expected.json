@@ -1,0 +1,98 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "fulmar",
+          "namespace": "user-tkariuki-redhat-com",
+          "name": "ocp4-etcd-perf-lab-k3dzr"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "fulmar",
+          "name": "ocp4.etcd-perf-lab.prod"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_resource_claim"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "actual-type",
+        "any_of": [
+          "r6i.xlarge"
+        ],
+        "ignore_case": true,
+        "asked_by": "what instance type",
+        "rationale": "worker_instance_type in the claim's instance_vars; the component says m6i.xlarge"
+      },
+      {
+        "id": "default-type",
+        "any_of": [
+          "m6i.xlarge"
+        ],
+        "ignore_case": true,
+        "asked_by": "what does the catalog default specify for workers",
+        "rationale": "the component's worker entry on fulmar; eider's default is m7i.large"
+      }
+    ],
+    "counts": [
+      {
+        "id": "actual-workers",
+        "value": 6,
+        "nouns": [
+          "workers",
+          "worker nodes",
+          "worker",
+          "nodes",
+          "r6i.xlarge",
+          "instances",
+          "machines"
+        ],
+        "window": 4,
+        "asked_by": "How many worker nodes does my lab actually have",
+        "rationale": "worker_instance_count 6 in the claim; only get_deployment carries it"
+      },
+      {
+        "id": "default-workers",
+        "value": 2,
+        "nouns": [
+          "workers",
+          "worker nodes",
+          "worker",
+          "nodes",
+          "m6i.xlarge",
+          "instances",
+          "machines"
+        ],
+        "window": 4,
+        "asked_by": "type and count",
+        "rationale": "the component's worker count on fulmar; the stopped sibling lab u8bwn has 4"
+      }
+    ],
+    "fold_markup": true
+  },
+  "weights": {
+    "tool_calls": 0.4,
+    "answer": 0.6
+  }
+}

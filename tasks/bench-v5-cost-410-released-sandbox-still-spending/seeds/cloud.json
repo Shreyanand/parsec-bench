@@ -1,0 +1,62 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sbx-8142",
+      "name": "sandbox8142",
+      "account_id": "362917450129",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "pgpu",
+      "zone": "sandbox8142.sbx.example.com",
+      "comment": "",
+      "conan_status": "clean",
+      "guid": "",
+      "hosted_zone_id": "Z08142K3P0129",
+      "service_uuid": "",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sbx-8143",
+      "name": "sandbox8143",
+      "account_id": "362917450183",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "pgpu",
+      "zone": "sandbox8143.sbx.example.com",
+      "comment": "returned to pool 2026-09-10 after t8wqk destroy",
+      "conan_status": "clean",
+      "guid": "t8wqk",
+      "hosted_zone_id": "Z08143K3P0183",
+      "service_uuid": "4be1c0d2-7a39-4f6e-9c51-2d8e0b7f3a64",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sbx-8144",
+      "name": "sandbox8144",
+      "account_id": "362917450247",
+      "available": false,
+      "owner": "rkaminski",
+      "owner_email": "rkaminski@example.org",
+      "envtype": "sbx-gpu-lab",
+      "reservation": "pgpu",
+      "zone": "sandbox8144.sbx.example.com",
+      "comment": "",
+      "conan_status": "in-use",
+      "guid": "p2mzd",
+      "hosted_zone_id": "Z08144K3P0247",
+      "service_uuid": "",
+      "annotations": {}
+    }
+  ]
+}

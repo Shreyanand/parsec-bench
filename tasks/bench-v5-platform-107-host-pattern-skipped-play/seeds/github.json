@@ -1,0 +1,32 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/configs/quantum-sim-lab/pre_software.yml",
+      "content": "---\n- name: Step 003 Pre Software\n  hosts: localhost\n  connection: local\n  gather_facts: false\n  tasks:\n    - name: Print the inventory groups\n      ansible.builtin.debug:\n        msg: \"groups={{ groups.keys() | list }}\"\n\n- name: Configure the bastion\n  hosts: bastions\n  become: true\n  gather_facts: false\n  tasks:\n    - name: Read the generated lab SSH key\n      ansible.builtin.slurp:\n        src: /home/lab-user/.ssh/id_ed25519.pub\n      register: lab_key\n\n    - name: Publish the bastion SSH key as a fact\n      ansible.builtin.set_fact:\n        bastion_ssh_key: \"{{ lab_key.content | b64decode | trim }}\"\n\n- name: Hand the bastion key to the simulator nodes\n  hosts: localhost\n  connection: local\n  gather_facts: false\n  tasks:\n    - name: Write the key into the lab user secret\n      ansible.builtin.copy:\n        dest: \"/tmp/{{ guid }}/lab-user.pub\"\n        content: \"{{ hostvars[groups['bastion'][0]].bastion_ssh_key }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/configs/quantum-sim-lab/pre_software.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/configs/quantum-sim-lab/pre_software.yml",
+      "content": "---\n- name: Step 003 Pre Software\n  hosts: localhost\n  connection: local\n  gather_facts: false\n  tasks:\n    - name: Print the inventory groups\n      ansible.builtin.debug:\n        msg: \"groups={{ groups.keys() | list }}\"\n\n- name: Configure the bastion\n  hosts: bastions\n  become: true\n  gather_facts: false\n  tasks:\n    - name: Read the generated lab SSH key\n      ansible.builtin.slurp:\n        src: /home/lab-user/.ssh/id_ed25519.pub\n      register: lab_key\n\n    - name: Publish the bastion SSH key as a fact\n      ansible.builtin.set_fact:\n        bastion_ssh_key: \"{{ lab_key.content | b64decode | trim }}\"\n\n- name: Hand the bastion key to the simulator nodes\n  hosts: localhost\n  connection: local\n  gather_facts: false\n  tasks:\n    - name: Write the key into the lab user secret\n      ansible.builtin.copy:\n        dest: \"/tmp/{{ guid }}/lab-user.pub\"\n        content: \"{{ hostvars[groups['bastion'][0]].bastion_ssh_key }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/configs/quantum-sim-lab/pre_software.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "0f9d2c6e1a7b48e53c0d91f6a2b8e47d5c3a1e60",
+      "path": "ansible/configs/quantum-sim-lab/pre_software.yml",
+      "content": "---\n- name: Step 003 Pre Software\n  hosts: localhost\n  connection: local\n  gather_facts: false\n  tasks:\n    - name: Print the inventory groups\n      ansible.builtin.debug:\n        msg: \"groups={{ groups.keys() | list }}\"\n\n- name: Configure the bastion\n  hosts: bastions\n  become: true\n  gather_facts: false\n  tasks:\n    - name: Read the generated lab SSH key\n      ansible.builtin.slurp:\n        src: /home/lab-user/.ssh/id_ed25519.pub\n      register: lab_key\n\n    - name: Publish the bastion SSH key as a fact\n      ansible.builtin.set_fact:\n        bastion_ssh_key: \"{{ lab_key.content | b64decode | trim }}\"\n\n- name: Hand the bastion key to the simulator nodes\n  hosts: localhost\n  connection: local\n  gather_facts: false\n  tasks:\n    - name: Write the key into the lab user secret\n      ansible.builtin.copy:\n        dest: \"/tmp/{{ guid }}/lab-user.pub\"\n        content: \"{{ hostvars[groups['bastion'][0]].bastion_ssh_key }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@0f9d2c6e1a7b48e53c0d91f6a2b8e47d5c3a1e60-ansible/configs/quantum-sim-lab/pre_software.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

@@ -1,0 +1,57 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "rhpds",
+      "repo": "partner-agnosticv",
+      "account": "partner_storage",
+      "directory": "ocp4-oadp-s3-backup",
+      "path": "partner_storage/ocp4-oadp-s3-backup",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "description.adoc",
+        "prod.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "rhpds/partner-agnosticv-partner_storage/ocp4-oadp-s3-backup"
+    }
+  ],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "partner-agnosticv",
+      "ref": "main",
+      "path": "partner_storage/ocp4-oadp-s3-backup/common.yaml",
+      "content": "---\n# OADP S3 backup lab - shared catalog configuration\ncloud_provider: ec2\nenv_type: ocp4-cluster\nocp4_workload_oadp_install: true\noadp_s3_bucket: pstg-oadp-restore-drill-41\noadp_s3_region: ca-central-1\noadp_credentials_secret_name: cloud-credentials-oadp\noadp_s3_access_key_id: <REDACTED>\noadp_s3_secret_access_key: <REDACTED>\noadp_backup_schedule: \"0 3 * * *\"\noadp_backup_ttl: 720h\n",
+      "file_id": "rhpds/partner-agnosticv@main-partner_storage/ocp4-oadp-s3-backup/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "partner-agnosticv",
+      "ref": "main",
+      "path": "partner_storage/ocp4-oadp-s3-backup/prod.yaml",
+      "content": "---\n# prod stage overrides\n__meta__:\n  deployer:\n    scm_ref: ocp4-oadp-s3-backup-1.4.0\noadp_backup_ttl: 2160h\n",
+      "file_id": "rhpds/partner-agnosticv@main-partner_storage/ocp4-oadp-s3-backup/prod.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "partner-agnosticv",
+      "ref": "HEAD",
+      "path": "partner_storage/ocp4-oadp-s3-backup/common.yaml",
+      "content": "---\n# OADP S3 backup lab - shared catalog configuration\ncloud_provider: ec2\nenv_type: ocp4-cluster\nocp4_workload_oadp_install: true\noadp_s3_bucket: pstg-oadp-restore-drill-41\noadp_s3_region: ca-central-1\noadp_credentials_secret_name: cloud-credentials-oadp\noadp_s3_access_key_id: <REDACTED>\noadp_s3_secret_access_key: <REDACTED>\noadp_backup_schedule: \"0 3 * * *\"\noadp_backup_ttl: 720h\n",
+      "file_id": "rhpds/partner-agnosticv@HEAD-partner_storage/ocp4-oadp-s3-backup/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "partner-agnosticv",
+      "ref": "HEAD",
+      "path": "partner_storage/ocp4-oadp-s3-backup/prod.yaml",
+      "content": "---\n# prod stage overrides\n__meta__:\n  deployer:\n    scm_ref: ocp4-oadp-s3-backup-1.4.0\noadp_backup_ttl: 2160h\n",
+      "file_id": "rhpds/partner-agnosticv@HEAD-partner_storage/ocp4-oadp-s3-backup/prod.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

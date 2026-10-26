@@ -1,0 +1,135 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "controller": "west",
+          "job_id": 6907233
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "aap2-ctl-west-01.mgmt.example.net"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "explanation",
+        "any_of": [
+          "marked as running at system start up",
+          "system start up",
+          "system startup",
+          "must have not shut down properly",
+          "did not shut down properly"
+        ],
+        "ignore_case": true,
+        "asked_by": "find out why the job actually failed",
+        "rationale": "only job_explanation says the controller restarted under the job"
+      },
+      {
+        "id": "change",
+        "any_of": [
+          "CHG-58312"
+        ],
+        "ignore_case": true,
+        "asked_by": "check whether anything was scheduled on it around that time",
+        "rationale": "the downtime row's comment; only get_downtimes returns it"
+      },
+      {
+        "id": "author",
+        "any_of": [
+          "pnowakowska"
+        ],
+        "ignore_case": true,
+        "asked_by": "who scheduled it",
+        "rationale": "the downtime's author"
+      },
+      {
+        "id": "inside-window",
+        "any_of": [
+          "inside that window",
+          "within the window",
+          "inside the window",
+          "during the maintenance",
+          "during the downtime",
+          "falls inside",
+          "falls within",
+          "in the middle of the reboot",
+          "during the reboot"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "check whether anything was scheduled on it around that time",
+        "rationale": "the synthesis: job finished 22:14:31, window 22:00-23:00",
+        "note": "get_job shows the job ran 2026-10-07T21:40:05Z to 22:14:31Z, and get_downtimes shows CHG-58312's fixed downtime on the controller host from start_time 1791410400 to end_time 1791414000 (2026-10-07 22:00 to 23:00 UTC), so the job ended inside the reboot window."
+      },
+      {
+        "id": "relaunch",
+        "any_of": [
+          "relaunch",
+          "rerun",
+          "run it again",
+          "launch it again"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what we should do",
+        "rationale": "no code fix; the job just needs to run again",
+        "note": "the job_explanation says the job was marked failed because it was still running when the controller started up again, not because a task failed, and the CHG-58312 window had ended by 23:00 UTC, so the remedy is to run the job again rather than rewrite the role."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "role-blamed",
+        "none_of": [
+          "role caused",
+          "role is broken",
+          "bug in the role",
+          "the role failed",
+          "kafka cluster never became ready",
+          "fix the role",
+          "role needs fixing",
+          "kafka cluster failed to become ready"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "teammate's theory",
+          "teammate thinks",
+          "teammate suspects",
+          "role did not fail",
+          "role didn't fail",
+          "not the role",
+          "is not the cause",
+          "never got a failed result"
+        ],
+        "rationale": "the teammate's theory; the retries were in progress when the controller rebooted"
+      },
+      {
+        "id": "old-downtime",
+        "none_of": [
+          "CHG-57104 caused",
+          "during CHG-57104",
+          "the PostgreSQL upgrade caused"
+        ],
+        "ignore_case": true,
+        "rationale": "the expired September downtime does not cover the job"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

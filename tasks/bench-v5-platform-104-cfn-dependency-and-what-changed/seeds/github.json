@@ -1,0 +1,32 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/configs/retail-edge-pos/files/cloud_providers/ec2_cloud_template.j2",
+      "content": "---\nAWSTemplateFormatVersion: \"2010-09-09\"\nDescription: retail-edge-pos lab network and instances\n\nResources:\n  Vpc:\n    Type: AWS::EC2::VPC\n    Properties:\n      CidrBlock: \"10.42.0.0/16\"\n\n  PublicRouteTable:\n    Type: AWS::EC2::RouteTable\n    Properties:\n      VpcId: !Ref Vpc\n\n  PublicSubnetA:\n    Type: AWS::EC2::Subnet\n    Properties:\n      VpcId: !Ref Vpc\n      CidrBlock: \"10.42.1.0/24\"\n      AvailabilityZone: \"{{ availability_zones[0] }}\"\n\n  PublicSubnetARouteTableAssociation:\n    Type: AWS::EC2::SubnetRouteTableAssociation\n    Properties:\n      SubnetId: !Ref PublicSubnetA\n      RouteTableId: !Ref PublicRouteTable\n\n{% if subnet_count | int > 1 %}\n  PublicSubnetB:\n    Type: AWS::EC2::Subnet\n    Properties:\n      VpcId: !Ref Vpc\n      CidrBlock: \"10.42.2.0/24\"\n      AvailabilityZone: \"{{ availability_zones[1] }}\"\n{% endif %}\n\n  PublicSubnetBRouteTableAssociation:\n    Type: AWS::EC2::SubnetRouteTableAssociation\n    Properties:\n      SubnetId: !Ref PublicSubnetB\n      RouteTableId: !Ref PublicRouteTable\n\n  PosTerminal:\n    Type: AWS::EC2::Instance\n    Properties:\n      ImageId: \"{{ pos_terminal_ami }}\"\n      InstanceType: m6i.large\n      SubnetId: !Ref PublicSubnetA\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/configs/retail-edge-pos/files/cloud_providers/ec2_cloud_template.j2"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/configs/retail-edge-pos/files/cloud_providers/ec2_cloud_template.j2",
+      "content": "---\nAWSTemplateFormatVersion: \"2010-09-09\"\nDescription: retail-edge-pos lab network and instances\n\nResources:\n  Vpc:\n    Type: AWS::EC2::VPC\n    Properties:\n      CidrBlock: \"10.42.0.0/16\"\n\n  PublicRouteTable:\n    Type: AWS::EC2::RouteTable\n    Properties:\n      VpcId: !Ref Vpc\n\n  PublicSubnetA:\n    Type: AWS::EC2::Subnet\n    Properties:\n      VpcId: !Ref Vpc\n      CidrBlock: \"10.42.1.0/24\"\n      AvailabilityZone: \"{{ availability_zones[0] }}\"\n\n  PublicSubnetARouteTableAssociation:\n    Type: AWS::EC2::SubnetRouteTableAssociation\n    Properties:\n      SubnetId: !Ref PublicSubnetA\n      RouteTableId: !Ref PublicRouteTable\n\n{% if subnet_count | int > 1 %}\n  PublicSubnetB:\n    Type: AWS::EC2::Subnet\n    Properties:\n      VpcId: !Ref Vpc\n      CidrBlock: \"10.42.2.0/24\"\n      AvailabilityZone: \"{{ availability_zones[1] }}\"\n{% endif %}\n\n  PublicSubnetBRouteTableAssociation:\n    Type: AWS::EC2::SubnetRouteTableAssociation\n    Properties:\n      SubnetId: !Ref PublicSubnetB\n      RouteTableId: !Ref PublicRouteTable\n\n  PosTerminal:\n    Type: AWS::EC2::Instance\n    Properties:\n      ImageId: \"{{ pos_terminal_ami }}\"\n      InstanceType: m6i.large\n      SubnetId: !Ref PublicSubnetA\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/configs/retail-edge-pos/files/cloud_providers/ec2_cloud_template.j2"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "2d6f0a9c4e8b17f35a0c62d9e4b7f1a83c5e0d26",
+      "path": "ansible/configs/retail-edge-pos/files/cloud_providers/ec2_cloud_template.j2",
+      "content": "---\nAWSTemplateFormatVersion: \"2010-09-09\"\nDescription: retail-edge-pos lab network and instances\n\nResources:\n  Vpc:\n    Type: AWS::EC2::VPC\n    Properties:\n      CidrBlock: \"10.42.0.0/16\"\n\n  PublicRouteTable:\n    Type: AWS::EC2::RouteTable\n    Properties:\n      VpcId: !Ref Vpc\n\n  PublicSubnetA:\n    Type: AWS::EC2::Subnet\n    Properties:\n      VpcId: !Ref Vpc\n      CidrBlock: \"10.42.1.0/24\"\n      AvailabilityZone: \"{{ availability_zones[0] }}\"\n\n  PublicSubnetARouteTableAssociation:\n    Type: AWS::EC2::SubnetRouteTableAssociation\n    Properties:\n      SubnetId: !Ref PublicSubnetA\n      RouteTableId: !Ref PublicRouteTable\n\n{% if subnet_count | int > 1 %}\n  PublicSubnetB:\n    Type: AWS::EC2::Subnet\n    Properties:\n      VpcId: !Ref Vpc\n      CidrBlock: \"10.42.2.0/24\"\n      AvailabilityZone: \"{{ availability_zones[1] }}\"\n{% endif %}\n\n  PublicSubnetBRouteTableAssociation:\n    Type: AWS::EC2::SubnetRouteTableAssociation\n    Properties:\n      SubnetId: !Ref PublicSubnetB\n      RouteTableId: !Ref PublicRouteTable\n\n  PosTerminal:\n    Type: AWS::EC2::Instance\n    Properties:\n      ImageId: \"{{ pos_terminal_ami }}\"\n      InstanceType: m6i.large\n      SubnetId: !Ref PublicSubnetA\n",
+      "file_id": "agnosticd/agnosticd-v2@2d6f0a9c4e8b17f35a0c62d9e4b7f1a83c5e0d26-ansible/configs/retail-edge-pos/files/cloud_providers/ec2_cloud_template.j2"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

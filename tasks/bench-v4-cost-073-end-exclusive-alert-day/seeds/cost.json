@@ -1,0 +1,296 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [
+    {
+      "aws_cost_result_id": "acr-k4w-0318-service",
+      "accounts_queried": 1,
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2026-03-12",
+        "end": "2026-03-18"
+      },
+      "period_id": "per-k4w-0318",
+      "results": [
+        {
+          "account_id": "736158204937",
+          "items": {
+            "Amazon Elastic Compute Cloud - Compute": {
+              "cost": 2584.0,
+              "daily": [
+                {
+                  "date": "2026-03-12",
+                  "cost": 431.0
+                },
+                {
+                  "date": "2026-03-13",
+                  "cost": 427.0
+                },
+                {
+                  "date": "2026-03-14",
+                  "cost": 436.0
+                },
+                {
+                  "date": "2026-03-15",
+                  "cost": 429.0
+                },
+                {
+                  "date": "2026-03-16",
+                  "cost": 433.0
+                },
+                {
+                  "date": "2026-03-17",
+                  "cost": 428.0
+                }
+              ]
+            },
+            "Amazon Simple Storage Service": {
+              "cost": 525.0,
+              "daily": [
+                {
+                  "date": "2026-03-12",
+                  "cost": 87.0
+                },
+                {
+                  "date": "2026-03-13",
+                  "cost": 88.0
+                },
+                {
+                  "date": "2026-03-14",
+                  "cost": 86.0
+                },
+                {
+                  "date": "2026-03-15",
+                  "cost": 89.0
+                },
+                {
+                  "date": "2026-03-16",
+                  "cost": 87.0
+                },
+                {
+                  "date": "2026-03-17",
+                  "cost": 88.0
+                }
+              ]
+            }
+          },
+          "total": 3109.0
+        }
+      ],
+      "total_cost": 3109.0
+    },
+    {
+      "aws_cost_result_id": "acr-k4w-0318-account",
+      "accounts_queried": 1,
+      "group_by": "LINKED_ACCOUNT",
+      "period": {
+        "start": "2026-03-12",
+        "end": "2026-03-18"
+      },
+      "period_id": "per-k4w-0318",
+      "results": [
+        {
+          "account_id": "org-wide",
+          "items": {
+            "736158204937": {
+              "cost": 3109.0,
+              "daily": [
+                {
+                  "date": "2026-03-12",
+                  "cost": 518.0
+                },
+                {
+                  "date": "2026-03-13",
+                  "cost": 515.0
+                },
+                {
+                  "date": "2026-03-14",
+                  "cost": 522.0
+                },
+                {
+                  "date": "2026-03-15",
+                  "cost": 518.0
+                },
+                {
+                  "date": "2026-03-16",
+                  "cost": 520.0
+                },
+                {
+                  "date": "2026-03-17",
+                  "cost": 516.0
+                }
+              ]
+            }
+          },
+          "total": 3109.0
+        }
+      ],
+      "total_cost": 3109.0
+    },
+    {
+      "aws_cost_result_id": "acr-k4w-0319-service",
+      "accounts_queried": 1,
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2026-03-12",
+        "end": "2026-03-19"
+      },
+      "period_id": "per-k4w-0319",
+      "results": [
+        {
+          "account_id": "736158204937",
+          "items": {
+            "Amazon Elastic Compute Cloud - Compute": {
+              "cost": 3018.0,
+              "daily": [
+                {
+                  "date": "2026-03-12",
+                  "cost": 431.0
+                },
+                {
+                  "date": "2026-03-13",
+                  "cost": 427.0
+                },
+                {
+                  "date": "2026-03-14",
+                  "cost": 436.0
+                },
+                {
+                  "date": "2026-03-15",
+                  "cost": 429.0
+                },
+                {
+                  "date": "2026-03-16",
+                  "cost": 433.0
+                },
+                {
+                  "date": "2026-03-17",
+                  "cost": 428.0
+                },
+                {
+                  "date": "2026-03-18",
+                  "cost": 434.0
+                }
+              ]
+            },
+            "Amazon Simple Storage Service": {
+              "cost": 614.0,
+              "daily": [
+                {
+                  "date": "2026-03-12",
+                  "cost": 87.0
+                },
+                {
+                  "date": "2026-03-13",
+                  "cost": 88.0
+                },
+                {
+                  "date": "2026-03-14",
+                  "cost": 86.0
+                },
+                {
+                  "date": "2026-03-15",
+                  "cost": 89.0
+                },
+                {
+                  "date": "2026-03-16",
+                  "cost": 87.0
+                },
+                {
+                  "date": "2026-03-17",
+                  "cost": 88.0
+                },
+                {
+                  "date": "2026-03-18",
+                  "cost": 89.0
+                }
+              ]
+            },
+            "AWS Glue": {
+              "cost": 2943.0,
+              "daily": [
+                {
+                  "date": "2026-03-18",
+                  "cost": 2943.0
+                }
+              ]
+            }
+          },
+          "total": 6575.0
+        }
+      ],
+      "total_cost": 6575.0
+    },
+    {
+      "aws_cost_result_id": "acr-k4w-0319-account",
+      "accounts_queried": 1,
+      "group_by": "LINKED_ACCOUNT",
+      "period": {
+        "start": "2026-03-12",
+        "end": "2026-03-19"
+      },
+      "period_id": "per-k4w-0319",
+      "results": [
+        {
+          "account_id": "org-wide",
+          "items": {
+            "736158204937": {
+              "cost": 6575.0,
+              "daily": [
+                {
+                  "date": "2026-03-12",
+                  "cost": 518.0
+                },
+                {
+                  "date": "2026-03-13",
+                  "cost": 515.0
+                },
+                {
+                  "date": "2026-03-14",
+                  "cost": 522.0
+                },
+                {
+                  "date": "2026-03-15",
+                  "cost": 518.0
+                },
+                {
+                  "date": "2026-03-16",
+                  "cost": 520.0
+                },
+                {
+                  "date": "2026-03-17",
+                  "cost": 516.0
+                },
+                {
+                  "date": "2026-03-18",
+                  "cost": 3466.0
+                }
+              ]
+            }
+          },
+          "total": 6575.0
+        }
+      ],
+      "total_cost": 6575.0
+    }
+  ],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-k4w-0318",
+      "start": "2026-03-12",
+      "end": "2026-03-18"
+    },
+    {
+      "period_id": "per-k4w-0319",
+      "start": "2026-03-12",
+      "end": "2026-03-19"
+    }
+  ]
+}

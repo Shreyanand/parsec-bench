@@ -1,0 +1,40 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "account": "agd-v2",
+      "directory": "ocp4-rehearsal-lab",
+      "path": "agd-v2/ocp4-rehearsal-lab/prod.yaml",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "agd-v2-agd-v2/ocp4-rehearsal-lab/prod.yaml"
+    }
+  ],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "agd-v2/ocp4-rehearsal-lab/prod.yaml",
+      "content": "---\n# ocp4-rehearsal-lab, production overlay\n\n# Destroy workflow. allow_simultaneous lets AAP run every destroy at once, and\n# no cap is set, so a bulk cleanup launches the whole batch together.\ndestroy_workflow:\n  allow_simultaneous: true\n  concurrency_limit: null\n\n# Each destroy resolves three DNS names separately before deleting them, so one\n# job costs three ListResourceRecordSets calls rather than one batched lookup.\ndestroy_dns_lookups:\n  - api\n  - api-int\n  - \"*.apps\"\n\ndns_hosted_zone: dynamic.example-workshops.io\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-agd-v2/ocp4-rehearsal-lab/prod.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "agd-v2/ocp4-rehearsal-lab/prod.yaml",
+      "content": "---\n# ocp4-rehearsal-lab, production overlay\n\n# Destroy workflow. allow_simultaneous lets AAP run every destroy at once, and\n# no cap is set, so a bulk cleanup launches the whole batch together.\ndestroy_workflow:\n  allow_simultaneous: true\n  concurrency_limit: null\n\n# Each destroy resolves three DNS names separately before deleting them, so one\n# job costs three ListResourceRecordSets calls rather than one batched lookup.\ndestroy_dns_lookups:\n  - api\n  - api-int\n  - \"*.apps\"\n\ndns_hosted_zone: dynamic.example-workshops.io\n",
+      "file_id": "agnosticd/agnosticd-v2@main-agd-v2/ocp4-rehearsal-lab/prod.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

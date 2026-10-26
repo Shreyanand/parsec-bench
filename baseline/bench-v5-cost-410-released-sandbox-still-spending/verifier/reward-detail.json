@@ -1,0 +1,155 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "362917450183"
+          ],
+          "start_date": "2026-09-07",
+          "end_date": "2026-09-15"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "account_id": "362917450183"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "\nSELECT p.uuid, p.babylon_guid, p.status, p.provisioned_at, p.retired_at,\n       p.catalog_id, u.email AS user_email, p.ordered_by\nFROM provisions p\nLEFT JOIN users u ON u.id = p.user_id\nWHERE p.babylon_guid = 't8wqk'\nORDER BY p.provisioned_at DESC\nLIMIT 10\n"
+        }
+      },
+      {
+        "name": "render_chart",
+        "args": {
+          "chart_type": "bar",
+          "title": "sandbox8143 (362917450183) \u2014 Daily AWS Costs Sep 7\u201314",
+          "labels": [
+            "Sep 7",
+            "Sep 8",
+            "Sep 9",
+            "Sep 10",
+            "Sep 11",
+            "Sep 12",
+            "Sep 13",
+            "Sep 14"
+          ],
+          "datasets": [
+            {
+              "label": "EC2 Compute",
+              "data": [
+                1452.3,
+                1448.9,
+                1455.1,
+                1021.6,
+                312.4,
+                311.85,
+                312.1,
+                312.65
+              ]
+            },
+            {
+              "label": "EC2 - Other",
+              "data": [
+                58.2,
+                58.2,
+                58.2,
+                52.1,
+                41.3,
+                41.3,
+                41.3,
+                41.3
+              ]
+            },
+            {
+              "label": "S3",
+              "data": [
+                6.1,
+                6.1,
+                6.2,
+                4.0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "t8wqk"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "destroy-succeeded",
+        "ignore_case": true,
+        "any_of": [
+          "71604",
+          "destroy job succeeded",
+          "destroy succeeded",
+          "destroy was successful",
+          "successful destroy",
+          "destroy job was successful",
+          "destroy completed successfully"
+        ],
+        "asked_by": "the AAP2 jobs for the GUID that record shows",
+        "rationale": "the destroy is discovered via the GUID from the account DB; it is green, which is what makes the trap"
+      },
+      {
+        "id": "spend-after-destroy",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "after the successful destroy",
+          "after the destroy",
+          "after destroy",
+          "after the teardown",
+          "since the destroy",
+          "post-destroy",
+          "post-teardown",
+          "still billing",
+          "still spending",
+          "kept billing",
+          "survived the teardown",
+          "continued after",
+          "continues after",
+          "persisted after",
+          "after 2026-09-10"
+        ],
+        "asked_by": "Is it OK to hand out",
+        "rationale": "the only contradicting evidence: the daily EC2 series stays ~$312/day from 09-11, after the destroy finished",
+        "note": "The destroy job 71604 for t8wqk finished successfully at 2026-09-10T14:22:37Z, yet the account's daily EC2 compute cost stays at $311.85-$312.65 on each of 2026-09-11 to 2026-09-14, so it is still spending after the destroy."
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

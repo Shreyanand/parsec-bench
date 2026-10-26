@@ -1,0 +1,51 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "path": "checks/identity/ipa/check_ipa_health.sh",
+      "content": "#!/bin/bash\n# IPA replica health: checks replication agreements and the CA subsystem.\nset -euo pipefail\n\nREPLICA_LAG_WARN=300\nREPLICA_LAG_CRIT=900\n\nipa-healthcheck --output-type json --severity error\n",
+      "file_id": "rhpds/rhdp-monitoring@main-checks/identity/ipa/check_ipa_health.sh"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "path": "checks/identity/ipa/check_ipa_health.sh",
+      "content": "#!/bin/bash\n# IPA replica health: checks replication agreements and the CA subsystem.\nset -euo pipefail\n\nREPLICA_LAG_WARN=300\nREPLICA_LAG_CRIT=900\n\nipa-healthcheck --output-type json --severity error\n",
+      "file_id": "rhpds/rhdp-monitoring@HEAD-checks/identity/ipa/check_ipa_health.sh"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "search": "check_ipa_health.sh",
+      "matches": [
+        "checks/identity/ipa/check_ipa_health.sh",
+        "checks/identity/ipa/README.md"
+      ],
+      "total_matches": 2,
+      "truncated": false,
+      "repo_search_result_id": "rhpds/rhdp-monitoring@main-check_ipa_health.sh"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "search": "check_ipa_health.sh",
+      "matches": [
+        "checks/identity/ipa/check_ipa_health.sh",
+        "checks/identity/ipa/README.md"
+      ],
+      "total_matches": 2,
+      "truncated": false,
+      "repo_search_result_id": "rhpds/rhdp-monitoring@HEAD-check_ipa_health.sh"
+    }
+  ],
+  "similar_items": []
+}

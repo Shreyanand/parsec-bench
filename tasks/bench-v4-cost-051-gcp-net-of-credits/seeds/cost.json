@@ -1,0 +1,93 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [
+    {
+      "gcp_cost_result_id": "gcr-2604-service",
+      "period_id": "per-gcp-2604",
+      "group_by": "SERVICE",
+      "period": {
+        "period_id": "per-gcp-2604",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "breakdown": [
+        {
+          "name": "Vertex AI",
+          "cost": 18764.0
+        },
+        {
+          "name": "Cloud SQL",
+          "cost": 18209.0
+        },
+        {
+          "name": "Kubernetes Engine",
+          "cost": 6433.0
+        },
+        {
+          "name": "Cloud Logging",
+          "cost": 2871.0
+        },
+        {
+          "name": "Artifact Registry",
+          "cost": 1186.0
+        }
+      ],
+      "daily_rows": 417,
+      "total_cost": 47463.0
+    },
+    {
+      "gcp_cost_result_id": "gcr-2603-service",
+      "period_id": "per-gcp-2603",
+      "group_by": "SERVICE",
+      "period": {
+        "period_id": "per-gcp-2603",
+        "start": "2026-03-01",
+        "end": "2026-03-31"
+      },
+      "breakdown": [
+        {
+          "name": "Cloud SQL",
+          "cost": 17352.0
+        },
+        {
+          "name": "Kubernetes Engine",
+          "cost": 9118.0
+        },
+        {
+          "name": "Cloud Run",
+          "cost": 3907.0
+        },
+        {
+          "name": "Cloud Logging",
+          "cost": 2640.0
+        },
+        {
+          "name": "Artifact Registry",
+          "cost": 1095.0
+        }
+      ],
+      "daily_rows": 389,
+      "total_cost": 34112.0
+    }
+  ],
+  "periods": [
+    {
+      "period_id": "per-gcp-2604",
+      "start": "2026-04-01",
+      "end": "2026-04-30"
+    },
+    {
+      "period_id": "per-gcp-2603",
+      "start": "2026-03-01",
+      "end": "2026-03-31"
+    }
+  ]
+}

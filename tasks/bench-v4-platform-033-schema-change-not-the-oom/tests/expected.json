@@ -1,0 +1,148 @@
+{
+  "answer": {
+    "counts": [],
+    "forbidden": [
+      {
+        "attributed_to": [
+          "contributing factor",
+          "not the cause",
+          "why it was not caught",
+          "why the merge",
+          "allowed the merge",
+          "masked",
+          "let it through"
+        ],
+        "id": "oom-as-cause",
+        "ignore_case": true,
+        "none_of": [
+          "root cause is the out of memory",
+          "root cause is the OOM",
+          "caused by the out of memory",
+          "caused by the OOM",
+          "OOM is the root cause",
+          "out of memory is the root cause",
+          "due to the OOM",
+          "due to out of memory",
+          "memory exhaustion caused"
+        ],
+        "rationale": "THE trap, and the source dataset records it at plausibility HIGH: the OOM is real, it is seeded, and it is the reason the merge was not blocked -- but it is a contributing factor, not the cause of an undefined variable. An agent that stops at the loudest anomaly in the logs lands here. The forms require a causal construction so an answer that correctly demotes the OOM to a contributing factor is not punished for mentioning it, and attributed_to excuses exactly that sentence"
+      },
+      {
+        "id": "version-mismatch",
+        "ignore_case": true,
+        "none_of": [
+          "controller version mismatch",
+          "version skew",
+          "aap version mismatch",
+          "incompatible controller version"
+        ],
+        "rationale": "the second ruled-out alternative, at plausibility medium. Nothing in the evidence shows a version difference, and reaching for one is the shape of a guess dressed as a diagnosis"
+      }
+    ],
+    "required": [
+      {
+        "any_of": [
+          "ansible_control_plane.secret",
+          "ansible_control_plane"
+        ],
+        "asked_by": "Name the configuration field the governor still reads",
+        "id": "old-field",
+        "ignore_case": true,
+        "rationale": "the field the governor still resolves. Named in the job log, so this fact alone does not prove the config was read -- the replacement does"
+      },
+      {
+        "any_of": [
+          "ansible_controllers",
+          "ansible_controller_select_mode"
+        ],
+        "asked_by": "the field that replaced it",
+        "id": "new-field",
+        "ignore_case": true,
+        "rationale": "the post-migration schema. It appears only in the changed include, never in the job log, so an agent that stopped at the failure cannot supply it"
+      },
+      {
+        "any_of": [
+          "19034",
+          "pr-19034",
+          "#19034"
+        ],
+        "asked_by": "say which pull request introduced the change",
+        "id": "pr",
+        "ignore_case": true,
+        "rationale": "the change that broke it. Reachable only through the PR search, and it is what makes the finding actionable -- a revert target rather than a description"
+      },
+      {
+        "any_of": [
+          "nothing in this file changed",
+          "governor was not changed",
+          "governor did not change",
+          "unchanged",
+          "was never updated",
+          "not updated",
+          "still reads",
+          "still references"
+        ],
+        "asked_by": "Tell me the root cause and the mechanism",
+        "derived": true,
+        "id": "governor-unchanged",
+        "ignore_case": true,
+        "note": "that the break is a missed follow-up rather than a bad edit is a synthesis over the PR's file list and the governor's own content; the config says it was not changed but not that this is why the failure happened",
+        "rationale": "the mechanism. The migration is not wrong in itself -- it broke because a consumer of the old schema was left reading a field that no longer exists, and saying so is the difference between naming a culprit and explaining a failure"
+      },
+      {
+        "any_of": [
+          "contributing factor",
+          "not blocked",
+          "was not caught",
+          "merged despite",
+          "bypassed",
+          "override",
+          "no result",
+          "allowed the merge",
+          "let it through",
+          "should have caught"
+        ],
+        "asked_by": "say what part the failing tests played",
+        "derived": true,
+        "id": "tests-role",
+        "ignore_case": true,
+        "note": "the role the failing tests played is a judgement about causation, not a seeded string: the logs record that the test run was killed and that the merge proceeded, but not that one explains the other",
+        "rationale": "the fact that makes the trap two-sided. Forbidding 'the OOM is the root cause' only punishes the wrong answer; requiring the agent to place the OOM correctly -- as the reason a breaking change was not stopped -- demands the right one. An agent that ignores the OOM entirely fails this, and an agent that blames it fails the forbidden fact"
+      }
+    ]
+  },
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  },
+  "schema": "bench/v4",
+  "tool_calls": {
+    "expected": [
+      {
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 90451
+        },
+        "name": "query_aap2"
+      },
+      {
+        "args": {},
+        "name": "search_agnosticv_prs"
+      },
+      {
+        "args": {
+          "owner": "rhpds",
+          "path": "roles/babylon_anarchy_governor/defaults/main.yaml",
+          "repo": "agnosticv"
+        },
+        "name": "fetch_github_file"
+      }
+    ],
+    "match": "ordered-subsequence"
+  },
+  "weights": {
+    "answer": 0.75,
+    "tool_calls": 0.25
+  }
+}

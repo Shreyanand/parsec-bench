@@ -1,0 +1,99 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.babylon_guid, p.catalog_id, p.current_state, p.provisioned_at, p.retired_at, p.updated_at, p.cloud, p.region, u.email as user_email, p.ordered_by\nFROM provisions p\nLEFT JOIN users u ON p.user_id = u.id\nWHERE p.provisioned_at >= '2026-10-20'\n  AND p.provisioned_at <= '2026-10-30'\n  AND p.cloud = 'gcp'\nORDER BY p.provisioned_at"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_gcp_projects",
+        "args": {
+          "action": "list_projects"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "proj-q2nvx",
+        "any_of": [
+          "rhdp-ws-q2nvx"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which projects have that label",
+        "rationale": "rhdp-ws-q2nvx is one of the four list_projects rows whose labels.event is fjord-devdays-2610; only the listing names it"
+      },
+      {
+        "id": "proj-j7tfa",
+        "any_of": [
+          "rhdp-ws-j7tfa"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which projects have that label",
+        "rationale": "rhdp-ws-j7tfa is one of the four list_projects rows whose labels.event is fjord-devdays-2610; only the listing names it"
+      },
+      {
+        "id": "proj-w5kcz",
+        "any_of": [
+          "rhdp-ws-w5kcz"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which projects have that label",
+        "rationale": "rhdp-ws-w5kcz is one of the four list_projects rows whose labels.event is fjord-devdays-2610; only the listing names it"
+      },
+      {
+        "id": "proj-b9hmu",
+        "any_of": [
+          "rhdp-ws-b9hmu"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which projects have that label",
+        "rationale": "rhdp-ws-b9hmu is one of the four list_projects rows whose labels.event is fjord-devdays-2610; only the listing names it"
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [
+      {
+        "id": "event-active-count",
+        "value": 3,
+        "nouns": [
+          "ACTIVE",
+          "active",
+          "still active",
+          "still running",
+          "running"
+        ],
+        "window": 6,
+        "asked_by": "how many of them are still ACTIVE",
+        "rationale": "three of the four fjord-devdays-2610 projects are ACTIVE; the listing's own active figure is 7 (the whole folder) and the event has 4 projects, so neither neighbouring figure is 3",
+        "extra_any_of": [
+          "three of the four",
+          "3 of the 4",
+          "3 of 4",
+          "three of four",
+          "3/4 are active",
+          "3/4 still active"
+        ]
+      }
+    ],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 0
+  }
+}

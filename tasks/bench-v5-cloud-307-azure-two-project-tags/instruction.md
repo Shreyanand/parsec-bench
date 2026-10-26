@@ -1,0 +1,1 @@
+We're folding the Azure project tag `fsi-fraud-demo-eu` into `fsi-fraud-demo` so that the fraud-demo team has a single tag. Before anyone retags anything: in the standard pools database, how many subscriptions carry each of the two tags, which subscription ids are they, and are they in use?

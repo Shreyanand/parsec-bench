@@ -1,0 +1,51 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "babylon-ocp-prod-us-east-1",
+        "detailed": true
+      },
+      "result": {
+        "result": "[{\"name\":\"anarchy-stuck-subjects\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"[Anarchy] Stuck AnarchySubjects\",\"host_name\":\"babylon-ocp-prod-us-east-1\",\"state\":2,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":0,\"groups\":[],\"last_check_result\":{\"output\":\"CRITICAL - 14 AnarchySubjects stuck in provision-pending for more than 30 minutes (threshold 5)\",\"state\":2,\"exit_status\":2}}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_comments",
+        "host": "babylon-ocp-prod-us-east-1"
+      },
+      "result": {
+        "result": "[]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_downtimes",
+        "host": "babylon-ocp-prod-us-east-1"
+      },
+      "result": {
+        "result": "[]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "rhdp-monitoring",
+        "path": "monitoring/babylon/check_stuck_subjects.py"
+      },
+      "result": {
+        "content": "#!/usr/bin/env python3\n\"\"\"Alert when too many AnarchySubjects sit in a pending state.\"\"\"\n\nSTUCK_MINUTES = 30\nWARN_COUNT = 3\nCRIT_COUNT = 5\n\ndef classify(stuck):\n    if stuck >= CRIT_COUNT:\n        return 2\n    if stuck >= WARN_COUNT:\n        return 1\n    return 0\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The service anarchy-stuck-subjects on babylon-ocp-prod-us-east-1 is CRITICAL. Its last check reported 14 AnarchySubjects stuck in provision-pending for more than 30 minutes.\n\nNobody has commented on it and there are no downtimes scheduled for it, so it is not acknowledged and not suppressed -- this is a live alert.\n\nReading the check script, it classifies on two thresholds: WARN_COUNT is 3 and CRIT_COUNT is 5, both counted against subjects stuck longer than STUCK_MINUTES = 30. So the critical threshold is 5, and the current value of 14 exceeds it by 9 -- nearly three times the level at which the check goes critical."
+}

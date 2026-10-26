@@ -1,0 +1,131 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "aap2-prod-us-west-2",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "aap2-prod-us-west-2"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "aap2-prod-us-west-2"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "monitoring/aap2/check_job_status.py"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "search_services"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "list_alerts"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "counts": [
+      {
+        "id": "window",
+        "value": 60,
+        "nouns": [
+          "minutes",
+          "minute",
+          "window",
+          "hour"
+        ],
+        "window": 6,
+        "asked_by": "report the window it counts failures over",
+        "rationale": "WINDOW_MINUTES appears only in the script, never in the alert output"
+      },
+      {
+        "id": "warn",
+        "value": 2,
+        "nouns": [
+          "warning",
+          "WARN_FAILURES",
+          "warn"
+        ],
+        "window": 6,
+        "asked_by": "the warning threshold",
+        "rationale": "WARN_FAILURES likewise appears only in the script, so it is a second fact proving the github leg happened"
+      }
+    ],
+    "required": [
+      {
+        "id": "ignored-action",
+        "any_of": [
+          "destroy"
+        ],
+        "ignore_case": true,
+        "asked_by": "which job action it ignores when counting",
+        "rationale": "IGNORE_ACTIONS is the least obvious thing in the script and cannot be guessed from the alert text"
+      },
+      {
+        "id": "live-alert",
+        "any_of": [
+          "no comment",
+          "no comments",
+          "not acknowledged",
+          "no downtime",
+          "no downtimes",
+          "nobody has",
+          "no one has",
+          "none scheduled"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "both collections are seeded empty; an absence has no literal",
+        "asked_by": "check for comments and downtimes",
+        "rationale": "makes the two suppression calls consequential"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "invented-suppression",
+        "none_of": [
+          "has been acknowledged",
+          "is acknowledged",
+          "in a scheduled downtime",
+          "downtime is active"
+        ],
+        "ignore_case": true,
+        "rationale": "the service is neither acknowledged nor in downtime"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

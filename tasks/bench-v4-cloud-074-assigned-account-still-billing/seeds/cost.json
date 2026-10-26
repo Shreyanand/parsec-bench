@@ -1,0 +1,171 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [
+    {
+      "aws_cost_result_id": "acr-0914-service",
+      "accounts_queried": 1,
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2026-09-14",
+        "end": "2026-09-21"
+      },
+      "period_id": "per-0914-0921",
+      "results": [
+        {
+          "account_id": "604918372251",
+          "items": {
+            "Amazon Elastic Compute Cloud - Compute": {
+              "cost": 1148.0,
+              "daily": [
+                {
+                  "date": "2026-09-14",
+                  "cost": 163.0
+                },
+                {
+                  "date": "2026-09-15",
+                  "cost": 165.0
+                },
+                {
+                  "date": "2026-09-16",
+                  "cost": 164.0
+                },
+                {
+                  "date": "2026-09-17",
+                  "cost": 164.0
+                },
+                {
+                  "date": "2026-09-18",
+                  "cost": 163.0
+                },
+                {
+                  "date": "2026-09-19",
+                  "cost": 165.0
+                },
+                {
+                  "date": "2026-09-20",
+                  "cost": 164.0
+                }
+              ]
+            },
+            "Amazon Virtual Private Cloud": {
+              "cost": 42.0,
+              "daily": [
+                {
+                  "date": "2026-09-14",
+                  "cost": 6.0
+                },
+                {
+                  "date": "2026-09-15",
+                  "cost": 6.0
+                },
+                {
+                  "date": "2026-09-16",
+                  "cost": 6.0
+                },
+                {
+                  "date": "2026-09-17",
+                  "cost": 6.0
+                },
+                {
+                  "date": "2026-09-18",
+                  "cost": 6.0
+                },
+                {
+                  "date": "2026-09-19",
+                  "cost": 6.0
+                },
+                {
+                  "date": "2026-09-20",
+                  "cost": 6.0
+                }
+              ]
+            },
+            "Amazon Simple Storage Service": {
+              "cost": 28.0,
+              "daily": [
+                {
+                  "date": "2026-09-14",
+                  "cost": 4.0
+                },
+                {
+                  "date": "2026-09-15",
+                  "cost": 4.0
+                },
+                {
+                  "date": "2026-09-16",
+                  "cost": 4.0
+                },
+                {
+                  "date": "2026-09-17",
+                  "cost": 4.0
+                },
+                {
+                  "date": "2026-09-18",
+                  "cost": 4.0
+                },
+                {
+                  "date": "2026-09-19",
+                  "cost": 4.0
+                },
+                {
+                  "date": "2026-09-20",
+                  "cost": 4.0
+                }
+              ]
+            },
+            "Amazon Route 53": {
+              "cost": 7.0,
+              "daily": [
+                {
+                  "date": "2026-09-14",
+                  "cost": 1.0
+                },
+                {
+                  "date": "2026-09-15",
+                  "cost": 1.0
+                },
+                {
+                  "date": "2026-09-16",
+                  "cost": 1.0
+                },
+                {
+                  "date": "2026-09-17",
+                  "cost": 1.0
+                },
+                {
+                  "date": "2026-09-18",
+                  "cost": 1.0
+                },
+                {
+                  "date": "2026-09-19",
+                  "cost": 1.0
+                },
+                {
+                  "date": "2026-09-20",
+                  "cost": 1.0
+                }
+              ]
+            }
+          },
+          "total": 1225.0
+        }
+      ],
+      "total_cost": 1225.0
+    }
+  ],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-0914-0921",
+      "start": "2026-09-14",
+      "end": "2026-09-21"
+    }
+  ]
+}

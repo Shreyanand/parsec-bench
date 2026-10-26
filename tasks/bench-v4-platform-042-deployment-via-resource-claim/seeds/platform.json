@@ -1,0 +1,86 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [
+    {
+      "babylon_anarchy_subject_id": "west-ansible-lightspeed-lab.tq4hm",
+      "cluster": "west",
+      "name": "ansible-lightspeed-lab.tq4hm",
+      "namespace": "babylon-anarchy-ansible-lightspeed-lab",
+      "governor": "ansible-lightspeed-lab",
+      "current_state": "provisioning",
+      "desired_state": "started",
+      "healthy": true,
+      "requester_email": "rortiz@redhat.com",
+      "instance_vars": {
+        "guid": "tq4hm",
+        "env_type": "ansible-lightspeed-lab"
+      },
+      "resource_claim": {
+        "name": "ansible-lightspeed-lab-tq4hm",
+        "namespace": "user-rortiz-redhat-com"
+      }
+    }
+  ],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [
+    {
+      "babylon_deployment_id": "west-user-rortiz-redhat-com-ansible-lightspeed-lab-tq4hm",
+      "cluster": "west",
+      "name": "ansible-lightspeed-lab-tq4hm",
+      "namespace": "user-rortiz-redhat-com",
+      "catalog_item": "ansible-lightspeed-lab.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "c41e7b2a-5d93-4f08-b6a1-7e2d90f3c58d",
+      "lifespan": {
+        "default": "3d",
+        "maximum": "5d"
+      },
+      "healthy": false,
+      "ready": false,
+      "state": "provisioning",
+      "current_state": "provisioning",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "tq4hm",
+        "env_type": "ansible-lightspeed-lab"
+      }
+    },
+    {
+      "babylon_deployment_id": "west-babylon-anarchy-ansible-lightspeed-lab-ansible-lightspeed-lab.tq4hm",
+      "cluster": "west",
+      "name": "ansible-lightspeed-lab.tq4hm",
+      "namespace": "babylon-anarchy-ansible-lightspeed-lab",
+      "catalog_item": "ansible-lightspeed-lab.event",
+      "catalog_namespace": "babylon-catalog-event",
+      "asset_uuid": "8d0f3e61-2b7a-4c95-a1e4-63b9c07d2f18",
+      "lifespan": {
+        "default": "1d",
+        "maximum": "2d"
+      },
+      "healthy": true,
+      "ready": true,
+      "state": "started",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "tq4hm",
+        "env_type": "ansible-lightspeed-lab"
+      }
+    }
+  ],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

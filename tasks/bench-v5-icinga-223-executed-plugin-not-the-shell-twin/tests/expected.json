@@ -1,0 +1,187 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "kafka-brk-zrh-5"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "repo": "rhdp-monitoring"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/jvm/check_fd_usage.py"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_check_commands"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_commands"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "executed-file",
+        "any_of": [
+          "plugins/jvm/check_fd_usage.py",
+          "jvm/check_fd_usage.py"
+        ],
+        "ignore_case": true,
+        "asked_by": "tell me which file in the repo is the one Icinga actually runs",
+        "rationale": "the repo path of the executed .py, chosen from two search matches by the last_check_result.command"
+      },
+      {
+        "id": "soft-limit",
+        "any_of": [
+          "soft limit",
+          "soft nofile",
+          "soft rlimit",
+          "soft value",
+          "soft column",
+          "soft \"max open files\"",
+          "soft 'max open files'",
+          "soft max open files",
+          "soft open-files limit",
+          "soft open files limit",
+          "soft open file limit",
+          "soft file limit",
+          "soft fd limit",
+          "soft file-descriptor limit",
+          "soft file descriptor limit",
+          "soft descriptor limit",
+          "soft ulimit",
+          "soft limit for open files",
+          "soft one",
+          "soft open-file",
+          "soft open file",
+          "soft open-files",
+          "soft open files",
+          "soft max",
+          "(soft)",
+          "soft)",
+          "max open files, soft",
+          "max open files (soft",
+          "soft nofile",
+          "soft fd",
+          "soft file-descriptor",
+          "soft file descriptor",
+          "soft descriptor",
+          "soft limits",
+          "soft cap",
+          "soft ceiling",
+          "soft, not",
+          "soft rather"
+        ],
+        "ignore_case": true,
+        "asked_by": "what that 81% is a share of",
+        "rationale": "the script divides by the process's SOFT Max open files limit; only the .py says so"
+      },
+      {
+        "id": "per-process",
+        "any_of": [
+          "per-process",
+          "per process",
+          "/proc/<pid>/limits",
+          "/proc/2817/limits",
+          "/proc/<pid>/fd",
+          "/proc/2817/fd",
+          "process's own",
+          "process's limit",
+          "process's soft",
+          "process limit",
+          "broker process",
+          "kafka process",
+          "pid 2817's",
+          "of that process",
+          "of the process",
+          "the process's"
+        ],
+        "ignore_case": true,
+        "asked_by": "what that 81% is a share of",
+        "rationale": "the denominator belongs to the broker process, not the kernel"
+      }
+    ],
+    "counts": [
+      {
+        "id": "crit-pct",
+        "value": 88,
+        "nouns": [
+          "%",
+          "percent",
+          "pct",
+          "critical",
+          "crit",
+          "crit_pct"
+        ],
+        "window": 4,
+        "asked_by": "at what percentage the check turns CRITICAL",
+        "rationale": "CRIT_PCT = 88, a script default; the command passes no -c and the perfdata carries no threshold",
+        "extra_any_of": [
+          "88%",
+          "88 %",
+          "CRIT_PCT = 88",
+          "CRIT_PCT=88"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "kernel-wide-denominator",
+        "none_of": [
+          "81% of the system-wide",
+          "81% of the kernel",
+          "81% of the host-wide",
+          "81% of the host's",
+          "81% of the system's",
+          "81% of fs.file-max",
+          "81% of file-max",
+          "81% is of the kernel",
+          "81% is of the system",
+          "81% is of the host",
+          "81% is of fs.file-max",
+          "81% is a share of the kernel",
+          "81% is a share of the system",
+          "81% is a share of the host",
+          "81% is a share of fs.file-max",
+          "share of the kernel's fs.file-max",
+          "share of the kernel-wide",
+          "measured against fs.file-max",
+          "measured against the kernel"
+        ],
+        "ignore_case": true,
+        "rationale": "the shell twin's reading (whole-kernel file handles against the kernel maximum); the executed .py measures one process against its soft limit"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

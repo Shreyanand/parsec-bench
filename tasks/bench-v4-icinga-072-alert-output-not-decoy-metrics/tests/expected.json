@@ -1,0 +1,71 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {}
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "degraded-operator",
+        "any_of": [
+          "openshift-samples",
+          "openshift samples",
+          "openshift_samples",
+          "samples operator",
+          "samples cluster operator",
+          "samples clusteroperator",
+          "cluster-samples-operator"
+        ],
+        "ignore_case": true,
+        "asked_by": "which cluster operator the alert reports as degraded",
+        "rationale": "the operator named in the CRITICAL row's attrs.last_check_result.output. Icinga-only: no platform row and not the instruction carries it. The decoy machineset and Splunk rows name no operator"
+      },
+      {
+        "id": "reason-code",
+        "any_of": [
+          "failedimageimport",
+          "failed image import",
+          "failed-image-import",
+          "failed_image_import"
+        ],
+        "ignore_case": true,
+        "asked_by": "the reason code it gives",
+        "rationale": "the reason=FailedImageImports token of the same output. Icinga-only. The singular stem also matches FailedImageImports and 'failed image imports'"
+      },
+      {
+        "id": "error-message",
+        "any_of": [
+          "manifest unknown",
+          "manifest_unknown",
+          "manifest is unknown",
+          "unknown manifest",
+          "wren-jdk21",
+          "wren-builder",
+          "manifest not found",
+          "manifest was not found",
+          "manifest could not be found",
+          "no such manifest"
+        ],
+        "ignore_case": true,
+        "asked_by": "the error message behind it",
+        "rationale": "the error text of the same output: the registry's 'manifest unknown' (or a manifest-not-found paraphrase), or the image (wren-jdk21) / imagestream (wren-builder-jdk21) it names. Icinga-only"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

@@ -1,0 +1,272 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [
+    {
+      "id": "aap2-east-6031958",
+      "job_id": 6031958,
+      "job_name": "rhel.imgbuild-lab.prod w2hcd provision",
+      "status": "successful",
+      "failed": false,
+      "started": "2026-11-12T16:20:04Z",
+      "finished": "2026-11-12T16:38:51Z",
+      "duration_seconds": 1127,
+      "launch_type": "workflow",
+      "job_explanation": "",
+      "template_name": "rhel.imgbuild-lab.prod",
+      "env_type": "ocp-virt-vms",
+      "guid": "w2hcd",
+      "action": "provision",
+      "cloud_provider": "cnv",
+      "display_name": "RHEL Image Builder Lab",
+      "controller": "east"
+    }
+  ],
+  "job_events": [
+    {
+      "job_event_id": "east-6031958-4",
+      "job_id": 6031958,
+      "controller": "east",
+      "event_key": "6031958-4",
+      "counter": 4,
+      "event": "runner_on_ok",
+      "task": "Gather lab facts",
+      "play": "Provision RHEL image builder lab on OpenShift Virtualization",
+      "role": "ocp4_workload_rhel_imgbuild_vms",
+      "host": "localhost",
+      "failed": false,
+      "changed": false,
+      "stdout": "ok: [localhost]",
+      "error_msg": ""
+    },
+    {
+      "job_event_id": "east-6031958-9",
+      "job_id": 6031958,
+      "controller": "east",
+      "event_key": "6031958-9",
+      "counter": 9,
+      "event": "runner_on_failed",
+      "task": "Look up an existing image-builder VirtualMachine",
+      "play": "Provision RHEL image builder lab on OpenShift Virtualization",
+      "role": "ocp4_workload_rhel_imgbuild_vms",
+      "host": "localhost",
+      "failed": false,
+      "changed": false,
+      "stdout": "fatal: [localhost]: FAILED! => {\"msg\": \"virtualmachines.kubevirt.io \\\"image-builder\\\" not found in namespace sandbox-w2hcd-imgbuild\"}\n...ignoring",
+      "error_msg": "virtualmachines.kubevirt.io \"image-builder\" not found"
+    },
+    {
+      "job_event_id": "east-6031958-12",
+      "job_id": 6031958,
+      "controller": "east",
+      "event_key": "6031958-12",
+      "counter": 12,
+      "event": "runner_on_failed",
+      "task": "Delete leftover DataVolume from a previous order",
+      "play": "Provision RHEL image builder lab on OpenShift Virtualization",
+      "role": "ocp4_workload_rhel_imgbuild_vms",
+      "host": "localhost",
+      "failed": false,
+      "changed": false,
+      "stdout": "fatal: [localhost]: FAILED! => {\"msg\": \"datavolumes.cdi.kubevirt.io \\\"image-builder-rootdisk\\\" not found in namespace sandbox-w2hcd-imgbuild\"}\n...ignoring",
+      "error_msg": "datavolumes.cdi.kubevirt.io \"image-builder-rootdisk\" not found"
+    },
+    {
+      "job_event_id": "east-6031958-15",
+      "job_id": 6031958,
+      "controller": "east",
+      "event_key": "6031958-15",
+      "counter": 15,
+      "event": "runner_on_failed",
+      "task": "Read the existing lab SSH key secret",
+      "play": "Provision RHEL image builder lab on OpenShift Virtualization",
+      "role": "ocp4_workload_rhel_imgbuild_vms",
+      "host": "localhost",
+      "failed": false,
+      "changed": false,
+      "stdout": "fatal: [localhost]: FAILED! => {\"msg\": \"secrets \\\"w2hcd-lab-ssh\\\" not found in namespace sandbox-w2hcd-imgbuild\"}\n...ignoring",
+      "error_msg": "secrets \"w2hcd-lab-ssh\" not found"
+    },
+    {
+      "job_event_id": "east-6031958-18",
+      "job_id": 6031958,
+      "controller": "east",
+      "event_key": "6031958-18",
+      "counter": 18,
+      "event": "runner_on_ok",
+      "task": "Create the lab SSH key secret",
+      "play": "Provision RHEL image builder lab on OpenShift Virtualization",
+      "role": "ocp4_workload_rhel_imgbuild_vms",
+      "host": "localhost",
+      "failed": false,
+      "changed": true,
+      "stdout": "changed: [localhost] => secret sandbox-w2hcd-imgbuild/w2hcd-lab-ssh created",
+      "error_msg": ""
+    },
+    {
+      "job_event_id": "east-6031958-22",
+      "job_id": 6031958,
+      "controller": "east",
+      "event_key": "6031958-22",
+      "counter": 22,
+      "event": "runner_on_ok",
+      "task": "Create VirtualMachine image-builder",
+      "play": "Provision RHEL image builder lab on OpenShift Virtualization",
+      "role": "ocp4_workload_rhel_imgbuild_vms",
+      "host": "localhost",
+      "failed": false,
+      "changed": true,
+      "stdout": "changed: [localhost] => VirtualMachine sandbox-w2hcd-imgbuild/image-builder created on cluster ocpv-ardent",
+      "error_msg": ""
+    },
+    {
+      "job_event_id": "east-6031958-23",
+      "job_id": 6031958,
+      "controller": "east",
+      "event_key": "6031958-23",
+      "counter": 23,
+      "event": "runner_on_ok",
+      "task": "Create VirtualMachine rhel9-client",
+      "play": "Provision RHEL image builder lab on OpenShift Virtualization",
+      "role": "ocp4_workload_rhel_imgbuild_vms",
+      "host": "localhost",
+      "failed": false,
+      "changed": true,
+      "stdout": "changed: [localhost] => VirtualMachine sandbox-w2hcd-imgbuild/rhel9-client created on cluster ocpv-ardent",
+      "error_msg": ""
+    },
+    {
+      "job_event_id": "east-6031958-27",
+      "job_id": 6031958,
+      "controller": "east",
+      "event_key": "6031958-27",
+      "counter": 27,
+      "event": "runner_on_ok",
+      "task": "Wait for the VirtualMachines to report Ready",
+      "play": "Provision RHEL image builder lab on OpenShift Virtualization",
+      "role": "ocp4_workload_rhel_imgbuild_vms",
+      "host": "localhost",
+      "failed": false,
+      "changed": false,
+      "stdout": "ok: [localhost] => 2 of 2 VirtualMachines Ready",
+      "error_msg": ""
+    },
+    {
+      "job_event_id": "east-6031958-31",
+      "job_id": 6031958,
+      "controller": "east",
+      "event_key": "6031958-31",
+      "counter": 31,
+      "event": "runner_on_ok",
+      "task": "Print lab access information",
+      "play": "Provision RHEL image builder lab on OpenShift Virtualization",
+      "role": "ocp4_workload_rhel_imgbuild_vms",
+      "host": "localhost",
+      "failed": false,
+      "changed": false,
+      "stdout": "ok: [localhost] => Lab ready: namespace sandbox-w2hcd-imgbuild on cluster ocpv-ardent, console https://console-openshift-console.apps.ocpv-ardent.example.net",
+      "error_msg": ""
+    }
+  ],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [
+    {
+      "ocpv_namespace_id": "ons-156-1",
+      "cluster": "ocpv-ardent",
+      "namespace": "sandbox-w2hcd-imgbuild",
+      "status": "Active"
+    }
+  ],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [
+    {
+      "ocpv_vm_id": "ovm-156-1",
+      "cluster": "ocpv-ardent",
+      "namespace": "sandbox-w2hcd-imgbuild",
+      "name": "image-builder",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "ardent-wrk-04",
+      "ip": "10.131.6.42",
+      "vcpus": 4,
+      "memory": "16Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        },
+        {
+          "name": "cloudinitdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "dataVolume": "image-builder-rootdisk"
+        },
+        {
+          "name": "cloudinitdisk",
+          "cloudInitNoCloud": {}
+        }
+      ],
+      "condition": {
+        "type": "Ready",
+        "status": "True",
+        "reason": "",
+        "message": ""
+      }
+    },
+    {
+      "ocpv_vm_id": "ovm-156-2",
+      "cluster": "ocpv-ardent",
+      "namespace": "sandbox-w2hcd-imgbuild",
+      "name": "rhel9-client",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "ardent-wrk-02",
+      "ip": "10.128.9.17",
+      "vcpus": 2,
+      "memory": "4Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        },
+        {
+          "name": "cloudinitdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "dataVolume": "rhel9-client-rootdisk"
+        },
+        {
+          "name": "cloudinitdisk",
+          "cloudInitNoCloud": {}
+        }
+      ],
+      "condition": {
+        "type": "Ready",
+        "status": "True",
+        "reason": "",
+        "message": ""
+      }
+    }
+  ],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,117 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_model_registry/defaults/main.yml",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_model_registry/defaults/main.yml",
+      "content": "---\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\n# Model Registry operator (part of OpenShift AI)\nocp4_workload_model_registry_namespace: rhoai-model-registries\nocp4_workload_model_registry_wait_retries: 40\n\n# Backing MySQL database\nocp4_workload_model_registry_db_name: registry_db\nocp4_workload_model_registry_db_storage: 10Gi\n\n# Name of the ModelRegistry instance. ocp4_workload_model_serving_lab reads\n# this as well, to build the registry route for its notebooks; keep the two\n# roles in step if you change it.\nocp4_workload_model_registry_instance_name: lab-registry\n"
+    },
+    {
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/tasks/main.yml",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/tasks/main.yml",
+      "content": "---\n- name: Build the model registry URL for the lab notebooks\n  ansible.builtin.set_fact:\n    ocp4_workload_model_serving_lab_registry_url: >-\n      https://{{ ocp4_workload_model_registry_instance_name }}-rest.{{ route_subdomain }}\n\n- name: Deploy the notebook workbench\n  kubernetes.core.k8s:\n    state: present\n    definition: \"{{ lookup('template', 'workbench.yaml.j2') | from_yaml }}\"\n"
+    },
+    {
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_model_registry/defaults/main.yml",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_model_registry/defaults/main.yml",
+      "content": "---\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\n# Model Registry operator (part of OpenShift AI)\nocp4_workload_model_registry_namespace: rhoai-model-registries\nocp4_workload_model_registry_wait_retries: 40\n\n# Backing MySQL database\nocp4_workload_model_registry_db_name: registry_db\nocp4_workload_model_registry_db_storage: 10Gi\n\n# Name of the ModelRegistry instance. ocp4_workload_model_serving_lab reads\n# this as well, to build the registry route for its notebooks; keep the two\n# roles in step if you change it.\nocp4_workload_model_registry_instance_name: lab-registry\n"
+    },
+    {
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/tasks/main.yml",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/tasks/main.yml",
+      "content": "---\n- name: Build the model registry URL for the lab notebooks\n  ansible.builtin.set_fact:\n    ocp4_workload_model_serving_lab_registry_url: >-\n      https://{{ ocp4_workload_model_registry_instance_name }}-rest.{{ route_subdomain }}\n\n- name: Deploy the notebook workbench\n  kubernetes.core.k8s:\n    state: present\n    definition: \"{{ lookup('template', 'workbench.yaml.j2') | from_yaml }}\"\n"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "repo_search_result_id": "rsr-152-var-HEAD",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "ocp4_workload_model_registry_instance_name",
+      "matches": [],
+      "total_matches": 0,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rsr-152-ocp4_workload_model_serving_lab-HEAD",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "ocp4_workload_model_serving_lab",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/templates/workbench.yaml.j2"
+      ],
+      "total_matches": 3,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rsr-152-model_serving_lab-HEAD",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "model_serving_lab",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/templates/workbench.yaml.j2"
+      ],
+      "total_matches": 3,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rsr-152-var-main",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "ocp4_workload_model_registry_instance_name",
+      "matches": [],
+      "total_matches": 0,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rsr-152-ocp4_workload_model_serving_lab-main",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "ocp4_workload_model_serving_lab",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/templates/workbench.yaml.j2"
+      ],
+      "total_matches": 3,
+      "truncated": false
+    },
+    {
+      "repo_search_result_id": "rsr-152-model_serving_lab-main",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "model_serving_lab",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_model_serving_lab/templates/workbench.yaml.j2"
+      ],
+      "total_matches": 3,
+      "truncated": false
+    }
+  ],
+  "similar_items": []
+}

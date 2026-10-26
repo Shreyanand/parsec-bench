@@ -1,0 +1,115 @@
+{
+  "catalog_items": [
+    {
+      "catalog_item_id": "rhpds/agnosticv-finserv_bu/payments-eventbus-lab",
+      "found": true,
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "account": "finserv_bu",
+      "directory": "payments-eventbus-lab",
+      "path": "finserv_bu/payments-eventbus-lab",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "default_branch": "main",
+      "message": ""
+    }
+  ],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "finserv_bu/payments-eventbus-lab/common.yaml",
+      "content": "---\n# payments-eventbus-lab: payments message pipeline on OpenShift (AWS)\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Payments Eventbus Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\naws_region: eu-west-3\nworker_instance_count: 3\nworker_instance_type: m6i.2xlarge\nocp4_installer_version: \"4.18\"\n\nworkloads:\n  - ocp4_workload_cert_manager\n  - ocp4_workload_kafka_topics\n  - ocp4_workload_payments_app\n  - ocp4_workload_streams_operator\n\nocp4_workload_streams_operator_channel: stable\nocp4_workload_kafka_topics_namespace: payments\nocp4_workload_kafka_topics_cluster: payments-kafka\nocp4_workload_kafka_topics_partitions: 6\nocp4_workload_kafka_topics_names:\n  - payments.authorized\n  - payments.settled\n  - payments.disputed\nocp4_workload_payments_app_replicas: 2\n",
+      "file_id": "rhpds/agnosticv@HEAD-finserv_bu/payments-eventbus-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "finserv_bu/payments-eventbus-lab/common.yaml",
+      "content": "---\n# payments-eventbus-lab: payments message pipeline on OpenShift (AWS)\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Payments Eventbus Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\naws_region: eu-west-3\nworker_instance_count: 3\nworker_instance_type: m6i.2xlarge\nocp4_installer_version: \"4.18\"\n\nworkloads:\n  - ocp4_workload_cert_manager\n  - ocp4_workload_kafka_topics\n  - ocp4_workload_payments_app\n  - ocp4_workload_streams_operator\n\nocp4_workload_streams_operator_channel: stable\nocp4_workload_kafka_topics_namespace: payments\nocp4_workload_kafka_topics_cluster: payments-kafka\nocp4_workload_kafka_topics_partitions: 6\nocp4_workload_kafka_topics_names:\n  - payments.authorized\n  - payments.settled\n  - payments.disputed\nocp4_workload_payments_app_replicas: 2\n",
+      "file_id": "rhpds/agnosticv@main-finserv_bu/payments-eventbus-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "finserv_bu/payments-eventbus-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 1d\n    maximum: 2d\n",
+      "file_id": "rhpds/agnosticv@HEAD-finserv_bu/payments-eventbus-lab/prod.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "finserv_bu/payments-eventbus-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 1d\n    maximum: 2d\n",
+      "file_id": "rhpds/agnosticv@main-finserv_bu/payments-eventbus-lab/prod.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_kafka_topics/tasks/workload.yml",
+      "content": "---\n# Create the lab's Kafka topics as KafkaTopic custom resources.\n# The KafkaTopic CRD is installed by the Strimzi operator\n# (ocp4_workload_streams_operator), which must run before this workload.\n\n- name: Create the payments topics\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: kafka.strimzi.io/v1beta2\n      kind: KafkaTopic\n      metadata:\n        name: \"{{ item }}\"\n        namespace: \"{{ ocp4_workload_kafka_topics_namespace }}\"\n        labels:\n          strimzi.io/cluster: \"{{ ocp4_workload_kafka_topics_cluster }}\"\n      spec:\n        partitions: \"{{ ocp4_workload_kafka_topics_partitions }}\"\n        replicas: 3\n  loop: \"{{ ocp4_workload_kafka_topics_names }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_kafka_topics/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_kafka_topics/tasks/workload.yml",
+      "content": "---\n# Create the lab's Kafka topics as KafkaTopic custom resources.\n# The KafkaTopic CRD is installed by the Strimzi operator\n# (ocp4_workload_streams_operator), which must run before this workload.\n\n- name: Create the payments topics\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: kafka.strimzi.io/v1beta2\n      kind: KafkaTopic\n      metadata:\n        name: \"{{ item }}\"\n        namespace: \"{{ ocp4_workload_kafka_topics_namespace }}\"\n        labels:\n          strimzi.io/cluster: \"{{ ocp4_workload_kafka_topics_cluster }}\"\n      spec:\n        partitions: \"{{ ocp4_workload_kafka_topics_partitions }}\"\n        replicas: 3\n  loop: \"{{ ocp4_workload_kafka_topics_names }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_kafka_topics/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "6e0d3c9a14b72f58d0c6e1a93b84f27d50a9c1e3",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_kafka_topics/tasks/workload.yml",
+      "content": "---\n# Create the lab's Kafka topics as KafkaTopic custom resources.\n# The KafkaTopic CRD is installed by the Strimzi operator\n# (ocp4_workload_streams_operator), which must run before this workload.\n\n- name: Create the payments topics\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: kafka.strimzi.io/v1beta2\n      kind: KafkaTopic\n      metadata:\n        name: \"{{ item }}\"\n        namespace: \"{{ ocp4_workload_kafka_topics_namespace }}\"\n        labels:\n          strimzi.io/cluster: \"{{ ocp4_workload_kafka_topics_cluster }}\"\n      spec:\n        partitions: \"{{ ocp4_workload_kafka_topics_partitions }}\"\n        replicas: 3\n  loop: \"{{ ocp4_workload_kafka_topics_names }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@6e0d3c9a14b72f58d0c6e1a93b84f27d50a9c1e3-ansible/roles_ocp_workloads/ocp4_workload_kafka_topics/tasks/workload.yml"
+    }
+  ],
+  "pull_requests": [
+    {
+      "pull_request_id": "rhpds/agnosticv#31588",
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "pr_number": 31588,
+      "title": "Sort workload lists alphabetically in finserv_bu catalog items (no functional change)",
+      "branch": "chore/sort-finserv-workloads",
+      "state": "closed",
+      "author": "lbrennan-rhdp",
+      "url": "https://github.com/rhpds/agnosticv/pull/31588",
+      "created_at": "2026-10-05T09:40:12Z",
+      "updated_at": "2026-10-05T17:12:48Z",
+      "files": [
+        "finserv_bu/fraud-scoring-lab/common.yaml",
+        "finserv_bu/ledger-api-workshop/common.yaml",
+        "finserv_bu/payments-eventbus-lab/common.yaml"
+      ]
+    },
+    {
+      "pull_request_id": "rhpds/agnosticv#31602",
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "pr_number": 31602,
+      "title": "payments-eventbus-lab: bump the Kafka cluster to 3.8",
+      "branch": "feature/payments-kafka-38",
+      "state": "open",
+      "author": "tokafor-rhdp",
+      "url": "https://github.com/rhpds/agnosticv/pull/31602",
+      "created_at": "2026-10-05T19:03:27Z",
+      "updated_at": "2026-10-06T08:41:09Z",
+      "files": [
+        "finserv_bu/payments-eventbus-lab/common.yaml"
+      ]
+    }
+  ],
+  "repo_search_results": [],
+  "similar_items": []
+}

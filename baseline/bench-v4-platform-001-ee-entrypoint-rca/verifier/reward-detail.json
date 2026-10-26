@@ -1,0 +1,112 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 90402
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "entrypoint.sh"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2",
+          "search": "entrypoint.sh"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "path": "tools/execution_environments/ee-multicloud-public/entrypoint.sh",
+          "ref": "development"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "ref": "development",
+          "search": "entrypoint.sh"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2",
+          "path": "tools/execution_environments/ee-multicloud-public/entrypoint.sh"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "tools/execution_environments/ee-multicloud-public/entrypoint.sh"
+        }
+      }
+    ],
+    "forbidden_violations": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [
+      {
+        "id": "entrypoint",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "tools/execution_environments/ee-multicloud-public/entrypoint.sh",
+        "asked_by": "Cite the file in the AgnosticD content repository that has to change",
+        "rationale": "parsec's RCA playbook forbids a code claim without an owner/repo:path citation, and the owner half is the wrong turn 21 real trajectory calls took"
+      }
+    ],
+    "citations_total": 1,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

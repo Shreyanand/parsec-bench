@@ -1,0 +1,70 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_log",
+        "controller": "partner0",
+        "job_id": 7731456
+      },
+      "result": {
+        "job_id": 7731456,
+        "job_name": "RHDP datalake_bu.telemetry-datamart-lab.prod-q8zvw-1-provision",
+        "status": "failed",
+        "failed": true,
+        "started": "2026-10-08T14:06:50.000Z",
+        "finished": "2026-10-08T15:07:01.000Z",
+        "duration_seconds": 3611,
+        "launch_type": "workflow",
+        "job_explanation": "",
+        "template_name": "RHDP datalake_bu.telemetry-datamart-lab.prod-provision",
+        "env_type": "prod",
+        "guid": "q8zvw",
+        "action": "provision",
+        "cloud_provider": "ec2",
+        "display_name": "telemetry-datamart-lab",
+        "controller": "partner0",
+        "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+        "git_branch": "main",
+        "git_revision": "9c4e71a0d3b85f26e0a1c7d94b3f58e2a6d01c73",
+        "log": "PLAY [Provision the datamart infrastructure] ****************************************\n\nTASK [sandbox_aws_session : Assume the sandbox provisioning role] ****************************************\nThursday 08 October 2026  14:06:53 +0000 (0:00:00.733)       0:00:02.245 ********************\nok: [localhost] => {\"changed\": false, \"msg\": \"assumed arn:aws:iam::613027954418:role/rhdp-sandbox-provisioner as session rhdp-job-7731456\"}\n\nTASK [infra_cloudformation : Create the datamart stack] ****************************************\nThursday 08 October 2026  14:07:04 +0000 (0:00:11.402)       0:00:13.647 ********************\nchanged: [localhost] => {\"changed\": true, \"stack_name\": \"datamart-q8zvw\", \"stack_status\": \"CREATE_COMPLETE\"}\n\nTASK [ocp4_install : Run openshift-install create cluster] ****************************************\nThursday 08 October 2026  14:12:40 +0000 (0:05:36.118)       0:05:49.765 ********************\nchanged: [localhost] => {\"changed\": true, \"msg\": \"Install complete! Elapsed 41m27s\"}\n\nTASK [ocp4_workload_datamart : Create the warehouse S3 bucket] ****************************************\nThursday 08 October 2026  14:54:11 +0000 (0:41:31.226)       0:47:20.991 ********************\nchanged: [localhost] => {\"changed\": true, \"name\": \"rhdp-q8zvw-warehouse\", \"region\": \"us-east-2\"}\n\nTASK [ocp4_workload_datamart : Wait for the Trino coordinator rollout] ****************************************\nThursday 08 October 2026  14:54:19 +0000 (0:00:08.004)       0:47:28.995 ********************\nok: [localhost] => {\"attempts\": 37, \"changed\": false, \"msg\": \"deployment trino-coordinator: 1/1 replicas available\"}\n\nTASK [ocp4_workload_datamart : Apply the warehouse bucket policy] ****************************************\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_datamart/tasks/workload.yml:58\nThursday 08 October 2026  15:06:58 +0000 (0:12:39.617)       1:00:08.612 ********************\nfatal: [localhost]: FAILED! => {\"boto3_version\": \"1.34.144\", \"changed\": false, \"error\": {\"code\": \"ExpiredToken\", \"message\": \"The security token included in the request is expired\"}, \"msg\": \"Failed to put bucket policy for rhdp-q8zvw-warehouse: An error occurred (ExpiredToken) when calling the PutBucketPolicy operation: The security token included in the request is expired\"}\n\nPLAY RECAP ****************************************\nlocalhost                  : ok=5    changed=3    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0\n",
+        "log_original_size": 2476,
+        "log_trimmed_size": 2476
+      },
+      "is_error": false
+    },
+    {
+      "name": "lookup_catalog_item",
+      "args": {
+        "search": "telemetry-datamart-lab"
+      },
+      "result": {
+        "found": true,
+        "owner": "rhpds",
+        "repo": "agnosticv",
+        "account": "datalake_bu",
+        "directory": "telemetry-datamart-lab",
+        "path": "datalake_bu/telemetry-datamart-lab",
+        "files": [
+          "common.yaml",
+          "prod.yaml"
+        ],
+        "default_branch": "main"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "agnosticv",
+        "path": "datalake_bu/telemetry-datamart-lab/common.yaml"
+      },
+      "result": {
+        "content": "---\n# telemetry-datamart-lab: Iceberg + Trino datamart on OpenShift (AWS sandbox)\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Telemetry Datamart Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\n# Sandbox credentials: the job assumes this role once, at the start of the run\nsandbox_aws_role_name: rhdp-sandbox-provisioner\nsandbox_aws_session_duration: 3600\n\naws_region: us-east-2\ncontrol_plane_instance_type: m6i.2xlarge\nworker_instance_count: 4\nworker_instance_type: m6i.4xlarge\nocp4_installer_version: \"4.18\"\n\nworkloads:\n  - ocp4_workload_datamart\n\nocp4_workload_datamart_trino_workers: 3\nocp4_workload_datamart_warehouse_bucket: \"rhdp-{{ guid }}-warehouse\"\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "AWS rejected the PutBucketPolicy call on rhdp-q8zvw-warehouse with `ExpiredToken`: \"The security token included in the request is expired\". The credentials were not revoked; they reached the end of their lifetime.\n\n- The job assumes the sandbox role once, at 14:06:53 UTC (`sandbox_aws_session : Assume the sandbox provisioning role`), and every later AWS call uses that session.\n- The catalog item `rhpds/agnosticv` `datalake_bu/telemetry-datamart-lab/common.yaml` sets `sandbox_aws_session_duration: 3600`, so the session is valid for one hour.\n- The failing call ran at 15:06:58, 60 minutes after the role was assumed. The run (cluster install ~41 minutes plus the datamart workload) is longer than the session, so the session expired mid-run.\n\nThe 14:30 key rotation is not the cause. The same session still worked after it: the warehouse bucket was created at 14:54:11. A revoked key would also give InvalidClientTokenId, not ExpiredToken. Re-issuing keys will not change anything.\n\nFix: raise `sandbox_aws_session_duration` in common.yaml above the run time (for example 10800, which also needs the role's maximum session duration to allow it), or refresh the session before the workload phase."
+}

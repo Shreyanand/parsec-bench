@@ -1,0 +1,1 @@
+We're cutting the Q4 renewal budget and I only want to budget for things that are actually live. As of 2026-10-12, which of the AWS Marketplace agreements on account 863017452296 are still in force? For each one give me the product, vendor, end date and estimated cost.

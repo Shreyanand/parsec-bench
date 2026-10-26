@@ -1,0 +1,156 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [
+    {
+      "name": "cnv-metal-a-7kq2d",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "cnv-metal-a-7kq2d",
+      "provider_id": "i-0c58e1a9f27b4d630",
+      "cluster": "ocpv07",
+      "ocpv_machine_id": "ocpv07-cnv-metal-a-7kq2d"
+    },
+    {
+      "name": "cnv-metal-a-m4xwp",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "cnv-metal-a-m4xwp",
+      "provider_id": "i-07d2b96e4a1c8f052",
+      "cluster": "ocpv07",
+      "ocpv_machine_id": "ocpv07-cnv-metal-a-m4xwp"
+    },
+    {
+      "name": "cnv-metal-b-r8vjn",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "cnv-metal-b-r8vjn",
+      "provider_id": "i-0e91f4c27a6b3d815",
+      "cluster": "ocpv07",
+      "ocpv_machine_id": "ocpv07-cnv-metal-b-r8vjn"
+    },
+    {
+      "name": "cnv-metal-b-l2gcs",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "cnv-metal-b-l2gcs",
+      "provider_id": "i-0a6c3e8d15f97b240",
+      "cluster": "ocpv07",
+      "ocpv_machine_id": "ocpv07-cnv-metal-b-l2gcs"
+    },
+    {
+      "name": "cnv-metal-b-9pwhe",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "cnv-metal-b-9pwhe",
+      "provider_id": "i-0f2b7d40c9e6a1583",
+      "cluster": "ocpv07",
+      "ocpv_machine_id": "ocpv07-cnv-metal-b-9pwhe"
+    },
+    {
+      "name": "cnv-metal-b-x6dtm",
+      "namespace": "openshift-machine-api",
+      "phase": "Provisioning",
+      "node": "",
+      "provider_id": "",
+      "cluster": "ocpv07",
+      "ocpv_machine_id": "ocpv07-cnv-metal-b-x6dtm"
+    },
+    {
+      "name": "cnv-metal-b-f3nqy",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "cnv-metal-b-f3nqy",
+      "provider_id": "i-0d37c9b1e85a2f604",
+      "cluster": "ocpv14",
+      "ocpv_machine_id": "ocpv14-cnv-metal-b-f3nqy"
+    },
+    {
+      "name": "cnv-metal-b-v9hle",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "cnv-metal-b-v9hle",
+      "provider_id": "i-09e5a2f7c4d6b1038",
+      "cluster": "ocpv14",
+      "ocpv_machine_id": "ocpv14-cnv-metal-b-v9hle"
+    }
+  ],
+  "ocpv_machinesets": [
+    {
+      "name": "cnv-metal-a",
+      "namespace": "openshift-machine-api",
+      "replicas": 2,
+      "ready_replicas": 2,
+      "available_replicas": 2,
+      "cluster": "ocpv07",
+      "ocpv_machineset_id": "ocpv07-cnv-metal-a"
+    },
+    {
+      "name": "cnv-metal-b",
+      "namespace": "openshift-machine-api",
+      "replicas": 4,
+      "ready_replicas": 3,
+      "available_replicas": 3,
+      "cluster": "ocpv07",
+      "ocpv_machineset_id": "ocpv07-cnv-metal-b"
+    },
+    {
+      "name": "cnv-metal-b",
+      "namespace": "openshift-machine-api",
+      "replicas": 2,
+      "ready_replicas": 2,
+      "available_replicas": 2,
+      "cluster": "ocpv14",
+      "ocpv_machineset_id": "ocpv14-cnv-metal-b"
+    }
+  ],
+  "ocpv_namespaces": [
+    {
+      "cluster": "ocpv07",
+      "namespace": "sandbox-hq3vt-rhel9-vm-lab",
+      "status": "Active",
+      "ocpv_namespace_id": "ocpv07-sandbox-hq3vt-rhel9-vm-lab"
+    }
+  ],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [
+    {
+      "name": "rhel9-jumphost",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "cnv-metal-a-7kq2d",
+      "ip": "10.131.2.47",
+      "vcpus": 2,
+      "memory": "4Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "type": "dataVolume",
+          "source": "rhel9-jumphost-rootdisk"
+        }
+      ],
+      "ocpv_vm_id": "ocpv07-sandbox-hq3vt-rhel9-vm-lab-rhel9-jumphost",
+      "cluster": "ocpv07",
+      "namespace": "sandbox-hq3vt-rhel9-vm-lab"
+    }
+  ],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

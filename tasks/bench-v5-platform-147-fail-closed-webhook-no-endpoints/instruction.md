@@ -1,0 +1,3 @@
+Storefront Funnel Lab orders have been failing on the `east` AAP2 controller since 2026-10-06. In job `8840217` the step that deploys the storefront services got an HTTP 500 "Internal error occurred" back from the cluster. The on-call engineer reads that as the cluster's API server falling over under load during provisioning, and wants the item changed to bigger control-plane nodes.
+
+Check that before anyone resizes anything. Read the job log, look up the catalog item and read its configuration, and check the cluster-side logs in Splunk. Tell me what actually rejected the deployment, why that component was not running, which settings in the item cause it, and whether bigger control-plane nodes would help.

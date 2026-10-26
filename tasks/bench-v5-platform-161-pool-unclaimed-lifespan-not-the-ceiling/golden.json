@@ -1,0 +1,62 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "list_resource_pools",
+        "cluster": "lapwing"
+      },
+      "result": {
+        "cluster": "lapwing",
+        "pools": [
+          {
+            "name": "ocp-poc-medium-pool",
+            "namespace": "poolboy",
+            "min_available": 2,
+            "max_unready": 1,
+            "lifespan": {
+              "default": "2d",
+              "maximum": "5d",
+              "unclaimed": "6d"
+            },
+            "resource_handle_count": 3,
+            "provider_name": "ocp-poc-medium-aws",
+            "resource_name": "ocp-poc-medium"
+          },
+          {
+            "name": "ocp-poc-small-pool",
+            "namespace": "poolboy",
+            "min_available": 4,
+            "max_unready": 2,
+            "lifespan": {
+              "default": "3d",
+              "maximum": "7d",
+              "unclaimed": "14d"
+            },
+            "resource_handle_count": 6,
+            "provider_name": "ocp-poc-small-aws",
+            "resource_name": "ocp-poc-small"
+          },
+          {
+            "name": "rhel-image-builder-pool",
+            "namespace": "poolboy",
+            "min_available": 3,
+            "max_unready": 1,
+            "lifespan": {
+              "default": "1d",
+              "maximum": "2d",
+              "unclaimed": "4d"
+            },
+            "resource_handle_count": 5,
+            "provider_name": "rhel-image-builder-aws",
+            "resource_name": "rhel-image-builder"
+          }
+        ],
+        "count": 3,
+        "truncated": false
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "Pool ocp-poc-small-pool on lapwing has lifespan {default: 3d, maximum: 7d, unclaimed: 14d}.\n\n- A freshly claimed environment runs for the default 3 days before Babylon retires it, unless someone extends it.\n- It can be extended to at most 7 days (the pool's maximum), so claimed on 2026-11-03 09:00 UTC it is retired by 2026-11-10 09:00 UTC at the latest.\n- So it will not cover a 10-day PoC: 7 days is the ceiling, 3 days short.\n- The 14d value is the unclaimed lifespan: how long an idle, pre-provisioned handle sits in the pool before it is recycled. It does not apply to a claimed environment.\n\nThe pool uses the provider ocp-poc-small-aws and currently holds 6 resource handles (min_available 4)."
+}

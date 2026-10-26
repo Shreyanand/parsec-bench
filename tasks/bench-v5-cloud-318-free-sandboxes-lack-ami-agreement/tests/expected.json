@@ -1,0 +1,239 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "reservation": "tessellate-2611"
+        }
+      },
+      {
+        "name": "query_marketplace_agreements",
+        "args": {}
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {}
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "free-8521",
+        "any_of": [
+          "sandbox8521",
+          "731406295817"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which free sandboxes would the seats use",
+        "rationale": "one of the four available: true rows in the reservation"
+      },
+      {
+        "id": "free-8522",
+        "any_of": [
+          "sandbox8522",
+          "731406295906"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which free sandboxes would the seats use",
+        "rationale": "one of the four available: true rows in the reservation"
+      },
+      {
+        "id": "free-8523",
+        "any_of": [
+          "sandbox8523",
+          "846250173394"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which free sandboxes would the seats use",
+        "rationale": "one of the four available: true rows in the reservation; also the one with the expired agreement"
+      },
+      {
+        "id": "free-8524",
+        "any_of": [
+          "sandbox8524",
+          "846250173467"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which free sandboxes would the seats use",
+        "rationale": "one of the four available: true rows in the reservation"
+      },
+      {
+        "id": "pool-44-free",
+        "any_of": [
+          "6 free",
+          "six free",
+          "6 available",
+          "six available",
+          "6 are free",
+          "six are free",
+          "6 of 8",
+          "six of eight",
+          "6 of its 8",
+          "six of its eight",
+          "6 of the 8",
+          "six of the eight",
+          "6/8",
+          "available: 6",
+          "available 6",
+          "free: 6",
+          "6 unused",
+          "six unused",
+          "6 unassigned",
+          "six unassigned",
+          "6 subscriptions free",
+          "6 subscriptions are free",
+          "6 subscriptions available",
+          "6 subscriptions are available",
+          "6 free subscriptions",
+          "six free subscriptions",
+          "| 6 |",
+          "pool-44-103"
+        ],
+        "ignore_case": true,
+        "asked_by": "Does pool 44 have enough free subscriptions",
+        "rationale": "get_pool (or list_pools) gives 6 of 8 free in pool 44, which covers four seats; the figure, or the free subscription ids, shows the pool was read"
+      },
+      {
+        "id": "expired-8523",
+        "any_of": [
+          "expired",
+          "no longer active",
+          "lapse",
+          "isn't active",
+          "is not active",
+          "not an active",
+          "inactive",
+          "agreement ended",
+          "it ended",
+          "ended on 2026-10-09",
+          "ended 2026-10-09",
+          "ended in October"
+        ],
+        "ignore_case": true,
+        "asked_by": "already hold an active Corvane Hardened Netwarden agreement",
+        "rationale": "the only Corvane agreement on a free sandbox (sandbox8523) has status EXPIRED; reading its presence as coverage is the near-miss"
+      },
+      {
+        "id": "none-on-free",
+        "derived": true,
+        "note": "The active Corvane Hardened Netwarden agreements sit on 592718360245, 592718360372 and 905613287440; none of those is one of the four free reservation accounts, and the one Corvane row on a free account (846250173394) is EXPIRED, so the agent concludes no free sandbox holds an active agreement.",
+        "any_of": [
+          "none of the free",
+          "none of the four",
+          "none of the 4",
+          "none of them hold",
+          "none of them holds",
+          "none of them has",
+          "none of them have",
+          "none of these hold",
+          "none of these has",
+          "none of these have",
+          "none has an active",
+          "none holds an active",
+          "none hold an active",
+          "none have an active",
+          "no free sandbox",
+          "no free account",
+          "not one of the free",
+          "not a single free",
+          "zero of the four",
+          "0 of the 4",
+          "0 of 4",
+          "0/4",
+          "nor do any of",
+          "all four lack",
+          "all 4 lack",
+          "every free sandbox lacks",
+          "all of them lack",
+          "only on the in-use",
+          "only on in-use",
+          "only on sandbox8525",
+          "only in sandbox8525",
+          "only on the busy",
+          "only on accounts that are in use",
+          "free sandboxes with an active agreement: none",
+          "agreement: none",
+          "agreements: none",
+          "agreement: 0",
+          "agreements: 0",
+          "none do",
+          "none does",
+          "none of those",
+          "neither of",
+          "not any of the free",
+          "agreement? no",
+          "agreements? no",
+          "agreement? none",
+          "agreements? none"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which of those free sandboxes already hold an active Corvane Hardened Netwarden agreement",
+        "rationale": "the inventory has three active Corvane agreements, which an agent that skips the account join reads as coverage; the honest answer is that no free sandbox has one"
+      },
+      {
+        "id": "cannot-run",
+        "derived": true,
+        "note": "With no active Corvane Hardened Netwarden agreement on any of the four free sandboxes, the image cannot launch in any seat's AWS account, so the agent concludes the lab cannot run as planned.",
+        "any_of": [
+          "not ready",
+          "isn't ready",
+          "cannot run as planned",
+          "can't run as planned",
+          "can not run as planned",
+          "cannot run the lab",
+          "can't run the lab",
+          "won't run as planned",
+          "will not run as planned",
+          "not as planned",
+          "not as things stand",
+          "cannot run yet",
+          "can't run yet",
+          "can the lab run as planned? no",
+          "can it run as planned? no",
+          "run as planned: no",
+          "bottom line: no",
+          "bottom line: not",
+          "bottom line - no",
+          "bottom line \u2014 no",
+          "no, the lab cannot",
+          "no, the lab can't",
+          "no, it cannot",
+          "no, it can't",
+          "no, not as planned",
+          "blocked",
+          "blocker",
+          "cannot launch",
+          "can't launch",
+          "will not launch",
+          "won't launch",
+          "would fail to launch",
+          "would not launch",
+          "wouldn't launch",
+          "cannot boot",
+          "can't boot",
+          "won't boot",
+          "will not boot"
+        ],
+        "ignore_case": true,
+        "asked_by": "can the lab run as planned",
+        "rationale": "sandboxes and Azure capacity suffice, but the Marketplace prerequisite fails on every seat"
+      }
+    ],
+    "counts": [],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

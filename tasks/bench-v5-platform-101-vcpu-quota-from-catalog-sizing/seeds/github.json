@@ -1,0 +1,80 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "account": "analytics_bu",
+      "directory": "ocp-lakehouse-bench",
+      "path": "analytics_bu/ocp-lakehouse-bench",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "rhpds/agnosticv-analytics_bu/ocp-lakehouse-bench"
+    }
+  ],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "analytics_bu/ocp-lakehouse-bench/common.yaml",
+      "content": "---\n# ocp-lakehouse-bench: three-tier lakehouse benchmark lab on AWS\ncloud_provider: ec2\nenv_type: lakehouse-bench\n\n__meta__:\n  catalog:\n    display_name: Lakehouse Benchmark Lab\n    category: Workshops\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\n# Instance sizing (vCPU per instance in the comments)\nbastion_instance_type: m6i.xlarge        # 4 vCPU\ncontrol_instance_count: 3\ncontrol_instance_type: m6i.2xlarge       # 8 vCPU\nworker_instance_count: 3\nworker_instance_type: m6i.4xlarge        # 16 vCPU\n\nlakehouse_bench_dataset: tpcds-sf1000\n",
+      "file_id": "rhpds/agnosticv@HEAD-analytics_bu/ocp-lakehouse-bench/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "analytics_bu/ocp-lakehouse-bench/common.yaml",
+      "content": "---\n# ocp-lakehouse-bench: three-tier lakehouse benchmark lab on AWS\ncloud_provider: ec2\nenv_type: lakehouse-bench\n\n__meta__:\n  catalog:\n    display_name: Lakehouse Benchmark Lab\n    category: Workshops\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\n# Instance sizing (vCPU per instance in the comments)\nbastion_instance_type: m6i.xlarge        # 4 vCPU\ncontrol_instance_count: 3\ncontrol_instance_type: m6i.2xlarge       # 8 vCPU\nworker_instance_count: 3\nworker_instance_type: m6i.4xlarge        # 16 vCPU\n\nlakehouse_bench_dataset: tpcds-sf1000\n",
+      "file_id": "rhpds/agnosticv@main-analytics_bu/ocp-lakehouse-bench/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "analytics_bu/ocp-lakehouse-bench/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 3d\n",
+      "file_id": "rhpds/agnosticv@HEAD-analytics_bu/ocp-lakehouse-bench/prod.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "analytics_bu/ocp-lakehouse-bench/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 3d\n",
+      "file_id": "rhpds/agnosticv@main-analytics_bu/ocp-lakehouse-bench/prod.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/configs/lakehouse-bench/default_vars.yml",
+      "content": "---\n# lakehouse-bench config defaults; catalog items override the sizing\ncloud_provider: ec2\nbastion_instance_type: m6i.large\ncontrol_instance_count: 3\ncontrol_instance_type: m6i.xlarge\nworker_instance_count: 1\nworker_instance_type: m6i.2xlarge\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/configs/lakehouse-bench/default_vars.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/configs/lakehouse-bench/default_vars.yml",
+      "content": "---\n# lakehouse-bench config defaults; catalog items override the sizing\ncloud_provider: ec2\nbastion_instance_type: m6i.large\ncontrol_instance_count: 3\ncontrol_instance_type: m6i.xlarge\nworker_instance_count: 1\nworker_instance_type: m6i.2xlarge\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/configs/lakehouse-bench/default_vars.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "c41e9a07d2b85f3e16a0c9d47b2e8f5a03d1c6b9",
+      "path": "ansible/configs/lakehouse-bench/default_vars.yml",
+      "content": "---\n# lakehouse-bench config defaults; catalog items override the sizing\ncloud_provider: ec2\nbastion_instance_type: m6i.large\ncontrol_instance_count: 3\ncontrol_instance_type: m6i.xlarge\nworker_instance_count: 1\nworker_instance_type: m6i.2xlarge\n",
+      "file_id": "agnosticd/agnosticd-v2@c41e9a07d2b85f3e16a0c9d47b2e8f5a03d1c6b9-ansible/configs/lakehouse-bench/default_vars.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

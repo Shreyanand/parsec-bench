@@ -1,0 +1,102 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [
+    {
+      "babylon_resource_pool_id": "east-acm-roadshow-pool",
+      "cluster": "east",
+      "name": "acm-roadshow-pool",
+      "namespace": "poolboy",
+      "min_available": 4,
+      "max_unready": 2,
+      "lifespan": {
+        "default": "1d",
+        "maximum": "2d",
+        "unclaimed": "7d"
+      },
+      "resource_handle_count": 9,
+      "provider_name": "acm-roadshow.prod",
+      "resource_name": "babylon"
+    },
+    {
+      "babylon_resource_pool_id": "east-devsecops-summit-pool",
+      "cluster": "east",
+      "name": "devsecops-summit-pool",
+      "namespace": "poolboy",
+      "min_available": 13,
+      "max_unready": 7,
+      "lifespan": {
+        "default": "2d",
+        "maximum": "4d",
+        "unclaimed": "7d"
+      },
+      "resource_handle_count": 15,
+      "provider_name": "devsecops-summit.prod",
+      "resource_name": "babylon"
+    },
+    {
+      "babylon_resource_pool_id": "east-ansible-automation-advanced-pool",
+      "cluster": "east",
+      "name": "ansible-automation-advanced-pool",
+      "namespace": "poolboy",
+      "min_available": 14,
+      "max_unready": 5,
+      "lifespan": {
+        "default": "1d",
+        "maximum": "4d",
+        "unclaimed": "2d"
+      },
+      "resource_handle_count": 17,
+      "provider_name": "ansible-automation-advanced.prod",
+      "resource_name": "babylon"
+    },
+    {
+      "babylon_resource_pool_id": "east-ansible-automation-bootcamp-pool",
+      "cluster": "east",
+      "name": "ansible-automation-bootcamp-pool",
+      "namespace": "poolboy",
+      "min_available": 6,
+      "max_unready": 3,
+      "lifespan": {
+        "default": "1d",
+        "maximum": "4d",
+        "unclaimed": "2d"
+      },
+      "resource_handle_count": 11,
+      "provider_name": "ansible-automation-bootcamp.prod",
+      "resource_name": "babylon"
+    },
+    {
+      "babylon_resource_pool_id": "south-ansible-automation-bootcamp-pool",
+      "cluster": "south",
+      "name": "ansible-automation-bootcamp-pool",
+      "namespace": "poolboy",
+      "min_available": 23,
+      "max_unready": 12,
+      "lifespan": {
+        "default": "1d",
+        "maximum": "4d",
+        "unclaimed": "2d"
+      },
+      "resource_handle_count": 27,
+      "provider_name": "ansible-automation-bootcamp.prod",
+      "resource_name": "babylon"
+    }
+  ],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

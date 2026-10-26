@@ -1,0 +1,3 @@
+Since 2026-10-08 every order of the Remittance Hub lab dies in the workload stage. The latest is job 838214 on the `west` AAP2 controller, for GUID q9hzt. We believe the EBS volumes behind the cluster are slow to come up, and the plan is to raise the bind wait to 90 retries and relaunch.
+
+Before anyone does that, read the job log, find the agnosticv pull request for this lab that was merged just before the failures began, and read the workload's task file that created the volume claim. Tell me what the claim was waiting for and why it never bound, which pull request caused it, and what to change. Cite the line in the workload's task file that renders the claim's storage class as `owner/repo:path:line`.

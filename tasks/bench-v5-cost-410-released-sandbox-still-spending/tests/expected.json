@@ -1,0 +1,167 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "362917450183"
+          ],
+          "start_date": "2026-09-07",
+          "end_date": "2026-09-15"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "account_id": "362917450183"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "t8wqk"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "destroy-succeeded",
+        "ignore_case": true,
+        "any_of": [
+          "71604",
+          "destroy job succeeded",
+          "destroy succeeded",
+          "destroy was successful",
+          "successful destroy",
+          "destroy job was successful",
+          "destroy completed successfully"
+        ],
+        "asked_by": "the AAP2 jobs for the GUID that record shows",
+        "rationale": "the destroy is discovered via the GUID from the account DB; it is green, which is what makes the trap"
+      },
+      {
+        "id": "spend-after-destroy",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "after the successful destroy",
+          "after the destroy",
+          "after destroy",
+          "after the teardown",
+          "since the destroy",
+          "post-destroy",
+          "post-teardown",
+          "still billing",
+          "still spending",
+          "kept billing",
+          "survived the teardown",
+          "continued after",
+          "continues after",
+          "persisted after",
+          "after 2026-09-10"
+        ],
+        "asked_by": "Is it OK to hand out",
+        "rationale": "the only contradicting evidence: the daily EC2 series stays ~$312/day from 09-11, after the destroy finished",
+        "note": "The destroy job 71604 for t8wqk finished successfully at 2026-09-10T14:22:37Z, yet the account's daily EC2 compute cost stays at $311.85-$312.65 on each of 2026-09-11 to 2026-09-14, so it is still spending after the destroy."
+      },
+      {
+        "id": "hold-the-account",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "don't hand",
+          "do not hand",
+          "don't reassign",
+          "do not reassign",
+          "don't give it",
+          "do not give it",
+          "out of the pool",
+          "pull it from the pool",
+          "remove it from the pool",
+          "hold the account",
+          "hold it back",
+          "mark it unavailable",
+          "not safe to hand",
+          "not safe to reassign",
+          "not ready to hand",
+          "not ready to reassign",
+          "not yet"
+        ],
+        "asked_by": "Is it OK to hand out",
+        "rationale": "the verdict",
+        "note": "Because the cost series shows steady EC2 spend after the successful destroy while the account DB marks it available and clean, the account should not be handed to the new user until the leftover resources are found."
+      }
+    ],
+    "counts": [
+      {
+        "id": "post-destroy-daily-ec2",
+        "value": 312,
+        "nouns": [
+          "day",
+          "daily",
+          "ec2"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "312.40",
+          "311.85",
+          "312.10",
+          "312.65",
+          "$312/day",
+          "$312 a day",
+          "$312 per day",
+          "~$312"
+        ],
+        "asked_by": "its AWS costs from 2026-09-07 through 2026-09-14",
+        "rationale": "the steady post-destroy EC2 daily spend"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "account-clean",
+        "ignore_case": true,
+        "none_of": [
+          "safe to hand out",
+          "safe to reassign",
+          "safe to give",
+          "ready to reassign",
+          "ready to hand out",
+          "ready for the next user",
+          "ready for reuse",
+          "nothing left running",
+          "nothing is still running",
+          "tail of the old lab",
+          "just the tail",
+          "account is clean",
+          "fine to hand out",
+          "ok to hand out"
+        ],
+        "attributed_to": [
+          "not safe",
+          "isn't safe",
+          "not ready",
+          "isn't ready",
+          "not trailing",
+          "despite the successful destroy",
+          "the records all say",
+          "says it's clean"
+        ],
+        "rationale": "the wrong answer trusts the green lifecycle records over the cost series"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

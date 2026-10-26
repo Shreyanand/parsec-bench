@@ -1,0 +1,436 @@
+{
+  "access_keys": [
+    {
+      "access_key_id": "AKIAEXAMPLE0001",
+      "account_id": "111111111111",
+      "created": "2024-01-15T09:00:00Z",
+      "status": "Active"
+    },
+    {
+      "access_key_id": "AKIAEXAMPLE0002",
+      "account_id": "111111111111",
+      "created": "2024-03-10T14:22:00Z",
+      "status": "Inactive"
+    },
+    {
+      "access_key_id": "AKIAEXAMPLE0003",
+      "account_id": "222222222222",
+      "created": "2024-02-05T11:45:00Z",
+      "status": "Active"
+    },
+    {
+      "access_key_id": "AKIAEXAMPLE0004",
+      "account_id": "333333333333",
+      "created": "2023-11-20T08:30:00Z",
+      "status": "Active"
+    }
+  ],
+  "azure_subscriptions": [
+    {
+      "azure_subscription_id": "azsub-001",
+      "database": "rhdp-pool-westus",
+      "id": "pool-sub-westus-01",
+      "projecttag": "proj-atlas",
+      "used": true
+    },
+    {
+      "azure_subscription_id": "azsub-002",
+      "database": "rhdp-pool-westus",
+      "id": "pool-sub-westus-02",
+      "projecttag": "proj-beacon",
+      "used": true
+    },
+    {
+      "azure_subscription_id": "azsub-003",
+      "database": "rhdp-pool-eastus",
+      "id": "pool-sub-eastus-01",
+      "projecttag": "",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "azsub-004",
+      "database": "rhdp-pool-centralus",
+      "id": "pool-sub-centralus-01",
+      "projecttag": "finops-lab",
+      "used": true
+    }
+  ],
+  "ec2_instances": [
+    {
+      "account_id": "111111111111",
+      "az": "us-east-1a",
+      "ec2_instance_id": "ec2rec-001",
+      "instance_id": "i-0a1b2c3d4e5f00001",
+      "instance_type": "t3.medium",
+      "launch_time": "2024-06-01T12:00:00Z",
+      "public_ip": "54.210.10.11",
+      "region": "us-east-1",
+      "state": "running",
+      "tags": {
+        "Name": "sandbox-bastion-01",
+        "Environment": "sandbox",
+        "Owner": "alice",
+        "Project": "rhdp-sbx-a"
+      }
+    },
+    {
+      "account_id": "111111111111",
+      "az": "us-east-1b",
+      "ec2_instance_id": "ec2rec-002",
+      "instance_id": "i-0a1b2c3d4e5f00002",
+      "instance_type": "m5.large",
+      "launch_time": "2024-06-03T16:20:00Z",
+      "public_ip": "",
+      "region": "us-east-1",
+      "state": "stopped",
+      "tags": {
+        "Name": "sandbox-app-01",
+        "Environment": "sandbox",
+        "Owner": "alice",
+        "Project": "rhdp-sbx-a"
+      }
+    },
+    {
+      "account_id": "222222222222",
+      "az": "us-west-2a",
+      "ec2_instance_id": "ec2rec-003",
+      "instance_id": "i-0a1b2c3d4e5f00003",
+      "instance_type": "g4dn.xlarge",
+      "launch_time": "2024-05-28T09:15:00Z",
+      "public_ip": "44.232.88.19",
+      "region": "us-west-2",
+      "state": "running",
+      "tags": {
+        "Name": "ml-workbench-01",
+        "Environment": "dev",
+        "Owner": "bob",
+        "Project": "vision-lab"
+      }
+    },
+    {
+      "account_id": "333333333333",
+      "az": "eu-west-1a",
+      "ec2_instance_id": "ec2rec-004",
+      "instance_id": "i-0a1b2c3d4e5f00004",
+      "instance_type": "t3.small",
+      "launch_time": "2024-04-18T07:40:00Z",
+      "public_ip": "18.202.44.77",
+      "region": "eu-west-1",
+      "state": "running",
+      "tags": {
+        "Name": "shared-jumpbox",
+        "Environment": "shared",
+        "Owner": "platform",
+        "Project": "ops"
+      }
+    }
+  ],
+  "events": [
+    {
+      "account_id": "111111111111",
+      "event_id": "evt-0001",
+      "event_name": "ConsoleLogin",
+      "event_source": "signin.amazonaws.com",
+      "event_time": "2024-06-10T08:01:12Z",
+      "resources": [],
+      "username": "alice"
+    },
+    {
+      "account_id": "111111111111",
+      "event_id": "evt-0002",
+      "event_name": "RunInstances",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2024-06-10T08:15:44Z",
+      "resources": [
+        "i-0a1b2c3d4e5f00001"
+      ],
+      "username": "alice"
+    },
+    {
+      "account_id": "111111111111",
+      "event_id": "evt-0003",
+      "event_name": "StopInstances",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2024-06-11T19:22:03Z",
+      "resources": [
+        "i-0a1b2c3d4e5f00002"
+      ],
+      "username": "alice"
+    },
+    {
+      "account_id": "222222222222",
+      "event_id": "evt-0004",
+      "event_name": "CreateAccessKey",
+      "event_source": "iam.amazonaws.com",
+      "event_time": "2024-06-09T13:05:55Z",
+      "resources": [
+        "AKIAEXAMPLE0003"
+      ],
+      "username": "bob"
+    },
+    {
+      "account_id": "222222222222",
+      "event_id": "evt-0005",
+      "event_name": "StartInstances",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2024-06-12T10:45:21Z",
+      "resources": [
+        "i-0a1b2c3d4e5f00003"
+      ],
+      "username": "bob"
+    },
+    {
+      "account_id": "333333333333",
+      "event_id": "evt-0006",
+      "event_name": "AssumeRole",
+      "event_source": "sts.amazonaws.com",
+      "event_time": "2024-06-12T11:00:00Z",
+      "resources": [
+        "arn:aws:iam::333333333333:role/Admin"
+      ],
+      "username": "platform-admin"
+    }
+  ],
+  "gcp_projects": [
+    {
+      "create_time": "2024-01-12T10:00:00Z",
+      "gcp_project_id": "gcpproj-001",
+      "labels": {
+        "creator": "rhdp",
+        "environment": "lab",
+        "owner": "team-atlas"
+      },
+      "name": "RHDP Atlas Lab",
+      "parent": "folders/789012345678",
+      "project_id": "rhdp-atlas-lab",
+      "state": "ACTIVE"
+    },
+    {
+      "create_time": "2024-02-20T15:30:00Z",
+      "gcp_project_id": "gcpproj-002",
+      "labels": {
+        "creator": "rhdp",
+        "environment": "demo",
+        "owner": "team-beacon"
+      },
+      "name": "RHDP Beacon Demo",
+      "parent": "folders/789012345678",
+      "project_id": "rhdp-beacon-demo",
+      "state": "ACTIVE"
+    },
+    {
+      "create_time": "2024-03-05T09:45:00Z",
+      "gcp_project_id": "gcpproj-003",
+      "labels": {
+        "creator": "rhdp",
+        "environment": "test",
+        "owner": "platform"
+      },
+      "name": "RHDP Platform Test",
+      "parent": "folders/789012345678",
+      "project_id": "rhdp-platform-test",
+      "state": "DELETE_REQUESTED"
+    },
+    {
+      "create_time": "2023-12-01T08:20:00Z",
+      "gcp_project_id": "gcpproj-004",
+      "labels": {
+        "creator": "manual",
+        "environment": "shared",
+        "owner": "ops"
+      },
+      "name": "Shared Operations Project",
+      "parent": "folders/123456789012",
+      "project_id": "shared-ops-project",
+      "state": "ACTIVE"
+    }
+  ],
+  "iam_users": [
+    {
+      "access_keys": [
+        "AKIAEXAMPLE0001",
+        "AKIAEXAMPLE0002"
+      ],
+      "account_id": "111111111111",
+      "created": "2023-10-01T12:00:00Z",
+      "iam_user_id": "iamuser-001",
+      "password_last_used": "2024-06-10T08:01:00Z",
+      "user_id": "AIDAUSER0001",
+      "username": "alice"
+    },
+    {
+      "access_keys": [
+        "AKIAEXAMPLE0003"
+      ],
+      "account_id": "222222222222",
+      "created": "2024-02-05T11:40:00Z",
+      "iam_user_id": "iamuser-002",
+      "password_last_used": "2024-06-12T10:40:00Z",
+      "user_id": "AIDAUSER0002",
+      "username": "bob"
+    },
+    {
+      "access_keys": [
+        "AKIAEXAMPLE0004"
+      ],
+      "account_id": "333333333333",
+      "created": "2023-11-20T08:00:00Z",
+      "iam_user_id": "iamuser-003",
+      "password_last_used": "",
+      "user_id": "AIDAUSER0003",
+      "username": "platform-admin"
+    }
+  ],
+  "marketplace_agreements": [
+    {
+      "marketplace_agreement_id": "mpa-001",
+      "account_id": "111111111111",
+      "account_name": "sandbox-a",
+      "agreement_end": "2025-01-31",
+      "agreement_id": "agr-awsmp-001",
+      "agreement_start": "2024-02-01",
+      "auto_renew": true,
+      "classification": "SaaS",
+      "currency": "USD",
+      "estimated_cost": 1200,
+      "estimated_cost_usd": 1200,
+      "last_updated": "2024-06-01T00:00:00Z",
+      "offer_type": "PrivateOffer",
+      "product_id": "prod-datadog-001",
+      "product_name": "Datadog Pro",
+      "status": "Active",
+      "terms": [
+        "annual",
+        "support-included"
+      ],
+      "vendor_name": "Datadog"
+    },
+    {
+      "marketplace_agreement_id": "mpa-002",
+      "account_id": "222222222222",
+      "account_name": "vision-lab",
+      "agreement_end": "2024-12-31",
+      "agreement_id": "agr-awsmp-002",
+      "agreement_start": "2024-01-01",
+      "auto_renew": false,
+      "classification": "Upfront",
+      "currency": "USD",
+      "estimated_cost": 5000,
+      "estimated_cost_usd": 5000,
+      "last_updated": "2024-06-02T00:00:00Z",
+      "offer_type": "Standard",
+      "product_id": "prod-snowflake-001",
+      "product_name": "Snowflake Enterprise",
+      "status": "Active",
+      "terms": [
+        "12-month",
+        "prepaid"
+      ],
+      "vendor_name": "Snowflake"
+    },
+    {
+      "marketplace_agreement_id": "mpa-003",
+      "account_id": "333333333333",
+      "account_name": "ops-shared",
+      "agreement_end": "2024-08-15",
+      "agreement_id": "agr-awsmp-003",
+      "agreement_start": "2023-08-15",
+      "auto_renew": false,
+      "classification": "PayAsYouGo",
+      "currency": "USD",
+      "estimated_cost": 300.5,
+      "estimated_cost_usd": 300.5,
+      "last_updated": "2024-05-28T00:00:00Z",
+      "offer_type": "PublicOffer",
+      "product_id": "prod-newrelic-001",
+      "product_name": "New Relic",
+      "status": "Expiring",
+      "terms": [
+        "monthly"
+      ],
+      "vendor_name": "New Relic"
+    }
+  ],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sbx-001",
+      "account_id": "111111111111",
+      "annotations": {
+        "cost_center": "ENG-SBX",
+        "purpose": "hands-on-lab"
+      },
+      "available": true,
+      "comment": "Ready for next workshop reservation",
+      "conan_status": "clean",
+      "envtype": "aws",
+      "guid": "guid-sbx-001",
+      "hosted_zone_id": "ZSBX0001",
+      "name": "sandbox-a",
+      "owner": "",
+      "owner_email": "",
+      "reservation": "pool",
+      "service_uuid": "svc-sbx-001",
+      "zone": "sbx-a.example.internal"
+    },
+    {
+      "sandbox_account_id": "sbx-002",
+      "account_id": "222222222222",
+      "annotations": {
+        "cost_center": "AI-LABS",
+        "purpose": "gpu-testing"
+      },
+      "available": false,
+      "comment": "Assigned to Bob for vision lab",
+      "conan_status": "in_use",
+      "envtype": "aws",
+      "guid": "guid-sbx-002",
+      "hosted_zone_id": "ZSBX0002",
+      "name": "sandbox-b",
+      "owner": "Bob Chen",
+      "owner_email": "bob.chen@example.com",
+      "reservation": "reserved",
+      "service_uuid": "svc-sbx-002",
+      "zone": "sbx-b.example.internal"
+    },
+    {
+      "sandbox_account_id": "sbx-003",
+      "account_id": "333333333333",
+      "annotations": {
+        "cost_center": "OPS",
+        "purpose": "shared-tools"
+      },
+      "available": false,
+      "comment": "Shared operations account",
+      "conan_status": "managed",
+      "envtype": "aws",
+      "guid": "guid-sbx-003",
+      "hosted_zone_id": "ZSBX0003",
+      "name": "sandbox-c",
+      "owner": "Platform Team",
+      "owner_email": "platform@example.com",
+      "reservation": "shared",
+      "service_uuid": "svc-sbx-003",
+      "zone": "sbx-c.example.internal"
+    },
+    {
+      "sandbox_account_id": "sbx-004",
+      "account_id": "444444444444",
+      "annotations": {
+        "cost_center": "ENG-SBX",
+        "purpose": "new-pool-capacity"
+      },
+      "available": true,
+      "comment": "Fresh account, no workloads yet",
+      "conan_status": "clean",
+      "envtype": "aws",
+      "guid": "guid-sbx-004",
+      "hosted_zone_id": "ZSBX0004",
+      "name": "sandbox-d",
+      "owner": "",
+      "owner_email": "",
+      "reservation": "pool",
+      "service_uuid": "svc-sbx-004",
+      "zone": "sbx-d.example.internal"
+    }
+  ]
+}

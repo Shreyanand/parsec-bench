@@ -1,0 +1,115 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "service_mesh"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_service_mesh_ambient/defaults/main.yml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "truncated",
+        "any_of": [
+          "truncated",
+          "incomplete",
+          "capped at 100",
+          "only 100 of",
+          "cut off",
+          "not the full list",
+          "100 of them",
+          "100 of the"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "whether the list you got back is complete",
+        "rationale": "the envelope says truncated: true; the list length is not the count",
+        "note": "search_github_repo returns 100 paths in matches with total_matches 131 and truncated true, so the list the agent got back holds only 100 of the 131 matching paths."
+      },
+      {
+        "id": "istio-version",
+        "any_of": [
+          "v1.26.2",
+          "1.26.2"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which Istio version does that role install by default",
+        "rationale": "only in the fetched defaults file; no search result carries it"
+      }
+    ],
+    "counts": [
+      {
+        "id": "total",
+        "value": 131,
+        "nouns": [
+          "paths",
+          "matches",
+          "match",
+          "files",
+          "results",
+          "total_matches",
+          "total"
+        ],
+        "window": 4,
+        "asked_by": "how many paths match",
+        "rationale": "total_matches; the list holds 100"
+      }
+    ],
+    "citations": [
+      {
+        "id": "version-line",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_service_mesh_ambient/defaults/main.yml",
+        "line": 12,
+        "asked_by": "cite the line that sets it",
+        "rationale": "the line number is counted from the seeded file and only reachable by fetching it"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "hundred-is-total",
+        "none_of": [
+          "100 paths match",
+          "100 matches in total",
+          "there are 100 paths",
+          "100 paths in total",
+          "matches 100 paths",
+          "100 matching paths",
+          "exactly 100"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "only 100 of",
+          "capped at 100",
+          "returned only 100",
+          "first 100",
+          "cut after the first 100"
+        ],
+        "rationale": "the page length reported as the repository count"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

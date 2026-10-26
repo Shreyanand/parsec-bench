@@ -1,0 +1,239 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [
+    {
+      "babylon_multiworkshop_id": "heron-user-pmukherjee-redhat-com-ocp-dev-summit-oct26",
+      "cluster": "heron",
+      "namespace": "user-pmukherjee-redhat-com",
+      "name": "ocp-dev-summit-oct26",
+      "display_name": "OpenShift Developer Summit - October 2026",
+      "number_seats": 90,
+      "start_date": "2026-10-20",
+      "end_date": "2026-10-22",
+      "purpose": "Customer event",
+      "assets": [
+        {
+          "name": "ods-app-modernization",
+          "display_name": "App Modernization",
+          "key": "app-modernization",
+          "type": "Workshop",
+          "namespace": "user-pmukherjee-redhat-com",
+          "workshop_id": "r4mxv"
+        },
+        {
+          "name": "ods-serverless",
+          "display_name": "Serverless Functions in Practice",
+          "key": "serverless",
+          "type": "Workshop",
+          "namespace": "user-pmukherjee-redhat-com",
+          "workshop_id": "w2nbf"
+        },
+        {
+          "name": "ods-gitops",
+          "display_name": "GitOps in Practice",
+          "key": "gitops",
+          "type": "Workshop",
+          "namespace": "user-pmukherjee-redhat-com",
+          "workshop_id": "h6pjs"
+        }
+      ],
+      "asset_count": 3
+    },
+    {
+      "babylon_multiworkshop_id": "heron-user-pmukherjee-redhat-com-partner-bootcamp-nov26",
+      "cluster": "heron",
+      "namespace": "user-pmukherjee-redhat-com",
+      "name": "partner-bootcamp-nov26",
+      "display_name": "Partner Bootcamp - November 2026",
+      "number_seats": 40,
+      "start_date": "2026-11-03",
+      "end_date": "2026-11-05",
+      "purpose": "Partner enablement",
+      "assets": [
+        {
+          "name": "pb-rhel-admin",
+          "display_name": "RHEL Admin Bootcamp",
+          "key": "rhel-admin",
+          "type": "Workshop",
+          "namespace": "user-pmukherjee-redhat-com",
+          "workshop_id": "t9cwd"
+        }
+      ],
+      "asset_count": 1
+    }
+  ],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [
+    {
+      "babylon_workshop_id": "heron-user-pmukherjee-redhat-com-ods-security-preview",
+      "cluster": "heron",
+      "namespace": "user-pmukherjee-redhat-com",
+      "name": "ods-security-preview",
+      "display_name": "Developer Summit - Security Preview",
+      "catalog_item": "ods-security-preview.prod",
+      "workshop_id": "k7hzq",
+      "description": "Developer Summit - Security Preview lab.",
+      "open_registration": true,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "5d"
+      },
+      "provision_count": {
+        "ordered": 20,
+        "active": 20,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 20,
+      "user_assignments_count": 12,
+      "resource_claims_count": 20,
+      "multiworkshop": "",
+      "requester": "pmukherjee@redhat.com"
+    },
+    {
+      "babylon_workshop_id": "heron-user-pmukherjee-redhat-com-ods-app-modernization",
+      "cluster": "heron",
+      "namespace": "user-pmukherjee-redhat-com",
+      "name": "ods-app-modernization",
+      "display_name": "App Modernization",
+      "catalog_item": "ods-app-modernization.prod",
+      "workshop_id": "r4mxv",
+      "description": "App Modernization lab.",
+      "open_registration": true,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "5d"
+      },
+      "provision_count": {
+        "ordered": 30,
+        "active": 30,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 30,
+      "user_assignments_count": 28,
+      "resource_claims_count": 30,
+      "multiworkshop": "ocp-dev-summit-oct26",
+      "requester": "pmukherjee@redhat.com"
+    },
+    {
+      "babylon_workshop_id": "heron-user-pmukherjee-redhat-com-pb-rhel-admin",
+      "cluster": "heron",
+      "namespace": "user-pmukherjee-redhat-com",
+      "name": "pb-rhel-admin",
+      "display_name": "RHEL Admin Bootcamp",
+      "catalog_item": "pb-rhel-admin.prod",
+      "workshop_id": "t9cwd",
+      "description": "RHEL Admin Bootcamp lab.",
+      "open_registration": true,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "5d"
+      },
+      "provision_count": {
+        "ordered": 40,
+        "active": 38,
+        "failed": 2,
+        "retries": 0
+      },
+      "user_count": 40,
+      "user_assignments_count": 40,
+      "resource_claims_count": 40,
+      "multiworkshop": "partner-bootcamp-nov26",
+      "requester": "pmukherjee@redhat.com"
+    },
+    {
+      "babylon_workshop_id": "heron-user-pmukherjee-redhat-com-ods-serverless",
+      "cluster": "heron",
+      "namespace": "user-pmukherjee-redhat-com",
+      "name": "ods-serverless",
+      "display_name": "Serverless Functions in Practice",
+      "catalog_item": "ods-serverless.prod",
+      "workshop_id": "w2nbf",
+      "description": "Serverless Functions in Practice lab.",
+      "open_registration": true,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "5d"
+      },
+      "provision_count": {
+        "ordered": 30,
+        "active": 27,
+        "failed": 3,
+        "retries": 0
+      },
+      "user_count": 30,
+      "user_assignments_count": 30,
+      "resource_claims_count": 30,
+      "multiworkshop": "ocp-dev-summit-oct26",
+      "requester": "pmukherjee@redhat.com"
+    },
+    {
+      "babylon_workshop_id": "heron-user-pmukherjee-redhat-com-ods-gitops",
+      "cluster": "heron",
+      "namespace": "user-pmukherjee-redhat-com",
+      "name": "ods-gitops",
+      "display_name": "GitOps in Practice",
+      "catalog_item": "ods-gitops.prod",
+      "workshop_id": "h6pjs",
+      "description": "GitOps in Practice lab.",
+      "open_registration": true,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "5d"
+      },
+      "provision_count": {
+        "ordered": 25,
+        "active": 25,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 25,
+      "user_assignments_count": 19,
+      "resource_claims_count": 25,
+      "multiworkshop": "ocp-dev-summit-oct26",
+      "requester": "pmukherjee@redhat.com"
+    },
+    {
+      "babylon_workshop_id": "heron-user-gchen-redhat-com-ods-serverless",
+      "cluster": "heron",
+      "namespace": "user-gchen-redhat-com",
+      "name": "ods-serverless",
+      "display_name": "Serverless Functions in Practice",
+      "catalog_item": "ods-serverless.prod",
+      "workshop_id": "d3vkt",
+      "description": "Serverless Functions in Practice lab.",
+      "open_registration": true,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "5d"
+      },
+      "provision_count": {
+        "ordered": 60,
+        "active": 60,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 60,
+      "user_assignments_count": 51,
+      "resource_claims_count": 60,
+      "multiworkshop": "",
+      "requester": "pmukherjee@redhat.com"
+    }
+  ],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,183 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 694251
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles/claims_warehouse_rds/tasks/main.yml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "password-rejected",
+        "any_of": [
+          "MasterUserPassword",
+          "not a valid password",
+          "invalid password",
+          "password was rejected",
+          "password is invalid",
+          "password was invalid",
+          "rejected the password",
+          "rejected the master password",
+          "rejected the database password",
+          "rejected the admin password",
+          "master password",
+          "master user password",
+          "DB password",
+          "database password",
+          "RDS password",
+          "InvalidParameterValue"
+        ],
+        "ignore_case": true,
+        "asked_by": "what AWS rejected",
+        "rationale": "the parameter the job log's CreateDBInstance error names"
+      },
+      {
+        "id": "password-source",
+        "any_of": [
+          "claims_warehouse_db_password",
+          "ansible.builtin.password",
+          "password lookup",
+          "lookup('password'",
+          "lookup(\"password\"",
+          "password plugin",
+          "lookup plugin"
+        ],
+        "ignore_case": true,
+        "asked_by": "where that value comes from in the role",
+        "rationale": "the generating task's output is censored by no_log, so only the fetched task file names the variable and the lookup that makes it"
+      },
+      {
+        "id": "random-per-run",
+        "any_of": [
+          "random",
+          "fresh password",
+          "new password",
+          "different password",
+          "each run generates",
+          "every run generates",
+          "generated per run",
+          "generated on each run",
+          "generated on every run",
+          "by chance",
+          "chance",
+          "probabilistic",
+          "luck of the draw",
+          "draw"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why the same code fails for some orders and not others",
+        "rationale": "the synthesis that explains the intermittency: the value is regenerated per run, so identical code fails only on some runs",
+        "note": "the fetched task generates claims_warehouse_db_password with lookup('ansible.builtin.password', '/dev/null', ...), which writes nothing and so returns a newly generated random password on every run."
+      },
+      {
+        "id": "punctuation-chars",
+        "any_of": [
+          "punctuation",
+          "special character",
+          "special-character",
+          "symbols",
+          "'/', '@'",
+          "/, @",
+          "/ @",
+          "slash",
+          "at sign",
+          "at-sign",
+          "@ sign",
+          "double quote",
+          "double-quote"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why the same code fails for some orders and not others",
+        "rationale": "links the character set in the task file to the characters the AWS error forbids",
+        "note": "the task's chars list includes 'punctuation' (Python's string.punctuation, which contains '/', '@' and '\"'), and the log's AWS message forbids '/', '@', '\"' and space."
+      },
+      {
+        "id": "charset-fix",
+        "any_of": [
+          "remove 'punctuation'",
+          "remove punctuation",
+          "remove the punctuation",
+          "drop 'punctuation'",
+          "drop punctuation",
+          "drop the punctuation",
+          "without punctuation",
+          "without 'punctuation'",
+          "no punctuation",
+          "exclude",
+          "excluding",
+          "letters and digits",
+          "ascii_letters and digits",
+          "ascii_letters', 'digits']",
+          "ascii_letters,digits",
+          "allowed set",
+          "safe set",
+          "safe character",
+          "safe subset",
+          "allowed characters",
+          "permitted characters",
+          "restrict the char",
+          "restrict chars",
+          "limit the char",
+          "replace 'punctuation'",
+          "replace punctuation",
+          "only characters rds accepts",
+          "characters rds allows",
+          "characters that rds allows",
+          "characters that rds accepts"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "how to fix it properly",
+        "rationale": "the remedy is in the generator's character set, not a retry",
+        "note": "the fix follows from the two reads: narrow the lookup's chars in tasks/main.yml to characters the CreateDBInstance error allows."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-cause",
+        "none_of": [
+          "AWS outage",
+          "RDS outage",
+          "transient AWS",
+          "transient RDS",
+          "AWS-side issue",
+          "RDS was unavailable",
+          "password is too short",
+          "password was too short",
+          "password too short",
+          "password is too weak",
+          "password was too weak",
+          "complexity requirement"
+        ],
+        "ignore_case": true,
+        "rationale": "the error is deterministic for the password drawn; blaming a transient AWS problem, the length (16 is within RDS's limits) or complexity misreads it"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

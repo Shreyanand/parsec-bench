@@ -1,0 +1,56 @@
+{
+  "catalog_items": [
+    {
+      "catalog_item_id": "rhpds/agnosticv-datalake_bu/telemetry-datamart-lab",
+      "found": true,
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "account": "datalake_bu",
+      "directory": "telemetry-datamart-lab",
+      "path": "datalake_bu/telemetry-datamart-lab",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "default_branch": "main",
+      "message": ""
+    }
+  ],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "datalake_bu/telemetry-datamart-lab/common.yaml",
+      "content": "---\n# telemetry-datamart-lab: Iceberg + Trino datamart on OpenShift (AWS sandbox)\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Telemetry Datamart Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\n# Sandbox credentials: the job assumes this role once, at the start of the run\nsandbox_aws_role_name: rhdp-sandbox-provisioner\nsandbox_aws_session_duration: 3600\n\naws_region: us-east-2\ncontrol_plane_instance_type: m6i.2xlarge\nworker_instance_count: 4\nworker_instance_type: m6i.4xlarge\nocp4_installer_version: \"4.18\"\n\nworkloads:\n  - ocp4_workload_datamart\n\nocp4_workload_datamart_trino_workers: 3\nocp4_workload_datamart_warehouse_bucket: \"rhdp-{{ guid }}-warehouse\"\n",
+      "file_id": "rhpds/agnosticv@HEAD-datalake_bu/telemetry-datamart-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "datalake_bu/telemetry-datamart-lab/common.yaml",
+      "content": "---\n# telemetry-datamart-lab: Iceberg + Trino datamart on OpenShift (AWS sandbox)\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Telemetry Datamart Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\n# Sandbox credentials: the job assumes this role once, at the start of the run\nsandbox_aws_role_name: rhdp-sandbox-provisioner\nsandbox_aws_session_duration: 3600\n\naws_region: us-east-2\ncontrol_plane_instance_type: m6i.2xlarge\nworker_instance_count: 4\nworker_instance_type: m6i.4xlarge\nocp4_installer_version: \"4.18\"\n\nworkloads:\n  - ocp4_workload_datamart\n\nocp4_workload_datamart_trino_workers: 3\nocp4_workload_datamart_warehouse_bucket: \"rhdp-{{ guid }}-warehouse\"\n",
+      "file_id": "rhpds/agnosticv@main-datalake_bu/telemetry-datamart-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "datalake_bu/telemetry-datamart-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 2d\n    maximum: 5d\n",
+      "file_id": "rhpds/agnosticv@HEAD-datalake_bu/telemetry-datamart-lab/prod.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "datalake_bu/telemetry-datamart-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 2d\n    maximum: 5d\n",
+      "file_id": "rhpds/agnosticv@main-datalake_bu/telemetry-datamart-lab/prod.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

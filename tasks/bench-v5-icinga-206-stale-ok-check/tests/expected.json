@@ -1,0 +1,165 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "bkp-vault-02"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_check_results"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_last_check"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "stale",
+        "any_of": [
+          "stale",
+          "out of date",
+          "outdated",
+          "not been checked",
+          "hasn't been checked",
+          "hasn't run",
+          "has not run",
+          "not run since",
+          "no check since",
+          "last check ran",
+          "last checked",
+          "last_check",
+          "old result"
+        ],
+        "ignore_case": true,
+        "asked_by": "Is Icinga actually telling us that",
+        "rationale": "the state is OK; only last_check shows it is old"
+      },
+      {
+        "id": "active-checks-off",
+        "any_of": [
+          "enable_active_checks",
+          "active checks are disabled",
+          "active checks disabled",
+          "active checks off",
+          "active checking is disabled",
+          "active checks were disabled",
+          "active checks turned off",
+          "stopped scheduling",
+          "no longer scheduled",
+          "not being scheduled",
+          "not scheduled"
+        ],
+        "ignore_case": true,
+        "asked_by": "Is Icinga actually telling us that",
+        "rationale": "why it went stale: the one service with active checks off"
+      },
+      {
+        "id": "last-check-date",
+        "any_of": [
+          "2026-11-09",
+          "Nov 9",
+          "9 Nov",
+          "November 9"
+        ],
+        "ignore_case": true,
+        "asked_by": "did the nightly backup on `bkp-vault-02` work",
+        "rationale": "the date of the stored result",
+        "derived": true,
+        "note": "The seed carries the time as epoch seconds: restic-snapshot-age's last_check (and execution_end) is 1794190500, which is 2026-11-09 02:15 UTC."
+      },
+      {
+        "id": "cannot-confirm",
+        "any_of": [
+          "can't confirm",
+          "cannot confirm",
+          "can not confirm",
+          "can't tell",
+          "cannot tell",
+          "doesn't tell",
+          "does not tell",
+          "no evidence",
+          "isn't evidence",
+          "can't say",
+          "cannot say",
+          "not confirm",
+          "would not report",
+          "wouldn't report",
+          "don't report",
+          "do not report"
+        ],
+        "ignore_case": true,
+        "asked_by": "did the nightly backup on `bkp-vault-02` work",
+        "rationale": "the verdict: a stale OK is not evidence",
+        "derived": true,
+        "note": "A verdict, so no seed literal: restic-snapshot-age's OK result dates from 2026-11-09 (last_check 1794190500) and enable_active_checks is false, so it says nothing about the backup before 2026-11-18."
+      }
+    ],
+    "counts": [
+      {
+        "id": "days-stale",
+        "value": 9,
+        "nouns": [
+          "days",
+          "day"
+        ],
+        "window": 4,
+        "asked_by": "before the 2026-11-18 08:00 UTC stand-up",
+        "rationale": "2026-11-18 08:00 minus last_check 2026-11-09 02:15 is 9 days 5h45m; derived",
+        "extra_any_of": [
+          "9 days",
+          "nine days",
+          "9d",
+          "over a week"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "backup-ok",
+        "none_of": [
+          "backup succeeded",
+          "backup was successful",
+          "backup worked",
+          "backups are ok",
+          "backup is fine",
+          "backup is healthy",
+          "backups ok"
+        ],
+        "ignore_case": true,
+        "rationale": "the green read as today's evidence",
+        "attributed_to": [
+          "planning to report",
+          "can't confirm",
+          "cannot confirm",
+          "would not report",
+          "wouldn't report",
+          "do not report",
+          "don't report"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

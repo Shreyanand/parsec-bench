@@ -1,0 +1,142 @@
+{
+  "answer": {
+    "counts": [
+      {
+        "asked_by": "say how many retry attempts were made",
+        "id": "retries",
+        "nouns": [
+          "retries",
+          "retry",
+          "attempts"
+        ],
+        "rationale": "read off the log's attempts field, and the number that makes the failure look transient -- an agent reporting it has looked at the right line",
+        "value": 10,
+        "window": 8
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "mirror-outage",
+        "ignore_case": true,
+        "none_of": [
+          "mirror is down",
+          "mirror was down",
+          "mirror outage",
+          "mirror.openshift.com is down",
+          "mirror is unavailable",
+          "server was down",
+          "host is down"
+        ],
+        "rationale": "the first hypothesis any ops team reaches for on a download timeout, and the source dataset records it as plausibility HIGH with two pieces of contradicting evidence seeded here. The forms name the ASSERTION rather than the host: mirror.openshift.com is all over the seed, so forbidding the bare hostname would defuse its own trap and punish an answer that correctly explains what it ruled out"
+      },
+      {
+        "id": "transient",
+        "ignore_case": true,
+        "none_of": [
+          "transient",
+          "intermittent",
+          "just retry",
+          "retry the job",
+          "re-run the job",
+          "flake"
+        ],
+        "rationale": "the operational conclusion that follows from the wrong diagnosis, and the one that costs a real team another failed provision. Ten exhausted retries are seeded precisely to make it tempting"
+      }
+    ],
+    "required": [
+      {
+        "any_of": [
+          "helm/latest/helm-linux-amd64.tar.gz",
+          "clients/helm/latest"
+        ],
+        "asked_by": "Report the root cause with the specific mechanism",
+        "id": "resolved-url",
+        "ignore_case": true,
+        "rationale": "the dead path itself. Naming it proves the agent composed the two variables rather than repeating the log's error string, which quotes the full URL but not its construction"
+      },
+      {
+        "any_of": [
+          "ocp4_workload_showroom_tools_root_url"
+        ],
+        "asked_by": "name the variables the URL is composed from",
+        "id": "var-root-url",
+        "ignore_case": true,
+        "rationale": "the first of the two. It exists only in the role's defaults file, so an agent that never read config cannot supply it"
+      },
+      {
+        "any_of": [
+          "ocp4_workload_showroom_helm_version"
+        ],
+        "asked_by": "name the variables the URL is composed from",
+        "id": "var-version",
+        "ignore_case": true,
+        "rationale": "the second. Together with the first this is the code_config_understanding dimension the source dataset scores, and the pair is what distinguishes a real diagnosis from quoting the failure"
+      },
+      {
+        "any_of": [
+          "other downloads",
+          "oc client",
+          "odo",
+          "mirror is up",
+          "same host succeeded",
+          "succeeded from the same",
+          "openshift-client"
+        ],
+        "asked_by": "check whether anything else was downloading from the same host during that window",
+        "derived": true,
+        "id": "mirror-serving",
+        "ignore_case": true,
+        "note": "the refutation is a synthesis over two Splunk rows and the job log; no single seeded string states that the mirror is up",
+        "rationale": "the evidence that turns 'the mirror is down' from unproven into refuted. This is the cross-source half: it cannot be had from the job log alone"
+      }
+    ]
+  },
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  },
+  "schema": "bench/v4",
+  "tool_calls": {
+    "expected": [
+      {
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 90431
+        },
+        "name": "query_aap2"
+      },
+      {
+        "args": {
+          "action": "search_by_guid",
+          "guid": "t7fkq"
+        },
+        "name": "query_splunk"
+      },
+      {
+        "args": {},
+        "name": "lookup_catalog_item"
+      },
+      {
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2"
+        },
+        "name": "search_github_repo"
+      },
+      {
+        "args": {
+          "owner": "agnosticd",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_showroom/defaults/main.yml",
+          "repo": "agnosticd-v2"
+        },
+        "name": "fetch_github_file"
+      }
+    ],
+    "match": "ordered-subsequence"
+  },
+  "weights": {
+    "answer": 0.7,
+    "tool_calls": 0.3
+  }
+}

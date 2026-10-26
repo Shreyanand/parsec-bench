@@ -1,0 +1,24 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/configs/zero-touch-base-rhel/default_vars.yml",
+      "content": "---\n# zero-touch-base-rhel\nbootc_base_image: registry.redhat.io/rhel9/rhel-bootc\nbootc_base_tag: rhel-9.5-bootc\nzero_touch_image_mode: true\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/configs/zero-touch-base-rhel/default_vars.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/configs/zero-touch-base-rhel/default_vars.yml",
+      "content": "---\n# zero-touch-base-rhel\nbootc_base_image: registry.redhat.io/rhel9/rhel-bootc\nbootc_base_tag: rhel-9.5-bootc\nzero_touch_image_mode: true\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/configs/zero-touch-base-rhel/default_vars.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

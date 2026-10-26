@@ -1,0 +1,143 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [
+    {
+      "babylon_component_id": "whimbrel-rhel-ha.pacemaker-lab.prod",
+      "cluster": "whimbrel",
+      "name": "rhel-ha.pacemaker-lab.prod",
+      "cloud_provider": "ec2",
+      "env_type": "rhel-ha-pacemaker",
+      "platform": "rhpds",
+      "expected_instances": [
+        {
+          "purpose": "bastion",
+          "instance_type": "t3a.small",
+          "count": 1
+        },
+        {
+          "purpose": "ha_node",
+          "instance_type": "m6a.xlarge",
+          "count": 3
+        }
+      ],
+      "definition": {
+        "cloud_provider": "ec2",
+        "env_type": "rhel-ha-pacemaker",
+        "bastion_instance_type": "t3a.small",
+        "ha_node_instance_type": "m6a.xlarge",
+        "ha_node_count": 3,
+        "__meta__": {
+          "deployer": {
+            "scm_ref": "pcmk-lab-3.4.1"
+          }
+        }
+      },
+      "scm_ref": "pcmk-lab-3.4.1",
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "rhel-ha/pacemaker-lab/prod.yaml"
+    },
+    {
+      "babylon_component_id": "whimbrel-rhel-ha.pacemaker-lab.event",
+      "cluster": "whimbrel",
+      "name": "rhel-ha.pacemaker-lab.event",
+      "cloud_provider": "ec2",
+      "env_type": "rhel-ha-pacemaker",
+      "platform": "rhpds",
+      "expected_instances": [
+        {
+          "purpose": "bastion",
+          "instance_type": "t3a.small",
+          "count": 1
+        },
+        {
+          "purpose": "ha_node",
+          "instance_type": "c7i.large",
+          "count": 2
+        }
+      ],
+      "definition": {
+        "cloud_provider": "ec2",
+        "env_type": "rhel-ha-pacemaker",
+        "bastion_instance_type": "t3a.small",
+        "ha_node_instance_type": "c7i.large",
+        "ha_node_count": 2,
+        "__meta__": {
+          "deployer": {
+            "scm_ref": "pcmk-lab-3.2.0"
+          }
+        }
+      },
+      "scm_ref": "pcmk-lab-3.2.0",
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "rhel-ha/pacemaker-lab/event.yaml"
+    }
+  ],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [
+    {
+      "babylon_workshop_id": "whimbrel-user-wsantos-redhat-com-pcmk-day-nov19",
+      "cluster": "whimbrel",
+      "namespace": "user-wsantos-redhat-com",
+      "name": "pcmk-day-nov19",
+      "display_name": "Pacemaker Day (Nov 19)",
+      "catalog_item": "rhel-ha.pacemaker-lab.event",
+      "workshop_id": "x4pqt",
+      "multiworkshop": "",
+      "description": "Pacemaker day",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-11-19T08:00:00Z",
+        "end": "2026-11-19T18:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 12,
+        "active": 12,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 12,
+      "user_assignments_count": 12,
+      "resource_claims_count": 12
+    },
+    {
+      "babylon_workshop_id": "whimbrel-user-wsantos-redhat-com-rhel-ha-office-hours",
+      "cluster": "whimbrel",
+      "namespace": "user-wsantos-redhat-com",
+      "name": "rhel-ha-office-hours",
+      "display_name": "HA Office Hours",
+      "catalog_item": "rhel-ha.pacemaker-lab.prod",
+      "workshop_id": "b9jve",
+      "multiworkshop": "",
+      "description": "Drop-in HA help",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-11-17T14:00:00Z",
+        "end": "2026-11-21T14:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 3,
+        "active": 3,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 3,
+      "user_assignments_count": 3,
+      "resource_claims_count": 3
+    }
+  ],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

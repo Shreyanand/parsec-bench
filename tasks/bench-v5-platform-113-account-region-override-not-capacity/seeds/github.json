@@ -1,0 +1,107 @@
+{
+ "catalog_items": [
+  {
+   "catalog_item_id": "rhoai-gpu-labs/llm-finetune-workbench",
+   "found": true,
+   "owner": "rhpds",
+   "repo": "agnosticv",
+   "account": "rhoai-gpu-labs",
+   "directory": "llm-finetune-workbench",
+   "path": "rhoai-gpu-labs/llm-finetune-workbench/prod.yaml",
+   "files": [
+    "common.yaml",
+    "prod.yaml"
+   ],
+   "default_branch": "main",
+   "message": ""
+  }
+ ],
+ "files": [
+  {
+   "file_id": "rhpds/agnosticv@HEAD:rhoai-gpu-labs/llm-finetune-workbench/prod.yaml",
+   "owner": "rhpds",
+   "repo": "agnosticv",
+   "path": "rhoai-gpu-labs/llm-finetune-workbench/prod.yaml",
+   "ref": "HEAD",
+   "content": "---\n# rhoai-gpu-labs/llm-finetune-workbench/prod.yaml\n__meta__:\n  catalog:\n    display_name: \"LLM Fine-Tuning Workbench (2x L40S)\"\n    category: Workshops\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\nconfig: openshift-cluster\ncloud_provider: aws\nworker_instance_type: g6e.12xlarge\nworker_instance_count: 2\nocp4_workload_rhoai_enable: true\nocp4_workload_nvidia_gpu_operator_enable: true\n"
+  },
+  {
+   "file_id": "rhpds/agnosticv@main:rhoai-gpu-labs/llm-finetune-workbench/prod.yaml",
+   "owner": "rhpds",
+   "repo": "agnosticv",
+   "path": "rhoai-gpu-labs/llm-finetune-workbench/prod.yaml",
+   "ref": "main",
+   "content": "---\n# rhoai-gpu-labs/llm-finetune-workbench/prod.yaml\n__meta__:\n  catalog:\n    display_name: \"LLM Fine-Tuning Workbench (2x L40S)\"\n    category: Workshops\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\nconfig: openshift-cluster\ncloud_provider: aws\nworker_instance_type: g6e.12xlarge\nworker_instance_count: 2\nocp4_workload_rhoai_enable: true\nocp4_workload_nvidia_gpu_operator_enable: true\n"
+  },
+  {
+   "file_id": "rhpds/agnosticv@HEAD:rhoai-gpu-labs/account.yaml",
+   "owner": "rhpds",
+   "repo": "agnosticv",
+   "path": "rhoai-gpu-labs/account.yaml",
+   "ref": "HEAD",
+   "content": "---\n# rhoai-gpu-labs/account.yaml -- defaults merged into every catalog item under rhoai-gpu-labs/\n__meta__:\n  sandbox_api:\n    pool: gpu-sandboxes\n# 2026-09-29: moved off us-east-1 for the reserved-capacity pricing in Calgary\naws_region: ca-west-1\ncloud_tags:\n  - cost_center: rhoai-labs\n"
+  },
+  {
+   "file_id": "rhpds/agnosticv@main:rhoai-gpu-labs/account.yaml",
+   "owner": "rhpds",
+   "repo": "agnosticv",
+   "path": "rhoai-gpu-labs/account.yaml",
+   "ref": "main",
+   "content": "---\n# rhoai-gpu-labs/account.yaml -- defaults merged into every catalog item under rhoai-gpu-labs/\n__meta__:\n  sandbox_api:\n    pool: gpu-sandboxes\n# 2026-09-29: moved off us-east-1 for the reserved-capacity pricing in Calgary\naws_region: ca-west-1\ncloud_tags:\n  - cost_center: rhoai-labs\n"
+  }
+ ],
+ "pull_requests": [
+  {
+   "pull_request_id": "pr-113-1",
+   "owner": "rhpds",
+   "repo": "agnosticv",
+   "pr_number": 20417,
+   "title": "Move GPU lab default region for reserved-capacity pricing",
+   "branch": "gpu-default-region-cawest1",
+   "state": "closed",
+   "author": "tvasquez-rh",
+   "url": "https://github.com/rhpds/agnosticv/pull/20417",
+   "created_at": "2026-09-27T15:02:00Z",
+   "updated_at": "2026-09-29T08:47:31Z",
+   "files": [
+    "rhoai-gpu-labs/account.yaml",
+    "docs/cost/regions.md"
+   ]
+  },
+  {
+   "pull_request_id": "pr-113-2",
+   "owner": "rhpds",
+   "repo": "agnosticv",
+   "pr_number": 19862,
+   "title": "Bump workbench notebook image to 2026.2",
+   "branch": "workbench-image-2026-2",
+   "state": "closed",
+   "author": "nakamura-k",
+   "url": "https://github.com/rhpds/agnosticv/pull/19862",
+   "created_at": "2026-08-10T11:20:00Z",
+   "updated_at": "2026-08-11T09:05:44Z",
+   "files": [
+    "rhoai-gpu-labs/llm-finetune-workbench/common.yaml"
+   ]
+  },
+  {
+   "pull_request_id": "pr-113-3",
+   "owner": "rhpds",
+   "repo": "agnosticv",
+   "pr_number": 20488,
+   "title": "Add vLLM serving lab",
+   "branch": "vllm-serving-lab",
+   "state": "open",
+   "author": "obi-mensah",
+   "url": "https://github.com/rhpds/agnosticv/pull/20488",
+   "created_at": "2026-09-29T17:40:00Z",
+   "updated_at": "2026-09-30T08:12:09Z",
+   "files": [
+    "rhoai-gpu-labs/vllm-serving-lab/common.yaml",
+    "rhoai-gpu-labs/vllm-serving-lab/prod.yaml"
+   ]
+  }
+ ],
+ "repo_search_results": [],
+ "similar_items": []
+}

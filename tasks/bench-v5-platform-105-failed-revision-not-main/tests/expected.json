@@ -1,0 +1,105 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "controller": "west",
+          "job_id": 804416
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/files/ledgerpolicy-crd.yaml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "revision-api",
+        "any_of": [
+          "v1beta1"
+        ],
+        "ignore_case": true,
+        "asked_by": "what the manifest says in that code",
+        "rationale": "the revision-vs-main discriminator: v1beta1 occurs only in the file at the job's git_revision (and its branch); main, the instruction and the job metadata never contain it"
+      },
+      {
+        "id": "which-revision",
+        "any_of": [
+          "71c0e4b9a2d63f58e1b07c4d9a3e26f8b5d10c97",
+          "71c0e4b",
+          "release-2026.08"
+        ],
+        "ignore_case": true,
+        "asked_by": "which code the job actually ran",
+        "rationale": "only get_job's git_revision/git_branch says the job did not run main"
+      },
+      {
+        "id": "api-removed",
+        "any_of": [
+          "removed in Kubernetes 1.22",
+          "removed in 1.22",
+          "no longer serves",
+          "no longer served",
+          "not served",
+          "was removed",
+          "API was removed",
+          "OpenShift 4.9"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "explain the error",
+        "rationale": "connects the old apiVersion to the truncated error",
+        "note": "the manifest at the job's git_revision 71c0e4b9 declares apiVersion apiextensions.k8s.io/v1beta1, and the pasted error (no matches for kind CustomResourceDefinition in version ...) is what a cluster returns for a CRD API version it no longer serves; the seed carries the version, and its removal in Kubernetes 1.22 is domain knowledge."
+      },
+      {
+        "id": "main-fixed",
+        "any_of": [
+          "already fixed on main",
+          "fixed on main",
+          "main was fixed",
+          "main already uses",
+          "main already has",
+          "main is already",
+          "fixed later on main",
+          "never picked up"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why the default branch looked fine",
+        "rationale": "reconciles the teammate's reading of main with the failing revision",
+        "note": "get_job gives git_branch release-2026.08 at git_revision 71c0e4b9, where the manifest uses apiextensions.k8s.io/v1beta1, while the same path on the default branch uses apiextensions.k8s.io/v1 with a versions list, so the default branch already has the fix the job's revision lacks."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "transient",
+        "none_of": [
+          "transient",
+          "a flake",
+          "flaky",
+          "retry will fix",
+          "just relaunch"
+        ],
+        "ignore_case": true,
+        "rationale": "the teammate's reading; the failure is deterministic at that revision"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

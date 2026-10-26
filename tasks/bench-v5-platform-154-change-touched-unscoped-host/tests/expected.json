@@ -1,0 +1,270 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "east",
+          "job_id": 8840317
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "controller": "east",
+          "job_id": 8840317
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "rollback"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "roll_back"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "revert"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "relaunch"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "relaunch_job"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "launch"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "launch_job"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "run_job"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "rollback_job"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "successful",
+        "any_of": [
+          "successful",
+          "succeeded",
+          "success",
+          "without error",
+          "without any error",
+          "no failed",
+          "no failures",
+          "failed: false",
+          "failed=false",
+          "did not fail",
+          "didn't fail"
+        ],
+        "ignore_case": true,
+        "asked_by": "Did the job finish cleanly",
+        "rationale": "the job's status, from get_job"
+      },
+      {
+        "id": "unscoped-host",
+        "any_of": [
+          "ldap-ams-02"
+        ],
+        "ignore_case": true,
+        "asked_by": "Did it modify anything outside the approved scope",
+        "rationale": "the one changed host outside the scope; only the job events name it"
+      },
+      {
+        "id": "conf",
+        "any_of": [
+          "chrony.conf"
+        ],
+        "ignore_case": true,
+        "asked_by": "what did it change on them",
+        "rationale": "the changed task, from the events"
+      },
+      {
+        "id": "restart",
+        "any_of": [
+          "restart chronyd",
+          "restarted chronyd",
+          "chronyd restart",
+          "chronyd was restarted",
+          "restarting chronyd",
+          "restarts chronyd",
+          "restart of chronyd",
+          "restarted the chronyd",
+          "chronyd service was restarted",
+          "chronyd: restart",
+          "chronyd (restart",
+          "chronyd restarted"
+        ],
+        "ignore_case": true,
+        "asked_by": "what did it change on them",
+        "rationale": "the handler that also reported changed on every changed host"
+      },
+      {
+        "id": "unchanged-in-scope",
+        "any_of": [
+          "ntp-ams-03",
+          "ams-03"
+        ],
+        "ignore_case": true,
+        "asked_by": "how many of the five in-scope servers were among them",
+        "rationale": "an in-scope server the run left unchanged; it is not named in the instruction, only in the events"
+      }
+    ],
+    "counts": [
+      {
+        "id": "hosts-changed",
+        "value": 4,
+        "nouns": [
+          "hosts",
+          "host",
+          "servers",
+          "server",
+          "machines",
+          "systems",
+          "nodes"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "4 of the 6",
+          "4 of 6",
+          "four of the six",
+          "4 in total",
+          "four in total",
+          "total of 4",
+          "total of four",
+          "total: 4",
+          "total 4"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the changed_only events name four distinct hosts: ntp-ams-01, ntp-ams-02, ntp-ams-04 and ldap-ams-02 (8 events, two per host).",
+        "asked_by": "How many hosts did it change in total",
+        "rationale": "event_count is 8 (two per host) and the scope is 5; neither is the answer"
+      },
+      {
+        "id": "in-scope-changed",
+        "value": 3,
+        "nouns": [
+          "of the five",
+          "of the 5",
+          "in-scope",
+          "in scope",
+          "servers",
+          "hosts"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "3 of the 5",
+          "3 of 5",
+          "three of the five",
+          "3/5",
+          "only three of the",
+          "three of them"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "of ntp-ams-01..05, only 01, 02 and 04 have changed events; 03 and 05 reported ok.",
+        "asked_by": "how many of the five in-scope servers were among them",
+        "rationale": "copying the scope gives 5"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "in-scope-only",
+        "none_of": [
+          "only the five",
+          "only in-scope hosts",
+          "only the in-scope hosts",
+          "only the approved hosts",
+          "stayed within scope",
+          "stayed within the scope",
+          "stayed within the approved scope",
+          "stayed in scope",
+          "all changes were in scope",
+          "all changes were within scope",
+          "all changes were within the approved scope",
+          "did not modify anything outside",
+          "didn't modify anything outside",
+          "did not touch anything outside",
+          "didn't touch anything outside",
+          "did not change anything outside",
+          "didn't change anything outside"
+        ],
+        "ignore_case": true,
+        "rationale": "ldap-ams-02 was changed and is outside the scope"
+      },
+      {
+        "id": "all-five-changed",
+        "none_of": [
+          "all five hosts were changed",
+          "all five servers were changed",
+          "all five were changed",
+          "all five time servers were changed",
+          "changed all five",
+          "every in-scope host was changed",
+          "every in-scope server was changed",
+          "5 hosts were changed",
+          "five hosts were changed",
+          "8 hosts",
+          "eight hosts",
+          "6 hosts were changed",
+          "six hosts were changed",
+          "changed 8 hosts",
+          "changed 6 hosts",
+          "changed six hosts",
+          "changed eight hosts",
+          "on all five servers",
+          "on all five hosts",
+          "on all five time servers"
+        ],
+        "ignore_case": true,
+        "rationale": "ntp-ams-03 and ntp-ams-05 were unchanged, and the 8 events cover 4 hosts"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

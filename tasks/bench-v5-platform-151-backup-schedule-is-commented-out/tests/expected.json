@@ -1,0 +1,121 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_timescale_metrics/defaults/main.yml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "commented-out",
+        "any_of": [
+          "comment",
+          "start with #",
+          "start with `#`",
+          "begin with #",
+          "begin with `#`",
+          "starts with #",
+          "starts with `#`",
+          "prefixed with #",
+          "prefixed with `#`",
+          "prefixed by #",
+          "behind a #",
+          "behind a `#`",
+          "behind #",
+          "behind `#`",
+          "leading #",
+          "leading `#`",
+          "inactive",
+          "not active"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the fetched defaults file carries backup_schedule and backup_retention only on lines that start with '#', so YAML ignores them and the role defines no schedule.",
+        "asked_by": "Does the role set up scheduled database backups out of the box",
+        "rationale": "the schedule and retention exist only as comment lines; reading them as settings is the trap"
+      },
+      {
+        "id": "ticket",
+        "any_of": [
+          "RHDPOPS-7731"
+        ],
+        "ignore_case": true,
+        "asked_by": "what the file says is holding it back",
+        "rationale": "the blocker's ticket, named only in the file's comment"
+      },
+      {
+        "id": "blocker",
+        "any_of": [
+          "lifecycle policy",
+          "lifecycle rule",
+          "lifecycle polic"
+        ],
+        "ignore_case": true,
+        "asked_by": "what the file says is holding it back",
+        "rationale": "the reason in the comment; a fabricated answer gives a schedule instead"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "backups-on",
+        "none_of": [
+          "backups are scheduled by default",
+          "backups are enabled by default",
+          "backups are on by default",
+          "backups are configured by default",
+          "backups run by default",
+          "schedules backups by default",
+          "sets up scheduled backups by default",
+          "does set up scheduled",
+          "yes, it does",
+          "backups run every sunday",
+          "backup runs every sunday",
+          "runs a backup every sunday",
+          "weekly backup on sunday",
+          "backups are kept for 14 days",
+          "backups are retained for 14 days",
+          "kept for 14 days",
+          "retained for 14 days",
+          "retention is 14 days",
+          "retention of 14 days"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "would run",
+          "would be kept",
+          "would be retained",
+          "would keep",
+          "would schedule",
+          "would apply",
+          "would take",
+          "if enabled",
+          "once enabled",
+          "when enabled",
+          "if it were enabled",
+          "if they were enabled",
+          "were they enabled",
+          "if re-enabled",
+          "once re-enabled"
+        ],
+        "rationale": "the schedule and retention lines are comments; asserting them as live behaviour is the fabrication this negative task exists to catch"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

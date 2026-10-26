@@ -1,0 +1,203 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [
+    {
+      "babylon_anarchy_subject_id": "kestrel-rover-telemetry-lab.r4tkq",
+      "cluster": "kestrel",
+      "name": "rover-telemetry-lab.r4tkq",
+      "namespace": "babylon-anarchy-rover-telemetry-lab",
+      "governor": "rover-telemetry-lab",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "requester_email": "ntavares@redhat.com",
+      "instance_vars": {
+        "guid": "r4tkq",
+        "env_type": "rover-telemetry-lab",
+        "aws_region": "ca-central-1",
+        "cloud_provider": "ec2"
+      },
+      "resource_claim": {
+        "name": "rover-telemetry-lab-r4tkq",
+        "namespace": "user-ntavares-redhat-com"
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "kestrel-rover-telemetry-lab.hw9zb",
+      "cluster": "kestrel",
+      "name": "rover-telemetry-lab.hw9zb",
+      "namespace": "babylon-anarchy-rover-telemetry-lab",
+      "governor": "rover-telemetry-lab",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "requester_email": "ntavares@redhat.com",
+      "instance_vars": {
+        "guid": "hw9zb",
+        "env_type": "rover-telemetry-lab",
+        "aws_region": "eu-north-1",
+        "cloud_provider": "ec2"
+      },
+      "resource_claim": {
+        "name": "rover-telemetry-lab-hw9zb",
+        "namespace": "user-ntavares-redhat-com"
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "osprey-rover-telemetry-lab.vn2jx",
+      "cluster": "osprey",
+      "name": "rover-telemetry-lab.vn2jx",
+      "namespace": "babylon-anarchy-rover-telemetry-lab",
+      "governor": "rover-telemetry-lab",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "requester_email": "ntavares@redhat.com",
+      "instance_vars": {
+        "guid": "vn2jx",
+        "env_type": "rover-telemetry-lab",
+        "aws_region": "ap-southeast-2",
+        "cloud_provider": "ec2"
+      },
+      "resource_claim": {
+        "name": "rover-telemetry-lab-vn2jx",
+        "namespace": "user-ntavares-redhat-com"
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "kestrel-rover-telemetry-lab.cy6fd",
+      "cluster": "kestrel",
+      "name": "rover-telemetry-lab.cy6fd",
+      "namespace": "babylon-anarchy-rover-telemetry-lab",
+      "governor": "rover-telemetry-lab",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "requester_email": "ntavares@redhat.com",
+      "instance_vars": {
+        "guid": "cy6fd",
+        "env_type": "rover-telemetry-lab",
+        "aws_region": "sa-east-1",
+        "cloud_provider": "ec2"
+      },
+      "resource_claim": {
+        "name": "rover-telemetry-lab-cy6fd",
+        "namespace": "user-ntavares-redhat-com"
+      }
+    }
+  ],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [
+    {
+      "babylon_deployment_id": "kestrel-user-ntavares-redhat-com-rover-telemetry-lab-r4tkq",
+      "cluster": "kestrel",
+      "name": "rover-telemetry-lab-r4tkq",
+      "namespace": "user-ntavares-redhat-com",
+      "catalog_item": "rover-telemetry-lab.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "3f8c2a71-9d4e-4b06-a5e1-6c7b0d92f4a8",
+      "lifespan": {
+        "start": "2026-07-06T09:00:00Z",
+        "end": "2026-07-27T00:00:00Z"
+      },
+      "healthy": true,
+      "ready": true,
+      "state": "unknown",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "r4tkq",
+        "env_type": "rover-telemetry-lab",
+        "aws_region": "ca-central-1",
+        "cloud_provider": "ec2"
+      }
+    },
+    {
+      "babylon_deployment_id": "kestrel-user-ntavares-redhat-com-rover-telemetry-lab-hw9zb",
+      "cluster": "kestrel",
+      "name": "rover-telemetry-lab-hw9zb",
+      "namespace": "user-ntavares-redhat-com",
+      "catalog_item": "rover-telemetry-lab.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "b2d94e06-1a7f-4c38-9e55-08f3a6c1d7b2",
+      "lifespan": {
+        "start": "2026-06-25T14:00:00Z",
+        "end": "2026-07-09T00:00:00Z"
+      },
+      "healthy": true,
+      "ready": true,
+      "state": "unknown",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "hw9zb",
+        "env_type": "rover-telemetry-lab",
+        "aws_region": "eu-north-1",
+        "cloud_provider": "ec2"
+      }
+    },
+    {
+      "babylon_deployment_id": "osprey-user-ntavares-redhat-com-rover-telemetry-lab-vn2jx",
+      "cluster": "osprey",
+      "name": "rover-telemetry-lab-vn2jx",
+      "namespace": "user-ntavares-redhat-com",
+      "catalog_item": "rover-telemetry-lab.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "7e1a5c93-4f02-48bd-b6d0-c9a2e7f14b65",
+      "lifespan": {
+        "start": "2026-07-08T11:00:00Z",
+        "end": "2026-07-29T00:00:00Z"
+      },
+      "healthy": true,
+      "ready": true,
+      "state": "unknown",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "vn2jx",
+        "env_type": "rover-telemetry-lab",
+        "aws_region": "ap-southeast-2",
+        "cloud_provider": "ec2"
+      }
+    },
+    {
+      "babylon_deployment_id": "kestrel-user-ntavares-redhat-com-rover-telemetry-lab-cy6fd",
+      "cluster": "kestrel",
+      "name": "rover-telemetry-lab-cy6fd",
+      "namespace": "user-ntavares-redhat-com",
+      "catalog_item": "rover-telemetry-lab.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "d40b8f2e-6c19-4a73-8e2d-51f7a3b09c6e",
+      "lifespan": {
+        "start": "2026-07-10T16:00:00Z",
+        "end": "2026-08-26T00:00:00Z"
+      },
+      "healthy": true,
+      "ready": true,
+      "state": "unknown",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "cy6fd",
+        "env_type": "rover-telemetry-lab",
+        "aws_region": "sa-east-1",
+        "cloud_provider": "ec2"
+      }
+    }
+  ],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,47 @@
+{
+  "catalog_items": [
+    {
+      "found": false,
+      "path": "sandboxes_gpte/ans-bu-wksp-rhel-91",
+      "message": "No exact match for the requested catalog item; returning near matches from the agnosticv index.",
+      "catalog_item_id": "sandboxes_gpte/ans-bu-wksp-rhel-91"
+    }
+  ],
+  "files": [],
+  "pull_requests": [
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "pr_number": 4127,
+      "title": "Add ans-bu-wksp-rhel-91 catalog item",
+      "branch": "add-ans-bu-wksp-rhel-91",
+      "state": "open",
+      "author": "opentlc-mgr",
+      "url": "https://github.com/rhpds/agnosticv/pull/4127",
+      "created_at": "2026-06-16T12:00:00Z",
+      "updated_at": "2026-06-17T09:14:00Z",
+      "files": [
+        "sandboxes_gpte/ans-bu-wksp-rhel-91/common.yaml",
+        "sandboxes_gpte/ans-bu-wksp-rhel-91/prod.yaml"
+      ],
+      "pull_request_id": "rhpds-agnosticv-pr-4127"
+    }
+  ],
+  "repo_search_results": [],
+  "similar_items": [
+    {
+      "name": "ans-bu-wksp-rhel-90",
+      "repo": "agnosticv",
+      "account": "sandboxes_gpte",
+      "path": "sandboxes_gpte/ans-bu-wksp-rhel-90",
+      "similar_item_id": "sandboxes_gpte-sandboxes_gpte/ans-bu-wksp-rhel-90"
+    },
+    {
+      "name": "ans-bu-wksp-rhel-88",
+      "repo": "agnosticv",
+      "account": "sandboxes_gpte",
+      "path": "sandboxes_gpte/ans-bu-wksp-rhel-88",
+      "similar_item_id": "sandboxes_gpte-sandboxes_gpte/ans-bu-wksp-rhel-88"
+    }
+  ]
+}

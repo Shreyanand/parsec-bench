@@ -1,0 +1,3 @@
+Two orders of the render farm workshop on 2026-10-08 ran the same catalog item from the same commit, and only one of them came up. Job 418627 on the `east` AAP2 controller failed while launching the render nodes; job 418655 on the same controller succeeded later that morning.
+
+I need to know what AWS rejected in the failed run, which AWS region each of the two jobs deployed to, and why identical code worked for one order and not the other. Read the role task that launches the nodes, in the repository the jobs ran from, and tell me how that task should change so the lab can be ordered in any region.

@@ -1,0 +1,131 @@
+{
+  "hosts": [
+    {
+      "name": "lab-ws-n3v8d",
+      "type": "Host",
+      "attrs": {
+        "display_name": "lab-ws-n3v8d",
+        "host_name": "lab-ws-n3v8d",
+        "address": "10.135.40.18",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "groups": [
+          "ocpv-lab-workstations"
+        ],
+        "last_state_change": 1796495534,
+        "last_check": 1796804067,
+        "vars": {
+          "ocpv_cluster": "ocpv-quince",
+          "ocpv_namespace": "sandbox-n3v8d-ws",
+          "vm_name": "workstation-n3v8d",
+          "lab_guid": "n3v8d"
+        },
+        "last_check_result": {
+          "output": "CRITICAL - 10.135.40.18: rta nan, lost 100%",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "lab-ws-h2k9w",
+      "type": "Host",
+      "attrs": {
+        "display_name": "lab-ws-h2k9w",
+        "host_name": "lab-ws-h2k9w",
+        "address": "10.135.40.61",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "groups": [
+          "ocpv-lab-workstations"
+        ],
+        "last_state_change": 1796637828,
+        "last_check": 1796804103,
+        "vars": {
+          "ocpv_cluster": "ocpv-quince",
+          "ocpv_namespace": "sandbox-h2k9w-ws",
+          "vm_name": "workstation-h2k9w",
+          "lab_guid": "h2k9w"
+        },
+        "last_check_result": {
+          "output": "OK - 10.135.40.61: rta 0.740ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "lab-ws-n3v8d!rootfs-free",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Root filesystem free",
+        "host_name": "lab-ws-n3v8d",
+        "check_command": "by_ssh",
+        "state": 3,
+        "state_type": 1,
+        "last_state_change": 1796495769,
+        "last_check": 1796803970,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "last_check_result": {
+          "output": "UNKNOWN - by_ssh: no reply within 10 s",
+          "state": 3,
+          "exit_status": 3
+        }
+      }
+    },
+    {
+      "name": "lab-ws-n3v8d!lab-desk-https",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Lab desktop HTTPS",
+        "host_name": "lab-ws-n3v8d",
+        "check_command": "http",
+        "state": 2,
+        "state_type": 1,
+        "last_state_change": 1796495681,
+        "last_check": 1796803970,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "last_check_result": {
+          "output": "HTTP CRITICAL - no TCP handshake from 10.135.40.18:443",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "lab-ws-n3v8d!ssh",
+      "type": "Service",
+      "attrs": {
+        "display_name": "SSH",
+        "host_name": "lab-ws-n3v8d",
+        "check_command": "ssh",
+        "state": 2,
+        "state_type": 1,
+        "last_state_change": 1796495610,
+        "last_check": 1796803970,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "last_check_result": {
+          "output": "SSH CRITICAL - no TCP handshake from 10.135.40.18:22",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

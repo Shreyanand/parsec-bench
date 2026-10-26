@@ -1,0 +1,110 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "cluster": "harrier",
+          "guid": "j8tvd"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.uuid, p.babylon_guid, p.status, p.provisioned_at, p.retired_at, p.modified_at, p.catalog_id, ci.name as catalog_item_name, p.ordered_by FROM provisions p LEFT JOIN catalog_items ci ON p.catalog_id = ci.id WHERE p.babylon_guid = 'j8tvd' ORDER BY p.provisioned_at DESC LIMIT 5"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 2290417
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_actions",
+          "cluster": "harrier",
+          "guid": "j8tvd"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 2290417
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "dev-spaces-lab",
+          "status": "failed",
+          "created_after": "2026-10-08",
+          "created_before": "2026-10-10"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "dev-spaces-lab",
+          "created_after": "2026-10-08",
+          "created_before": "2026-10-10"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_by_guid",
+          "guid": "j8tvd",
+          "earliest": "-14d",
+          "errors_only": true
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "harrier",
+          "namespace": "user-hsoerensen-redhat-com",
+          "name": "dev-spaces-lab-j8tvd"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_babylon_pod_logs",
+          "cluster": "harrier",
+          "namespace": "babylon-anarchy-dev-spaces-lab",
+          "guid": "j8tvd"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_gcp_projects",
+        "args": {
+          "action": "list_projects"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "proj-q2nvx",
+        "any_of": [
+          "rhdp-ws-q2nvx"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which projects have that label",
+        "rationale": "rhdp-ws-q2nvx is one of the four list_projects rows whose labels.event is fjord-devdays-2610; only the listing names it"
+      },
+      {
+        "id": "proj-j7tfa",
+        "any_of": [
+          "rhdp-ws-j7tfa"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which projects have that label",
+        "rationale": "rhdp-ws-j7tfa is one of the four list_projects rows whose labels.event is fjord-devdays-2610; only the listing names it"
+      },
+      {
+        "id": "proj-w5kcz",
+        "any_of": [
+          "rhdp-ws-w5kcz"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which projects have that label",
+        "rationale": "rhdp-ws-w5kcz is one of the four list_projects rows whose labels.event is fjord-devdays-2610; only the listing names it"
+      },
+      {
+        "id": "proj-b9hmu",
+        "any_of": [
+          "rhdp-ws-b9hmu"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which projects have that label",
+        "rationale": "rhdp-ws-b9hmu is one of the four list_projects rows whose labels.event is fjord-devdays-2610; only the listing names it"
+      },
+      {
+        "id": "w5kcz-delete-requested",
+        "any_of": [
+          "DELETE_REQUESTED",
+          "delete requested",
+          "delete-requested",
+          "deletion requested",
+          "requested for delet",
+          "pending delet",
+          "scheduled for delet",
+          "marked for delet",
+          "queued for delet",
+          "awaiting delet",
+          "being deleted"
+        ],
+        "ignore_case": true,
+        "asked_by": "what state is each one in",
+        "rationale": "one of the four event projects (rhdp-ws-w5kcz) is DELETE_REQUESTED, the rest ACTIVE; an agent that pre-filters on state_filter ACTIVE never sees it"
+      }
+    ],
+    "counts": [
+      {
+        "id": "event-active-count",
+        "value": 3,
+        "nouns": [
+          "ACTIVE",
+          "active",
+          "still active",
+          "still running",
+          "running"
+        ],
+        "window": 6,
+        "asked_by": "how many of them are still ACTIVE",
+        "rationale": "three of the four fjord-devdays-2610 projects are ACTIVE; the listing's own active figure is 7 (the whole folder) and the event has 4 projects, so neither neighbouring figure is 3",
+        "extra_any_of": [
+          "three of the four",
+          "3 of the 4",
+          "3 of 4",
+          "three of four",
+          "3/4 are active",
+          "3/4 still active"
+        ]
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

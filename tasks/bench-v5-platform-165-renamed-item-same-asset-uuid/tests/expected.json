@@ -1,0 +1,106 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "petrel",
+          "namespace": "user-hvasquez-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "petrel"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_catalog_item"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "ordered-from",
+        "any_of": [
+          "edgefleet.ota-lab.prod"
+        ],
+        "ignore_case": true,
+        "asked_by": "which catalog item my lab was ordered from",
+        "rationale": "the deployment's catalog_item; the instruction names only a loose title"
+      },
+      {
+        "id": "current-name",
+        "any_of": [
+          "edgefleet.ota-updates"
+        ],
+        "ignore_case": true,
+        "asked_by": "its catalog name",
+        "rationale": "the petrel item whose asset_uuid equals the deployment's"
+      },
+      {
+        "id": "current-title",
+        "any_of": [
+          "Over-the-Air Updates",
+          "Over the Air Updates"
+        ],
+        "ignore_case": true,
+        "asked_by": "the title she'll see",
+        "rationale": "display_name of the successor; the old title now belongs to a different item"
+      },
+      {
+        "id": "asset-uuid",
+        "any_of": [
+          "5e1c9a47-3b02-4d8e-a6f1-0c7d92b4e813",
+          "5e1c9a47"
+        ],
+        "ignore_case": true,
+        "asked_by": "how you know it's the same one",
+        "rationale": "the shared asset_uuid is the join key between the claim and the catalog"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-successor-or-pulled",
+        "none_of": [
+          "renamed to edgefleet.ota-lab-emea",
+          "now called edgefleet.ota-lab-emea",
+          "now edgefleet.ota-lab-emea",
+          "lives on as edgefleet.ota-lab-emea",
+          "successor is edgefleet.ota-lab-emea",
+          "same lab is edgefleet.ota-lab-emea",
+          "should order edgefleet.ota-lab-emea",
+          "can order edgefleet.ota-lab-emea",
+          "same one is edgefleet.ota-lab-emea",
+          "has been pulled",
+          "was pulled from",
+          "it was pulled",
+          "has no successor",
+          "no replacement exists",
+          "there is no replacement"
+        ],
+        "ignore_case": true,
+        "rationale": "matching on the old title picks the emea fork, whose asset_uuid differs; and the item was renamed, not pulled"
+      }
+    ],
+    "fold_markup": true
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

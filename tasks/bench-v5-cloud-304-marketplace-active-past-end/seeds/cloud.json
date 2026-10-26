@@ -1,0 +1,131 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [
+    {
+      "marketplace_agreement_id": "mpa-0001",
+      "account_id": "863017452296",
+      "account_name": "rhdp-partner-labs-03",
+      "agreement_id": "agmt-3nd8v5pr1cq7",
+      "product_name": "Quillmark Log Insights",
+      "product_id": "prod-qlm4x8a1",
+      "vendor_name": "Quillmark Inc",
+      "agreement_start": "2026-04-01T00:00:00Z",
+      "agreement_end": "2027-03-31T00:00:00Z",
+      "auto_renew": false,
+      "status": "ACTIVE",
+      "classification": "SaaS (Contract)",
+      "currency": "USD",
+      "estimated_cost": 9600,
+      "estimated_cost_usd": 9600,
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "Configurable"
+        }
+      ],
+      "last_updated": "2026-08-31T04:00:00Z"
+    },
+    {
+      "marketplace_agreement_id": "mpa-0002",
+      "account_id": "863017452296",
+      "account_name": "rhdp-partner-labs-03",
+      "agreement_id": "agmt-7kq2m9xw4t0b",
+      "product_name": "Halvane Secrets Vault",
+      "product_id": "prod-hlv2c7d9",
+      "vendor_name": "Halvane Software",
+      "agreement_start": "2025-10-01T00:00:00Z",
+      "agreement_end": "2026-09-30T00:00:00Z",
+      "auto_renew": false,
+      "status": "ACTIVE",
+      "classification": "SaaS (Contract)",
+      "currency": "USD",
+      "estimated_cost": 18400,
+      "estimated_cost_usd": 18400,
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "Configurable"
+        }
+      ],
+      "last_updated": "2026-08-31T04:00:00Z"
+    },
+    {
+      "marketplace_agreement_id": "mpa-0003",
+      "account_id": "863017452296",
+      "account_name": "rhdp-partner-labs-03",
+      "agreement_id": "agmt-9fz4h6tb2e5k",
+      "product_name": "Corvex Edge Firewall",
+      "product_id": "prod-crv9e3f5",
+      "vendor_name": "Corvex Networks",
+      "agreement_start": "2026-02-01T00:00:00Z",
+      "agreement_end": "2027-01-31T00:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "estimated_cost": 22750,
+      "estimated_cost_usd": 22750,
+      "offer_type": "PrivateOffer",
+      "terms": [
+        {
+          "type": "Configurable"
+        }
+      ],
+      "last_updated": "2026-08-31T04:00:00Z"
+    },
+    {
+      "marketplace_agreement_id": "mpa-0004",
+      "account_id": "863017452926",
+      "account_name": "rhdp-partner-labs-07",
+      "agreement_id": "agmt-1wc6r3jn8p2d",
+      "product_name": "Halvane Secrets Vault",
+      "product_id": "prod-hlv2c7d9",
+      "vendor_name": "Halvane Software",
+      "agreement_start": "2026-07-01T00:00:00Z",
+      "agreement_end": "2027-06-30T00:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "estimated_cost": 17200,
+      "estimated_cost_usd": 17200,
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "Configurable"
+        }
+      ],
+      "last_updated": "2026-08-31T04:00:00Z"
+    },
+    {
+      "marketplace_agreement_id": "mpa-0005",
+      "account_id": "863017452926",
+      "account_name": "rhdp-partner-labs-07",
+      "agreement_id": "agmt-5tb0y7ks4m9h",
+      "product_name": "Pellora Data Masking",
+      "product_id": "prod-pll6k2m8",
+      "vendor_name": "Pellora Ltd",
+      "agreement_start": "2026-03-15T00:00:00Z",
+      "agreement_end": "2027-03-14T00:00:00Z",
+      "auto_renew": false,
+      "status": "ACTIVE",
+      "classification": "SaaS (Contract)",
+      "currency": "USD",
+      "estimated_cost": 6300,
+      "estimated_cost_usd": 6300,
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "Configurable"
+        }
+      ],
+      "last_updated": "2026-08-31T04:00:00Z"
+    }
+  ],
+  "sandbox_accounts": []
+}

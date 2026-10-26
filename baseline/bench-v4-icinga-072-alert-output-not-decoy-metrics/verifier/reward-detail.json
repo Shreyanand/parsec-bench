@@ -1,0 +1,115 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "get_ocpv_pod_logs",
+          "cluster": "ocpv-tamarack",
+          "namespace": "openshift-cluster-version",
+          "search": "degraded"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "get_node_resources",
+          "cluster": "ocpv-tamarack"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "nodes_top",
+          "cluster": "ocpv-tamarack"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "get_ocpv_pod_logs",
+          "namespace": "openshift-cluster-version",
+          "search": "degraded"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_pods",
+          "namespace": "openshift-cluster-version"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_icinga",
+        "args": {}
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "degraded-operator",
+        "any_of": [
+          "openshift-samples",
+          "openshift samples",
+          "openshift_samples",
+          "samples operator",
+          "samples cluster operator",
+          "samples clusteroperator",
+          "cluster-samples-operator"
+        ],
+        "ignore_case": true,
+        "asked_by": "which cluster operator the alert reports as degraded",
+        "rationale": "the operator named in the CRITICAL row's attrs.last_check_result.output. Icinga-only: no platform row and not the instruction carries it. The decoy machineset and Splunk rows name no operator"
+      },
+      {
+        "id": "reason-code",
+        "any_of": [
+          "failedimageimport",
+          "failed image import",
+          "failed-image-import",
+          "failed_image_import"
+        ],
+        "ignore_case": true,
+        "asked_by": "the reason code it gives",
+        "rationale": "the reason=FailedImageImports token of the same output. Icinga-only. The singular stem also matches FailedImageImports and 'failed image imports'"
+      },
+      {
+        "id": "error-message",
+        "any_of": [
+          "manifest unknown",
+          "manifest_unknown",
+          "manifest is unknown",
+          "unknown manifest",
+          "wren-jdk21",
+          "wren-builder",
+          "manifest not found",
+          "manifest was not found",
+          "manifest could not be found",
+          "no such manifest"
+        ],
+        "ignore_case": true,
+        "asked_by": "the error message behind it",
+        "rationale": "the error text of the same output: the registry's 'manifest unknown' (or a manifest-not-found paraphrase), or the image (wren-jdk21) / imagestream (wren-builder-jdk21) it names. Icinga-only"
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 0
+  }
+}

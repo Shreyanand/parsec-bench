@@ -1,0 +1,103 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 90402
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "tools/execution_environments/ee-multicloud-public/entrypoint.sh"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "error-string",
+        "any_of": [
+          "unrecognized arguments: --private-data-dir",
+          "--private-data-dir"
+        ],
+        "ignore_case": true,
+        "asked_by": "report the error string the playbook reported",
+        "rationale": "the literal only a real log read supplies"
+      },
+      {
+        "id": "invocation-meaning",
+        "any_of": [
+          "container group",
+          "ansible-runner",
+          "runner argument",
+          "runner args",
+          "wrong code path"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "aap2_fix.py KNOWN_PATTERNS[1] explains this as the chained entrypoint failing to detect AAP container group mode (ansible-runner worker) and passing runner args to ansible-playbook; the interpretation is not a seed literal",
+        "asked_by": "Explain what that error means about how the execution environment was invoked",
+        "rationale": "the synthesis step -- quoting the error alone does not supply it"
+      }
+    ],
+    "citations": [
+      {
+        "id": "entrypoint",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "tools/execution_environments/ee-multicloud-public/entrypoint.sh",
+        "asked_by": "Cite the file in the AgnosticD content repository that has to change",
+        "rationale": "parsec's RCA playbook forbids a code claim without an owner/repo:path citation, and the owner half is the wrong turn 21 real trajectory calls took"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-known-pattern",
+        "none_of": [
+          "InvalidClientTokenId",
+          "not in JSON format",
+          "worker stream",
+          "collections_path"
+        ],
+        "ignore_case": true,
+        "rationale": "the signatures of aap2_fix.py's four OTHER KNOWN_PATTERNS. An agent that pattern-matches a familiar AAP2 failure instead of reading this log lands on one of them; none appears in either seed, so a faithful quote cannot trip it"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

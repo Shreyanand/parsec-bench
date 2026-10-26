@@ -1,0 +1,155 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [
+    {
+      "event_id": "b41e07c2-5d93-4f6a-9e18-3a7c52d0f914",
+      "account_id": "683021947551",
+      "event_name": "DeleteStream",
+      "event_source": "kinesis.amazonaws.com",
+      "event_time": "2026-10-08T09:12:55Z",
+      "username": "nightly-ingest",
+      "resources": [
+        {
+          "ARN": "arn:aws:kinesis:us-east-1:683021947551:stream/clickstream-raw-b7"
+        }
+      ]
+    },
+    {
+      "event_id": "6c2f91ad-08e4-47b5-b3d1-e95a4f7c2068",
+      "account_id": "683021947551",
+      "event_name": "DeleteTable",
+      "event_source": "dynamodb.amazonaws.com",
+      "event_time": "2026-10-08T09:13:40Z",
+      "username": "nightly-ingest",
+      "resources": [
+        {
+          "ARN": "arn:aws:dynamodb:us-east-1:683021947551:table/clickstream-sessions-v2"
+        }
+      ]
+    },
+    {
+      "event_id": "e8d3a5f0-7b21-4c96-8a4e-1f60b29c7d35",
+      "account_id": "507318246190",
+      "event_name": "CreateStream",
+      "event_source": "kinesis.amazonaws.com",
+      "event_time": "2026-10-08T15:58:02Z",
+      "username": "nightly-ingest",
+      "resources": [
+        {
+          "ARN": "arn:aws:kinesis:us-east-1:507318246190:stream/postings-intake"
+        }
+      ]
+    },
+    {
+      "event_id": "0a9b7e14-c3f6-4d28-95a1-6e2d8b40f7c9",
+      "account_id": "507318246190",
+      "event_name": "CreateDeliveryStream",
+      "event_source": "firehose.amazonaws.com",
+      "event_time": "2026-10-08T16:01:37Z",
+      "username": "nightly-ingest",
+      "resources": [
+        {
+          "ARN": "arn:aws:firehose:us-east-1:507318246190:deliverystream/postings-to-lake"
+        }
+      ]
+    },
+    {
+      "event_id": "57f4c0b9-2e8a-4b13-a6d7-c91e3f8a5b20",
+      "account_id": "507318246190",
+      "event_name": "CreateTable",
+      "event_source": "glue.amazonaws.com",
+      "event_time": "2026-10-09T02:00:41Z",
+      "username": "nightly-ingest",
+      "resources": [
+        {
+          "ARN": "arn:aws:glue:us-east-1:507318246190:table/postings_lake/daily_postings"
+        }
+      ]
+    },
+    {
+      "event_id": "c1e6b8d2-94a7-4f50-b2c3-7d8e05a9f146",
+      "account_id": "507318246190",
+      "event_name": "StartJobRun",
+      "event_source": "glue.amazonaws.com",
+      "event_time": "2026-10-09T02:03:19Z",
+      "username": "nightly-ingest",
+      "resources": [
+        {
+          "ARN": "arn:aws:glue:us-east-1:507318246190:job/postings-nightly-load"
+        }
+      ]
+    },
+    {
+      "event_id": "9d27e4a1-6f0c-4b85-8e93-24c7b1d5a0f8",
+      "account_id": "507318246190",
+      "event_name": "DescribeStream",
+      "event_source": "kinesis.amazonaws.com",
+      "event_time": "2026-10-09T06:30:12Z",
+      "username": "audit-reader",
+      "resources": [
+        {
+          "ARN": "arn:aws:kinesis:us-east-1:507318246190:stream/postings-intake"
+        }
+      ]
+    },
+    {
+      "event_id": "3b80f5c7-a1d4-4e29-b7f6-58c2e0d9a413",
+      "account_id": "683021947551",
+      "event_name": "DeleteDBSnapshot",
+      "event_source": "rds.amazonaws.com",
+      "event_time": "2026-10-09T21:30:05Z",
+      "username": "nightly-ingest",
+      "resources": [
+        {
+          "ARN": "arn:aws:rds:us-east-1:683021947551:snapshot:clickstream-pg-pre-upgrade-0921"
+        }
+      ]
+    }
+  ],
+  "gcp_projects": [],
+  "iam_users": [
+    {
+      "iam_user_id": "iu-317-01",
+      "account_id": "507318246190",
+      "username": "nightly-ingest",
+      "user_id": "AIDA5JW2Q8RM7TNB4XE9C",
+      "created": "2026-10-08T15:42:10Z",
+      "password_last_used": "",
+      "access_keys": [
+        {
+          "access_key_id": "AKIA5JW2Q8RMQ4VZ7TD3",
+          "status": "Active",
+          "created": "2026-10-08T15:43:02Z"
+        }
+      ]
+    },
+    {
+      "iam_user_id": "iu-317-02",
+      "account_id": "507318246190",
+      "username": "audit-reader",
+      "user_id": "AIDA3PL6X1WB9KQ2MR7HN",
+      "created": "2026-04-14T10:05:31Z",
+      "password_last_used": "2026-10-06T08:11:47Z",
+      "access_keys": []
+    },
+    {
+      "iam_user_id": "iu-317-03",
+      "account_id": "683021947551",
+      "username": "nightly-ingest",
+      "user_id": "AIDA8GT4N2VC6YH1ZK5LD",
+      "created": "2026-07-21T13:27:44Z",
+      "password_last_used": "",
+      "access_keys": [
+        {
+          "access_key_id": "AKIA8GT4N2VCW9RJ3PX6",
+          "status": "Active",
+          "created": "2026-07-21T13:28:15Z"
+        }
+      ]
+    }
+  ],
+  "marketplace_agreements": [],
+  "sandbox_accounts": []
+}

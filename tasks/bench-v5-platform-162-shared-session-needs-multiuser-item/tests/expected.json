@@ -1,0 +1,61 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "avocet"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "item-name",
+        "any_of": [
+          "rhoai.model-serving-lab",
+          "OpenShift AI Serving Lab"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which catalog item should I order?",
+        "rationale": "the only OpenShift AI item on avocet with multiuser: true; the 'Workshop' item is single-user there"
+      },
+      {
+        "id": "asset-uuid",
+        "any_of": [
+          "8c41f2d7-e05b-4a9c-9f63-2b7d18e4c5a0"
+        ],
+        "ignore_case": true,
+        "asked_by": "its asset UUID for the request ticket",
+        "rationale": "asset_uuid of the multiuser row; the decoy's is e3a95c18-..."
+      },
+      {
+        "id": "multiuser-flag",
+        "any_of": [
+          "multiuser",
+          "multi-user",
+          "multi user"
+        ],
+        "ignore_case": true,
+        "asked_by": "what in the catalog record makes it the right one",
+        "rationale": "the field that carries the answer; the instruction never names it"
+      }
+    ],
+    "counts": [],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

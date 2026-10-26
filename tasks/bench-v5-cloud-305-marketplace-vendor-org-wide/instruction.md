@@ -1,0 +1,1 @@
+Procurement wants to consolidate everything we buy from Brightmoor Analytics through AWS Marketplace. Across all of our AWS accounts, how many Marketplace agreements do we hold with that vendor, and on which accounts? Which of them auto-renew, and what is their combined estimated cost?

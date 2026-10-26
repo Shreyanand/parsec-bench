@@ -1,0 +1,294 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "ci-runner-pool-b"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/ci/check_queue_wait.py"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/ci/queue_wait.yaml"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "config-file",
+        "any_of": [
+          "queue_wait.yaml"
+        ],
+        "ignore_case": true,
+        "asked_by": "Follow wherever the plugin gets its thresholds from",
+        "rationale": "named only inside the script"
+      },
+      {
+        "id": "config-missing",
+        "any_of": [
+          "never created",
+          "never deployed",
+          "never committed",
+          "yaml not found",
+          "yaml was not found",
+          "yaml is not found",
+          "yaml: not found",
+          "yaml (not found)",
+          "yaml -> not found",
+          "yaml → not found",
+          "yaml - not found",
+          "yaml — not found",
+          "yaml | not found",
+          "yaml returned not found",
+          "yaml returns not found",
+          "yaml came back not found",
+          "file not found",
+          "file was not found",
+          "file is not found",
+          "file: not found",
+          "file (not found)",
+          "file -> not found",
+          "file → not found",
+          "file - not found",
+          "file — not found",
+          "file | not found",
+          "file returned not found",
+          "file returns not found",
+          "file came back not found",
+          "config not found",
+          "config was not found",
+          "config is not found",
+          "config: not found",
+          "config (not found)",
+          "config -> not found",
+          "config → not found",
+          "config - not found",
+          "config — not found",
+          "config | not found",
+          "config returned not found",
+          "config returns not found",
+          "config came back not found",
+          "configuration not found",
+          "configuration was not found",
+          "configuration is not found",
+          "configuration: not found",
+          "configuration (not found)",
+          "configuration -> not found",
+          "configuration → not found",
+          "configuration - not found",
+          "configuration — not found",
+          "configuration | not found",
+          "configuration returned not found",
+          "configuration returns not found",
+          "configuration came back not found",
+          "yaml is missing",
+          "file is missing",
+          "config is missing",
+          "configuration is missing",
+          "yaml` is missing",
+          "yaml` not found",
+          "yaml` was not found",
+          "yaml` is not found",
+          "yaml`: not found",
+          "yaml` (not found)",
+          "yaml, is missing",
+          "yaml), is missing",
+          "yaml) is missing",
+          "yaml it reads is missing",
+          "yaml it reads, is missing",
+          "yaml it expects is missing",
+          "yaml it expects, is missing",
+          "yaml the plugin reads is missing",
+          "yaml the plugin reads, is missing",
+          "yaml the plugin expects is missing",
+          "yaml the plugin expects, is missing",
+          "yaml it looks for is missing",
+          "yaml it looks for, is missing",
+          "yaml it needs is missing",
+          "yaml it needs, is missing",
+          "file it reads is missing",
+          "file it reads, is missing",
+          "file it expects is missing",
+          "file it expects, is missing",
+          "file the plugin reads is missing",
+          "file the plugin reads, is missing",
+          "file the plugin expects is missing",
+          "file the plugin expects, is missing",
+          "file it looks for is missing",
+          "file it looks for, is missing",
+          "file it needs is missing",
+          "file it needs, is missing",
+          "config it reads is missing",
+          "config it reads, is missing",
+          "config it expects is missing",
+          "config it expects, is missing",
+          "config the plugin reads is missing",
+          "config the plugin reads, is missing",
+          "config the plugin expects is missing",
+          "config the plugin expects, is missing",
+          "config it looks for is missing",
+          "config it looks for, is missing",
+          "config it needs is missing",
+          "config it needs, is missing",
+          "configuration it reads is missing",
+          "configuration it reads, is missing",
+          "configuration it expects is missing",
+          "configuration it expects, is missing",
+          "configuration the plugin reads is missing",
+          "configuration the plugin reads, is missing",
+          "configuration the plugin expects is missing",
+          "configuration the plugin expects, is missing",
+          "configuration it looks for is missing",
+          "configuration it looks for, is missing",
+          "configuration it needs is missing",
+          "configuration it needs, is missing",
+          "what is missing",
+          "what is not found",
+          "what's not found",
+          "missing from the repo",
+          "404",
+          "is absent",
+          "no such file",
+          "yaml was missing",
+          "file was missing",
+          "config was missing",
+          "result was not found",
+          "yaml\", which is missing",
+          "yaml, which is missing",
+          "fetch came back not found",
+          "fetch returned not found",
+          "fetch says not found",
+          "fetch: not found"
+        ],
+        "ignore_case": true,
+        "asked_by": "Follow wherever the plugin gets its thresholds from",
+        "rationale": "the break: the fetch returns not-found"
+      },
+      {
+        "id": "only-example",
+        "any_of": [
+          ".example",
+          "example file",
+          "only an example",
+          "template"
+        ],
+        "ignore_case": true,
+        "asked_by": "Follow wherever",
+        "rationale": "the search result: the file exists only as an example"
+      },
+      {
+        "id": "not-intended",
+        "any_of": [
+          "fallback",
+          "built-in default",
+          "builtin default",
+          "hard-coded default",
+          "hardcoded default",
+          "default thresholds",
+          "defaults in the plugin",
+          "plugin's defaults",
+          "plugin defaults"
+        ],
+        "ignore_case": true,
+        "asked_by": "whether this CRITICAL reflects the thresholds the team actually intended",
+        "rationale": "the verdict follows from the missing config plus the script's fallback",
+        "derived": true,
+        "note": "A verdict, so no seed literal: the script reads per-pool thresholds from queue_wait.yaml and silently falls back to DEFAULT_WARN_S 120 / DEFAULT_CRIT_S 240 when it is absent; the fetch of plugins/ci/queue_wait.yaml returns not-found and the search finds only queue_wait.yaml.example, so the 240 s critical line is the plugin's default, not a chosen threshold."
+      }
+    ],
+    "counts": [
+      {
+        "id": "default-warn",
+        "value": 120,
+        "nouns": [
+          "s",
+          "seconds",
+          "warn",
+          "warning",
+          "default_warn_s"
+        ],
+        "window": 4,
+        "asked_by": "how the plugin decides",
+        "rationale": "DEFAULT_WARN_S; script only (and perfdata)",
+        "extra_any_of": [
+          "120 s",
+          "120s",
+          "120 seconds",
+          "DEFAULT_WARN_S = 120"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "plugin-missing",
+        "none_of": [
+          "plugin is missing",
+          "script is missing",
+          "plugin was moved",
+          "script was moved",
+          "plugin not found",
+          "plugin does not exist"
+        ],
+        "ignore_case": true,
+        "rationale": "the 014-shaped misreading: the break is the config, not the plugin",
+        "attributed_to": [
+          "plugin itself is present"
+        ]
+      },
+      {
+        "id": "buy-runners",
+        "none_of": [
+          "buy more runners",
+          "add more runners",
+          "need more runners",
+          "runner capacity is the"
+        ],
+        "ignore_case": true,
+        "rationale": "acting on a CRITICAL that only exists because of fallback thresholds",
+        "attributed_to": [
+          "before buying",
+          "someone wants to buy",
+          "wants to buy"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  },
+  "floors": {
+    "exempt": [
+      "fabricate",
+      "mute"
+    ],
+    "reason": "Weak discriminator, owner-approved 2026-10-13 and flagged in the baseline report: real fabricators that make the golden calls and blame a missing plugin score 0.700-0.900 (four of the five measured at 0.800-0.900), far above the mute floor (0.500), because they also state the example file, the defaults and 120 s; and mute itself sits at the 0.50 cap. The gate's fabricate probe scores below mute (0.300) only because of how the forbidden forms are worded, not because this contract scores fabrication below a content-free answer."
+  }
+}

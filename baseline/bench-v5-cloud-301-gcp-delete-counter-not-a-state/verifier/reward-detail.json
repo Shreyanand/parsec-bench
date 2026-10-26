@@ -1,0 +1,67 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_gcp_projects",
+        "args": {
+          "action": "list_projects",
+          "max_results": 500
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "\nSELECT\n  p.babylon_guid,\n  p.status,\n  p.provisioned_at,\n  p.retired_at,\n  p.retirement_date,\n  p.modified_at,\n  p.ordered_by,\n  u.email AS user_email\nFROM provisions p\nLEFT JOIN users u ON p.user_id = u.id\nWHERE p.babylon_guid IN ('b2fqz','d6vjs','h2wzd','k9rbf','m5yhb','p4xnl','r8cyh','t7mqc','w3gkt')\nORDER BY p.babylon_guid\n"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "\nSELECT\n  p.babylon_guid,\n  p.status,\n  p.provisioned_at,\n  p.retirement_date,\n  p.retired_at,\n  u.email AS user_email\nFROM provisions p\nLEFT JOIN users u ON p.account_id = u.id\nWHERE p.babylon_guid IN ('b2fqz','d6vjs','h2wzd','k9rbf','m5yhb','p4xnl','r8cyh','t7mqc','w3gkt')\nORDER BY p.provisioned_at DESC\n"
+        }
+      },
+      {
+        "name": "render_chart",
+        "args": {
+          "chart_type": "doughnut",
+          "title": "GCP Open Environments \u2014 Project State Breakdown (Week of 2026-10-12)",
+          "labels": [
+            "ACTIVE",
+            "DELETE_REQUESTED",
+            "STATE_UNSPECIFIED"
+          ],
+          "datasets": [
+            {
+              "label": "Projects",
+              "data": [
+                5,
+                3,
+                1
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

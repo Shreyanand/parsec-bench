@@ -1,0 +1,148 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 238114
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "analytics_bu/ocp-lakehouse-bench/common.yaml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "analytics_bu/ocp-lakehouse-bench/common.yaml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "error-code",
+        "any_of": [
+          "VcpuLimitExceeded",
+          "requested more vCPU capacity than your current vCPU limit"
+        ],
+        "ignore_case": true,
+        "asked_by": "what AWS refused",
+        "rationale": "the literal only the job log supplies"
+      },
+      {
+        "id": "why-over",
+        "any_of": [
+          "12 more",
+          "exceeds the 64",
+          "over the 64",
+          "more than the 64",
+          "76 vCPUs requested",
+          "needs 76",
+          "requests 76",
+          "asks for 76",
+          "76 > 64",
+          "76 vs 64",
+          "76 versus 64",
+          "76 against"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "explain why the request overflowed it",
+        "rationale": "the synthesis: the sum from the catalog item compared against the limit from the log",
+        "note": "common.yaml sets one m6i.xlarge bastion (4 vCPU), 3 m6i.2xlarge control nodes (8 vCPU) and 3 m6i.4xlarge workers (16 vCPU), 76 vCPU in total, and the job log gives the account's vCPU limit as 64."
+      }
+    ],
+    "counts": [
+      {
+        "id": "limit",
+        "value": 64,
+        "nouns": [
+          "limit",
+          "quota"
+        ],
+        "window": 6,
+        "asked_by": "how much the account allows",
+        "rationale": "read from the log's AWS message"
+      },
+      {
+        "id": "requested",
+        "value": 76,
+        "nouns": [
+          "vcpu",
+          "vcpus",
+          "requested",
+          "request",
+          "needs",
+          "total"
+        ],
+        "window": 5,
+        "asked_by": "how many vCPUs the catalog item asks for",
+        "rationale": "a sum over three sizing lines in agnosticv common.yaml; only the fetch supplies the instance types and counts"
+      }
+    ],
+    "citations": [
+      {
+        "id": "worker-type-line",
+        "repo": "rhpds/agnosticv",
+        "path": "analytics_bu/ocp-lakehouse-bench/common.yaml",
+        "line": 19,
+        "asked_by": "cite the line that sets the worker instance size",
+        "rationale": "the line number is counted from the seeded file; it proves the agnosticv file, not the agnosticd defaults, was read"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "defaults-total",
+        "none_of": [
+          "44 vCPU",
+          "m6i.2xlarge workers",
+          "common.yaml sets worker_instance_count: 1",
+          "catalog item sets worker_instance_count: 1",
+          "item sets worker_instance_count: 1",
+          "common.yaml has worker_instance_count: 1",
+          "item has worker_instance_count: 1",
+          "sizing comes from agnosticd/"
+        ],
+        "ignore_case": true,
+        "rationale": "the agnosticd config defaults (1 x m6i.2xlarge worker; 22 vCPU total: m6i.large 2 + 3 x m6i.xlarge 4 = 12 + m6i.2xlarge 8) are overridden by the catalog item; quoting them as the sizing is the wrong-file mistake. '44 vCPU' is kept as a form because it catches arithmetically wrong answers, not because the decoy totals 44"
+      },
+      {
+        "id": "aws-outage",
+        "none_of": [
+          "AWS outage",
+          "transient AWS",
+          "AWS-side issue",
+          "capacity shortage"
+        ],
+        "ignore_case": true,
+        "rationale": "a per-account vCPU quota is not an AWS service or capacity problem"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

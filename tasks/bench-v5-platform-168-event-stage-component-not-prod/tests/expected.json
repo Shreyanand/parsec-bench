@@ -1,0 +1,82 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_workshops",
+          "cluster": "whimbrel",
+          "namespace": "user-wsantos-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "whimbrel",
+          "name": "rhel-ha.pacemaker-lab.event"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "event-item",
+        "any_of": [
+          "pacemaker-lab.event"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which catalog item and component is the workshop actually built from",
+        "rationale": "the workshop's catalog_item carries the .event stage"
+      },
+      {
+        "id": "node-type",
+        "any_of": [
+          "c7i.large"
+        ],
+        "ignore_case": true,
+        "asked_by": "what node instance type",
+        "rationale": "the event component's ha_node entry; prod says m6a.xlarge"
+      },
+      {
+        "id": "scm-ref",
+        "any_of": [
+          "pcmk-lab-3.2.0"
+        ],
+        "ignore_case": true,
+        "asked_by": "which source revision (scm_ref) does it build from",
+        "rationale": "the event component's scm_ref; prod builds pcmk-lab-3.4.1"
+      }
+    ],
+    "counts": [
+      {
+        "id": "node-count",
+        "value": 2,
+        "nouns": [
+          "nodes",
+          "node",
+          "ha_node",
+          "c7i.large",
+          "instances",
+          "machines",
+          "cluster nodes"
+        ],
+        "window": 4,
+        "asked_by": "how many cluster nodes does it specify",
+        "rationale": "ha_node count 2 in the event component; prod asks for 3"
+      }
+    ],
+    "fold_markup": true
+  },
+  "weights": {
+    "tool_calls": 0.4,
+    "answer": 0.6
+  }
+}

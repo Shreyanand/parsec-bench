@@ -1,0 +1,114 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [
+    {
+      "azure_cost_result_id": "azr-q8m-0930",
+      "period_id": "per-az-q8m-0930",
+      "source": "cache",
+      "subscriptions_queried": "1",
+      "period": {
+        "start": "2026-09-01",
+        "end": "2026-09-30"
+      },
+      "cache_last_refresh": "2026-10-02T03:15:00Z",
+      "results": [
+        {
+          "subscription_name": "pool-47-205",
+          "services": {
+            "Virtual Machines": {
+              "cost": 6218.0,
+              "meter_subcategories": {
+                "NCasT4_v3 Series": 4312.0,
+                "Dv5 Series": 1906.0
+              }
+            },
+            "Storage": {
+              "cost": 1229.0,
+              "meter_subcategories": {
+                "Standard HDD Managed Disks": 688.0,
+                "Premium SSD Managed Disks": 541.0
+              }
+            },
+            "Bandwidth": {
+              "cost": 214.0,
+              "meter_subcategories": {
+                "Inter Region": 214.0
+              }
+            }
+          },
+          "total": 7661.0,
+          "gpu_cost": 5000.0
+        }
+      ],
+      "total_cost": 7661.0
+    }
+  ],
+  "azure_service_costs": [
+    {
+      "azure_service_cost_id": "azsc-q8m-pool-47-205-virtual-machines",
+      "cost": 6218.0,
+      "meter_subcategories": {
+        "NCasT4_v3 Series": 4312.0,
+        "Dv5 Series": 1906.0
+      }
+    },
+    {
+      "azure_service_cost_id": "azsc-q8m-pool-47-205-storage",
+      "cost": 1229.0,
+      "meter_subcategories": {
+        "Standard HDD Managed Disks": 688.0,
+        "Premium SSD Managed Disks": 541.0
+      }
+    },
+    {
+      "azure_service_cost_id": "azsc-q8m-pool-47-205-bandwidth",
+      "cost": 214.0,
+      "meter_subcategories": {
+        "Inter Region": 214.0
+      }
+    }
+  ],
+  "azure_subscription_costs": [
+    {
+      "subscription_name": "pool-47-205",
+      "services": {
+        "Virtual Machines": {
+          "cost": 6218.0,
+          "meter_subcategories": {
+            "NCasT4_v3 Series": 4312.0,
+            "Dv5 Series": 1906.0
+          }
+        },
+        "Storage": {
+          "cost": 1229.0,
+          "meter_subcategories": {
+            "Standard HDD Managed Disks": 688.0,
+            "Premium SSD Managed Disks": 541.0
+          }
+        },
+        "Bandwidth": {
+          "cost": 214.0,
+          "meter_subcategories": {
+            "Inter Region": 214.0
+          }
+        }
+      },
+      "total": 7661.0,
+      "gpu_cost": 5000.0,
+      "azure_subscription_cost_id": "azsc-q8m-pool-47-205"
+    }
+  ],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-az-q8m-0930",
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    }
+  ]
+}
