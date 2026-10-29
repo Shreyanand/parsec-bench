@@ -1,0 +1,173 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aws_capacity_manager",
+        "args": {
+          "metric": "unused_cost",
+          "group_by": "account-id",
+          "hours": 1464
+        }
+      },
+      {
+        "name": "query_aws_capacity_manager",
+        "args": {
+          "metric": "utilization",
+          "group_by": "account-id",
+          "hours": 1464
+        }
+      },
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "summary",
+          "start_date": "2026-10-01",
+          "end_date": "2026-11-30",
+          "providers": "aws"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "share-not-meaningful",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "not meaningful",
+          "no meaningful",
+          "isn't meaningful",
+          "wouldn't be meaningful",
+          "can't give a meaningful",
+          "cannot give a meaningful",
+          "don't match",
+          "do not match",
+          "doesn't match",
+          "does not match",
+          "mismatched",
+          "mismatch",
+          "different windows",
+          "different periods",
+          "different time",
+          "not comparable",
+          "isn't comparable",
+          "aren't comparable",
+          "not like-for-like",
+          "apples",
+          "can't compute a",
+          "can't compute the",
+          "can't compute that",
+          "can't compute it",
+          "can't compute this",
+          "can't compute an",
+          "can't compute one",
+          "can't compute any",
+          "cannot compute a",
+          "cannot compute the",
+          "cannot compute that",
+          "cannot compute it",
+          "cannot compute this",
+          "cannot compute an",
+          "cannot compute one",
+          "cannot compute any",
+          "can't calculate a",
+          "can't calculate the",
+          "can't calculate that",
+          "can't calculate it",
+          "can't calculate this",
+          "can't calculate an",
+          "can't calculate one",
+          "can't calculate any",
+          "cannot calculate a",
+          "cannot calculate the",
+          "cannot calculate that",
+          "cannot calculate it",
+          "cannot calculate this",
+          "cannot calculate an",
+          "cannot calculate one",
+          "cannot calculate any",
+          "can't state",
+          "cannot state",
+          "can't give you the percentage",
+          "can't give the percentage",
+          "cannot give the percentage",
+          "can't give a percentage",
+          "leave out the share",
+          "leave the share out",
+          "should not go in",
+          "shouldn't go in",
+          "not a valid",
+          "no valid",
+          "not valid",
+          "not stated",
+          "wouldn't mean",
+          "would not mean",
+          "meaningless",
+          "not usable",
+          "isn't usable",
+          "pairs a",
+          "pairs about",
+          "wouldn't put a percentage",
+          "would not put a percentage",
+          "won't give a percentage",
+          "not quote a percentage",
+          "shouldn't quote",
+          "should not quote",
+          "don't quote",
+          "do not quote",
+          "different spans",
+          "different ranges",
+          "left it out",
+          "left out",
+          "leaving it out",
+          "omitted the percentage",
+          "omit the percentage",
+          "would be misleading",
+          "be misleading",
+          "not apples"
+        ],
+        "asked_by": "state idle reservation cost as a percentage of EC2 spend for the two months",
+        "rationale": "a ratio of about 16 days of idle cost to two full months of EC2 spend compares different periods, so the requested percentage cannot honestly be stated",
+        "note": "Derived from the mismatch between the capacity period (2026-11-16..2026-12-02) and the monitor rows (2026-10 and 2026-11)."
+      }
+    ],
+    "required_total": 7,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [
+      {
+        "id": "naive-share",
+        "ignore_case": true,
+        "none_of": [
+          "2.43%",
+          "2.4%",
+          "2.43 %",
+          "2.4 %",
+          "2.4 percent",
+          "2.43 percent",
+          "2.434"
+        ],
+        "attributed_to": [
+          "naive",
+          "would understate",
+          "understates"
+        ],
+        "rationale": "7,339.70 / 301,520.15 = 2.4%: the share the trap produces by dividing a 16-day idle figure by two months of EC2 spend"
+      }
+    ],
+    "forbidden_total": 1
+  }
+}

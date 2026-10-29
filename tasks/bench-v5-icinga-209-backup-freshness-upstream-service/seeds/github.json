@@ -1,0 +1,24 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "file_id": "rhpds/rhdp-monitoring@HEAD:plugins/storage/check_marker_age.sh",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/storage/check_marker_age.sh",
+      "ref": "HEAD",
+      "content": "#!/bin/bash\n# check_marker_age.sh - age of a marker file that another job touches when it succeeds.\n#\n# On pg-archive-01 the marker /srv/wal-archive/.last_basebackup is written by the nightly\n# pg_basebackup run on the primary, which Icinga monitors as service 'pg-basebackup' on host\n# pg-primary-ord-1. This host only stores the result: a stale marker means the producer did\n# not finish, so look at that service before touching the archive host.\n#\n# usage: check_marker_age.sh MARKER [WARN_HOURS] [CRIT_HOURS]\nset -euo pipefail\n\nMARKER=\"${1:?marker path required}\"\nWARN_HOURS=\"${2:-26}\"\nCRIT_HOURS=\"${3:-30}\"\n\nif [[ ! -e \"$MARKER\" ]]; then\n  echo \"MARKER UNKNOWN - $MARKER does not exist\"; exit 3\nfi\nage_h=$(( ( $(date +%s) - $(stat -c %Y \"$MARKER\") ) / 3600 ))\nif (( age_h >= CRIT_HOURS )); then\n  echo \"MARKER CRITICAL - $MARKER is ${age_h} h old (crit ${CRIT_HOURS} h)\"; exit 2\nelif (( age_h >= WARN_HOURS )); then\n  echo \"MARKER WARNING - $MARKER is ${age_h} h old (warn ${WARN_HOURS} h)\"; exit 1\nfi\necho \"MARKER OK - $MARKER is ${age_h} h old\"; exit 0\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@main:plugins/storage/check_marker_age.sh",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/storage/check_marker_age.sh",
+      "ref": "main",
+      "content": "#!/bin/bash\n# check_marker_age.sh - age of a marker file that another job touches when it succeeds.\n#\n# On pg-archive-01 the marker /srv/wal-archive/.last_basebackup is written by the nightly\n# pg_basebackup run on the primary, which Icinga monitors as service 'pg-basebackup' on host\n# pg-primary-ord-1. This host only stores the result: a stale marker means the producer did\n# not finish, so look at that service before touching the archive host.\n#\n# usage: check_marker_age.sh MARKER [WARN_HOURS] [CRIT_HOURS]\nset -euo pipefail\n\nMARKER=\"${1:?marker path required}\"\nWARN_HOURS=\"${2:-26}\"\nCRIT_HOURS=\"${3:-30}\"\n\nif [[ ! -e \"$MARKER\" ]]; then\n  echo \"MARKER UNKNOWN - $MARKER does not exist\"; exit 3\nfi\nage_h=$(( ( $(date +%s) - $(stat -c %Y \"$MARKER\") ) / 3600 ))\nif (( age_h >= CRIT_HOURS )); then\n  echo \"MARKER CRITICAL - $MARKER is ${age_h} h old (crit ${CRIT_HOURS} h)\"; exit 2\nelif (( age_h >= WARN_HOURS )); then\n  echo \"MARKER WARNING - $MARKER is ${age_h} h old (warn ${WARN_HOURS} h)\"; exit 1\nfi\necho \"MARKER OK - $MARKER is ${age_h} h old\"; exit 0\n"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

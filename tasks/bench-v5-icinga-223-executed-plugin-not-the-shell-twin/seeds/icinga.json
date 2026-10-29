@@ -1,0 +1,93 @@
+{
+  "hosts": [
+    {
+      "name": "kafka-brk-zrh-5",
+      "type": "Host",
+      "attrs": {
+        "display_name": "kafka-brk-zrh-5",
+        "host_name": "kafka-brk-zrh-5",
+        "address": "10.61.33.85",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "kafka-zrh"
+        ],
+        "last_state_change": 1796115814,
+        "last_check": 1796891582,
+        "last_check_result": {
+          "output": "OK - 10.61.33.85: rta 0.190ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "kafka-brk-zrh-5!open-files",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Kafka broker open files",
+        "host_name": "kafka-brk-zrh-5",
+        "check_command": "rhdp-plugin",
+        "state": 1,
+        "state_type": 1,
+        "last_state_change": 1796746826,
+        "last_check": 1796891507,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "vars": {
+          "plugin_name": "check_fd_usage",
+          "pid_file": "/run/kafka/server.pid"
+        },
+        "last_check_result": {
+          "output": "FD WARNING - pid 2817 has 66355 open files, 81% of limit",
+          "performance_data": [
+            "open_fds=66355;;;0"
+          ],
+          "command": [
+            "/usr/lib64/nagios/plugins/rhdp/check_fd_usage.py",
+            "--pid-file",
+            "/run/kafka/server.pid"
+          ],
+          "state": 1,
+          "exit_status": 1
+        }
+      }
+    },
+    {
+      "name": "kafka-brk-zrh-5!under-replicated",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Kafka under-replicated partitions",
+        "host_name": "kafka-brk-zrh-5",
+        "check_command": "rhdp-plugin",
+        "state": 0,
+        "state_type": 1,
+        "last_state_change": 1796116325,
+        "last_check": 1796891539,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "vars": {
+          "plugin_name": "check_kafka_urp"
+        },
+        "last_check_result": {
+          "output": "URP OK - 0 under-replicated partitions",
+          "command": [
+            "/usr/lib64/nagios/plugins/rhdp/check_kafka_urp.py",
+            "--bootstrap",
+            "localhost:9092"
+          ],
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

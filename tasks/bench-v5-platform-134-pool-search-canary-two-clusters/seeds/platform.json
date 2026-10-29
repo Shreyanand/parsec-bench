@@ -1,0 +1,118 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [
+    {
+      "babylon_resource_pool_id": "condor-ocp-virt-pool",
+      "cluster": "condor",
+      "name": "ocp-virt-pool",
+      "namespace": "poolboy",
+      "min_available": 5,
+      "max_unready": 2,
+      "resource_handle_count": 7,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "7d",
+        "unclaimed": "2d"
+      },
+      "provider_name": "ocp-virt-aws",
+      "resource_name": "ocp-virt"
+    },
+    {
+      "babylon_resource_pool_id": "condor-rhel-edge-pool",
+      "cluster": "condor",
+      "name": "rhel-edge-pool",
+      "namespace": "poolboy",
+      "min_available": 8,
+      "max_unready": 3,
+      "resource_handle_count": 11,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "7d",
+        "unclaimed": "2d"
+      },
+      "provider_name": "rhel-edge-aws",
+      "resource_name": "rhel-edge"
+    },
+    {
+      "babylon_resource_pool_id": "condor-rhel-edge-pool-canary",
+      "cluster": "condor",
+      "name": "rhel-edge-pool-canary",
+      "namespace": "poolboy",
+      "min_available": 2,
+      "max_unready": 1,
+      "resource_handle_count": 3,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "7d",
+        "unclaimed": "2d"
+      },
+      "provider_name": "edge-canary-aws",
+      "resource_name": "rhel-edge"
+    },
+    {
+      "babylon_resource_pool_id": "merlin-dev-spaces-pool",
+      "cluster": "merlin",
+      "name": "dev-spaces-pool",
+      "namespace": "poolboy",
+      "min_available": 4,
+      "max_unready": 2,
+      "resource_handle_count": 4,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "7d",
+        "unclaimed": "2d"
+      },
+      "provider_name": "dev-spaces-azure",
+      "resource_name": "dev-spaces"
+    },
+    {
+      "babylon_resource_pool_id": "merlin-rhel-edge-pool",
+      "cluster": "merlin",
+      "name": "rhel-edge-pool",
+      "namespace": "poolboy",
+      "min_available": 6,
+      "max_unready": 3,
+      "resource_handle_count": 9,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "7d",
+        "unclaimed": "2d"
+      },
+      "provider_name": "rhel-edge-azure",
+      "resource_name": "rhel-edge"
+    },
+    {
+      "babylon_resource_pool_id": "merlin-rhel-edge-pool-canary",
+      "cluster": "merlin",
+      "name": "rhel-edge-pool-canary",
+      "namespace": "poolboy",
+      "min_available": 1,
+      "max_unready": 1,
+      "resource_handle_count": 2,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "7d",
+        "unclaimed": "2d"
+      },
+      "provider_name": "edge-canary-azure",
+      "resource_name": "rhel-edge"
+    }
+  ],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

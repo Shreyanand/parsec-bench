@@ -1,0 +1,157 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_resource_pools",
+          "cluster": "lapwing"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_resource_pool"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "default-lifespan",
+        "any_of": [
+          "3d",
+          "3 days",
+          "three days",
+          "3-day",
+          "three-day",
+          "72 hours",
+          "72h",
+          "3 day"
+        ],
+        "ignore_case": true,
+        "asked_by": "how long does a freshly claimed environment run before it is retired if nobody extends it",
+        "rationale": "lifespan.default of ocp-poc-small-pool on lapwing; godwit's twin defaults to 5d"
+      },
+      {
+        "id": "maximum-lifespan",
+        "any_of": [
+          "7d",
+          "7 days",
+          "seven days",
+          "7-day",
+          "seven-day",
+          "one week",
+          "1 week",
+          "a week",
+          "168 hours",
+          "168h",
+          "7 day"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is the longest lifespan it can be extended to",
+        "rationale": "lifespan.maximum; the 14d unclaimed value is the lure, godwit's twin allows 21d"
+      },
+      {
+        "id": "latest-retirement",
+        "any_of": [
+          "2026-11-10",
+          "November 10",
+          "10 November",
+          "Nov 10",
+          "10 Nov",
+          "Nov. 10",
+          "11/10/2026",
+          "10/11/2026"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "The instruction's claim time 2026-11-03 09:00 UTC plus the pool's lifespan.maximum of 7d gives 2026-11-10 09:00 UTC.",
+        "asked_by": "what is the latest date it could then be retired on",
+        "rationale": "claim at 2026-11-03 09:00 UTC plus the 7d maximum; reading the 14d unclaimed value gives 2026-11-17"
+      },
+      {
+        "id": "provider",
+        "any_of": [
+          "ocp-poc-small-aws"
+        ],
+        "ignore_case": true,
+        "asked_by": "which provider the pool uses",
+        "rationale": "provider_name of the lapwing pool; godwit's twin uses ocp-poc-small-gcp"
+      }
+    ],
+    "counts": [
+      {
+        "id": "handles",
+        "value": 6,
+        "nouns": [
+          "resource handles",
+          "handles",
+          "handle",
+          "environments",
+          "resource_handle_count",
+          "envs",
+          "pooled"
+        ],
+        "window": 4,
+        "asked_by": "how many environments (resource handles) the pool holds",
+        "rationale": "resource_handle_count 6; min_available is 4, godwit's twin holds 2"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "unclaimed-read-as-ceiling",
+        "none_of": [
+          "extended to 14 days",
+          "extend it to 14 days",
+          "extendable to 14 days",
+          "extended up to 14 days",
+          "extend it up to 14 days",
+          "extend to 14 days",
+          "extensions up to 14 days",
+          "maximum of 14 days",
+          "maximum lifespan of 14 days",
+          "maximum lifespan is 14",
+          "maximum is 14 days",
+          "maximum of 14d",
+          "max of 14 days",
+          "max lifespan of 14",
+          "keep it for 14 days",
+          "keep it for up to 14 days",
+          "lasts up to 14 days",
+          "run for up to 14 days",
+          "can run for 14 days",
+          "ceiling is 14 days",
+          "will cover the 10",
+          "can cover the 10",
+          "covers the 10",
+          "is enough for the 10",
+          "long enough for the 10",
+          "enough to cover the 10",
+          "yes, it will cover",
+          "yes, it can cover",
+          "yes, that covers",
+          "yes, it covers",
+          "fits within the 14",
+          "within the 14-day"
+        ],
+        "ignore_case": true,
+        "rationale": "reads unclaimed: 14d (the idle-handle recycle age) as the claim's ceiling, and so says the 10-day PoC fits"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

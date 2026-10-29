@@ -1,0 +1,71 @@
+{
+  "comments": [
+    {
+      "name": "generic-rhdp-comment-1",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "generic-rhdp",
+        "author": "opentlc-mgr",
+        "text": "Expected: the schema-diff check uses a PAT that we rotate on the 1st of each month, and it reads UNKNOWN until the Vault sync runs. Tracked in RHDPSUP-8812. No action needed unless it is still UNKNOWN after the sync window.",
+        "entry_time": 1781000000.0,
+        "service_name": "babylon-schema-yaml-diff"
+      }
+    }
+  ],
+  "downtimes": [
+    {
+      "name": "generic-rhdp-downtime-1",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "generic-rhdp",
+        "author": "opentlc-mgr",
+        "comment": "PAT rotation window, monthly",
+        "start_time": 1781000000.0,
+        "end_time": 1781600000.0,
+        "fixed": true,
+        "was_cancelled": false,
+        "service_name": "babylon-schema-yaml-diff"
+      }
+    }
+  ],
+  "hosts": [
+    {
+      "name": "generic-rhdp",
+      "type": "Host",
+      "attrs": {
+        "display_name": "Generic RHDP",
+        "host_name": "generic-rhdp",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "babylon-schema-yaml-diff",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Babylon Schema YAML Diff",
+        "host_name": "generic-rhdp",
+        "state": 3,
+        "state_type": 1,
+        "acknowledgement": 1,
+        "downtime_depth": 1,
+        "groups": [],
+        "last_check_result": {
+          "output": "UNKNOWN - GitHub API 401 Unauthorized while fetching the schema for comparison",
+          "state": 3,
+          "exit_status": 3
+        }
+      }
+    }
+  ]
+}

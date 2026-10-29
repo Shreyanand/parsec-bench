@@ -1,0 +1,109 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "east",
+          "job_id": 90405,
+          "failed_only": true
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/configs/ocp4-cluster/default_vars.yml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "failing-task",
+        "any_of": [
+          "Wait for the worker nodes to register"
+        ],
+        "ignore_case": true,
+        "asked_by": "Find the task that actually failed",
+        "rationale": "distinguishes reading the failed event from naming the first task in the play"
+      },
+      {
+        "id": "failing-host",
+        "any_of": [
+          "worker-02.vt8dr.sandbox",
+          "worker-02"
+        ],
+        "ignore_case": true,
+        "asked_by": "and the host it failed on",
+        "rationale": "two hosts appear in the recap and only one failed; the seed makes the wrong one available"
+      },
+      {
+        "id": "role",
+        "any_of": [
+          "ocp4_cluster_nodes"
+        ],
+        "ignore_case": true,
+        "asked_by": "Report the role that task belongs to",
+        "rationale": "the role is in the job_events row and NOT in the log text, so it cannot be had from get_job_log alone -- this is what makes the events call necessary rather than optional"
+      }
+    ],
+    "counts": [
+      {
+        "id": "retries",
+        "value": 30,
+        "nouns": [
+          "retries",
+          "attempts",
+          "node_ready_retries"
+        ],
+        "window": 5,
+        "asked_by": "report how many retries the provision was allowed",
+        "rationale": "read from the seeded default_vars.yml; the numeric matcher accepts digit and word forms near the noun"
+      }
+    ],
+    "citations": [
+      {
+        "id": "default-vars",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/configs/ocp4-cluster/default_vars.yml",
+        "asked_by": "configured in `ansible/configs/ocp4-cluster/default_vars.yml` in the `agnosticd/agnosticd-v2` repository",
+        "rationale": "the instruction hands over the path, so this fact is cheap on purpose -- it is here to keep the citation habit uniform across shape A, not to discriminate"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-host",
+        "none_of": [
+          "bastion.vt8dr.sandbox failed",
+          "failed on bastion",
+          "bastion never reached"
+        ],
+        "ignore_case": true,
+        "rationale": "the bastion succeeded. An agent that reads the recap without distinguishing the two hosts, or that names the first host it sees, asserts one of these"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

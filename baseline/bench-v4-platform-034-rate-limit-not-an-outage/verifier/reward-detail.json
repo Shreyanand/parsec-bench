@@ -1,0 +1,154 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 90461
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "status": "failed",
+          "template_name": "rehearsal",
+          "created_after": "2026-10-08"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "status": "failed",
+          "template_name": "ocp4-rehearsal-lab",
+          "created_after": "2026-10-08",
+          "max_results": 200
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "status": "failed",
+          "template_name": "ocp4-rehearsal-lab",
+          "created_after": "2026-06-25",
+          "max_results": 200
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "rehearsal"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "agd-v2/ocp4-rehearsal-lab/prod.yaml"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "agd-v2/ocp4-rehearsal-lab/common.yaml"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "ocp4-rehearsal-lab"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ocp4-rehearsal-lab"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "agd-v2/ocp4-rehearsal-lab"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "rehearsal"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "search": "rehearsal"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "status": "failed"
+        },
+        "name": "query_aap2"
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "any_of": [
+          "isolated",
+          "probe",
+          "single call succeeded",
+          "same window",
+          "412ms",
+          "3543 records",
+          "not an outage",
+          "route53 was responding",
+          "responded normally"
+        ],
+        "asked_by": "Tell me the root cause and the mechanism",
+        "derived": true,
+        "id": "not-an-outage",
+        "ignore_case": true,
+        "note": "the refutation is a synthesis over one Splunk probe row and the throttling error; nothing states that Route53 was healthy",
+        "rationale": "the evidence that rules out the obvious answer. A throttling error and an outage are different failures, and one isolated call returning 3,543 records in the same window settles which one this is"
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

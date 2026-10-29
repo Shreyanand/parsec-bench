@@ -1,0 +1,120 @@
+{
+  "hosts": [
+    {
+      "name": "edge-lb-sjc-2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "edge-lb-sjc-2",
+        "host_name": "edge-lb-sjc-2",
+        "address": "172.20.61.12",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ingress-west"
+        ],
+        "last_check": 1794994145,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.29 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "edge-lb-sjc-2!conntrack-table",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Netfilter conntrack usage",
+        "host_name": "edge-lb-sjc-2",
+        "state": 0,
+        "flapping": false,
+        "flapping_current": 0.0,
+        "last_state_change": 1794230400,
+        "last_check": 1794994120,
+        "last_check_result": {
+          "output": "CONNTRACK OK - 61822 of 262144 entries (23%)",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 4,
+        "check_interval": 120,
+        "retry_interval": 30,
+        "enable_notifications": true,
+        "enable_flapping": true,
+        "flapping_threshold_low": 25.0,
+        "flapping_threshold_high": 30.0,
+        "acknowledgement": 0,
+        "downtime_depth": 0
+      }
+    },
+    {
+      "name": "edge-lb-sjc-2!haproxy-backend-api",
+      "type": "Service",
+      "attrs": {
+        "display_name": "HAProxy backend api_pool",
+        "host_name": "edge-lb-sjc-2",
+        "state": 0,
+        "flapping": true,
+        "flapping_current": 41.7,
+        "last_state": 2,
+        "last_state_change": 1794993120,
+        "last_hard_state_change": 1794993120,
+        "last_check": 1794994160,
+        "last_notification": 1794973620,
+        "last_check_result": {
+          "output": "HAPROXY OK - backend api_pool: 6/6 servers UP",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 4,
+        "check_interval": 120,
+        "retry_interval": 30,
+        "enable_notifications": true,
+        "enable_flapping": true,
+        "flapping_threshold_low": 25.0,
+        "flapping_threshold_high": 30.0,
+        "acknowledgement": 0,
+        "downtime_depth": 0
+      }
+    },
+    {
+      "name": "edge-lb-sjc-2!tls-handshake",
+      "type": "Service",
+      "attrs": {
+        "display_name": "TLS handshake latency",
+        "host_name": "edge-lb-sjc-2",
+        "state": 1,
+        "flapping": false,
+        "flapping_current": 4.2,
+        "last_state_change": 1794953100,
+        "last_check": 1794994135,
+        "last_check_result": {
+          "output": "TLS WARNING - handshake p95 412 ms (warn 350 ms)",
+          "state": 1,
+          "exit_status": 1
+        },
+        "state_type": 1,
+        "check_attempt": 1,
+        "max_check_attempts": 4,
+        "check_interval": 120,
+        "retry_interval": 30,
+        "enable_notifications": true,
+        "enable_flapping": true,
+        "flapping_threshold_low": 25.0,
+        "flapping_threshold_high": 30.0,
+        "acknowledgement": 0,
+        "downtime_depth": 0
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

@@ -1,0 +1,35 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_log",
+        "controller": "west",
+        "job_id": 90408
+      },
+      "result": {
+        "job_id": 90408,
+        "job_name": "RHPDS agd-v2.rosa-consolidated.prod-m9xkc-provision",
+        "status": "failed",
+        "failed": true,
+        "started": "2026-06-16T05:00:00.000Z",
+        "finished": "2026-06-16T07:00:00.000Z",
+        "duration_seconds": 7200,
+        "launch_type": "manual",
+        "job_explanation": "",
+        "template_name": "RHPDS agd-v2.rosa-consolidated.prod-m9xkc-provision",
+        "env_type": "prod",
+        "guid": "m9xkc",
+        "action": "provision",
+        "cloud_provider": "aws",
+        "display_name": "rosa-consolidated",
+        "controller": "west",
+        "log": "PLAY [ROSA consolidated provision] *********************************\nTASK [Gathering Facts] *********************************************\nok: [localhost]\n\nTASK [Create the ROSA account roles] *******************************\nchanged: [localhost]\n\nTASK [Wait for the ROSA HCP installer to finish] *******************\n",
+        "log_original_size": 315,
+        "log_trimmed_size": 315
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The log does not establish a root cause for job 90408.\n\nWhat it does show: the play gathered facts, created the ROSA account roles successfully, then entered the task \"Wait for the ROSA HCP installer to finish\" -- and stops there. There is no result line for that task, no fatal, no error text and no PLAY RECAP. The job is recorded as failed and ran for two hours, which is consistent with the installer wait never returning, but the log itself does not say why.\n\nI am not going to name a cause on that evidence. What I would look at next, in order: the job's failed events via get_job_events, which often carry an error message the stdout never received; the job_explanation field on the job record, which is where AAP puts a runner-level failure; and the AAP2 controller logs in Splunk around the finish timestamp, if the events are also empty."
+}

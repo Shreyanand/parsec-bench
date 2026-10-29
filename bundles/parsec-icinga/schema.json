@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "comments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/IcingaComment"
+      }
+    },
+    "downtimes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/IcingaDowntime"
+      }
+    },
+    "hosts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/IcingaHost"
+      }
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/IcingaService"
+      }
+    }
+  },
+  "required": [
+    "comments",
+    "downtimes",
+    "hosts",
+    "services"
+  ],
+  "$defs": {
+    "IcingaComment": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "name",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The comment object's full name \u2014 its primary key."
+        },
+        "type": {
+          "type": "string"
+        },
+        "attrs": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "attrs"
+      ]
+    },
+    "IcingaDowntime": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "name",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The downtime object's full name \u2014 its primary key."
+        },
+        "type": {
+          "type": "string"
+        },
+        "attrs": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "attrs"
+      ]
+    },
+    "IcingaHost": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "name",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The host object's name \u2014 its primary key."
+        },
+        "type": {
+          "type": "string"
+        },
+        "attrs": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "attrs"
+      ]
+    },
+    "IcingaService": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "name",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Composite name in 'hostname!servicename' form -- its primary key."
+        },
+        "type": {
+          "type": "string"
+        },
+        "attrs": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "attrs"
+      ]
+    }
+  }
+}

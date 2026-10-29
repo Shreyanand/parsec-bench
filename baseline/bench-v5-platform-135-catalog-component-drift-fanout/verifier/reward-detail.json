@@ -1,0 +1,257 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "Network Automation Fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "condor",
+          "search": "network automation fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "heron",
+          "search": "network automation fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "kite",
+          "search": "network automation fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "puffin",
+          "search": "network automation fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "condor",
+          "name": "netauto.fundamentals.prod"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "heron",
+          "name": "netauto.fundamentals.prod"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "kite",
+          "name": "netauto.fundamentals.prod"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "puffin",
+          "name": "netauto.fundamentals-ng.prod"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "condor",
+          "namespace": "babylon-catalog-prod",
+          "name": "netauto.fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "heron",
+          "namespace": "babylon-catalog-prod",
+          "name": "netauto.fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "kite",
+          "namespace": "babylon-catalog-prod",
+          "name": "netauto.fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "puffin",
+          "namespace": "babylon-catalog-prod",
+          "name": "netauto.fundamentals-ng"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "condor",
+          "namespace": "babylon-catalog-prod",
+          "search": "fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "heron",
+          "namespace": "babylon-catalog-prod",
+          "search": "fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "kite",
+          "namespace": "babylon-catalog-prod",
+          "search": "fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "puffin",
+          "namespace": "babylon-catalog-prod",
+          "search": "fundamentals"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "netauto"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "network-automation"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "condor",
+          "name": "netauto.fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "puffin",
+          "name": "netauto.fundamentals-ng"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "heron",
+          "name": "netauto.fundamentals"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "kite",
+          "name": "netauto.fundamentals"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "outlier-ref",
+        "any_of": [
+          "v2.9.4",
+          "2.9.4"
+        ],
+        "asked_by": "the source revision (scm_ref) it builds from",
+        "rationale": "only heron's component carries it; reachable only through get_component on heron"
+      },
+      {
+        "id": "majority-ref",
+        "any_of": [
+          "v3.2.0",
+          "3.2.0"
+        ],
+        "asked_by": "what the rest are on",
+        "rationale": "condor, kite and puffin"
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [
+      {
+        "id": "clusters-on-majority",
+        "value": 3,
+        "nouns": [
+          "clusters",
+          "of the four",
+          "of four"
+        ],
+        "window": 3,
+        "asked_by": "what the rest are on",
+        "rationale": "condor, kite, puffin on v3.2.0"
+      }
+    ],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

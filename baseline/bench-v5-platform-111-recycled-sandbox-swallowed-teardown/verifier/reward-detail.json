@@ -1,0 +1,298 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 3304817
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "service-mesh-tracing-lab"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "sandbox8842"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "mesh-tracing-lab"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "m2wqd"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "agd-v2/mesh-tracing-lab/common.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "agd-v2/mesh-tracing-lab/prod.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "template_name": "m2wqd"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.babylon_guid, p.catalog_id, p.provisioned_at, p.retired_at, p.status, p.account, p.provision_uuid FROM provisions p WHERE p.babylon_guid = 'm2wqd' LIMIT 5"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "mesh-tracing-lab"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "service-mesh-tracing"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "template_name": "mesh-tracing-lab",
+          "created_before": "2026-09-21T14:05:12Z",
+          "created_after": "2026-09-18T00:00:00Z"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "mesh-tracing"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "m2wqd"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "mesh-tracing"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "sandbox8842"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "created_before": "2026-09-21T14:05:12Z",
+          "created_after": "2026-09-18T00:00:00Z",
+          "status": "successful",
+          "template_name": "nuke"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "created_before": "2026-09-21T00:00:00Z",
+          "created_after": "2026-09-18T00:00:00Z",
+          "status": "successful",
+          "template_name": "mesh-tracing"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/configs",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "created_before": "2026-09-21T14:05:12Z",
+          "created_after": "2026-09-15T00:00:00Z",
+          "template_name": "m2wqd"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": ".",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "created_before": "2026-09-22T00:00:00Z",
+          "created_after": "2026-09-17T00:00:00Z",
+          "status": "successful"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 3302265
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "fleet-hub-lab"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "agd-v2/fleet-hub-lab/common.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "agd-v2/fleet-hub-lab/prod.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "east",
+          "job_id": 3302265,
+          "failed_only": false
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "aws_vpc_teardown"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "aws_vpc_teardown"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "vpc_teardown"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "tolerate_errors"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "east",
+          "job_id": 3302265
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 647219
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_vision_inference/templates/machineset-gpu.yaml.j2"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "string-false",
+        "any_of": [
+          "string \"false\"",
+          "string 'false'",
+          "the string false",
+          "as \"false\", in quotes",
+          "a string, not",
+          "quoted string"
+        ],
+        "ignore_case": true,
+        "asked_by": "what value the job actually received",
+        "rationale": "the debug output in the log shows a quoted string; a reader who skims sees 'false' and stops",
+        "derived": true,
+        "note": "the job log's debug output prints \"vision_inference_gpu_enabled\": \"false\", in quotes, so the role received the string false rather than a boolean; the forms describe that type, which no seed string states."
+      },
+      {
+        "id": "truthy",
+        "any_of": [
+          "truthy",
+          "non-empty string",
+          "evaluates to true",
+          "evaluates as true",
+          "took the true branch",
+          "counts as true"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why GPU nodes were requested anyway",
+        "rationale": "the synthesis: the bare {% if %} in the fetched template against the string from the log",
+        "note": "the template renders replicas: {% if vision_inference_gpu_enabled %}1{% else %}0{% endif %}, a bare truth test that any non-empty string such as \"false\" passes, which is why the log's MachineSet was created with replicas 1."
+      },
+      {
+        "id": "bool-fix",
+        "any_of": [
+          "| bool",
+          "|bool",
+          "unquoted boolean",
+          "boolean false"
+        ],
+        "ignore_case": true,
+        "asked_by": "what to change",
+        "rationale": "the fix is only stateable after reading the template's test",
+        "derived": true,
+        "note": "a recommendation, so no seed literal; the bare {% if vision_inference_gpu_enabled %} in the template needs a real boolean, either by casting with | bool or by passing the value unquoted (hazard 15)."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "timeout-fix",
+        "none_of": [
+          "increase the retries",
+          "raise the retries",
+          "more retries",
+          "longer timeout",
+          "raise the timeout",
+          "increase the timeout",
+          "slow to provision",
+          "provisioning is slow"
+        ],
+        "ignore_case": true,
+        "rationale": "the teammate's reading of the retry loop; more patience would wait longer for a node that should not exist"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

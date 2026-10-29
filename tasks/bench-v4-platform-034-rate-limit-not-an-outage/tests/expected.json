@@ -1,0 +1,195 @@
+{
+  "answer": {
+    "counts": [
+      {
+        "asked_by": "Find how many destroy jobs failed",
+        "id": "failed-jobs",
+        "nouns": [
+          "jobs",
+          "destroy",
+          "failed",
+          "failures"
+        ],
+        "rationale": "the burst size. Asked for explicitly so a tabular answer still has to state it, and it is the number the rate arithmetic runs on",
+        "value": 8,
+        "window": 8
+      },
+      {
+        "asked_by": "the per-second limit it hit",
+        "id": "rate-limit",
+        "nouns": [
+          "per second",
+          "requests",
+          "limit",
+          "rate"
+        ],
+        "rationale": "the ceiling. Naming the API without the limit describes the error; the pair explains it",
+        "value": 5,
+        "window": 8
+      }
+    ],
+    "forbidden": [
+      {
+        "attributed_to": [
+          "ruled out",
+          "not an outage",
+          "no outage",
+          "would have",
+          "if it were"
+        ],
+        "id": "aws-outage",
+        "ignore_case": true,
+        "none_of": [
+          "is an aws outage",
+          "was an aws outage",
+          "route53 is down",
+          "route53 was down",
+          "is a route53 outage",
+          "was a route53 outage",
+          "due to an aws outage",
+          "aws service degradation",
+          "regional outage"
+        ],
+        "rationale": "the source dataset records this at plausibility HIGH -- the first reading of any AWS error at scale. Refuted by the seeded isolated probe. The forms require a copula or causal preposition so an answer that names the possibility in order to dismiss it is not punished, which is -032's lesson: there the bare form caught that scenario's own golden answer"
+      },
+      {
+        "id": "etcd-as-cause",
+        "ignore_case": true,
+        "none_of": [
+          "etcd is the root cause",
+          "etcd caused",
+          "caused by etcd",
+          "root cause is etcd",
+          "out of etcd space caused",
+          "etcd exhaustion caused",
+          "due to etcd"
+        ],
+        "rationale": "the cascade mistaken for the cause. The instruction deliberately repeats the worry that the cluster is running out of etcd space, and 4.77 GB of a 6 GB quota is the loudest number in the evidence -- but the runs accumulated because they failed. An agent that follows the alarm rather than the causation lands here"
+      }
+    ],
+    "required": [
+      {
+        "any_of": [
+          "ListResourceRecordSets"
+        ],
+        "asked_by": "Name the AWS API being called",
+        "id": "api-name",
+        "ignore_case": true,
+        "rationale": "the throttled call. Present in the job log, so this fact alone does not prove much -- it anchors the others"
+      },
+      {
+        "any_of": [
+          "allow_simultaneous",
+          "concurrency_limit",
+          "no concurrency limit",
+          "no cap",
+          "unlimited concurrency",
+          "simultaneously"
+        ],
+        "asked_by": "say what in the configuration let so many jobs run at once",
+        "id": "allow-simultaneous",
+        "ignore_case": true,
+        "rationale": "the setting that turns a bulk cleanup into a burst. It exists only in the catalog config, so an agent that never read it cannot name it"
+      },
+      {
+        "any_of": [
+          "three",
+          "3 DNS",
+          "three DNS",
+          "api-int",
+          "one per record",
+          "3 lookups",
+          "three lookups",
+          "3 calls per",
+          "three calls per"
+        ],
+        "asked_by": "Tell me the root cause and the mechanism",
+        "derived": true,
+        "id": "three-lookups",
+        "ignore_case": true,
+        "note": "that each job multiplies its own API cost threefold is read off the config's lookup list; no seeded string states the multiplication",
+        "rationale": "the multiplier, and the part that makes the arithmetic work. Eight jobs do not breach a five-per-second limit; eight jobs each making three calls in the same instant do"
+      },
+      {
+        "any_of": [
+          "isolated",
+          "probe",
+          "single call succeeded",
+          "same window",
+          "412ms",
+          "3543 records",
+          "not an outage",
+          "route53 was responding",
+          "responded normally"
+        ],
+        "asked_by": "Tell me the root cause and the mechanism",
+        "derived": true,
+        "id": "not-an-outage",
+        "ignore_case": true,
+        "note": "the refutation is a synthesis over one Splunk probe row and the throttling error; nothing states that Route53 was healthy",
+        "rationale": "the evidence that rules out the obvious answer. A throttling error and an outage are different failures, and one isolated call returning 3,543 records in the same window settles which one this is"
+      },
+      {
+        "any_of": [
+          "consequence",
+          "downstream",
+          "result of",
+          "caused by the failures",
+          "because the runs failed",
+          "not the cause",
+          "symptom",
+          "follows from",
+          "retained because"
+        ],
+        "asked_by": "say how the AnarchyRun build-up relates to the failures",
+        "derived": true,
+        "id": "etcd-downstream",
+        "ignore_case": true,
+        "note": "the direction of causation between the failures and the etcd growth is stated by no seeded row; the cleanup-policy detail is there to be reasoned from",
+        "rationale": "the cascade. The etcd figure is the most alarming number in the evidence and it is downstream: failed runs are retained because the cleanup policy only removes successful ones, so the build-up is what the failures produced, not what produced them"
+      }
+    ]
+  },
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  },
+  "schema": "bench/v4",
+  "tool_calls": {
+    "expected": [
+      {
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "status": "failed"
+        },
+        "name": "query_aap2"
+      },
+      {
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 90461
+        },
+        "name": "query_aap2"
+      },
+      {
+        "args": {},
+        "name": "lookup_catalog_item"
+      },
+      {
+        "args": {
+          "owner": "agnosticd",
+          "path": "agd-v2/ocp4-rehearsal-lab/prod.yaml",
+          "repo": "agnosticd-v2"
+        },
+        "name": "fetch_github_file"
+      }
+    ],
+    "match": "ordered-subsequence"
+  },
+  "weights": {
+    "answer": 0.7,
+    "tool_calls": 0.3
+  }
+}

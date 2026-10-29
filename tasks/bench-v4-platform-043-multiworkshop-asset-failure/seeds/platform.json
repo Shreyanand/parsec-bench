@@ -1,0 +1,555 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [
+    {
+      "babylon_multiworkshop_id": "nordic-automation-academy-w6",
+      "cluster": "nordic",
+      "namespace": "user-hlindqvist-redhat-com",
+      "name": "automation-academy-w6",
+      "display_name": "Automation Academy - Wave 6",
+      "number_seats": 36,
+      "start_date": "2026-05-11",
+      "end_date": "2026-05-14",
+      "purpose": "Partner enablement",
+      "assets": [
+        {
+          "name": "aa-linux-core",
+          "display_name": "Linux Automation Core",
+          "key": "linux-core",
+          "type": "Workshop",
+          "namespace": "user-hlindqvist-redhat-com",
+          "workshop_id": "zq4hd"
+        },
+        {
+          "name": "aa-network",
+          "display_name": "Network Automation",
+          "key": "network",
+          "type": "Workshop",
+          "namespace": "user-hlindqvist-redhat-com",
+          "workshop_id": "vm8tg"
+        },
+        {
+          "name": "aa-cloud",
+          "display_name": "Cloud Automation",
+          "key": "cloud",
+          "type": "Workshop",
+          "namespace": "user-hlindqvist-redhat-com",
+          "workshop_id": "hy2rb"
+        }
+      ],
+      "asset_count": 3
+    },
+    {
+      "babylon_multiworkshop_id": "nordic-automation-academy-w7",
+      "cluster": "nordic",
+      "namespace": "user-hlindqvist-redhat-com",
+      "name": "automation-academy-w7",
+      "display_name": "Automation Academy - Wave 7",
+      "number_seats": 60,
+      "start_date": "2026-06-15",
+      "end_date": "2026-06-18",
+      "purpose": "Partner enablement",
+      "assets": [
+        {
+          "name": "aa-linux-core",
+          "display_name": "Linux Automation Core",
+          "key": "linux-core",
+          "type": "Workshop",
+          "namespace": "user-hlindqvist-redhat-com",
+          "workshop_id": "k2r8w"
+        },
+        {
+          "name": "aa-network",
+          "display_name": "Network Automation",
+          "key": "network",
+          "type": "Workshop",
+          "namespace": "user-hlindqvist-redhat-com",
+          "workshop_id": "p5d1q"
+        },
+        {
+          "name": "aa-windows",
+          "display_name": "Windows Automation",
+          "key": "windows",
+          "type": "Workshop",
+          "namespace": "user-hlindqvist-redhat-com",
+          "workshop_id": "t8m3v"
+        },
+        {
+          "name": "aa-eda",
+          "display_name": "Event-Driven Ansible",
+          "key": "eda",
+          "type": "Workshop",
+          "namespace": "user-hlindqvist-redhat-com",
+          "workshop_id": "b6x9n"
+        },
+        {
+          "name": "aa-security",
+          "display_name": "Security Automation",
+          "key": "security",
+          "type": "Workshop",
+          "namespace": "user-hlindqvist-redhat-com",
+          "workshop_id": "f3j7c"
+        }
+      ],
+      "asset_count": 5
+    }
+  ],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [
+    {
+      "babylon_workshop_id": "nordic-aa6-linux-core",
+      "catalog_item": "aa-linux-core.prod",
+      "cluster": "nordic",
+      "description": "Linux Automation Core lab, part of Automation Academy - Wave 6.",
+      "display_name": "Linux Automation Core",
+      "lifespan": {
+        "default": "4d",
+        "maximum": "6d"
+      },
+      "multiworkshop": "automation-academy-w6",
+      "name": "aa6-linux-core",
+      "namespace": "user-hlindqvist-redhat-com",
+      "open_registration": false,
+      "provision_count": {
+        "ordered": 1,
+        "active": 1,
+        "failed": 0,
+        "retries": 0
+      },
+      "requester": "hlindqvist@redhat.com",
+      "resource_claims": [
+        {
+          "name": "aa-linux-core-prod-c7n2s",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "aa-linux-core",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "aa-linux-core.prod-c7n2s",
+              "anarchy_namespace": "babylon-anarchy-automation-academy",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "c7n2s",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-04.example.com",
+                  "job_id": 70215,
+                  "status": "successful",
+                  "completed": "2026-05-11T07:20:44Z"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resource_claims_count": 1,
+      "user_assignments_count": 0,
+      "user_count": 0,
+      "workshop_id": "zq4hd"
+    },
+    {
+      "babylon_workshop_id": "nordic-aa6-network",
+      "catalog_item": "aa-network.prod",
+      "cluster": "nordic",
+      "description": "Network Automation lab, part of Automation Academy - Wave 6.",
+      "display_name": "Network Automation",
+      "lifespan": {
+        "default": "4d",
+        "maximum": "6d"
+      },
+      "multiworkshop": "automation-academy-w6",
+      "name": "aa6-network",
+      "namespace": "user-hlindqvist-redhat-com",
+      "open_registration": false,
+      "provision_count": {
+        "ordered": 1,
+        "active": 0,
+        "failed": 1,
+        "retries": 0
+      },
+      "requester": "hlindqvist@redhat.com",
+      "resource_claims": [
+        {
+          "name": "aa-network-prod-e4w6k",
+          "state": "provision-error",
+          "healthy": false,
+          "ready": false,
+          "resources": [
+            {
+              "name": "aa-network",
+              "healthy": false,
+              "ready": false,
+              "anarchy_subject": "aa-network.prod-e4w6k",
+              "anarchy_namespace": "babylon-anarchy-automation-academy",
+              "current_state": "provision-error",
+              "desired_state": "started",
+              "guid": "e4w6k",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-04.example.com",
+                  "job_id": 70222,
+                  "status": "failed",
+                  "completed": "2026-05-11T07:31:02Z"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resource_claims_count": 1,
+      "user_assignments_count": 0,
+      "user_count": 0,
+      "workshop_id": "vm8tg"
+    },
+    {
+      "babylon_workshop_id": "nordic-aa6-cloud",
+      "catalog_item": "aa-cloud.prod",
+      "cluster": "nordic",
+      "description": "Cloud Automation lab, part of Automation Academy - Wave 6.",
+      "display_name": "Cloud Automation",
+      "lifespan": {
+        "default": "4d",
+        "maximum": "6d"
+      },
+      "multiworkshop": "automation-academy-w6",
+      "name": "aa6-cloud",
+      "namespace": "user-hlindqvist-redhat-com",
+      "open_registration": false,
+      "provision_count": {
+        "ordered": 1,
+        "active": 1,
+        "failed": 0,
+        "retries": 0
+      },
+      "requester": "hlindqvist@redhat.com",
+      "resource_claims": [
+        {
+          "name": "aa-cloud-prod-u9p3f",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "aa-cloud",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "aa-cloud.prod-u9p3f",
+              "anarchy_namespace": "babylon-anarchy-automation-academy",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "u9p3f",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-04.example.com",
+                  "job_id": 70230,
+                  "status": "successful",
+                  "completed": "2026-05-11T07:44:19Z"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resource_claims_count": 1,
+      "user_assignments_count": 0,
+      "user_count": 0,
+      "workshop_id": "hy2rb"
+    },
+    {
+      "babylon_workshop_id": "nordic-aa7-linux-core",
+      "catalog_item": "aa-linux-core.prod",
+      "cluster": "nordic",
+      "description": "Linux Automation Core lab, part of Automation Academy - Wave 7.",
+      "display_name": "Linux Automation Core",
+      "lifespan": {
+        "default": "4d",
+        "maximum": "6d"
+      },
+      "multiworkshop": "automation-academy-w7",
+      "name": "aa7-linux-core",
+      "namespace": "user-hlindqvist-redhat-com",
+      "open_registration": false,
+      "provision_count": {
+        "ordered": 1,
+        "active": 1,
+        "failed": 0,
+        "retries": 0
+      },
+      "requester": "hlindqvist@redhat.com",
+      "resource_claims": [
+        {
+          "name": "aa-linux-core-prod-s3b9m",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "aa-linux-core",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "aa-linux-core.prod-s3b9m",
+              "anarchy_namespace": "babylon-anarchy-automation-academy",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "s3b9m",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-04.example.com",
+                  "job_id": 73406,
+                  "status": "successful",
+                  "completed": "2026-06-15T06:58:12Z"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resource_claims_count": 1,
+      "user_assignments_count": 0,
+      "user_count": 0,
+      "workshop_id": "k2r8w"
+    },
+    {
+      "babylon_workshop_id": "nordic-aa7-network",
+      "catalog_item": "aa-network.prod",
+      "cluster": "nordic",
+      "description": "Network Automation lab, part of Automation Academy - Wave 7.",
+      "display_name": "Network Automation",
+      "lifespan": {
+        "default": "4d",
+        "maximum": "6d"
+      },
+      "multiworkshop": "automation-academy-w7",
+      "name": "aa7-network",
+      "namespace": "user-hlindqvist-redhat-com",
+      "open_registration": false,
+      "provision_count": {
+        "ordered": 1,
+        "active": 1,
+        "failed": 0,
+        "retries": 0
+      },
+      "requester": "hlindqvist@redhat.com",
+      "resource_claims": [
+        {
+          "name": "aa-network-prod-g8h4t",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "aa-network",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "aa-network.prod-g8h4t",
+              "anarchy_namespace": "babylon-anarchy-automation-academy",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "g8h4t",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-04.example.com",
+                  "job_id": 73411,
+                  "status": "successful",
+                  "completed": "2026-06-15T07:04:37Z"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resource_claims_count": 1,
+      "user_assignments_count": 0,
+      "user_count": 0,
+      "workshop_id": "p5d1q"
+    },
+    {
+      "babylon_workshop_id": "nordic-aa7-windows",
+      "catalog_item": "aa-windows.prod",
+      "cluster": "nordic",
+      "description": "Windows Automation lab, part of Automation Academy - Wave 7.",
+      "display_name": "Windows Automation",
+      "lifespan": {
+        "default": "4d",
+        "maximum": "6d"
+      },
+      "multiworkshop": "automation-academy-w7",
+      "name": "aa7-windows",
+      "namespace": "user-hlindqvist-redhat-com",
+      "open_registration": false,
+      "provision_count": {
+        "ordered": 1,
+        "active": 0,
+        "failed": 1,
+        "retries": 0
+      },
+      "requester": "hlindqvist@redhat.com",
+      "resource_claims": [
+        {
+          "name": "aa-windows-prod-x2k7r",
+          "state": "provision-error",
+          "healthy": false,
+          "ready": false,
+          "resources": [
+            {
+              "name": "aa-windows",
+              "healthy": false,
+              "ready": false,
+              "anarchy_subject": "aa-windows.prod-x2k7r",
+              "anarchy_namespace": "babylon-anarchy-automation-academy",
+              "current_state": "provision-error",
+              "desired_state": "started",
+              "guid": "x2k7r",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-04.example.com",
+                  "job_id": 73419,
+                  "status": "failed",
+                  "completed": "2026-06-15T07:13:50Z"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resource_claims_count": 1,
+      "user_assignments_count": 0,
+      "user_count": 0,
+      "workshop_id": "t8m3v"
+    },
+    {
+      "babylon_workshop_id": "nordic-aa7-eda",
+      "catalog_item": "aa-eda.prod",
+      "cluster": "nordic",
+      "description": "Event-Driven Ansible lab, part of Automation Academy - Wave 7.",
+      "display_name": "Event-Driven Ansible",
+      "lifespan": {
+        "default": "4d",
+        "maximum": "6d"
+      },
+      "multiworkshop": "automation-academy-w7",
+      "name": "aa7-eda",
+      "namespace": "user-hlindqvist-redhat-com",
+      "open_registration": false,
+      "provision_count": {
+        "ordered": 1,
+        "active": 1,
+        "failed": 0,
+        "retries": 0
+      },
+      "requester": "hlindqvist@redhat.com",
+      "resource_claims": [
+        {
+          "name": "aa-eda-prod-j6q1z",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "aa-eda",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "aa-eda.prod-j6q1z",
+              "anarchy_namespace": "babylon-anarchy-automation-academy",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "j6q1z",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-04.example.com",
+                  "job_id": 73423,
+                  "status": "successful",
+                  "completed": "2026-06-15T07:21:08Z"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resource_claims_count": 1,
+      "user_assignments_count": 0,
+      "user_count": 0,
+      "workshop_id": "b6x9n"
+    },
+    {
+      "babylon_workshop_id": "nordic-aa7-security",
+      "catalog_item": "aa-security.prod",
+      "cluster": "nordic",
+      "description": "Security Automation lab, part of Automation Academy - Wave 7.",
+      "display_name": "Security Automation",
+      "lifespan": {
+        "default": "4d",
+        "maximum": "6d"
+      },
+      "multiworkshop": "automation-academy-w7",
+      "name": "aa7-security",
+      "namespace": "user-hlindqvist-redhat-com",
+      "open_registration": false,
+      "provision_count": {
+        "ordered": 1,
+        "active": 1,
+        "failed": 0,
+        "retries": 0
+      },
+      "requester": "hlindqvist@redhat.com",
+      "resource_claims": [
+        {
+          "name": "aa-security-prod-d9v2l",
+          "state": "started",
+          "healthy": true,
+          "ready": true,
+          "resources": [
+            {
+              "name": "aa-security",
+              "healthy": true,
+              "ready": true,
+              "anarchy_subject": "aa-security.prod-d9v2l",
+              "anarchy_namespace": "babylon-anarchy-automation-academy",
+              "current_state": "started",
+              "desired_state": "started",
+              "guid": "d9v2l",
+              "cloud_provider": "aws",
+              "tower_jobs": {
+                "provision": {
+                  "controller": "aap2-ctl-04.example.com",
+                  "job_id": 73430,
+                  "status": "successful",
+                  "completed": "2026-06-15T07:29:46Z"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "resource_claims_count": 1,
+      "user_assignments_count": 0,
+      "user_count": 0,
+      "workshop_id": "f3j7c"
+    }
+  ],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,104 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "account": "summit_bu",
+      "directory": "coastal-sre-bootcamp",
+      "path": "summit_bu/coastal-sre-bootcamp",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "rhpds/agnosticv-summit_bu/coastal-sre-bootcamp"
+    }
+  ],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "summit_bu/coastal-sre-bootcamp/common.yaml",
+      "content": "---\n# coastal-sre-bootcamp: multi-team OpenShift operations bootcamp for events\ncloud_provider: none\nconfig: team-workloads\n\n__meta__:\n  catalog:\n    display_name: Coastal SRE Bootcamp\n    category: Workshops\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\nworkloads:\n  - ocp4_workload_team_projects\n\n# one project per bootcamp team\nteam_projects_prefix: Tidewater_Ops\nteam_projects_count: 4\nteam_projects_cpu_limit: \"8\"\n",
+      "file_id": "rhpds/agnosticv@HEAD-summit_bu/coastal-sre-bootcamp/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "summit_bu/coastal-sre-bootcamp/common.yaml",
+      "content": "---\n# coastal-sre-bootcamp: multi-team OpenShift operations bootcamp for events\ncloud_provider: none\nconfig: team-workloads\n\n__meta__:\n  catalog:\n    display_name: Coastal SRE Bootcamp\n    category: Workshops\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\nworkloads:\n  - ocp4_workload_team_projects\n\n# one project per bootcamp team\nteam_projects_prefix: Tidewater_Ops\nteam_projects_count: 4\nteam_projects_cpu_limit: \"8\"\n",
+      "file_id": "rhpds/agnosticv@main-summit_bu/coastal-sre-bootcamp/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "summit_bu/coastal-sre-bootcamp/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 2d\n",
+      "file_id": "rhpds/agnosticv@HEAD-summit_bu/coastal-sre-bootcamp/prod.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "summit_bu/coastal-sre-bootcamp/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 2d\n",
+      "file_id": "rhpds/agnosticv@main-summit_bu/coastal-sre-bootcamp/prod.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_team_projects/tasks/workload.yml",
+      "content": "---\n- name: Create the bootcamp team projects\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: v1\n      kind: Namespace\n      metadata:\n        name: \"{{ team_projects_prefix }}-{{ guid }}-team{{ item }}\"\n        labels:\n          bootcamp-team: \"team{{ item }}\"\n  loop: \"{{ range(1, team_projects_count | int + 1) | list }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_team_projects/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_team_projects/tasks/workload.yml",
+      "content": "---\n- name: Create the bootcamp team projects\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: v1\n      kind: Namespace\n      metadata:\n        name: \"{{ team_projects_prefix }}-{{ guid }}-team{{ item }}\"\n        labels:\n          bootcamp-team: \"team{{ item }}\"\n  loop: \"{{ range(1, team_projects_count | int + 1) | list }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_team_projects/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "7d40b2e9c18f5a63e0b9d42c1f7a8e35b6c09d14",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_team_projects/tasks/workload.yml",
+      "content": "---\n- name: Create the bootcamp team projects\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: v1\n      kind: Namespace\n      metadata:\n        name: \"{{ team_projects_prefix }}-{{ guid }}-team{{ item }}\"\n        labels:\n          bootcamp-team: \"team{{ item }}\"\n  loop: \"{{ range(1, team_projects_count | int + 1) | list }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@7d40b2e9c18f5a63e0b9d42c1f7a8e35b6c09d14-ansible/roles_ocp_workloads/ocp4_workload_team_projects/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_team_projects/defaults/main.yml",
+      "content": "---\n# ocp4_workload_team_projects defaults; catalog items override these\nteam_projects_prefix: bootcamp\nteam_projects_count: 2\nteam_projects_cpu_limit: \"4\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_team_projects/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_team_projects/defaults/main.yml",
+      "content": "---\n# ocp4_workload_team_projects defaults; catalog items override these\nteam_projects_prefix: bootcamp\nteam_projects_count: 2\nteam_projects_cpu_limit: \"4\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_team_projects/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "7d40b2e9c18f5a63e0b9d42c1f7a8e35b6c09d14",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_team_projects/defaults/main.yml",
+      "content": "---\n# ocp4_workload_team_projects defaults; catalog items override these\nteam_projects_prefix: bootcamp\nteam_projects_count: 2\nteam_projects_cpu_limit: \"4\"\n",
+      "file_id": "agnosticd/agnosticd-v2@7d40b2e9c18f5a63e0b9d42c1f7a8e35b6c09d14-ansible/roles_ocp_workloads/ocp4_workload_team_projects/defaults/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

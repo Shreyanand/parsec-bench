@@ -1,0 +1,157 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.guid, p.sandbox, p.region, p.account_id, p.status, p.catalog_item, p.created_at, u.email\nFROM provisions p\nLEFT JOIN users u ON p.user_id = u.id\nWHERE p.guid = 'n7rkd'\nLIMIT 5"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "sandbox"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.babylon_guid, p.sandbox_name, p.account_id, p.provisioned_at, p.retired_at, u.email FROM provisions p JOIN users u ON p.user_id = u.id WHERE p.babylon_guid = 'n7rkd' ORDER BY p.provisioned_at DESC LIMIT 5"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "owner": "n7rkd"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "n7rkd"
+        }
+      },
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "SELECT recipientAccountId, userIdentity.arn, eventTime, requestParameters FROM cloudtrail_events WHERE eventName = 'RunInstances' AND eventTime > '2026-11-08' AND eventTime < '2026-11-11' ORDER BY eventTime DESC LIMIT 50"
+        }
+      },
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "SELECT recipientAccountId, userIdentity.arn, eventTime, requestParameters FROM cloudtrail_events WHERE eventTime > '2026-11-08' AND eventTime < '2026-11-11' LIMIT 10"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "controller": "east",
+          "job_id": 5148806
+        }
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "action": "describe_instances",
+          "account_id": "418092736615",
+          "region": "ap-southeast-2"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "account-id",
+        "any_of": [
+          "418092736615"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which AWS sandbox account hosts this lab",
+        "rationale": "the account id comes only from the sandbox DB; the log names the sandbox, not the id"
+      },
+      {
+        "id": "region",
+        "any_of": [
+          "ap-southeast-2"
+        ],
+        "ignore_case": true,
+        "asked_by": "in which region",
+        "rationale": "the region is set only in the provisioning log; the describe_instances default is us-east-1"
+      },
+      {
+        "id": "bastion-id",
+        "any_of": [
+          "i-07b3e19ac25d4f861"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is each one's instance id, type and state",
+        "rationale": "the bastion's instance id, returned only by describe_instances in the lab's region"
+      },
+      {
+        "id": "bastion-stopped",
+        "any_of": [
+          "stopped"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is each one's instance id, type and state",
+        "rationale": "the bastion's state; an empty default-region lookup never shows it"
+      },
+      {
+        "id": "node-type",
+        "any_of": [
+          "m6i.xlarge"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is each one's instance id, type and state",
+        "rationale": "the nodes' instance type, only in describe_instances"
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [
+      {
+        "id": "instances",
+        "value": 3,
+        "nouns": [
+          "instances",
+          "instance",
+          "EC2 instances",
+          "machines",
+          "VMs",
+          "servers",
+          "hosts"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "instance_count: 3",
+          "instance_count 3",
+          "three EC2",
+          "3 EC2"
+        ],
+        "ignore_case": true,
+        "asked_by": "How many EC2 instances does the lab have",
+        "rationale": "describe_instances in ap-southeast-2 returns 3; the default region returns 0",
+        "derived": true,
+        "note": "instance_count is 3 in ap-southeast-2: bastion (stopped), node1 and node2 (running)."
+      }
+    ],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

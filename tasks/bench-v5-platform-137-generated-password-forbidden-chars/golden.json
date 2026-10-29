@@ -1,0 +1,50 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_log",
+        "controller": "west",
+        "job_id": 694251
+      },
+      "result": {
+        "job_id": 694251,
+        "job_name": "RHDP insurance_bu.claims-analytics-lab.prod-vt3kc-1-provision",
+        "status": "failed",
+        "failed": true,
+        "started": "2026-10-06T10:41:18.000Z",
+        "finished": "2026-10-06T10:47:02.000Z",
+        "duration_seconds": 344,
+        "launch_type": "workflow",
+        "job_explanation": "",
+        "template_name": "RHDP insurance_bu.claims-analytics-lab.prod-provision",
+        "env_type": "prod",
+        "guid": "vt3kc",
+        "action": "provision",
+        "cloud_provider": "ec2",
+        "display_name": "claims-analytics-lab",
+        "controller": "west",
+        "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+        "git_branch": "main",
+        "git_revision": "e3a91c07b5d24f68a0c2e7d19b4f3a6c85d0e2f1",
+        "log": "PLAY [Provision the claims warehouse] ******************************************\n\nTASK [Gathering Facts] *********************************************************\nok: [localhost]\n\nTASK [claims_warehouse_rds : Generate the warehouse admin password] ************\ntask path: /runner/project/ansible/roles/claims_warehouse_rds/tasks/main.yml:3\nok: [localhost] => {\"censored\": \"the output has been hidden due to the fact that 'no_log: true' was specified for this result\", \"changed\": false}\n\nTASK [claims_warehouse_rds : Create the claims warehouse PostgreSQL instance] ***\ntask path: /runner/project/ansible/roles/claims_warehouse_rds/tasks/main.yml:10\nfatal: [localhost]: FAILED! => {\"boto3_version\": \"1.35.54\", \"botocore_version\": \"1.35.54\", \"changed\": false, \"error\": {\"code\": \"InvalidParameterValue\", \"message\": \"The parameter MasterUserPassword is not a valid password. Only printable ASCII characters besides '/', '@', '\\\"', ' ' may be used.\", \"type\": \"Sender\"}, \"msg\": \"Unable to create DB instance: An error occurred (InvalidParameterValue) when calling the CreateDBInstance operation: The parameter MasterUserPassword is not a valid password. Only printable ASCII characters besides '/', '@', '\\\"', ' ' may be used.\", \"response_metadata\": {\"http_status_code\": 400, \"request_id\": \"8d2c4f71-0b9e-4a36-b5d8-3e17c6a90f24\", \"retry_attempts\": 0}}\n\nPLAY RECAP *********************************************************************\nlocalhost                  : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0\n",
+        "log_original_size": 1543,
+        "log_trimmed_size": 1543
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "agnosticd",
+        "repo": "agnosticd-v2",
+        "path": "ansible/roles/claims_warehouse_rds/tasks/main.yml"
+      },
+      "result": {
+        "content": "---\n# claims_warehouse_rds: the PostgreSQL warehouse behind the claims analytics lab\n- name: Generate the warehouse admin password\n  ansible.builtin.set_fact:\n    claims_warehouse_db_password: >-\n      {{ lookup('ansible.builtin.password', '/dev/null',\n                length=16, chars=['ascii_letters', 'digits', 'punctuation']) }}\n  no_log: true\n\n- name: Create the claims warehouse PostgreSQL instance\n  amazon.aws.rds_instance:\n    id: \"claims-wh-{{ guid }}\"\n    engine: postgres\n    engine_version: \"16.4\"\n    db_instance_class: db.m6g.large\n    allocated_storage: 100\n    master_username: whadmin\n    master_user_password: \"{{ claims_warehouse_db_password }}\"\n    region: \"{{ aws_region }}\"\n    wait: true\n  register: r_claims_wh_db\n\n- name: Store the warehouse endpoint for the workshop users\n  ansible.builtin.set_fact:\n    claims_warehouse_endpoint: \"{{ r_claims_wh_db.endpoint.address }}\"\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "AWS rejected the database password. The CreateDBInstance call for claims-wh-vt3kc failed with InvalidParameterValue: \"The parameter MasterUserPassword is not a valid password. Only printable ASCII characters besides '/', '@', '\"', ' ' may be used.\"\n\nThe password comes from the role itself. In ansible/roles/claims_warehouse_rds/tasks/main.yml (agnosticd/agnosticd-v2), the task \"Generate the warehouse admin password\" sets claims_warehouse_db_password with the ansible.builtin.password lookup: length=16, chars=['ascii_letters', 'digits', 'punctuation']. The create task then passes it as the RDS master password.\n\nWhy only some orders fail: the lookup draws a new random password on every run. The punctuation set includes '/', '@' and '\"', which RDS forbids. A run fails only when its 16 random characters happen to include one of them; otherwise the same code succeeds. Nothing changed between the good and the bad orders, and this was not an AWS-side outage or a length problem.\n\nFix: stop generating characters RDS refuses. Drop 'punctuation' from chars (use ascii_letters and digits only, raising the length if you want more entropy), or use a punctuation subset that excludes '/', '@', '\"' and space. A retry only re-rolls the dice.\n"
+}

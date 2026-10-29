@@ -1,0 +1,165 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "pgw-ledger-03"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_state_history"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_notifications"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "soft-state",
+        "any_of": [
+          "soft"
+        ],
+        "ignore_case": true,
+        "asked_by": "is it still making up its mind",
+        "rationale": "state_type 0 is Icinga's SOFT state; nothing else in the row says 'soft', so the agent must read state_type",
+        "derived": true,
+        "note": "No field says 'soft': the pg-connections row has state 2 with state_type 0, which is Icinga's SOFT state type (1 is HARD), on check_attempt 2 of max_check_attempts 5."
+      },
+      {
+        "id": "not-notified",
+        "any_of": [
+          "no notification",
+          "not notified",
+          "not been notified",
+          "not yet notified",
+          "not sent",
+          "hasn't sent",
+          "has not sent",
+          "not paged",
+          "not been paged",
+          "hasn't paged",
+          "has not paged",
+          "nobody has been paged",
+          "no one has been paged",
+          "no page",
+          "not yet paged",
+          "not gone out",
+          "hasn't gone out",
+          "has not gone out",
+          "only notifies",
+          "only sends notifications",
+          "notifications only"
+        ],
+        "ignore_case": true,
+        "asked_by": "sent out a notification already",
+        "rationale": "soft states never notify; an agent reading only state=2 says the DBA has been paged",
+        "derived": true,
+        "note": "Icinga only notifies on HARD states; the row is still SOFT (state_type 0, check_attempt 2 of 5) and its last_hard_state is 0 (OK), so no notification has gone out yet."
+      }
+    ],
+    "counts": [
+      {
+        "id": "attempts-left",
+        "value": 3,
+        "nouns": [
+          "checks",
+          "attempts",
+          "failures",
+          "retries",
+          "more"
+        ],
+        "window": 5,
+        "asked_by": "how many more failing checks",
+        "rationale": "max_check_attempts 5 minus check_attempt 2; stated by no field",
+        "extra_any_of": [
+          "three more"
+        ]
+      },
+      {
+        "id": "current-attempt",
+        "value": 2,
+        "nouns": [
+          "attempt",
+          "attempts"
+        ],
+        "window": 4,
+        "asked_by": "still making up its mind",
+        "rationale": "check_attempt is the soft-state counter",
+        "extra_any_of": [
+          "2/5",
+          "2 of 5"
+        ]
+      },
+      {
+        "id": "minutes-to-hard",
+        "value": 3,
+        "nouns": [
+          "minutes",
+          "minute",
+          "min",
+          "mins"
+        ],
+        "window": 4,
+        "asked_by": "roughly how many minutes",
+        "rationale": "3 retries x retry_interval 60 s; the check_interval 300 s would give 15 minutes, the wrong rate",
+        "extra_any_of": [
+          "three minutes",
+          "~3 min",
+          "3-minute"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "claims-hard-or-paged",
+        "none_of": [
+          "hard critical",
+          "is hard",
+          "confirmed critical",
+          "already been notified",
+          "already notified",
+          "already paged",
+          "already been paged",
+          "15 minutes"
+        ],
+        "ignore_case": true,
+        "rationale": "the wrong reading of state=2 as a confirmed, notified problem, or the check_interval rate",
+        "attributed_to": [
+          "will become",
+          "would become",
+          "becomes a hard",
+          "become a hard",
+          "turns into a hard",
+          "turn into a hard",
+          "is still soft",
+          "still a soft",
+          "has not paged",
+          "not yet notified",
+          "no notification"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

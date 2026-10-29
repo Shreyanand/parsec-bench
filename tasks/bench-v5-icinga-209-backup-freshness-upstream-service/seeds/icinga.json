@@ -1,0 +1,150 @@
+{
+  "hosts": [
+    {
+      "name": "pg-archive-01",
+      "type": "Host",
+      "attrs": {
+        "display_name": "pg-archive-01",
+        "host_name": "pg-archive-01",
+        "address": "10.64.5.30",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "pg-ord"
+        ],
+        "last_check": 1794976740,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "pg-primary-ord-1",
+      "type": "Host",
+      "attrs": {
+        "display_name": "pg-primary-ord-1",
+        "host_name": "pg-primary-ord-1",
+        "address": "10.64.5.10",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "pg-ord"
+        ],
+        "last_check": 1794976740,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "pg-archive-01!fs-wal-archive",
+      "type": "Service",
+      "attrs": {
+        "display_name": "/srv/wal-archive free space",
+        "host_name": "pg-archive-01",
+        "state": 0,
+        "check_attempt": 1,
+        "last_state_change": 1793707200,
+        "last_check": 1794976560,
+        "vars": {
+          "plugin": "plugins/storage/check_fs_free.sh",
+          "mount": "/srv/wal-archive"
+        },
+        "last_check_result": {
+          "output": "DISK OK - /srv/wal-archive 47% used",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "pg-archive-01!wal-archive-freshness",
+      "type": "Service",
+      "attrs": {
+        "display_name": "WAL archive base backup freshness",
+        "host_name": "pg-archive-01",
+        "state": 2,
+        "check_attempt": 3,
+        "last_state_change": 1794973200,
+        "last_hard_state_change": 1794973800,
+        "last_check": 1794976680,
+        "vars": {
+          "plugin": "plugins/storage/check_marker_age.sh",
+          "marker": "/srv/wal-archive/.last_basebackup"
+        },
+        "last_check_result": {
+          "output": "MARKER CRITICAL - /srv/wal-archive/.last_basebackup is 31 h old (crit 30 h)",
+          "state": 2,
+          "exit_status": 2
+        },
+        "state_type": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "pg-primary-ord-1!pg-basebackup",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Nightly pg_basebackup to archive",
+        "host_name": "pg-primary-ord-1",
+        "state": 2,
+        "check_attempt": 3,
+        "last_state_change": 1794952320,
+        "last_hard_state_change": 1794952320,
+        "last_check": 1794976200,
+        "last_check_result": {
+          "output": "BASEBACKUP CRITICAL - last run 2026-11-17 21:40 exited 1: FATAL: number of requested standby connections exceeds max_wal_senders (currently 4)",
+          "state": 2,
+          "exit_status": 2
+        },
+        "state_type": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "pg-primary-ord-1!pg-replication-lag",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Streaming replica lag",
+        "host_name": "pg-primary-ord-1",
+        "state": 0,
+        "check_attempt": 1,
+        "last_state_change": 1794297600,
+        "last_check": 1794976500,
+        "last_check_result": {
+          "output": "PG OK - replica lag 0.4 s",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

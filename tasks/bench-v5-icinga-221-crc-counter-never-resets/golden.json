@@ -1,0 +1,28 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "ceph-osd-yul-14"
+      },
+      "result": {
+        "result": "[{\"name\":\"ceph-osd-yul-14!nic-errors-ens2f1\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"NIC error counter ens2f1\",\"host_name\":\"ceph-osd-yul-14\",\"check_command\":\"rhdp-plugin\",\"state\":2,\"state_type\":1,\"last_state_change\":1796271041,\"last_check\":1796810113,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true,\"vars\":{\"plugin\":\"plugins/net/check_nic_errors.py\",\"nic\":\"ens2f1\",\"counter\":\"rx_crc_errors\"},\"last_check_result\":{\"output\":\"NIC CRITICAL - ens2f1 rx_crc_errors=1520 (crit 1000)\",\"performance_data\":[\"rx_crc_errors=1520c;250;1000;0\"],\"state\":2,\"exit_status\":2}}},{\"name\":\"ceph-osd-yul-14!nic-error-rate-ens2f1\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"NIC error rate ens2f1 (15 min)\",\"host_name\":\"ceph-osd-yul-14\",\"check_command\":\"rhdp-plugin\",\"state\":0,\"state_type\":1,\"last_state_change\":1796397907,\"last_check\":1796810162,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true,\"vars\":{\"plugin\":\"plugins/net/check_nic_error_rate.py\",\"nic\":\"ens2f1\",\"counter\":\"rx_crc_errors\"},\"last_check_result\":{\"output\":\"NIC_RATE OK - ens2f1 rx_crc_errors +0.0/min over 15 min\",\"performance_data\":[\"rx_crc_errors_rate=0.0;5;20;0\"],\"state\":0,\"exit_status\":0}}},{\"name\":\"ceph-osd-yul-14!osd-heartbeat\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Ceph OSD liveness\",\"host_name\":\"ceph-osd-yul-14\",\"check_command\":\"rhdp-plugin\",\"state\":0,\"state_type\":1,\"last_state_change\":1795261229,\"last_check\":1796810268,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true,\"vars\":{\"plugin\":\"plugins/ceph/check_osd_heartbeat.py\"},\"last_check_result\":{\"output\":\"OSD OK - osd.112 osd.113 osd.114 osd.115 up and in\",\"state\":0,\"exit_status\":0}}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "rhdp-monitoring",
+        "path": "plugins/net/check_nic_errors.py"
+      },
+      "result": {
+        "content": "#!/usr/bin/env python3\n\"\"\"check_nic_errors.py - NIC error counters, read from sysfs.\n\nReads /sys/class/net/<iface>/statistics/<counter> and compares the raw value with the\nthresholds below. These kernel counters are cumulative: they hold every error the driver has\nseen from the moment it initialised the NIC, and they never go down. So this check cannot tell\nyou whether new errors are arriving. Once the total crosses a threshold the service stays\nin that state until the counter is zeroed, and on these hosts that only happens when the host\nreboots or the NIC driver is reloaded. Swapping optics or cables does not reset it.\n\nFor a per-minute rate over a 15-minute window, use check_nic_error_rate.py.\n\"\"\"\nimport sys\nfrom pathlib import Path\n\nDEFAULT_WARN = 250\nDEFAULT_CRIT = 1000\n\n\ndef main():\n    iface = sys.argv[1]\n    counter = sys.argv[2] if len(sys.argv) > 2 else \"rx_crc_errors\"\n    value = int(Path(f\"/sys/class/net/{iface}/statistics/{counter}\").read_text())\n    perf = f\"{counter}={value}c;{DEFAULT_WARN};{DEFAULT_CRIT};0\"\n    if value >= DEFAULT_CRIT:\n        print(f\"NIC CRITICAL - {iface} {counter}={value} (crit {DEFAULT_CRIT})|{perf}\")\n        sys.exit(2)\n    if value >= DEFAULT_WARN:\n        print(f\"NIC WARNING - {iface} {counter}={value} (warn {DEFAULT_WARN})|{perf}\")\n        sys.exit(1)\n    print(f\"NIC OK - {iface} {counter}={value}|{perf}\")\n    sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "No need for another hardware ticket: the CRITICAL is a stale cumulative counter, and the\nerrors stopped after your swap.\n\n- **What it measures:** `nic-errors-ens2f1` runs `plugins/net/check_nic_errors.py`, which reads\n  the raw kernel counter `/sys/class/net/ens2f1/statistics/rx_crc_errors`. That counter is\n  cumulative since the driver initialised the interface and never goes down; the check does not\n  compute a rate.\n- **Value and threshold:** rx_crc_errors = 1520, against the plugin's critical threshold of 1000\n  (warning 250). It went CRITICAL on 2026-12-03 04:10 UTC, before the swap.\n- **Still happening?** No. The sibling check `nic-error-rate-ens2f1` reports +0.0/min over\n  15 min and has been OK since 2026-12-04 15:25 UTC, 25 minutes after the SFP and cable swap.\n- **Back to OK:** only when the counter is zeroed, which per the plugin means a reboot of the\n  host or a reload of the NIC driver. Replacing optics or cables never resets it, so it will\n  stay CRITICAL until then (acknowledge it in the meantime if the noise matters).\n"
+}

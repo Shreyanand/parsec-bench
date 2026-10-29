@@ -1,0 +1,26 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_gcp_projects",
+      "args": {
+        "action": "get_project",
+        "project_id": "openenv-wq4mt"
+      },
+      "result": {
+        "project_id": "openenv-wq4mt",
+        "name": "openenv-wq4mt",
+        "state": "DELETE_REQUESTED",
+        "create_time": "2026-05-30T07:22:11Z",
+        "labels": {
+          "guid": "wq4mt",
+          "envtype": "gcp-base",
+          "owner": "dmoreau",
+          "conan": "cleanup-pending"
+        },
+        "parent": "folders/418299301122"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "openenv-wq4mt is in state DELETE_REQUESTED. It was created 2026-05-30 at 07:22 UTC, and its labels record guid wq4mt, envtype gcp-base, owner dmoreau, and conan cleanup-pending.\n\nYes -- that state explains the deployment failure directly. A GCP project in DELETE_REQUESTED is scheduled for deletion and rejects new resource creation, so nothing can be deployed into it regardless of permissions or quota. The conan label being cleanup-pending says the same thing from the RHDP side: the sandbox reaper has already marked this environment for teardown.\n\nSo this is not something to fix inside the project. Whoever needs to deploy wants a fresh sandbox -- and if the deletion was not expected, that is the thing to query, since a project in this state cannot be returned to ACTIVE by the requester."
+}

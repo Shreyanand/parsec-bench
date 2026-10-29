@@ -1,0 +1,297 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 838214
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_remittance_hub/tasks/main.yml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "relaunch_job"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "relaunch"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "launch_job"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "launch"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "update_job_template"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "empty-class",
+        "any_of": [
+          "storageClassName: \"\"",
+          "storageClassName \"\"",
+          "storageClassName=\"\"",
+          "storageClassName of \"\"",
+          "storageClassName is \"\"",
+          "storageClassName set to \"\"",
+          "storageClassName is empty",
+          "storageClassName was empty",
+          "empty storageClassName",
+          "empty storage class",
+          "storage class is empty",
+          "storage class was empty",
+          "storage class empty",
+          "blank storage class",
+          "storage class is blank",
+          "no storage class is set",
+          "no storage class set",
+          "no storage class was set",
+          "without a storage class",
+          "storage class of \"\"",
+          "storage class \"\"",
+          "empty string",
+          "empty value",
+          "class=\"\"",
+          "class: \"\""
+        ],
+        "ignore_case": true,
+        "asked_by": "why it never bound",
+        "rationale": "the created claim carries storageClassName \"\" (log), and its event says no storage class is set"
+      },
+      {
+        "id": "no-dynamic-provisioning",
+        "any_of": [
+          "dynamic provisioning",
+          "dynamically provision",
+          "dynamically provisioned",
+          "no persistent volumes available",
+          "pre-created",
+          "precreated",
+          "pre-provisioned",
+          "preprovisioned",
+          "pre-existing",
+          "preexisting",
+          "existing PersistentVolume",
+          "existing PV",
+          "static PV",
+          "static binding",
+          "statically",
+          "never requested a volume",
+          "no volume was ever requested",
+          "no volume was requested",
+          "never asked for a volume",
+          "no provisioner",
+          "provisioner is never",
+          "provisioner was never",
+          "never provisioned",
+          "no PV",
+          "no matching PV",
+          "no PersistentVolume",
+          "class-less",
+          "classless",
+          "PV with no class",
+          "PV without a class",
+          "PV with no storage class",
+          "volume with no class"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what the claim was waiting for",
+        "rationale": "an explicitly empty storage class turns dynamic provisioning off, so the claim waits for a pre-created class-less PV that does not exist",
+        "note": "the log's claim event reads 'no persistent volumes available for this claim and no storage class is set'; with storageClassName \"\" Kubernetes binds only to an existing PV with no class and never calls a provisioner."
+      },
+      {
+        "id": "pr",
+        "any_of": [
+          "7354"
+        ],
+        "ignore_case": true,
+        "asked_by": "which pull request caused it",
+        "rationale": "only a PR search that includes closed PRs returns it; the default open search shows only the unrelated #7391"
+      },
+      {
+        "id": "default-filter",
+        "any_of": [
+          "undefined",
+          "not defined",
+          "isn't defined",
+          "is still defined",
+          "counts as defined",
+          "defined but empty",
+          "default filter",
+          "default()",
+          "default(",
+          "| default",
+          "default only",
+          "default does not",
+          "default doesn't",
+          "default never",
+          "default is not applied",
+          "default isn't applied",
+          "default is never applied",
+          "default was not applied",
+          "default wasn't applied",
+          "fallback never",
+          "fallback is never",
+          "fallback does not",
+          "fallback doesn't",
+          "falsy"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why it never bound",
+        "rationale": "the synthesis across the PR and the task file: default() replaces only an undefined value, so the PR's empty string reaches the claim unchanged",
+        "note": "the task renders storageClassName from remittance_hub_storage_class | default('gp3-csi'); Jinja's default filter without its second argument applies only to undefined variables, and the PR made the variable defined and empty."
+      },
+      {
+        "id": "fix",
+        "any_of": [
+          ", true)",
+          "true as the second",
+          "second argument",
+          "boolean argument",
+          "boolean=true",
+          "boolean: true",
+          "remove the empty",
+          "delete the empty",
+          "drop the empty",
+          "remove the remittance_hub_storage_class",
+          "delete the remittance_hub_storage_class",
+          "drop the remittance_hub_storage_class",
+          "remove remittance_hub_storage_class",
+          "delete remittance_hub_storage_class",
+          "drop remittance_hub_storage_class",
+          "unset remittance_hub_storage_class",
+          "unset the variable",
+          "leave it undefined",
+          "leave the variable undefined",
+          "leave remittance_hub_storage_class undefined",
+          "set it to gp3-csi",
+          "set remittance_hub_storage_class to",
+          "set remittance_hub_storage_class: gp3-csi",
+          "remittance_hub_storage_class: gp3-csi",
+          "real storage class",
+          "explicit storage class",
+          "name a storage class",
+          "name the storage class",
+          "revert",
+          "back out",
+          "remove the override",
+          "drop the override",
+          "remove that line",
+          "delete that line",
+          "remove the line",
+          "delete the line",
+          "omit the variable",
+          "omit the key",
+          "remove the key",
+          "delete the key"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what to change",
+        "rationale": "the remedy: stop passing an empty class (catalog side) or make the fallback apply to empty values (role side)",
+        "note": "either removing remittance_hub_storage_class: \"\" from the catalog item (or naming a real class) or using default('gp3-csi', true) in the task restores a provisionable class."
+      }
+    ],
+    "citations": [
+      {
+        "id": "storage-class-line",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_remittance_hub/tasks/main.yml",
+        "line": 22,
+        "asked_by": "cite the line in the workload's task file that renders the claim's storage class as `owner/repo:path:line`",
+        "rationale": "counted from the seeded tasks/main.yml; the log names the task's first line (10), not the storageClassName line, so only the fetch supplies it"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "slow-storage",
+        "none_of": [
+          "EBS volumes are slow",
+          "EBS volumes were slow",
+          "EBS is slow",
+          "are slow to come up",
+          "were slow to come up",
+          "slow to provision",
+          "provisioned too slowly",
+          "provisioning is slow",
+          "provisioning was slow",
+          "get a volume in time",
+          "got a volume in time",
+          "storage backend is slow",
+          "storage backend was slow",
+          "the storage is slow",
+          "CSI driver is slow",
+          "CSI driver was slow",
+          "provisioner is slow",
+          "provisioner was slow",
+          "ran out of EBS",
+          "EBS capacity is exhausted",
+          "storage capacity is exhausted",
+          "out of storage capacity",
+          "more retries will fix",
+          "more retries would fix",
+          "a longer wait will fix",
+          "a longer wait would fix",
+          "raising the retries will fix",
+          "raising the retries would fix",
+          "90 retries will fix",
+          "90 retries would fix"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "team's theory",
+          "your theory",
+          "the theory that",
+          "the belief that",
+          "you believe",
+          "we believe"
+        ],
+        "rationale": "no volume was ever requested from EBS: the empty class disables provisioning, so neither storage speed nor a longer wait is involved"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

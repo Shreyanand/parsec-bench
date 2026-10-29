@@ -1,0 +1,16 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_downtimes",
+        "host": "mq-relay-ams-1"
+      },
+      "result": {
+        "result": "[{\"name\":\"mq-relay-ams-1!b61f0c2e-5d1a-4c8e-9a77-0e3f2d9b4a10\",\"type\":\"Downtime\",\"attrs\":{\"host_name\":\"mq-relay-ams-1\",\"service_name\":\"\",\"author\":\"rvoskuijlen\",\"comment\":\"CHG-40917 broker firmware upgrade, rolling restart of the relay pair\",\"entry_time\":1794823500,\"start_time\":1794938400,\"end_time\":1794952800,\"fixed\":true,\"duration\":14400,\"trigger_time\":1794938400,\"is_in_effect\":false}},{\"name\":\"mq-relay-ams-1!amqp-queue-depth!4e93a7d5-21c0-4b6f-8d12-c7a95f03e8b1\",\"type\":\"Downtime\",\"attrs\":{\"host_name\":\"mq-relay-ams-1\",\"service_name\":\"amqp-queue-depth\",\"author\":\"tsalonen\",\"comment\":\"CHG-41022 move orders.inbound to quorum queues; depth will spike during the drain\",\"entry_time\":1794930000,\"start_time\":1795204800,\"end_time\":1795215600,\"fixed\":true,\"duration\":10800,\"trigger_time\":0,\"is_in_effect\":false}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "No - at 2026-11-18 09:30 UTC no downtime is in effect on mq-relay-ams-1, so the pages are legitimate.\n\nIcinga has two downtimes on record for the host, and neither covers right now:\n\n1. Host downtime by rvoskuijlen - \"CHG-40917 broker firmware upgrade, rolling restart of the relay pair\".\n   Window 2026-11-17 18:00 -> 2026-11-17 22:00 UTC (fixed, 4 h). It already ended at 22:00 UTC yesterday,\n   about 11.5 hours ago; is_in_effect is false.\n2. Service downtime on amqp-queue-depth by tsalonen - \"CHG-41022 move orders.inbound to quorum queues; depth\n   will spike during the drain\". Window 2026-11-20 20:00 -> 23:00 UTC (fixed, 3 h). It has not started yet;\n   trigger_time is 0 and is_in_effect is false.\n\nSo the calendar entry is either the expired CHG-40917 window or the future CHG-41022 one. The CRITICAL\non amqp-queue-depth today is not covered by either; if it is expected, someone needs to schedule a new\ndowntime or acknowledge it."
+}

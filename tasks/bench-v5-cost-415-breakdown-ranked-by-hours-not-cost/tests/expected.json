@@ -1,0 +1,144 @@
+{
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "breakdown",
+          "group_by": "INSTANCE_TYPE"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [],
+    "counts": [
+      {
+        "id": "first-g5",
+        "value": 12862,
+        "nouns": [
+          "g5.4xlarge"
+        ],
+        "window": 10,
+        "extra_any_of": [
+          "12,862.08",
+          "12862.08",
+          "12,862.1"
+        ],
+        "asked_by": "what did each of them cost",
+        "rationale": "the costliest type, sixth in the monitor's hours-ordered list"
+      },
+      {
+        "id": "second-p3",
+        "value": 11016,
+        "nouns": [
+          "p3.2xlarge"
+        ],
+        "window": 10,
+        "extra_any_of": [
+          "11,016"
+        ],
+        "asked_by": "what did each of them cost",
+        "rationale": "the second costliest, ninth in the hours-ordered list"
+      },
+      {
+        "id": "third-c7i",
+        "value": 9302,
+        "nouns": [
+          "c7i.2xlarge"
+        ],
+        "window": 10,
+        "extra_any_of": [
+          "9,302.40",
+          "9302.40",
+          "9,302.4"
+        ],
+        "asked_by": "what did each of them cost",
+        "rationale": "the third costliest; it is also second in the hours ordering, so the decoy reading earns it too (partial credit, bar C)"
+      },
+      {
+        "id": "top3-combined",
+        "value": 33180,
+        "derived": true,
+        "nouns": [
+          "together",
+          "combined",
+          "total",
+          "sum",
+          "altogether",
+          "three"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "33,180.48",
+          "33180.48",
+          "33,180.5"
+        ],
+        "asked_by": "What did those three cost together?",
+        "rationale": "12,862.08 + 11,016.00 + 9,302.40; the decoy top three (by rank) sum to 20,444.54",
+        "note": "Sum of the three largest `cost` values in the breakdown: g5.4xlarge 12,862.08 + p3.2xlarge 11,016.00 + c7i.2xlarge 9,302.40 = 33,180.48."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "hours-rank-read-as-cost",
+        "ignore_case": true,
+        "none_of": [
+          "m7i.xlarge cost the most",
+          "m7i.xlarge costs the most",
+          "m7i.xlarge was the most expensive",
+          "m7i.xlarge is the most expensive",
+          "m7i.xlarge was the costliest",
+          "m7i.xlarge is the costliest",
+          "m7i.xlarge was the biggest cost",
+          "m7i.xlarge is the biggest cost",
+          "m7i.xlarge had the highest cost",
+          "m7i.xlarge has the highest cost",
+          "m7i.xlarge was the top spender",
+          "m7i.xlarge is the top spender",
+          "m7i.xlarge was the most costly",
+          "m7i.xlarge is the most costly",
+          "most expensive was m7i.xlarge",
+          "most expensive is m7i.xlarge",
+          "most expensive instance type was m7i.xlarge",
+          "most expensive instance type is m7i.xlarge",
+          "most expensive instance type: m7i.xlarge",
+          "most expensive: m7i.xlarge",
+          "costliest: m7i.xlarge",
+          "costliest was m7i.xlarge",
+          "costliest is m7i.xlarge",
+          "top spender was m7i.xlarge",
+          "top spender is m7i.xlarge",
+          "top spender: m7i.xlarge",
+          "highest cost was m7i.xlarge",
+          "biggest cost was m7i.xlarge",
+          "m7i.xlarge, c7i.2xlarge and t3.large",
+          "m7i.xlarge, c7i.2xlarge, and t3.large",
+          "m7i.xlarge, c7i.2xlarge, t3.large",
+          "m7i.xlarge, c7i.2xlarge & t3.large"
+        ],
+        "attributed_to": [
+          "by hours",
+          "by usage",
+          "usage hours",
+          "most hours",
+          "instance-hours",
+          "instance hours",
+          "hours-ordered",
+          "ranked by usage"
+        ],
+        "rationale": "the wrong answer takes the monitor's rank order (by usage hours) as cost order and puts m7i.xlarge first / reports rank 1-3 as the top three; a sentence that says the rank is by hours is excused"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

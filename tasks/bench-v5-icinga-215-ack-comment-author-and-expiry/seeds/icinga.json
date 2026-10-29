@@ -1,0 +1,115 @@
+{
+  "hosts": [
+    {
+      "name": "ptp-grandmaster-osl-2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "ptp-grandmaster-osl-2",
+        "host_name": "ptp-grandmaster-osl-2",
+        "address": "10.88.3.12",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "timing-osl"
+        ],
+        "last_check": 1795601520,
+        "last_check_result": {
+          "output": "OK - 10.88.3.12: rta 0.410ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "ptp-grandmaster-osl-2!ptp-phase-err",
+      "type": "Service",
+      "attrs": {
+        "display_name": "PTP phase error vs grandmaster",
+        "host_name": "ptp-grandmaster-osl-2",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 1,
+        "downtime_depth": 0,
+        "last_state_change": 1795511100,
+        "last_check": 1795601520,
+        "last_check_result": {
+          "output": "PTP WARNING - phase error 4.1 us (warn 3 us, crit 10 us)",
+          "state": 1,
+          "exit_status": 1,
+          "performance_data": [
+            "phase_err=4.1us;3;10"
+          ]
+        },
+        "acknowledgement_expiry": 1795802400
+      }
+    },
+    {
+      "name": "ptp-grandmaster-osl-2!gnss-lock",
+      "type": "Service",
+      "attrs": {
+        "display_name": "GNSS receiver lock",
+        "host_name": "ptp-grandmaster-osl-2",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_state_change": 1795519800,
+        "last_check": 1795601520,
+        "last_check_result": {
+          "output": "GNSS OK - 9 satellites in view, lock held",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "downtimes": [],
+  "comments": [
+    {
+      "name": "ptp-grandmaster-osl-2!ptp-phase-err!7f2d9c41-0b8e-4e6a-a3d5-91c6e8f04b27",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "ptp-grandmaster-osl-2",
+        "service_name": "ptp-phase-err",
+        "author": "ichikawa.r",
+        "text": "GNSS antenna feed weak after the roof work on block C; Meinberg case SR-77140 is open. Phase error stays inside the trading-floor tolerance, keep it as is until the engineer comes on site.",
+        "entry_type": 4,
+        "entry_time": 1795513200,
+        "expire_time": 1795802400,
+        "persistent": false
+      }
+    },
+    {
+      "name": "ptp-grandmaster-osl-2!ptp-phase-err!c3a18e60-52f7-4d19-8b0e-2e7d4a96f513",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "ptp-grandmaster-osl-2",
+        "service_name": "ptp-phase-err",
+        "author": "pmbeki",
+        "text": "Phase error jumped to 4.1 us around 13:00 and has held flat after that. Watching it, leaving it be.",
+        "entry_type": 1,
+        "entry_time": 1795526100,
+        "expire_time": 0,
+        "persistent": true
+      }
+    },
+    {
+      "name": "ptp-grandmaster-osl-2!e95b0f7a-3c64-41d2-9f88-6ab21d7c0e34",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "ptp-grandmaster-osl-2",
+        "service_name": "",
+        "author": "vdalgaard",
+        "text": "PDU swap in rack B4 needs facilities sign-off first; do not power-cycle this box remotely.",
+        "entry_type": 1,
+        "entry_time": 1795161600,
+        "expire_time": 0,
+        "persistent": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [
+    {
+      "project_id": "openenv-wq4mt",
+      "name": "openenv-wq4mt",
+      "state": "DELETE_REQUESTED",
+      "create_time": "2026-05-30T07:22:11Z",
+      "labels": {
+        "guid": "wq4mt",
+        "envtype": "gcp-base",
+        "owner": "dmoreau",
+        "conan": "cleanup-pending"
+      },
+      "parent": "folders/418299301122",
+      "gcp_project_id": "openenv-wq4mt"
+    },
+    {
+      "project_id": "openenv-zt3pk",
+      "name": "openenv-zt3pk",
+      "state": "ACTIVE",
+      "create_time": "2026-06-14T10:04:00Z",
+      "labels": {
+        "guid": "zt3pk",
+        "envtype": "gcp-base",
+        "owner": "dmoreau"
+      },
+      "parent": "folders/418299301122",
+      "gcp_project_id": "openenv-zt3pk"
+    }
+  ],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": []
+}

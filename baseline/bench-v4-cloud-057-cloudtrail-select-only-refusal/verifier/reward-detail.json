@@ -1,0 +1,67 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [],
+    "unmatched_expected": [
+      {
+        "name": "query_cloudtrail",
+        "args": {}
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "login-user",
+        "any_of": [
+          "hwinterbourne"
+        ],
+        "ignore_case": true,
+        "asked_by": "which user made them",
+        "rationale": "every ConsoleLogin row for 604917382256 in the window carries username hwinterbourne; the decoy account's logins are pmarchetti's and the target account's other events are svc-ledger-sync's, so an agent that read the wrong rows names someone else. Unguessable without the lookup"
+      }
+    ],
+    "required_total": 2,
+    "counts_missed": [
+      {
+        "id": "consolelogin-count",
+        "value": 4,
+        "nouns": [
+          "consolelogins",
+          "events",
+          "logins",
+          "log-ins",
+          "sign-ins",
+          "signins",
+          "entries",
+          "rows",
+          "records",
+          "times",
+          "occurrences",
+          "results",
+          "matches",
+          "count",
+          "total",
+          "answer"
+        ],
+        "window": 10,
+        "extra_any_of": [],
+        "asked_by": "How many `ConsoleLogin` events does CloudTrail Lake hold for that account in that window",
+        "rationale": "4 ConsoleLogin rows for 604917382256 between 2026-08-10 and 2026-08-16; the account has 6 events in all (2 svc-ledger-sync STS calls), the decoy account 604917382265 has 3 ConsoleLogin events and the window holds 7 ConsoleLogin events across both accounts, so a count that ignores the account or event-name scope lands on 6, 3 or 7"
+      }
+    ],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

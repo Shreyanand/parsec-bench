@@ -1,0 +1,342 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "list_multiworkshops",
+        "cluster": "nordic",
+        "namespace": "user-hlindqvist-redhat-com"
+      },
+      "result": {
+        "cluster": "nordic",
+        "namespace": "user-hlindqvist-redhat-com",
+        "multiworkshops": [
+          {
+            "name": "automation-academy-w6",
+            "namespace": "user-hlindqvist-redhat-com",
+            "display_name": "Automation Academy - Wave 6",
+            "number_seats": 36,
+            "start_date": "2026-05-11",
+            "end_date": "2026-05-14",
+            "purpose": "Partner enablement",
+            "assets": [
+              {
+                "name": "aa-linux-core",
+                "display_name": "Linux Automation Core",
+                "key": "linux-core",
+                "type": "Workshop",
+                "namespace": "user-hlindqvist-redhat-com",
+                "workshop_id": "zq4hd"
+              },
+              {
+                "name": "aa-network",
+                "display_name": "Network Automation",
+                "key": "network",
+                "type": "Workshop",
+                "namespace": "user-hlindqvist-redhat-com",
+                "workshop_id": "vm8tg"
+              },
+              {
+                "name": "aa-cloud",
+                "display_name": "Cloud Automation",
+                "key": "cloud",
+                "type": "Workshop",
+                "namespace": "user-hlindqvist-redhat-com",
+                "workshop_id": "hy2rb"
+              }
+            ],
+            "asset_count": 3
+          },
+          {
+            "name": "automation-academy-w7",
+            "namespace": "user-hlindqvist-redhat-com",
+            "display_name": "Automation Academy - Wave 7",
+            "number_seats": 60,
+            "start_date": "2026-06-15",
+            "end_date": "2026-06-18",
+            "purpose": "Partner enablement",
+            "assets": [
+              {
+                "name": "aa-linux-core",
+                "display_name": "Linux Automation Core",
+                "key": "linux-core",
+                "type": "Workshop",
+                "namespace": "user-hlindqvist-redhat-com",
+                "workshop_id": "k2r8w"
+              },
+              {
+                "name": "aa-network",
+                "display_name": "Network Automation",
+                "key": "network",
+                "type": "Workshop",
+                "namespace": "user-hlindqvist-redhat-com",
+                "workshop_id": "p5d1q"
+              },
+              {
+                "name": "aa-windows",
+                "display_name": "Windows Automation",
+                "key": "windows",
+                "type": "Workshop",
+                "namespace": "user-hlindqvist-redhat-com",
+                "workshop_id": "t8m3v"
+              },
+              {
+                "name": "aa-eda",
+                "display_name": "Event-Driven Ansible",
+                "key": "eda",
+                "type": "Workshop",
+                "namespace": "user-hlindqvist-redhat-com",
+                "workshop_id": "b6x9n"
+              },
+              {
+                "name": "aa-security",
+                "display_name": "Security Automation",
+                "key": "security",
+                "type": "Workshop",
+                "namespace": "user-hlindqvist-redhat-com",
+                "workshop_id": "f3j7c"
+              }
+            ],
+            "asset_count": 5
+          }
+        ],
+        "count": 2,
+        "truncated": false
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "get_multiworkshop",
+        "cluster": "nordic",
+        "namespace": "user-hlindqvist-redhat-com",
+        "name": "automation-academy-w7"
+      },
+      "result": {
+        "cluster": "nordic",
+        "name": "automation-academy-w7",
+        "namespace": "user-hlindqvist-redhat-com",
+        "display_name": "Automation Academy - Wave 7",
+        "seats": 60,
+        "start_date": "2026-06-15",
+        "end_date": "2026-06-18",
+        "purpose": "Partner enablement",
+        "workshops": [
+          {
+            "name": "aa7-linux-core",
+            "display_name": "Linux Automation Core",
+            "catalog_item": "aa-linux-core.prod",
+            "workshop_id": "k2r8w",
+            "provision_count": {
+              "ordered": 1,
+              "active": 1,
+              "failed": 0,
+              "retries": 0
+            },
+            "resource_claims": [
+              {
+                "name": "aa-linux-core-prod-s3b9m",
+                "state": "started",
+                "healthy": true,
+                "ready": true,
+                "resources": [
+                  {
+                    "name": "aa-linux-core",
+                    "healthy": true,
+                    "ready": true,
+                    "anarchy_subject": "aa-linux-core.prod-s3b9m",
+                    "anarchy_namespace": "babylon-anarchy-automation-academy",
+                    "current_state": "started",
+                    "desired_state": "started",
+                    "guid": "s3b9m",
+                    "cloud_provider": "aws",
+                    "tower_jobs": {
+                      "provision": {
+                        "controller": "aap2-ctl-04.example.com",
+                        "job_id": 73406,
+                        "status": "successful",
+                        "completed": "2026-06-15T06:58:12Z"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "aa7-network",
+            "display_name": "Network Automation",
+            "catalog_item": "aa-network.prod",
+            "workshop_id": "p5d1q",
+            "provision_count": {
+              "ordered": 1,
+              "active": 1,
+              "failed": 0,
+              "retries": 0
+            },
+            "resource_claims": [
+              {
+                "name": "aa-network-prod-g8h4t",
+                "state": "started",
+                "healthy": true,
+                "ready": true,
+                "resources": [
+                  {
+                    "name": "aa-network",
+                    "healthy": true,
+                    "ready": true,
+                    "anarchy_subject": "aa-network.prod-g8h4t",
+                    "anarchy_namespace": "babylon-anarchy-automation-academy",
+                    "current_state": "started",
+                    "desired_state": "started",
+                    "guid": "g8h4t",
+                    "cloud_provider": "aws",
+                    "tower_jobs": {
+                      "provision": {
+                        "controller": "aap2-ctl-04.example.com",
+                        "job_id": 73411,
+                        "status": "successful",
+                        "completed": "2026-06-15T07:04:37Z"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "aa7-windows",
+            "display_name": "Windows Automation",
+            "catalog_item": "aa-windows.prod",
+            "workshop_id": "t8m3v",
+            "provision_count": {
+              "ordered": 1,
+              "active": 0,
+              "failed": 1,
+              "retries": 0
+            },
+            "resource_claims": [
+              {
+                "name": "aa-windows-prod-x2k7r",
+                "state": "provision-error",
+                "healthy": false,
+                "ready": false,
+                "resources": [
+                  {
+                    "name": "aa-windows",
+                    "healthy": false,
+                    "ready": false,
+                    "anarchy_subject": "aa-windows.prod-x2k7r",
+                    "anarchy_namespace": "babylon-anarchy-automation-academy",
+                    "current_state": "provision-error",
+                    "desired_state": "started",
+                    "guid": "x2k7r",
+                    "cloud_provider": "aws",
+                    "tower_jobs": {
+                      "provision": {
+                        "controller": "aap2-ctl-04.example.com",
+                        "job_id": 73419,
+                        "status": "failed",
+                        "completed": "2026-06-15T07:13:50Z"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "aa7-eda",
+            "display_name": "Event-Driven Ansible",
+            "catalog_item": "aa-eda.prod",
+            "workshop_id": "b6x9n",
+            "provision_count": {
+              "ordered": 1,
+              "active": 1,
+              "failed": 0,
+              "retries": 0
+            },
+            "resource_claims": [
+              {
+                "name": "aa-eda-prod-j6q1z",
+                "state": "started",
+                "healthy": true,
+                "ready": true,
+                "resources": [
+                  {
+                    "name": "aa-eda",
+                    "healthy": true,
+                    "ready": true,
+                    "anarchy_subject": "aa-eda.prod-j6q1z",
+                    "anarchy_namespace": "babylon-anarchy-automation-academy",
+                    "current_state": "started",
+                    "desired_state": "started",
+                    "guid": "j6q1z",
+                    "cloud_provider": "aws",
+                    "tower_jobs": {
+                      "provision": {
+                        "controller": "aap2-ctl-04.example.com",
+                        "job_id": 73423,
+                        "status": "successful",
+                        "completed": "2026-06-15T07:21:08Z"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "aa7-security",
+            "display_name": "Security Automation",
+            "catalog_item": "aa-security.prod",
+            "workshop_id": "f3j7c",
+            "provision_count": {
+              "ordered": 1,
+              "active": 1,
+              "failed": 0,
+              "retries": 0
+            },
+            "resource_claims": [
+              {
+                "name": "aa-security-prod-d9v2l",
+                "state": "started",
+                "healthy": true,
+                "ready": true,
+                "resources": [
+                  {
+                    "name": "aa-security",
+                    "healthy": true,
+                    "ready": true,
+                    "anarchy_subject": "aa-security.prod-d9v2l",
+                    "anarchy_namespace": "babylon-anarchy-automation-academy",
+                    "current_state": "started",
+                    "desired_state": "started",
+                    "guid": "d9v2l",
+                    "cloud_provider": "aws",
+                    "tower_jobs": {
+                      "provision": {
+                        "controller": "aap2-ctl-04.example.com",
+                        "job_id": 73430,
+                        "status": "successful",
+                        "completed": "2026-06-15T07:29:46Z"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "summary": {
+          "total_workshops": 5,
+          "active": 4,
+          "failed": 1
+        }
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The Wave 7 event is the MultiWorkshop automation-academy-w7 (not automation-academy-w6, the Wave 6 event in the same namespace). It has 5 child workshops: aa7-linux-core, aa7-network, aa7-windows, aa7-eda and aa7-security. The one that failed to provision is aa7-windows (Windows Automation): its resource claim aa-windows-prod-x2k7r is in provision-error, and its failed provision job is AAP2 job 73419 on controller aap2-ctl-04.example.com. The other four provisioned successfully."
+}

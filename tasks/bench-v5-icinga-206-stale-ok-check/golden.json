@@ -1,0 +1,16 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "bkp-vault-02"
+      },
+      "result": {
+        "result": "[{\"name\":\"bkp-vault-02!backup-volume-free\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"/srv/restic free space\",\"host_name\":\"bkp-vault-02\",\"state\":0,\"enable_active_checks\":true,\"check_interval\":900,\"last_state_change\":1793361600,\"last_check\":1794988260,\"last_check_result\":{\"output\":\"DISK OK - /srv/restic 41% used\",\"state\":0,\"exit_status\":0,\"execution_end\":1794988260},\"state_type\":1,\"check_attempt\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}},{\"name\":\"bkp-vault-02!restic-repo-integrity\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"restic repository integrity\",\"host_name\":\"bkp-vault-02\",\"state\":0,\"enable_active_checks\":true,\"check_interval\":3600,\"last_state_change\":1793502000,\"last_check\":1794987000,\"last_check_result\":{\"output\":\"RESTIC OK - check passed, no errors in 3 packs sampled\",\"state\":0,\"exit_status\":0,\"execution_end\":1794987000},\"state_type\":1,\"check_attempt\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}},{\"name\":\"bkp-vault-02!restic-snapshot-age\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"restic newest snapshot age\",\"host_name\":\"bkp-vault-02\",\"state\":0,\"enable_active_checks\":false,\"check_interval\":1800,\"last_state_change\":1793758800,\"last_check\":1794190500,\"last_check_result\":{\"output\":\"RESTIC OK - newest snapshot of vault-data is 5h old (warn 26h, crit 50h)\",\"state\":0,\"exit_status\":0,\"execution_end\":1794190500},\"state_type\":1,\"check_attempt\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "No - that green does not tell you anything about last night.\n\n`restic-snapshot-age` on bkp-vault-02 is in state OK, but its last check ran on 2026-11-09 at 02:15 UTC, 9 days\nbefore this morning, and enable_active_checks is false for that service, so Icinga has stopped scheduling it.\nThe OK you see is a stale result from 2026-11-09: the output \"newest snapshot of vault-data is 5h old\" described\nthe snapshot as of that date, not today's. Every other check on the host ran within the last half hour\n(backup-volume-free at 07:51, restic-repo-integrity at 07:30), which shows it is only this check that stopped.\n\nSo I can't confirm the nightly backup from Icinga. I would not report \"backups OK\"; check the restic snapshots\ndirectly, and get active checks re-enabled on restic-snapshot-age."
+}

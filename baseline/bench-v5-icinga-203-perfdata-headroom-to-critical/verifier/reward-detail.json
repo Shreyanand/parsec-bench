@@ -1,0 +1,116 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "filter_expr": "match(\"*objstore-pool*\", service.name)",
+          "detailed": true
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-scripts",
+          "search": "objstore"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "objstore"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-scripts",
+          "search": "pool"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "s3gw"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "search": "objstore-pool"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "other-host-ok",
+        "any_of": [
+          "s3gw-ash-2 - OK",
+          "s3gw-ash-2 is OK",
+          "s3gw-ash-2: OK",
+          "s3gw-ash-2 (OK",
+          "s3gw-ash-2 is fine",
+          "s3gw-ash-2 is healthy",
+          "s3gw-ash-2 - ok",
+          "s3gw-ash-2 ok",
+          "s3gw-ash-2 is in OK",
+          "s3gw-ash-2 reports OK",
+          "s3gw-ash-2 is green",
+          "s3gw-ash-2 is within"
+        ],
+        "ignore_case": true,
+        "asked_by": "how the other host is doing",
+        "rationale": "the OK row the search also returns",
+        "derived": true,
+        "note": "The search returns a second objstore-pool row, on s3gw-ash-2, with state 0 and output 'POOL OK - tank0 within limits'; the forms pair that host with its OK state, which no single seed string does."
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [
+      {
+        "id": "headroom-to-full",
+        "none_of": [
+          "88 GB",
+          "88GB"
+        ],
+        "ignore_case": true,
+        "rationale": "500 - 412 is room to the pool's max, not to the critical threshold the question asks about",
+        "attributed_to": [
+          "until full",
+          "to full",
+          "before full",
+          "until the pool is full",
+          "pool size",
+          "to the max",
+          "raw capacity"
+        ]
+      }
+    ],
+    "forbidden_total": 1
+  }
+}

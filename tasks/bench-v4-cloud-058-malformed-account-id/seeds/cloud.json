@@ -1,0 +1,96 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [
+    {
+      "iam_user_id": "iu-3107-01",
+      "username": "mbrandt-deploy",
+      "user_id": "AIDA3107MBRANDTDEPLOY",
+      "account_id": "061840275391",
+      "created": "2025-11-04T09:12:00Z",
+      "password_last_used": "",
+      "access_keys": [
+        {"access_key_id": "AKIA3107MBRANDT0001", "status": "Active", "create_date": "2025-11-04T09:15:00Z"}
+      ]
+    },
+    {
+      "iam_user_id": "iu-3107-02",
+      "username": "jtorvik-ro",
+      "user_id": "AIDA3107JTORVIKRO",
+      "account_id": "061840275391",
+      "created": "2025-12-01T14:40:00Z",
+      "password_last_used": "2026-01-20T08:02:00Z",
+      "access_keys": [
+        {"access_key_id": "AKIA3107JTORVIK0001", "status": "Inactive", "create_date": "2025-12-01T14:41:00Z"}
+      ]
+    },
+    {
+      "iam_user_id": "iu-3108-01",
+      "username": "pnair-audit",
+      "user_id": "AIDA3108PNAIRAUDIT",
+      "account_id": "618402753910",
+      "created": "2026-02-17T11:05:00Z",
+      "password_last_used": "",
+      "access_keys": [
+        {"access_key_id": "AKIA3108PNAIR00001", "status": "Active", "create_date": "2026-02-17T11:06:00Z"}
+      ]
+    }
+  ],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sandbox3107",
+      "name": "sandbox3107",
+      "account_id": "061840275391",
+      "available": false,
+      "owner": "hkowalski",
+      "owner_email": "hkowalski@partner.example.com",
+      "zone": "sandbox3107.opentlc.com",
+      "hosted_zone_id": "Z3107SANDBOXZONE",
+      "guid": "q7m2x",
+      "envtype": "ocp4-cluster",
+      "reservation": "",
+      "conan_status": "in-use",
+      "comment": "guid: q7m2x / catalog: agd-v2.ocp4-cluster.prod",
+      "service_uuid": "5b0e7c1a-3107-4d2e-9a61-0c8f2d4e3107",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sandbox3108",
+      "name": "sandbox3108",
+      "account_id": "618402753910",
+      "available": false,
+      "owner": "rokafor",
+      "owner_email": "rokafor@partner.example.com",
+      "zone": "sandbox3108.opentlc.com",
+      "hosted_zone_id": "Z3108SANDBOXZONE",
+      "guid": "w4k9d",
+      "envtype": "rosa",
+      "reservation": "",
+      "conan_status": "in-use",
+      "comment": "guid: w4k9d / catalog: agd-v2.rosa.prod",
+      "service_uuid": "8d1f4a27-3108-4b6c-8e03-7a5c9b1d3108",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sandbox3109",
+      "name": "sandbox3109",
+      "account_id": "774019362058",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "zone": "sandbox3109.opentlc.com",
+      "hosted_zone_id": "Z3109SANDBOXZONE",
+      "guid": "",
+      "envtype": "",
+      "reservation": "",
+      "conan_status": "available",
+      "comment": "",
+      "service_uuid": "c2a96e04-3109-47f1-b5d8-1e3f6a0b3109",
+      "annotations": {}
+    }
+  ]
+}

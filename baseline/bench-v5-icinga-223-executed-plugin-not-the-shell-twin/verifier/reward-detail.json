@@ -1,0 +1,83 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "kafka-brk-zrh-5",
+          "filter_expr": "match(\"*open*file*\", service.name) || match(\"*open*file*\", service.display_name)",
+          "detailed": true
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "search": "open_file"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "kafka"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "search": "check_fd_usage"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "check_fd_usage"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/jvm/check_fd_usage.py"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "rhdp-plugin"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "account": "agd-v2",
+      "directory": "llama-stack-demo",
+      "path": "agd-v2/llama-stack-demo/prod.yaml",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "agd-v2-agd-v2/llama-stack-demo/prod.yaml"
+    }
+  ],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "agd-v2/llama-stack-demo/prod.yaml",
+      "content": "---\n# Shared credential for every OCP-dependent catalog item on this account.\n# Rotated externally on 2026-06-23 by the console team; nothing here changed.\n__meta__:\n  secrets:\n    - name: ocp4_token\n      from: includes/secrets/ocp4_token.yaml\n\nocp4_pull_secret_name: ocp4_token\nocp4_registry_host: registry.redhat.io\n\n# ocp4_token itself is ansible-vault encrypted in the include above, so its\n# content cannot be inspected from here -- only that every item requires it.\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-agd-v2/llama-stack-demo/prod.yaml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "agd-v2/llama-stack-demo/prod.yaml",
+      "content": "---\n# Shared credential for every OCP-dependent catalog item on this account.\n# Rotated externally on 2026-06-23 by the console team; nothing here changed.\n__meta__:\n  secrets:\n    - name: ocp4_token\n      from: includes/secrets/ocp4_token.yaml\n\nocp4_pull_secret_name: ocp4_token\nocp4_registry_host: registry.redhat.io\n\n# ocp4_token itself is ansible-vault encrypted in the include above, so its\n# content cannot be inspected from here -- only that every item requires it.\n",
+      "file_id": "agnosticd/agnosticd-v2@main-agd-v2/llama-stack-demo/prod.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

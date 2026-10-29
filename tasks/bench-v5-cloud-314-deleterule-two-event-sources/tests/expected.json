@@ -1,0 +1,132 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_cloudtrail",
+        "args": {}
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "actor",
+        "any_of": [
+          "hvesterlund"
+        ],
+        "ignore_case": true,
+        "asked_by": "who deleted the load balancer's listener rules in that window",
+        "rationale": "hvesterlund owns every elasticloadbalancing DeleteRule in 13:00-15:00 UTC; the name is only in the tool result"
+      },
+      {
+        "id": "first-deletion",
+        "any_of": [
+          "13:24:51",
+          "13:24"
+        ],
+        "ignore_case": true,
+        "asked_by": "the UTC time of the first and the last of those deletions",
+        "rationale": "the first listener-rule deletion; reading every DeleteRule gives pdasgupta's EventBridge deletion at 13:09:44 instead"
+      },
+      {
+        "id": "last-deletion",
+        "any_of": [
+          "14:38:12",
+          "14:38"
+        ],
+        "ignore_case": true,
+        "asked_by": "the UTC time of the first and the last of those deletions",
+        "rationale": "the last listener-rule deletion in the window; the EventBridge decoy gives 14:52:18 and ignoring the window gives jokafor's 15:12:40"
+      },
+      {
+        "id": "event-source",
+        "any_of": [
+          "elasticloadbalancing.amazonaws.com",
+          "elasticloadbalancing",
+          "Elastic Load Balancing",
+          "ELBv2"
+        ],
+        "ignore_case": true,
+        "asked_by": "the event source those deletions were logged under",
+        "rationale": "the eventSource of the three listener-rule deletions; it is what separates them from the EventBridge DeleteRule events and occurs only in the tool result"
+      }
+    ],
+    "counts": [
+      {
+        "id": "listener-rule-deletions",
+        "value": 3,
+        "nouns": [
+          "listener rules",
+          "listener-rule",
+          "rules",
+          "deletions",
+          "DeleteRule",
+          "events",
+          "calls"
+        ],
+        "window": 5,
+        "asked_by": "how many they deleted",
+        "rationale": "three elasticloadbalancing DeleteRule events in the window; every DeleteRule in the window gives 5, the whole afternoon gives 6, and ignoring the window but keeping the source gives 4"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "eventbridge-actor-blamed",
+        "ignore_case": true,
+        "none_of": [
+          "pdasgupta deleted the listener rules",
+          "pdasgupta deleted listener rules",
+          "pdasgupta deleted the ALB",
+          "pdasgupta deleted ALB",
+          "pdasgupta also deleted the listener",
+          "pdasgupta also deleted listener",
+          "pdasgupta deleted two of the listener",
+          "pdasgupta deleted 2 of the listener",
+          "pdasgupta deleted two listener",
+          "pdasgupta deleted 2 listener",
+          "pdasgupta removed the listener",
+          "pdasgupta removed listener",
+          "listener rules were deleted by pdasgupta",
+          "listener rules deleted by pdasgupta",
+          "listener rules were also deleted by pdasgupta",
+          "pdasgupta deleted load balancer",
+          "pdasgupta deleted the load balancer"
+        ],
+        "rationale": "pdasgupta's DeleteRule events were logged by events.amazonaws.com, so they are EventBridge rules; an honest answer may name pdasgupta and say what they deleted, so only claims tying pdasgupta to listener or load-balancer rules are forbidden (hazard 14)"
+      },
+      {
+        "id": "listener-rule-count-inflated",
+        "ignore_case": true,
+        "none_of": [
+          "5 listener rules",
+          "five listener rules",
+          "5 listener-rule",
+          "five listener-rule",
+          "4 listener rules",
+          "four listener rules",
+          "4 listener-rule",
+          "four listener-rule",
+          "5 ALB rules",
+          "five ALB rules",
+          "5 load balancer rules",
+          "five load balancer rules",
+          "5 load-balancer rules",
+          "five load-balancer rules"
+        ],
+        "rationale": "5 is every DeleteRule in the window (EventBridge included) and 4 adds jokafor's deletion after 15:00; 5 DeleteRule events and 5 rules in total are true statements and are not forbidden, only the listener-rule framing"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_model_registry/defaults/main.yml"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "default",
+        "any_of": [
+          "lab-registry"
+        ],
+        "ignore_case": true,
+        "asked_by": "the variable's default value",
+        "rationale": "only the fetched file gives it"
+      },
+      {
+        "id": "line",
+        "any_of": [
+          "line 17",
+          "line #17",
+          "line no. 17",
+          "line number 17",
+          "L17",
+          ":17",
+          "(17)",
+          "line: 17",
+          "| 17 |"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the variable is the 17th line of the fetched defaults file.",
+        "asked_by": "the line that sets it",
+        "rationale": "counted from the seeded file; graded as a required fact, not a citation line, because an honest answer names the file more than once"
+      },
+      {
+        "id": "consumer",
+        "any_of": [
+          "model_serving_lab"
+        ],
+        "ignore_case": true,
+        "asked_by": "is it safe to rename the variable in this role alone",
+        "rationale": "the other role that reads the variable, named only in the file's own comment; the search cannot surface it"
+      },
+      {
+        "id": "path-search",
+        "any_of": [
+          "file paths",
+          "file path",
+          "file names",
+          "filenames",
+          "file name",
+          "path names",
+          "pathnames",
+          "paths, not",
+          "paths only",
+          "only paths",
+          "only matches paths",
+          "matches paths",
+          "match paths",
+          "matched against paths",
+          "against paths",
+          "against the paths",
+          "path search",
+          "path-only",
+          "file tree",
+          "repo tree",
+          "directory names",
+          "names of files",
+          "names of the files",
+          "file and directory names",
+          "not file content",
+          "repository tree",
+          "directory tree",
+          "tree of the repo",
+          "not file contents",
+          "not the contents",
+          "not their contents",
+          "not contents",
+          "not content",
+          "inside files",
+          "inside the files",
+          "look inside",
+          "looks inside",
+          "file contents",
+          "content search",
+          "code search",
+          "grep"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "search_github_repo filters the repository tree by path substring (its own description), so a variable name that is no part of any path returns 0 matches even though the fetched defaults file contains it.",
+        "asked_by": "what does that result tell us",
+        "rationale": "the empty result is about paths; reading it as 'nothing uses the variable' is the trap"
+      },
+      {
+        "id": "not-safe",
+        "any_of": [
+          "not safe",
+          "isn't safe",
+          "is unsafe",
+          "not be safe",
+          "unsafe to",
+          "would break",
+          "will break",
+          "break ocp4_workload_model_serving_lab",
+          "breaks ocp4_workload_model_serving_lab",
+          "rename it in both",
+          "both roles",
+          "in step",
+          "in lockstep",
+          "together with",
+          "alone? no",
+          "alone: no",
+          "safe? no",
+          "safe: no",
+          "no, it is not",
+          "no, it isn't",
+          "no, not"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the file's comment names a second role that reads the variable, so renaming it in one role alone breaks the other.",
+        "asked_by": "is it safe to rename the variable in this role alone",
+        "rationale": "the answer to the closing question"
+      }
+    ],
+    "counts": [
+      {
+        "id": "zero-matches",
+        "value": 0,
+        "nouns": [
+          "matches",
+          "match",
+          "results",
+          "result",
+          "paths",
+          "hits",
+          "hit",
+          "files"
+        ],
+        "window": 3,
+        "extra_any_of": [
+          "total_matches: 0",
+          "total_matches 0",
+          "total_matches = 0",
+          "total_matches\": 0",
+          "matches: []",
+          "matches\": []",
+          "empty result",
+          "empty list",
+          "empty match",
+          "came back empty",
+          "returned nothing",
+          "found nothing",
+          "returned an empty",
+          "nothing came back",
+          "no paths"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the seeded search row for the variable name has matches [] and total_matches 0.",
+        "asked_by": "What did the search return",
+        "rationale": "the envelope the agent must report before interpreting it"
+      }
+    ],
+    "citations": [
+      {
+        "id": "defaults-file",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_model_registry/defaults/main.yml",
+        "asked_by": "Cite the file",
+        "rationale": "repo and path named together; the owner is part of the match"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "safe-to-rename",
+        "none_of": [
+          "safe to rename it in this role alone",
+          "safe to rename it in just this role",
+          "it is safe to rename",
+          "it's safe to rename",
+          "it is safe to change",
+          "it's safe to change",
+          "safe to rename the variable",
+          "can safely rename",
+          "can safely be renamed",
+          "rename it safely",
+          "yes, it is safe",
+          "yes, it's safe",
+          "yes, safe"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "only if you also",
+          "only after you also",
+          "as long as you also",
+          "provided you also",
+          "if you also update",
+          "once you also update",
+          "after you also update"
+        ],
+        "rationale": "another role reads the variable; a rename in this role alone breaks it"
+      },
+      {
+        "id": "search-proves-unused",
+        "none_of": [
+          "confirms it is unused",
+          "confirms that it is unused",
+          "confirms the variable is unused",
+          "proves it is unused",
+          "proves that it is unused",
+          "shows it is unused",
+          "shows that it is unused",
+          "shows it is not used anywhere",
+          "confirms it is not used",
+          "confirms that it is not used",
+          "is unused elsewhere",
+          "unused outside this role",
+          "used only in this role",
+          "only used in this role",
+          "only used by this role",
+          "only referenced in this role",
+          "only referenced by this role",
+          "is not used anywhere else",
+          "isn't used anywhere else"
+        ],
+        "ignore_case": true,
+        "rationale": "an empty path search says nothing about file contents"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

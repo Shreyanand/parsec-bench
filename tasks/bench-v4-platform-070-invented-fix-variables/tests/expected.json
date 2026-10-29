@@ -1,0 +1,84 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 47290
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles/ocp4_workload_kestrel_ingress/templates/cluster-issuer.yaml.j2"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "undefined-variable",
+        "any_of": [
+          "kestrel_ingress_dns_zone"
+        ],
+        "ignore_case": true,
+        "asked_by": "Tell me the exact name of the variable the error says is undefined",
+        "rationale": "the name the [ERROR] and fatal lines print. It is in the job log and the failed event, never in the instruction. It is the one required fact the log alone earns"
+      },
+      {
+        "id": "gate-variable",
+        "any_of": [
+          "kestrel_ingress_acme_solver"
+        ],
+        "ignore_case": true,
+        "asked_by": "Tell me which role variable decides whether the template uses that variable",
+        "rationale": "the variable the template's {% if %} tests and defaults/main.yml sets. It occurs in the two fetched files only, never in the log or the instruction, and is not derivable from the undefined name"
+      },
+      {
+        "id": "gate-value",
+        "any_of": [
+          "route53-delegated"
+        ],
+        "ignore_case": true,
+        "asked_by": "and which value of it makes the template use it",
+        "rationale": "the value the {% if %} compares against and the role default. Fetch-only; the instruction says 'Route 53' but never this token"
+      },
+      {
+        "id": "fix-value",
+        "any_of": [
+          "http01-router"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the recommendation is a synthesis: the instruction rules out a hosted zone, and the template's only other branch is the http01-router one, which never reads the zone",
+        "asked_by": "Tell me which variable I should set, and to what",
+        "rationale": "the template's {% elif %} value, the only branch that does not read the undefined variable. It occurs only in the fetched template, never in defaults/main.yml, the log or the instruction. A bare literal: binding it to the gate variable was measured in fix round 1 and rejected (4 of 10 untuned honest answers fell to 0.825), so a neutral mention of the branch earns it too"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

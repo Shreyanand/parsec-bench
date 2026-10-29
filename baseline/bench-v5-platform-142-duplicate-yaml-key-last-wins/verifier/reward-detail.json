@@ -1,0 +1,83 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 509381
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "vector-tile-server"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "tile-server-lab"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "geo_bu/tile-server-lab/common.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "geo_bu/tile-server-lab/prod.yaml",
+          "ref": "main"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "effective-line",
+        "any_of": [
+          "line 29",
+          ":29",
+          "L29",
+          "line #29",
+          "line no. 29",
+          "line number 29",
+          "lines 29",
+          "(line 29)"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "line 29 of the fetched common.yaml is the second worker_instance_type, c7g.2xlarge, the value the job log reports; line 16 holds the overridden c7i.2xlarge.",
+        "asked_by": "cite the line that sets the instance type the job used as `owner/repo:path:line`",
+        "rationale": "counted from the seeded common.yaml; the teammate's line (16) is the wrong line, and only the fetch shows either. Graded as a required fact rather than a citation because the verifier's citation matcher reads only the first repo+path occurrence, and an honest answer naturally names the same path for line 16 first."
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

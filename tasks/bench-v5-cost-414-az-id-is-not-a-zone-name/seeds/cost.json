@@ -1,0 +1,145 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [
+    {
+      "capacity_metric_result_id": "cmr-azid-util-7731",
+      "capacity_totals_id": "ct-azid-util-7731",
+      "capacity_window_id": "cw-azid-168h-7731",
+      "metric": "utilization",
+      "group_by": "availability-zone-id",
+      "period": {
+        "start": "2026-10-28T06:00:00Z",
+        "end": "2026-11-04T06:00:00Z"
+      },
+      "results": [
+        {
+          "dimension": "use1-az6",
+          "avg_utilization_pct": 44.7,
+          "total_capacity_hrs": 9408.0,
+          "unused_capacity_hrs": 5203.6,
+          "total_estimated_cost_usd": 9186.42,
+          "unused_estimated_cost_usd": 5080.93,
+          "reservation_count": 56
+        },
+        {
+          "dimension": "use1-az4",
+          "avg_utilization_pct": 68.0,
+          "total_capacity_hrs": 6720.0,
+          "unused_capacity_hrs": 2150.4,
+          "total_estimated_cost_usd": 6412.8,
+          "unused_estimated_cost_usd": 2052.1,
+          "reservation_count": 40
+        },
+        {
+          "dimension": "use1-az1",
+          "avg_utilization_pct": 74.0,
+          "total_capacity_hrs": 5040.0,
+          "unused_capacity_hrs": 1310.4,
+          "total_estimated_cost_usd": 4233.6,
+          "unused_estimated_cost_usd": 1100.74,
+          "reservation_count": 30
+        },
+        {
+          "dimension": "use1-az2",
+          "avg_utilization_pct": 86.0,
+          "total_capacity_hrs": 3360.0,
+          "unused_capacity_hrs": 470.4,
+          "total_estimated_cost_usd": 2856.0,
+          "unused_estimated_cost_usd": 399.84,
+          "reservation_count": 20
+        },
+        {
+          "dimension": "use1-az5",
+          "avg_utilization_pct": 93.0,
+          "total_capacity_hrs": 1680.0,
+          "unused_capacity_hrs": 117.6,
+          "total_estimated_cost_usd": 1108.8,
+          "unused_estimated_cost_usd": 77.62,
+          "reservation_count": 10
+        }
+      ],
+      "totals": {
+        "capacity_totals_id": "ct-azid-util-7731",
+        "total_estimated_cost_usd": 23797.62,
+        "unused_estimated_cost_usd": 8711.23,
+        "overall_utilization_pct": 64.7,
+        "total_dimensions": 5
+      }
+    },
+    {
+      "capacity_metric_result_id": "cmr-azid-unused-7731",
+      "capacity_totals_id": "ct-azid-unused-7731",
+      "capacity_window_id": "cw-azid-168h-7731",
+      "metric": "unused_cost",
+      "group_by": "availability-zone-id",
+      "period": {
+        "start": "2026-10-28T06:00:00Z",
+        "end": "2026-11-04T06:00:00Z"
+      },
+      "results": [
+        {
+          "dimension": "use1-az6",
+          "unused_capacity_hrs": 5203.6,
+          "unused_estimated_cost_usd": 5080.93
+        },
+        {
+          "dimension": "use1-az4",
+          "unused_capacity_hrs": 2150.4,
+          "unused_estimated_cost_usd": 2052.1
+        },
+        {
+          "dimension": "use1-az1",
+          "unused_capacity_hrs": 1310.4,
+          "unused_estimated_cost_usd": 1100.74
+        },
+        {
+          "dimension": "use1-az2",
+          "unused_capacity_hrs": 470.4,
+          "unused_estimated_cost_usd": 399.84
+        },
+        {
+          "dimension": "use1-az5",
+          "unused_capacity_hrs": 117.6,
+          "unused_estimated_cost_usd": 77.62
+        }
+      ],
+      "totals": {
+        "capacity_totals_id": "ct-azid-unused-7731",
+        "total_estimated_cost_usd": 0.0,
+        "unused_estimated_cost_usd": 8711.23,
+        "overall_utilization_pct": 0.0,
+        "total_dimensions": 5
+      }
+    }
+  ],
+  "capacity_totals": [
+    {
+      "capacity_totals_id": "ct-azid-util-7731",
+      "total_estimated_cost_usd": 23797.62,
+      "unused_estimated_cost_usd": 8711.23,
+      "overall_utilization_pct": 64.7,
+      "total_dimensions": 5
+    },
+    {
+      "capacity_totals_id": "ct-azid-unused-7731",
+      "total_estimated_cost_usd": 0.0,
+      "unused_estimated_cost_usd": 8711.23,
+      "overall_utilization_pct": 0.0,
+      "total_dimensions": 5
+    }
+  ],
+  "capacity_windows": [
+    {
+      "capacity_window_id": "cw-azid-168h-7731",
+      "start": "2026-10-28T06:00:00Z",
+      "end": "2026-11-04T06:00:00Z"
+    }
+  ],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": []
+}

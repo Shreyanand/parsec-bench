@@ -1,0 +1,106 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts",
+          "search": "sftp-edge-cph-04",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "sftp-edge-cph-04"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "sftp-edge-cph-04"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "sftp-edge"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "sftp-partner-dmz"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "down-time",
+        "any_of": [
+          "06:52",
+          "6:52",
+          "0652"
+        ],
+        "ignore_case": true,
+        "asked_by": "at what UTC time it went DOWN",
+        "rationale": "last_state_change 1796194320 is 2026-12-02 06:52 UTC, twelve minutes after the move",
+        "derived": true,
+        "note": "Converted from the host's last_state_change epoch 1796194320 (2026-12-02 06:52 UTC); the seed stores only the epoch."
+      }
+    ],
+    "required_total": 4,
+    "counts_missed": [
+      {
+        "id": "hours-down",
+        "value": 28,
+        "nouns": [
+          "hours",
+          "hrs",
+          "h"
+        ],
+        "window": 3,
+        "asked_by": "how many hours it has been DOWN for",
+        "rationale": "2026-12-02 06:52 UTC to the stated now, 2026-12-03 10:52 UTC",
+        "derived": true,
+        "note": "Derived: last_state_change 1796194320 (2026-12-02 06:52 UTC) to the instruction's 2026-12-03 10:52 UTC is exactly 28 hours.",
+        "extra_any_of": [
+          "28h",
+          "28 h",
+          "28hrs",
+          "1 day 4 hours",
+          "1 day and 4 hours",
+          "one day and four hours",
+          "a day and 4 hours",
+          "a day and four hours",
+          "1d 4h",
+          "1 day, 4 hours"
+        ]
+      }
+    ],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "event0",
+          "job_id": 287455
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/seat_access.yml",
+          "ref": "b47e0d29a6c13f58e2d9a0b71c4f36e8d5a2b90c"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/main.yml",
+          "ref": "b47e0d29a6c13f58e2d9a0b71c4f36e8d5a2b90c"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [
+      {
+        "id": "namespace-line",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/seat_access.yml",
+        "line": 12,
+        "asked_by": "cite the line that puts the RoleBinding in the wrong project as `owner/repo:path:line`",
+        "rationale": "the line is counted from the seeded seat_access.yml; the log names the task's first line, not the namespace line"
+      }
+    ],
+    "citations_total": 1,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

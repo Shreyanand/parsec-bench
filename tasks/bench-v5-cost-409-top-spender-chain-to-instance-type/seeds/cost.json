@@ -1,0 +1,189 @@
+{
+  "account_costs": [
+    {
+      "account_id": "593027418866",
+      "items": {
+        "g6e.12xlarge": 38906.2,
+        "NoInstanceType": 19284.48,
+        "m7i.4xlarge": 8410.0,
+        "c7i.8xlarge": 4802.2
+      },
+      "total": 71402.88,
+      "account_cost_id": "ac-v9t-2609-top"
+    }
+  ],
+  "aws_cost_results": [
+    {
+      "aws_cost_result_id": "acr-v9t-2609-itype",
+      "accounts_queried": 1,
+      "group_by": "INSTANCE_TYPE",
+      "period": {
+        "start": "2026-09-01",
+        "end": "2026-10-01"
+      },
+      "period_id": "per-aws-v9t-2609",
+      "results": [
+        {
+          "account_id": "593027418866",
+          "items": {
+            "g6e.12xlarge": 38906.2,
+            "NoInstanceType": 19284.48,
+            "m7i.4xlarge": 8410.0,
+            "c7i.8xlarge": 4802.2
+          },
+          "total": 71402.88
+        }
+      ],
+      "total_cost": 71402.88
+    }
+  ],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [
+    {
+      "capacity_metric_result_id": "cmr-v9t-util-itype",
+      "capacity_totals_id": "ct-v9t-util-1002",
+      "capacity_window_id": "cw-v9t-168h-1002",
+      "metric": "utilization",
+      "group_by": "instance-type",
+      "period": {
+        "start": "2026-09-25T04:00:00Z",
+        "end": "2026-10-02T04:00:00Z"
+      },
+      "results": [
+        {
+          "dimension": "g6e.12xlarge",
+          "avg_utilization_pct": 91.4,
+          "total_capacity_hrs": 1512.0,
+          "unused_capacity_hrs": 130.0,
+          "total_estimated_cost_usd": 15865.42,
+          "unused_estimated_cost_usd": 1365.3,
+          "reservation_count": 9
+        },
+        {
+          "dimension": "m7i.4xlarge",
+          "avg_utilization_pct": 62.5,
+          "total_capacity_hrs": 336.0,
+          "unused_capacity_hrs": 126.0,
+          "total_estimated_cost_usd": 268.8,
+          "unused_estimated_cost_usd": 100.8,
+          "reservation_count": 2
+        }
+      ],
+      "totals": {
+        "capacity_totals_id": "ct-v9t-util-1002",
+        "total_estimated_cost_usd": 16134.22,
+        "unused_estimated_cost_usd": 1466.1,
+        "overall_utilization_pct": 86.1,
+        "total_dimensions": 2
+      }
+    }
+  ],
+  "capacity_totals": [
+    {
+      "capacity_totals_id": "ct-v9t-util-1002",
+      "total_estimated_cost_usd": 16134.22,
+      "unused_estimated_cost_usd": 1466.1,
+      "overall_utilization_pct": 86.1,
+      "total_dimensions": 2
+    }
+  ],
+  "capacity_windows": [
+    {
+      "capacity_window_id": "cw-v9t-168h-1002",
+      "start": "2026-09-25T04:00:00Z",
+      "end": "2026-10-02T04:00:00Z"
+    }
+  ],
+  "cost_monitor_results": [
+    {
+      "cost_monitor_result_id": "cmr-v9t-breakdown",
+      "endpoint": "breakdown",
+      "results": [
+        {
+          "account_id": "593027418866",
+          "account_name": "ml-training-prod",
+          "provider": "aws",
+          "cost": 71402.88,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "account_id": "448190265537",
+          "account_name": "data-lake-prod",
+          "provider": "aws",
+          "cost": 68950.12,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "account_id": "730264519908",
+          "account_name": "web-edge-prod",
+          "provider": "aws",
+          "cost": 41377.05,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "account_id": "216908734452",
+          "account_name": "ci-runners",
+          "provider": "aws",
+          "cost": 22610.4,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "account_id": "381945027716",
+          "account_name": "observability",
+          "provider": "aws",
+          "cost": 9884.31,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        }
+      ]
+    },
+    {
+      "cost_monitor_result_id": "cmr-v9t-drill",
+      "endpoint": "drilldown",
+      "results": [
+        {
+          "account_id": "593027418866",
+          "service": "Amazon Elastic Compute Cloud - Compute",
+          "cost": 52118.4,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "account_id": "593027418866",
+          "service": "Amazon Simple Storage Service",
+          "cost": 9940.18,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "account_id": "593027418866",
+          "service": "Amazon FSx",
+          "cost": 6210.3,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "account_id": "593027418866",
+          "service": "AWS Data Transfer",
+          "cost": 3134.0,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        }
+      ]
+    }
+  ],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-aws-v9t-2609",
+      "start": "2026-09-01",
+      "end": "2026-10-01"
+    }
+  ]
+}

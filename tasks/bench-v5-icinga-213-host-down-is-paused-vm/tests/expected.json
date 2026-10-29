@@ -1,0 +1,141 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts",
+          "search": "lab-bastion-kx7q2"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_vms",
+          "cluster": "ocpv-juniper",
+          "namespace": "sandbox-kx7q2-bastion"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "paused",
+        "any_of": [
+          "paused"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is really wrong with it",
+        "rationale": "the VM status/condition; only in the platform row"
+      },
+      {
+        "id": "io-error",
+        "any_of": [
+          "IOError",
+          "I/O error",
+          "IO error",
+          "io-error"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is really wrong",
+        "rationale": "the condition reason; only in the platform row"
+      },
+      {
+        "id": "disk",
+        "any_of": [
+          "rootdisk",
+          "disk",
+          "storage",
+          "volume"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is really wrong",
+        "rationale": "where the I/O error is",
+        "derived": true,
+        "note": "bastion-kx7q2's condition is Paused / IOError with message 'VMI was paused, low-level IO error detected on disk rootdisk', so the fault is in its root disk volume (dataVolume bastion-kx7q2-rootdisk)."
+      },
+      {
+        "id": "cluster-ns",
+        "any_of": [
+          "ocpv-juniper"
+        ],
+        "ignore_case": true,
+        "asked_by": "which cluster and namespace",
+        "rationale": "from the host's vars; not in the instruction"
+      },
+      {
+        "id": "other-vm-ok",
+        "any_of": [
+          "showroom-kx7q2 is Running",
+          "showroom-kx7q2 is running",
+          "showroom-kx7q2, is Running",
+          "showroom-kx7q2 (Running",
+          "showroom-kx7q2: Running",
+          "showroom-kx7q2 - Running",
+          "showroom-kx7q2 is fine",
+          "showroom-kx7q2 is healthy",
+          "showroom-kx7q2 is not affected",
+          "showroom-kx7q2 is unaffected",
+          "showroom-kx7q2, is Running and ready"
+        ],
+        "ignore_case": true,
+        "asked_by": "whether the other VM in that lab is affected",
+        "rationale": "the sibling VM row",
+        "derived": true,
+        "note": "list_vms for ocpv-juniper / sandbox-kx7q2-bastion returns a second VM, showroom-kx7q2, with status Running and ready true; the forms pair that VM with its state, which no single seed string does."
+      }
+    ],
+    "counts": [
+      {
+        "id": "vms-in-ns",
+        "value": 2,
+        "nouns": [
+          "vms",
+          "vm",
+          "virtual machines"
+        ],
+        "window": 4,
+        "asked_by": "the other VM in that lab",
+        "rationale": "list_vms count",
+        "extra_any_of": [
+          "two VMs",
+          "both VMs"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "network-cause",
+        "none_of": [
+          "network outage",
+          "network problem is",
+          "a network fault",
+          "firewall change",
+          "routing issue",
+          "security group"
+        ],
+        "ignore_case": true,
+        "rationale": "the ping output and the instruction invite a network answer",
+        "attributed_to": [
+          "not a network problem",
+          "isn't a network problem",
+          "not a network issue",
+          "network team says",
+          "network team insists",
+          "rules out the network"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

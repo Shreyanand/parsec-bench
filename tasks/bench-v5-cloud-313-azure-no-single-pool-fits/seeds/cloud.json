@@ -1,0 +1,130 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [
+    {
+      "azure_subscription_id": "azs-pool-23-104",
+      "database": "pools",
+      "id": "pool-23-104",
+      "used": true,
+      "projecttag": "nimbus-fsi-lab"
+    },
+    {
+      "azure_subscription_id": "azs-pool-23-109",
+      "database": "pools",
+      "id": "pool-23-109",
+      "used": true,
+      "projecttag": "nimbus-fsi-lab"
+    },
+    {
+      "azure_subscription_id": "azs-pool-23-115",
+      "database": "pools",
+      "id": "pool-23-115",
+      "used": true,
+      "projecttag": "edge-retail-poc"
+    },
+    {
+      "azure_subscription_id": "azs-pool-23-118",
+      "database": "pools",
+      "id": "pool-23-118",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "azs-pool-23-121",
+      "database": "pools",
+      "id": "pool-23-121",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "azs-pool-23-126",
+      "database": "pools",
+      "id": "pool-23-126",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "azs-pool-27-203",
+      "database": "pools",
+      "id": "pool-27-203",
+      "used": true,
+      "projecttag": "aro-gitops-ws"
+    },
+    {
+      "azure_subscription_id": "azs-pool-27-207",
+      "database": "pools",
+      "id": "pool-27-207",
+      "used": true,
+      "projecttag": "aro-gitops-ws"
+    },
+    {
+      "azure_subscription_id": "azs-pool-27-211",
+      "database": "pools",
+      "id": "pool-27-211",
+      "used": true,
+      "projecttag": "quarkus-perf-day"
+    },
+    {
+      "azure_subscription_id": "azs-pool-27-214",
+      "database": "pools",
+      "id": "pool-27-214",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "azs-pool-27-219",
+      "database": "pools",
+      "id": "pool-27-219",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "azs-pool-31-302",
+      "database": "pools",
+      "id": "pool-31-302",
+      "used": true,
+      "projecttag": "sap-hana-demo"
+    },
+    {
+      "azure_subscription_id": "azs-pool-31-305",
+      "database": "pools",
+      "id": "pool-31-305",
+      "used": true,
+      "projecttag": "sap-hana-demo"
+    },
+    {
+      "azure_subscription_id": "azs-pool-31-310",
+      "database": "pools",
+      "id": "pool-31-310",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "azs-pool-31-313",
+      "database": "pools",
+      "id": "pool-31-313",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "azs-pool-36-401",
+      "database": "pools",
+      "id": "pool-36-401",
+      "used": true,
+      "projecttag": "ai-ops-summit"
+    },
+    {
+      "azure_subscription_id": "azs-pool-36-404",
+      "database": "pools",
+      "id": "pool-36-404",
+      "used": true,
+      "projecttag": "ai-ops-summit"
+    },
+    {
+      "azure_subscription_id": "azs-pool-36-408",
+      "database": "pools",
+      "id": "pool-36-408",
+      "used": true,
+      "projecttag": "netobserv-lab"
+    }
+  ],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": []
+}

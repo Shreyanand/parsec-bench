@@ -1,0 +1,24 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "main",
+      "path": "monitoring/aap2/check_job_status.py",
+      "content": "#!/usr/bin/env python3\n\"\"\"Alert on recent AAP2 job failures per controller.\"\"\"\n\nWINDOW_MINUTES = 60\nWARN_FAILURES = 2\nCRIT_FAILURES = 4\nIGNORE_ACTIONS = (\"destroy\",)\n\ndef classify(failures):\n    if failures >= CRIT_FAILURES:\n        return 2\n    if failures >= WARN_FAILURES:\n        return 1\n    return 0\n",
+      "file_id": "rhpds/rhdp-monitoring@main-monitoring/aap2/check_job_status.py"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "ref": "HEAD",
+      "path": "monitoring/aap2/check_job_status.py",
+      "content": "#!/usr/bin/env python3\n\"\"\"Alert on recent AAP2 job failures per controller.\"\"\"\n\nWINDOW_MINUTES = 60\nWARN_FAILURES = 2\nCRIT_FAILURES = 4\nIGNORE_ACTIONS = (\"destroy\",)\n\ndef classify(failures):\n    if failures >= CRIT_FAILURES:\n        return 2\n    if failures >= WARN_FAILURES:\n        return 1\n    return 0\n",
+      "file_id": "rhpds/rhdp-monitoring@HEAD-monitoring/aap2/check_job_status.py"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

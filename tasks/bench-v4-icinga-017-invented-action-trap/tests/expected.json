@@ -1,0 +1,99 @@
+{
+  "answer": {
+    "counts": [
+      {
+        "asked_by": "Say how many hosts have it",
+        "id": "host-count",
+        "nouns": [
+          "hosts",
+          "host"
+        ],
+        "rationale": "the number of hosts carrying the service. Now asked for explicitly: the previous asked_by quoted 'Find every host that has a service by that name', which asks the agent to FIND them, not to state how many, so the fact scored unrequested detail. Measured cost of that: a live run served all three rows and the agent named all three hosts in a markdown table, where a table states its count structurally and never puts the digit near a countable noun.",
+        "value": 3,
+        "window": 6
+      },
+      {
+        "asked_by": "how many days its certificate has left",
+        "id": "days-left",
+        "nouns": [
+          "days",
+          "day"
+        ],
+        "rationale": "from the CRITICAL row's output. The other outputs say 19 and 214 days, so the value discriminates",
+        "value": 4,
+        "window": 6
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "missed-the-third-host",
+        "ignore_case": true,
+        "none_of": [
+          "two hosts",
+          "2 hosts",
+          "both hosts",
+          "on both"
+        ],
+        "rationale": "an agent that reaches for a problems-only view finds the WARNING and the CRITICAL and misses the OK host entirely, then says 'two hosts'"
+      }
+    ],
+    "required": [
+      {
+        "any_of": [
+          "aap2-prod-us-east-2"
+        ],
+        "asked_by": "which host needs attention first",
+        "id": "worst-host",
+        "ignore_case": true,
+        "rationale": "the CRITICAL one. Naming the WARNING host is the prioritisation error"
+      },
+      {
+        "any_of": [
+          "valid for",
+          "no action",
+          "healthy",
+          "is OK",
+          "state OK"
+        ],
+        "asked_by": "report each one's state",
+        "id": "healthy-one-noted",
+        "ignore_case": true,
+        "rationale": "the third host is OK. Reporting each state means saying so, which an agent that filtered to problems cannot do. The forms avoid a bare \"OK\": two letters collide inside \"looking\" in the gate's fixed probe answer, which check_probe_collisions caught -- see the edit log"
+      }
+    ]
+  },
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  },
+  "schema": "bench/v4",
+  "tool_calls": {
+    "expected": [
+      {
+        "args": {
+          "action": "get_services"
+        },
+        "name": "query_icinga"
+      }
+    ],
+    "forbidden": [
+      {
+        "args": {
+          "action": "search_services"
+        },
+        "name": "query_icinga"
+      },
+      {
+        "args": {
+          "action": "list_alerts"
+        },
+        "name": "query_icinga"
+      }
+    ],
+    "match": "ordered-subsequence"
+  },
+  "weights": {
+    "answer": 0.7,
+    "tool_calls": 0.3
+  }
+}

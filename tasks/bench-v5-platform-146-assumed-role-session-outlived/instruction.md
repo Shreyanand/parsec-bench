@@ -1,0 +1,3 @@
+Telemetry Datamart Lab orders on the `partner0` AAP2 controller have started dying near the very end of provisioning. The latest is job `7731456`, from 2026-10-08. The AWS error talks about the security token, and the security team's access-key rotation ran across the sandbox accounts at 14:30 UTC that day, so my assumption is that the rotation revoked our keys in the middle of the run. I am about to ask them to re-issue the keys.
+
+Before I do that, read the job log, look up the catalog item and read its configuration. Tell me what AWS actually rejected and why the credentials stopped working, how many minutes after the role was assumed the failure came, whether the rotation explains it, and which setting in the item has to change.

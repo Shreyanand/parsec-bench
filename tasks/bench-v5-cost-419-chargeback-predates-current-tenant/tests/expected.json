@@ -1,0 +1,200 @@
+{
+  "schema": "bench/v4",
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "breakdown"
+        }
+      },
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "570284196633"
+          ],
+          "start_date": "2026-09-01",
+          "end_date": "2026-10-01"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "account_id": "570284196633"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "w6hcx"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "top-account",
+        "ignore_case": true,
+        "any_of": [
+          "570284196633"
+        ],
+        "asked_by": "find the sandbox account that cost the most",
+        "rationale": "the account comes only from the breakdown's top row; the instruction names none"
+      },
+      {
+        "id": "current-holder",
+        "ignore_case": true,
+        "any_of": [
+          "tnakashima"
+        ],
+        "asked_by": "who holds it now",
+        "rationale": "the owner of record in the sandbox account database, the person the default rule would bill"
+      },
+      {
+        "id": "provisioned-date",
+        "ignore_case": true,
+        "any_of": [
+          "2026-09-18",
+          "september 18",
+          "18 september",
+          "sept 18",
+          "sep 18",
+          "18 sep",
+          "9/18",
+          "18th"
+        ],
+        "asked_by": "when their lab was provisioned",
+        "rationale": "provision job 84152 for w6hcx started and finished on 2026-09-18; this is the boundary of the holder's tenancy"
+      },
+      {
+        "id": "not-billable-amount",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "7,718.43",
+          "7718.43",
+          "7,718.4",
+          "7,718",
+          "7.72k",
+          "7.7k"
+        ],
+        "asked_by": "how much should not go to them",
+        "rationale": "the 2026-09-01..2026-09-12 block, which ends days before the holder's lab existed",
+        "note": "Sum of both services' daily entries dated 2026-09-01 to 2026-09-12 in the query_aws_costs result (EC2 compute 7,256.43 + EC2 - Other 462.00)."
+      },
+      {
+        "id": "earlier-spend-predates-lab",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "predates",
+          "pre-dates",
+          "predating",
+          "before their lab",
+          "before the lab was provisioned",
+          "before the lab existed",
+          "before their lab existed",
+          "before tnakashima",
+          "before the account was assigned",
+          "before it was assigned",
+          "before 2026-09-18",
+          "before september 18",
+          "before the 18th",
+          "previous tenant",
+          "previous holder",
+          "previous occupant",
+          "previous user",
+          "previous lab",
+          "prior tenant",
+          "prior holder",
+          "prior lab",
+          "earlier tenant",
+          "earlier lab",
+          "different lab",
+          "another lab",
+          "someone else",
+          "not theirs",
+          "isn't theirs",
+          "wasn't theirs",
+          "not their usage",
+          "not their spend",
+          "not tnakashima's"
+        ],
+        "asked_by": "how much should not go to them",
+        "rationale": "the reason the month-end rule fails: the early-September spend is followed by five zero days and then the holder's first provision, so it belongs to an earlier use of the account",
+        "note": "find_jobs for w6hcx returns only provision job 84152 (started 2026-09-18T14:51:07Z), while the cost series has spend on 2026-09-01..12 and none on 09-13..17."
+      }
+    ],
+    "counts": [
+      {
+        "id": "billable-amount",
+        "value": 5830,
+        "nouns": [
+          "bill",
+          "billed",
+          "charge",
+          "tnakashima"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "5,830.20",
+          "5830.20",
+          "5,830.2",
+          "5830.2",
+          "5,830",
+          "5.83k"
+        ],
+        "asked_by": "how much of September they should actually be billed",
+        "rationale": "the 2026-09-18..2026-09-30 spend, from the holder's provision day to month end",
+        "note": "Derived: sum of both services' daily entries dated 2026-09-18 to 2026-09-30 (EC2 compute 5,551.10 + EC2 - Other 279.10 = 5,830.20)."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "whole-month-to-holder",
+        "ignore_case": true,
+        "none_of": [
+          "bill the whole month to",
+          "bill the full month to",
+          "bill the entire month to",
+          "bill them for the full",
+          "bill them for the whole",
+          "bill them the full",
+          "they should be billed the full",
+          "they should be billed for the full",
+          "they should be billed for the whole",
+          "charge them the full",
+          "charge them for the full",
+          "bill the full $13,548.63",
+          "bill all $13,548.63",
+          "the full $13,548.63 should",
+          "the whole $13,548.63",
+          "the default rule holds",
+          "the month-end rule holds",
+          "safe to apply the default",
+          "the default rule is fine",
+          "nothing needs to be held back"
+        ],
+        "attributed_to": [
+          "default rule would",
+          "the default would",
+          "month-end rule would",
+          "under finance's default"
+        ],
+        "rationale": "the trap: applying the month-end default and billing the holder for spend that ended before their lab existed"
+      }
+    ]
+  },
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

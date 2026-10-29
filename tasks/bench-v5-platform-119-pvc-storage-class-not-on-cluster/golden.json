@@ -1,0 +1,83 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_ocpv_cluster",
+      "args": {
+        "action": "list_pvcs",
+        "cluster": "ocpv-garnet",
+        "namespace": "sandbox-j5wqc-sap-hana-lab"
+      },
+      "result": {
+        "cluster": "ocpv-garnet",
+        "namespace": "sandbox-j5wqc-sap-hana-lab",
+        "pvcs": [
+          {
+            "name": "hana-db01-rootdisk",
+            "status": "Pending",
+            "storage_class": "ocs-external-storagecluster-ceph-rbd-virtualization",
+            "size": "64Gi",
+            "volume_mode": "Block",
+            "access_modes": [
+              "ReadWriteMany"
+            ],
+            "events": [
+              "ProvisioningFailed: storageclass.storage.k8s.io \"ocs-external-storagecluster-ceph-rbd-virtualization\" not found"
+            ]
+          },
+          {
+            "name": "hana-db01-data",
+            "status": "Bound",
+            "storage_class": "ocs-storagecluster-ceph-rbd-virtualization",
+            "size": "250Gi",
+            "volume_mode": "Block",
+            "access_modes": [
+              "ReadWriteMany"
+            ]
+          }
+        ],
+        "count": 2,
+        "pending_count": 1
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_ocpv_cluster",
+      "args": {
+        "action": "list_storage_classes",
+        "cluster": "ocpv-garnet"
+      },
+      "result": {
+        "cluster": "ocpv-garnet",
+        "storage_classes": [
+          {
+            "name": "ocs-storagecluster-ceph-rbd-virtualization",
+            "provisioner": "openshift-storage.rbd.csi.ceph.com",
+            "reclaim_policy": "Delete",
+            "binding_mode": "Immediate",
+            "allow_volume_expansion": true,
+            "default": true
+          },
+          {
+            "name": "ocs-storagecluster-ceph-rbd",
+            "provisioner": "openshift-storage.rbd.csi.ceph.com",
+            "reclaim_policy": "Delete",
+            "binding_mode": "Immediate",
+            "allow_volume_expansion": true,
+            "default": false
+          },
+          {
+            "name": "ocs-storagecluster-cephfs",
+            "provisioner": "openshift-storage.cephfs.csi.ceph.com",
+            "reclaim_policy": "Delete",
+            "binding_mode": "Immediate",
+            "allow_volume_expansion": true,
+            "default": false
+          }
+        ],
+        "count": 3
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "This is not a Ceph capacity problem. The VM's root disk claim asks for a storage class that does not exist on ocpv-garnet.\n\nIn sandbox-j5wqc-sap-hana-lab, list_pvcs shows:\n- hana-db01-rootdisk: Pending, 64Gi, storage class ocs-external-storagecluster-ceph-rbd-virtualization. Event: ProvisioningFailed: storageclass.storage.k8s.io \"ocs-external-storagecluster-ceph-rbd-virtualization\" not found.\n- hana-db01-data: Bound, 250Gi, storage class ocs-storagecluster-ceph-rbd-virtualization.\n\nlist_storage_classes on ocpv-garnet returns three classes: ocs-storagecluster-ceph-rbd-virtualization (the default), ocs-storagecluster-ceph-rbd and ocs-storagecluster-cephfs. There is no ocs-external-storagecluster-ceph-rbd-virtualization. The \"external\" name is how the class is called on clusters that use an external Ceph. On ocpv-garnet the internal ODF class is named ocs-storagecluster-ceph-rbd-virtualization. The provisioner was never even asked for a volume, so space never came into it. The data disk in the same namespace bound a 250Gi volume on ocs-storagecluster-ceph-rbd-virtualization, which shows that Ceph on this cluster is provisioning fine.\n\nFix: recreate the root disk's DataVolume/PVC with storageClassName ocs-storagecluster-ceph-rbd-virtualization, or better, fix the lab template that hard-codes the external class name so the next order doesn't hit this. A PVC's storage class cannot be edited in place. I also can't make the change: query_ocpv_cluster only reads (list_pvcs, list_storage_classes, list_vms and similar), so someone with cluster access has to apply it.\n"
+}

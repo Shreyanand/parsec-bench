@@ -1,0 +1,136 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "863017452296"
+          ],
+          "start_date": "2026-09-01",
+          "end_date": "2026-10-13",
+          "group_by": "SERVICE"
+        }
+      },
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "drilldown",
+          "selected_key": "863017452296",
+          "drilldown_type": "account_services",
+          "start_date": "2026-09-01",
+          "end_date": "2026-10-13"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "account_id": "863017452296"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_marketplace_agreements",
+        "args": {
+          "account_id": "863017452296"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "live-quillmark",
+        "any_of": [
+          "Quillmark Log Insights"
+        ],
+        "ignore_case": true,
+        "asked_by": "which of the AWS Marketplace agreements on account 863017452296 are still in force",
+        "rationale": "ends 2027-03-31; only the inventory names it"
+      },
+      {
+        "id": "live-corvex",
+        "any_of": [
+          "Corvex Edge Firewall"
+        ],
+        "ignore_case": true,
+        "asked_by": "which of the AWS Marketplace agreements on account 863017452296 are still in force",
+        "rationale": "ends 2027-01-31; only the inventory names it"
+      },
+      {
+        "id": "halvane-lapsed",
+        "derived": true,
+        "note": "The Halvane Secrets Vault row returned by query_marketplace_agreements says status ACTIVE but has agreement_end 2026-09-30, before the 2026-10-12 as-of date, and auto_renew false, so the agent concludes it has lapsed; no seed string says so.",
+        "ignore_case": true,
+        "any_of": [
+          "lapsed",
+          "expired",
+          "has ended",
+          "ended on 2026-09-30",
+          "ended 2026-09-30",
+          "no longer in force",
+          "not in force",
+          "not live",
+          "no longer live",
+          "no longer active",
+          "not active",
+          "past its end",
+          "out of term",
+          "terminated on 2026-09-30"
+        ],
+        "asked_by": "As of 2026-10-12, which of the AWS Marketplace agreements on account 863017452296 are still in force",
+        "rationale": "the Halvane row says ACTIVE but agreement_end 2026-09-30 is before the as-of date and auto_renew is false"
+      },
+      {
+        "id": "end-date",
+        "any_of": [
+          "2026-09-30",
+          "30 September 2026",
+          "September 30, 2026",
+          "Sept 30",
+          "Sep 30",
+          "30 Sep"
+        ],
+        "ignore_case": true,
+        "asked_by": "end date",
+        "rationale": "the stored agreement_end of the lapsed agreement; the evidence for the lapse"
+      },
+      {
+        "id": "stale-status",
+        "derived": true,
+        "note": "Every row the tool returns carries last_updated 2026-08-31, which predates the Halvane agreement_end of 2026-09-30, so the agent infers the ACTIVE status was recorded before the term ended and is stale.",
+        "ignore_case": true,
+        "any_of": [
+          "2026-08-31",
+          "last_updated",
+          "last updated",
+          "last refreshed",
+          "stale",
+          "out of date",
+          "outdated",
+          "not been refreshed",
+          "hasn't been refreshed"
+        ],
+        "asked_by": "only want to budget for things that are actually live",
+        "rationale": "explains why status says ACTIVE: the inventory row predates the end date"
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

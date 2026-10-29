@@ -1,0 +1,181 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-lmoreau-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-kdasgupta-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-pferreira-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-jnakashima-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-ebrennan-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-sokoye-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-mlindgren-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "skua",
+          "namespace": "user-hcastillo-redhat-com"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "claim-hq8vs",
+        "any_of": [
+          "hq8vs"
+        ],
+        "ignore_case": true,
+        "asked_by": "with its GUID",
+        "rationale": "lmoreau's event claim"
+      },
+      {
+        "id": "claim-pw3nd",
+        "any_of": [
+          "pw3nd"
+        ],
+        "ignore_case": true,
+        "asked_by": "with its GUID",
+        "rationale": "pferreira's claim is provision-failed but still exists"
+      },
+      {
+        "id": "claim-cx9tl",
+        "any_of": [
+          "cx9tl"
+        ],
+        "ignore_case": true,
+        "asked_by": "with its GUID",
+        "rationale": "jnakashima's event claim is stopped but still exists"
+      },
+      {
+        "id": "claim-ej5rm",
+        "any_of": [
+          "ej5rm"
+        ],
+        "ignore_case": true,
+        "asked_by": "with its GUID",
+        "rationale": "ebrennan's first event claim"
+      },
+      {
+        "id": "claim-fk2zb",
+        "any_of": [
+          "fk2zb"
+        ],
+        "ignore_case": true,
+        "asked_by": "with its GUID",
+        "rationale": "ebrennan ordered twice; the second claim is easy to miss"
+      }
+    ],
+    "counts": [
+      {
+        "id": "leftover-claims",
+        "value": 5,
+        "nouns": [
+          "claims",
+          "ResourceClaims",
+          "labs",
+          "leftovers",
+          "deployments",
+          "environments"
+        ],
+        "window": 4,
+        "asked_by": "how many leftover event claims there are in total",
+        "rationale": "5 claims of ocp4.gitops-day.event across the eight namespaces on skua"
+      },
+      {
+        "id": "attendees-holding",
+        "value": 4,
+        "nouns": [
+          "attendees",
+          "namespaces",
+          "people",
+          "users",
+          "participants"
+        ],
+        "window": 4,
+        "asked_by": "how many attendees still hold one",
+        "rationale": "lmoreau, pferreira, jnakashima and ebrennan; mlindgren holds only a personal lab"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "drops-failed-claim",
+        "none_of": [
+          "4 leftover",
+          "four leftover",
+          "4 event claims",
+          "four event claims",
+          "4 claims in total",
+          "total of 4 claims",
+          "3 attendees",
+          "three attendees",
+          "nothing to clean up there",
+          "pferreira has nothing",
+          "pferreira's namespace is clean"
+        ],
+        "ignore_case": true,
+        "rationale": "dropping the failed claim pw3nd gives 4 claims and 3 attendees; it still exists"
+      }
+    ],
+    "fold_markup": true
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

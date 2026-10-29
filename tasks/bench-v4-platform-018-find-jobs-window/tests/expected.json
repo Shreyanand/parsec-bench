@@ -1,0 +1,84 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "template_name": "RHPDS agd-v2.ocp4-cluster.prod-provision",
+          "status": "failed",
+          "created_after": "2026-05-01",
+          "created_before": "2026-05-21"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "counts": [
+      {
+        "id": "failure-count",
+        "value": 3,
+        "nouns": [
+          "failed",
+          "failures",
+          "runs",
+          "jobs"
+        ],
+        "window": 6,
+        "asked_by": "Report how many of its runs failed in that range",
+        "rationale": "three of the six seeded jobs match all three filters. An agent that drops the controller filter counts 4, one that drops the date filter counts 4, and one that drops the status filter counts 4 as well -- so the value 3 is only reachable with every filter applied"
+      }
+    ],
+    "required": [
+      {
+        "id": "earliest-id",
+        "any_of": [
+          "90410"
+        ],
+        "ignore_case": true,
+        "asked_by": "Give the job id and start time of the earliest failure",
+        "rationale": "the 2026-05-04 run. The 2026-04-28 run is earlier but outside the range, so an agent that ignored created_after names 90415 instead"
+      },
+      {
+        "id": "earliest-start",
+        "any_of": [
+          "2026-05-04",
+          "02:11"
+        ],
+        "ignore_case": true,
+        "asked_by": "Give the job id and start time of the earliest failure",
+        "rationale": "a second literal tied to the same record"
+      },
+      {
+        "id": "second-id",
+        "any_of": [
+          "90411"
+        ],
+        "ignore_case": true,
+        "asked_by": "list every failing job id",
+        "rationale": "the second in-range failure. Listing every id means the whole result set has to be reported, not just the extreme"
+      },
+      {
+        "id": "third-id",
+        "any_of": [
+          "90412"
+        ],
+        "ignore_case": true,
+        "asked_by": "list every failing job id",
+        "rationale": "the third in-range failure"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

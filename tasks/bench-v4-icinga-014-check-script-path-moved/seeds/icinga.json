@@ -1,0 +1,44 @@
+{
+  "comments": [],
+  "downtimes": [],
+  "hosts": [
+    {
+      "name": "replica3-ops",
+      "type": "Host",
+      "attrs": {
+        "display_name": "replica3.ops.demo.redhat.com",
+        "host_name": "replica3-ops",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "ipa-healthcheck",
+      "type": "Service",
+      "attrs": {
+        "display_name": "IPA HEALTHCHECK",
+        "host_name": "replica3-ops",
+        "state": 3,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "UNKNOWN - check plugin not found: /home/icinga/monitoring-scripts/monitoring/ipa/check_ipa_health.sh",
+          "state": 3,
+          "exit_status": 3
+        }
+      }
+    }
+  ]
+}

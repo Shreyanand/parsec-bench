@@ -1,0 +1,456 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "job_id": 512944,
+          "controller": "west"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "west",
+          "template_name": "h8cuy"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "iot-fleet-sim"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "job_id": 512944,
+          "controller": "west",
+          "failed_only": true
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "iot-fleet-sim"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "iot-fleet-sim"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "infra_ec2_template_create"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "h8cuy"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "infra_ec2_template_create"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "iot-fleet-sim"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "infra_ec2_template"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "infra_ec2_template"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "job_id": 512937,
+          "controller": "west"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "\nSELECT\n  p.uuid,\n  p.guid,\n  p.status,\n  p.created_at,\n  p.updated_at,\n  p.catalog_item,\n  p.cloud_provider,\n  p.region,\n  u.email AS user_email\nFROM provisions p\nLEFT JOIN users u ON p.user_id = u.id\nWHERE p.guid = 'h8cuy'\nORDER BY p.created_at DESC\n"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.uuid, p.babylon_guid, p.current_state, p.desired_state, p.provisioned_at, p.retired_at, p.modified_at, p.catalog_id, ci.name AS catalog_item_name, p.ordered_by FROM provisions p LEFT JOIN catalog_items ci ON p.catalog_id = ci.id WHERE p.babylon_guid = 'h8cuy' ORDER BY p.provisioned_at DESC LIMIT 5"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_by_guid",
+          "guid": "h8cuy",
+          "earliest": "-7d"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_actions",
+          "guid": "h8cuy"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=federated:rh_pds-001_ocp_infra \"h8cuy\" | spath | sort -_time | head 50",
+          "earliest": "-7d"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "search": "iot fleet simulator"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "iot-fleet-simulator"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "owner": "h8cuy"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "sandbox-h8cuy"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "iot-fleet"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job",
+          "controller": "west",
+          "job_id": 512937
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/configs/iot-fleet-sim/default_vars.yml",
+          "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038",
+          "search": "infra_ec2_template_create"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038",
+          "search": "iot-fleet-sim"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038",
+          "search": "cloudformation_stack_name"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038",
+          "search": "iot"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038",
+          "search": "stack_name"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038",
+          "search": "cloudformation"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "iot-fleet-sim",
+          "state": "all"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038",
+          "search": "ec2_template"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/configs",
+          "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible",
+          "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": ".",
+          "ref": "a5c38e1f0d924b7e6c1a0f83d5b29e47c6f1d038"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": ".",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "cloudformation_stack_name"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2",
+          "path": ".",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "stack_name"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "iot-fleet"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "path": "ansible/roles",
+          "ref": "development"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "path": "ansible"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "west",
+          "job_id": 512937,
+          "changed_only": false
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=rh_pds-001_aap \"iot-fleet-sim\" \"stack_name\" earliest=-30d",
+          "max_results": 50
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_by_guid",
+          "guid": "h8cuy",
+          "search_terms": "stack_name cloudformation",
+          "earliest": "-30d"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_aap2_logs",
+          "controller": "aap2-prod-us-west-2-01.aap.infra.demo.redhat.com",
+          "guid": "h8cuy",
+          "search_terms": "stack_name iot-fleet-sim",
+          "earliest": "-30d"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "west",
+          "template_name": "iot-fleet-sim",
+          "status": "successful",
+          "max_results": 5
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 512902
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "west",
+          "job_id": 512902,
+          "changed_only": true
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/configs/iot-fleet-sim/default_vars_ec2.yml"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "guid-only-name",
+        "any_of": [
+          "GUID alone",
+          "guid alone",
+          "only the guid",
+          "only from the guid",
+          "derived from the guid",
+          "built from the guid",
+          "same stack name",
+          "always collide"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why it failed",
+        "rationale": "the stack-name rule is only in the fetched defaults",
+        "note": "default_vars_ec2.yml sets stack_name: \"{{ env_type }}-{{ guid }}\", and the log's failing stack is iot-fleet-sim-h8cuy, so every run for GUID h8cuy creates the same stack name while job 512937 still holds it."
+      }
+    ],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

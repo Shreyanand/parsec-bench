@@ -1,0 +1,32 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "file_id": "rhpds/rhdp-monitoring@HEAD:plugins/fs/check_mount_latency.sh",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/fs/check_mount_latency.sh",
+      "ref": "HEAD",
+      "content": "#!/bin/bash\n# check_mount_latency.sh - time a stat() on every mount from /proc/mounts.\nset -uo pipefail\nCRIT=\"${1:-5}\"\nworst=0; worst_m=\"\"; out=()\nwhile read -r _ m fstype _; do\n  case \"$fstype\" in proc|sysfs|tmpfs|devtmpfs|cgroup2) continue ;; esac\n  # autofs indirect maps: stat() triggers a mount and measures the automounter, not NFS.\n  [[ \"$fstype\" == autofs ]] && continue\n  t=$( { /usr/bin/time -f %e stat -t \"$m\" >/dev/null; } 2>&1 )\n  out+=(\"$m $t s\")\n  if (( $(echo \"$t > $worst\" | bc) )); then worst=$t; worst_m=$m; fi\ndone < /proc/mounts\nif (( $(echo \"$worst > $CRIT\" | bc) )); then\n  echo \"MOUNT CRITICAL - $worst_m stat() took $worst s (crit $CRIT s); ${out[*]}\"; exit 2\nfi\necho \"MOUNT OK - ${out[*]}\"; exit 0\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@main:plugins/fs/check_mount_latency.sh",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/fs/check_mount_latency.sh",
+      "ref": "main",
+      "content": "#!/bin/bash\n# check_mount_latency.sh - time a stat() on every mount from /proc/mounts.\nset -uo pipefail\nCRIT=\"${1:-5}\"\nworst=0; worst_m=\"\"; out=()\nwhile read -r _ m fstype _; do\n  case \"$fstype\" in proc|sysfs|tmpfs|devtmpfs|cgroup2) continue ;; esac\n  # autofs indirect maps: stat() triggers a mount and measures the automounter, not NFS.\n  [[ \"$fstype\" == autofs ]] && continue\n  t=$( { /usr/bin/time -f %e stat -t \"$m\" >/dev/null; } 2>&1 )\n  out+=(\"$m $t s\")\n  if (( $(echo \"$t > $worst\" | bc) )); then worst=$t; worst_m=$m; fi\ndone < /proc/mounts\nif (( $(echo \"$worst > $CRIT\" | bc) )); then\n  echo \"MOUNT CRITICAL - $worst_m stat() took $worst s (crit $CRIT s); ${out[*]}\"; exit 2\nfi\necho \"MOUNT OK - ${out[*]}\"; exit 0\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@v3.4.0:plugins/fs/check_mount_latency.sh",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/fs/check_mount_latency.sh",
+      "ref": "v3.4.0",
+      "content": "#!/bin/bash\n# check_mount_latency.sh - time a stat() on every mount from /proc/mounts.\nset -uo pipefail\nCRIT=\"${1:-5}\"\nworst=0; worst_m=\"\"; out=()\nwhile read -r _ m fstype _; do\n  case \"$fstype\" in proc|sysfs|tmpfs|devtmpfs|cgroup2) continue ;; esac\n  t=$( { /usr/bin/time -f %e stat -t \"$m\" >/dev/null; } 2>&1 )\n  out+=(\"$m $t s\")\n  if (( $(echo \"$t > $worst\" | bc) )); then worst=$t; worst_m=$m; fi\ndone < /proc/mounts\nif (( $(echo \"$worst > $CRIT\" | bc) )); then\n  echo \"MOUNT CRITICAL - $worst_m stat() took $worst s (crit $CRIT s); ${out[*]}\"; exit 2\nfi\necho \"MOUNT OK - ${out[*]}\"; exit 0\n"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

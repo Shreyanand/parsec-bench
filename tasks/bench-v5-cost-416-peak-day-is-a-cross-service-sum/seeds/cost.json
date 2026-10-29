@@ -1,0 +1,311 @@
+{
+  "account_costs": [
+    {
+      "account_id": "529364071846",
+      "items": {
+        "Amazon Elastic Compute Cloud - Compute": {
+          "cost": 10092.15,
+          "daily": [
+            {
+              "date": "2026-09-14",
+              "cost": 1180.4
+            },
+            {
+              "date": "2026-09-15",
+              "cost": 2960.15
+            },
+            {
+              "date": "2026-09-16",
+              "cost": 1204.75
+            },
+            {
+              "date": "2026-09-17",
+              "cost": 1192.3
+            },
+            {
+              "date": "2026-09-18",
+              "cost": 1210.6
+            },
+            {
+              "date": "2026-09-19",
+              "cost": 1175.05
+            },
+            {
+              "date": "2026-09-20",
+              "cost": 1168.9
+            }
+          ]
+        },
+        "Amazon Simple Storage Service": {
+          "cost": 2707.2,
+          "daily": [
+            {
+              "date": "2026-09-14",
+              "cost": 210.3
+            },
+            {
+              "date": "2026-09-15",
+              "cost": 214.1
+            },
+            {
+              "date": "2026-09-16",
+              "cost": 219.85
+            },
+            {
+              "date": "2026-09-17",
+              "cost": 228.4
+            },
+            {
+              "date": "2026-09-18",
+              "cost": 1366.2
+            },
+            {
+              "date": "2026-09-19",
+              "cost": 236.75
+            },
+            {
+              "date": "2026-09-20",
+              "cost": 231.6
+            }
+          ]
+        },
+        "AWS Data Transfer": {
+          "cost": 2299.95,
+          "daily": [
+            {
+              "date": "2026-09-14",
+              "cost": 95.2
+            },
+            {
+              "date": "2026-09-15",
+              "cost": 101.45
+            },
+            {
+              "date": "2026-09-16",
+              "cost": 98.7
+            },
+            {
+              "date": "2026-09-17",
+              "cost": 104.15
+            },
+            {
+              "date": "2026-09-18",
+              "cost": 1688.35
+            },
+            {
+              "date": "2026-09-19",
+              "cost": 112.3
+            },
+            {
+              "date": "2026-09-20",
+              "cost": 99.8
+            }
+          ]
+        },
+        "AmazonCloudWatch": {
+          "cost": 291.75,
+          "daily": [
+            {
+              "date": "2026-09-14",
+              "cost": 41.1
+            },
+            {
+              "date": "2026-09-15",
+              "cost": 40.85
+            },
+            {
+              "date": "2026-09-16",
+              "cost": 41.3
+            },
+            {
+              "date": "2026-09-17",
+              "cost": 42.05
+            },
+            {
+              "date": "2026-09-18",
+              "cost": 43.9
+            },
+            {
+              "date": "2026-09-19",
+              "cost": 41.6
+            },
+            {
+              "date": "2026-09-20",
+              "cost": 40.95
+            }
+          ]
+        }
+      },
+      "total": 15391.05,
+      "account_cost_id": "ac-w7q-0921"
+    }
+  ],
+  "aws_cost_results": [
+    {
+      "aws_cost_result_id": "acr-w7q-0921-svc",
+      "accounts_queried": 1,
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2026-09-14",
+        "end": "2026-09-21"
+      },
+      "period_id": "per-aws-w7q-0921",
+      "results": [
+        {
+          "account_id": "529364071846",
+          "items": {
+            "Amazon Elastic Compute Cloud - Compute": {
+              "cost": 10092.15,
+              "daily": [
+                {
+                  "date": "2026-09-14",
+                  "cost": 1180.4
+                },
+                {
+                  "date": "2026-09-15",
+                  "cost": 2960.15
+                },
+                {
+                  "date": "2026-09-16",
+                  "cost": 1204.75
+                },
+                {
+                  "date": "2026-09-17",
+                  "cost": 1192.3
+                },
+                {
+                  "date": "2026-09-18",
+                  "cost": 1210.6
+                },
+                {
+                  "date": "2026-09-19",
+                  "cost": 1175.05
+                },
+                {
+                  "date": "2026-09-20",
+                  "cost": 1168.9
+                }
+              ]
+            },
+            "Amazon Simple Storage Service": {
+              "cost": 2707.2,
+              "daily": [
+                {
+                  "date": "2026-09-14",
+                  "cost": 210.3
+                },
+                {
+                  "date": "2026-09-15",
+                  "cost": 214.1
+                },
+                {
+                  "date": "2026-09-16",
+                  "cost": 219.85
+                },
+                {
+                  "date": "2026-09-17",
+                  "cost": 228.4
+                },
+                {
+                  "date": "2026-09-18",
+                  "cost": 1366.2
+                },
+                {
+                  "date": "2026-09-19",
+                  "cost": 236.75
+                },
+                {
+                  "date": "2026-09-20",
+                  "cost": 231.6
+                }
+              ]
+            },
+            "AWS Data Transfer": {
+              "cost": 2299.95,
+              "daily": [
+                {
+                  "date": "2026-09-14",
+                  "cost": 95.2
+                },
+                {
+                  "date": "2026-09-15",
+                  "cost": 101.45
+                },
+                {
+                  "date": "2026-09-16",
+                  "cost": 98.7
+                },
+                {
+                  "date": "2026-09-17",
+                  "cost": 104.15
+                },
+                {
+                  "date": "2026-09-18",
+                  "cost": 1688.35
+                },
+                {
+                  "date": "2026-09-19",
+                  "cost": 112.3
+                },
+                {
+                  "date": "2026-09-20",
+                  "cost": 99.8
+                }
+              ]
+            },
+            "AmazonCloudWatch": {
+              "cost": 291.75,
+              "daily": [
+                {
+                  "date": "2026-09-14",
+                  "cost": 41.1
+                },
+                {
+                  "date": "2026-09-15",
+                  "cost": 40.85
+                },
+                {
+                  "date": "2026-09-16",
+                  "cost": 41.3
+                },
+                {
+                  "date": "2026-09-17",
+                  "cost": 42.05
+                },
+                {
+                  "date": "2026-09-18",
+                  "cost": 43.9
+                },
+                {
+                  "date": "2026-09-19",
+                  "cost": 41.6
+                },
+                {
+                  "date": "2026-09-20",
+                  "cost": 40.95
+                }
+              ]
+            }
+          },
+          "total": 15391.05
+        }
+      ],
+      "total_cost": 15391.05
+    }
+  ],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-aws-w7q-0921",
+      "start": "2026-09-14",
+      "end": "2026-09-21"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "815362904471"
+          ],
+          "start_date": "2025-02-01",
+          "end_date": "2025-03-01",
+          "group_by": "SERVICE"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "org-wide-label",
+        "ignore_case": true,
+        "any_of": [
+          "org-wide",
+          "organisation-wide",
+          "organization-wide",
+          "whole organisation",
+          "whole organization",
+          "entire organisation",
+          "entire organization",
+          "across all accounts",
+          "payer-level",
+          "account filter was dropped",
+          "dropped the account filter",
+          "without the account filter"
+        ],
+        "asked_by": "What did the account cost that month",
+        "rationale": "the only entry's account_id is the literal org-wide; reading that label is the whole task"
+      },
+      {
+        "id": "not-the-account-figure",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "isn't scoped to",
+          "is not scoped to",
+          "not scoped to",
+          "not the account's",
+          "isn't the account's",
+          "not 815362904471's",
+          "can't give you the account",
+          "cannot give you the account",
+          "can't tell you what 815362904471",
+          "cannot tell you what 815362904471",
+          "not specific to",
+          "no per-account",
+          "no figure for 815362904471"
+        ],
+        "asked_by": "I need that account's AWS cost for February 2025 for the final chargeback",
+        "rationale": "the verdict: the returned total cannot be booked against the account",
+        "note": "The only entry in the result has account_id \"org-wide\", not 815362904471, so its $61,842.55 total is the organisation's aggregate and cannot be booked as the account's cost."
+      }
+    ],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

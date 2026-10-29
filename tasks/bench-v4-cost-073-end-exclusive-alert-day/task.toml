@@ -1,0 +1,23 @@
+schema_version = "1.3"
+
+[task]
+name = "bench/bench-v4-cost-073-end-exclusive-alert-day"
+description = "Authored bench scenario (see provenance.md)"
+
+[metadata]
+suite = "bench/v4"
+services = ["cost"]
+
+[environment]
+docker_image = "registry.access.redhat.com/ubi9/ubi:latest"
+workdir = "/"
+
+[[environment.mcp_servers]]
+name = "cost"
+url = "${COST_MCP_URL}"
+
+[verifier]
+timeout_sec = 120.0
+
+[agent]
+timeout_sec = 900.0

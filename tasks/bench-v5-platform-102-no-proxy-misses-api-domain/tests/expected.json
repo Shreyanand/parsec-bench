@@ -1,0 +1,100 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "partner0",
+          "job_id": 417503
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/defaults/main.yml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "proxy-403",
+        "any_of": [
+          "Tunnel connection failed: 403",
+          "ProxyError",
+          "403 Forbidden"
+        ],
+        "ignore_case": true,
+        "asked_by": "what the failing task hit",
+        "rationale": "the literal only the job log supplies"
+      },
+      {
+        "id": "no-proxy-var",
+        "any_of": [
+          "meridian_gateway_no_proxy"
+        ],
+        "ignore_case": true,
+        "asked_by": "name the setting responsible",
+        "rationale": "the variable is named only in the defaults file; the log shows a proxy error but not which setting routes the API through it"
+      },
+      {
+        "id": "domain-missing",
+        "any_of": [
+          "does not include the cluster",
+          "doesn't include the cluster",
+          "not in the no_proxy",
+          "not in meridian_gateway_no_proxy",
+          "missing from the no_proxy",
+          "missing from meridian_gateway_no_proxy",
+          "omits the cluster",
+          "lacks the cluster",
+          "add .partner-labs.meridian.example",
+          "add partner-labs.meridian.example"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "explain why",
+        "rationale": "the synthesis: the API host from the log against the exclusion list from the file",
+        "note": "the job log shows the request to api.cluster-p7mzr.partner-labs.meridian.example going through the egress proxy and failing with 403, and defaults/main.yml sets meridian_gateway_no_proxy to localhost,127.0.0.1,.svc,.cluster.local,169.254.169.254, which has no partner-labs.meridian.example entry."
+      }
+    ],
+    "citations": [
+      {
+        "id": "no-proxy-line",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/defaults/main.yml",
+        "line": 10,
+        "asked_by": "cite the line as owner/repo:path:line",
+        "rationale": "the line is counted from the seeded defaults file"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "api-down",
+        "none_of": [
+          "API server was down",
+          "API server is down",
+          "API was unavailable",
+          "cluster API is down",
+          "certificate"
+        ],
+        "ignore_case": true,
+        "rationale": "the request never reached the API; blaming the API server or a certificate is the plausible wrong reading of a connection error"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

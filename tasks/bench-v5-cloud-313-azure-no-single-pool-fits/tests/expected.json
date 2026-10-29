@@ -1,0 +1,191 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "list_pools"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "no-single-pool",
+        "any_of": [
+          "no single pool",
+          "no individual pool",
+          "no one pool",
+          "none of the pools",
+          "none of the four pools",
+          "none of the 4 pools",
+          "none of them has",
+          "none of them have",
+          "none has 5",
+          "none has five",
+          "none have 5",
+          "none have five",
+          "no pool has",
+          "no pool can",
+          "no pool currently has",
+          "no pool with",
+          "no pool that",
+          "no pool offers",
+          "no pool in the",
+          "not from a single pool",
+          "not from one pool",
+          "not in a single pool",
+          "not in any single pool",
+          "not in any one pool",
+          "in any single pool",
+          "in any one pool",
+          "from any single pool",
+          "from any one pool",
+          "cannot be served from a single pool",
+          "cannot be served from one pool",
+          "can't be served from a single pool",
+          "can't be served from one pool",
+          "there is no pool",
+          "there's no pool",
+          "there isn't a pool",
+          "there is not a pool",
+          "is not a pool",
+          "isn't a pool",
+          "no, there isn't",
+          "no, there is not",
+          "no, none",
+          "no. none",
+          "no \u2014 none",
+          "no - none",
+          "short of five",
+          "short of 5",
+          "two short",
+          "2 short",
+          "falls short",
+          "fall short",
+          "not possible",
+          "isn't possible",
+          "is impossible",
+          "not feasible",
+          "isn't feasible",
+          "short answer: no",
+          "answer: no",
+          "none can",
+          "none of them can",
+          "not enough in any",
+          "doesn't have five",
+          "doesn't have 5",
+          "does not have five",
+          "does not have 5",
+          "no pool reaches",
+          "none reaches",
+          "none reach",
+          "? no",
+          "what any single pool",
+          "what any one pool",
+          "than any single pool",
+          "than any one pool",
+          "none is big enough",
+          "not enough free in any"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "list_pools gives per-pool available counts of 3, 2, 2 and 0 (SKILL.md derivation rules: available = total - in_use per pool); no pool reaches five, which no seed literal states.",
+        "asked_by": "is there a pool that can give me five free subscriptions",
+        "rationale": "the largest per-pool available figure is 3; only the summary.available of 7, a sum over four pools, reaches five"
+      },
+      {
+        "id": "best-pool-23",
+        "any_of": [
+          "pool 23",
+          "pool-23",
+          "pool \"23\"",
+          "pool '23'",
+          "pool id 23",
+          "pool #23",
+          "pool no. 23",
+          "| 23 |",
+          "23: 3 free",
+          "23 has 3",
+          "23 has three",
+          "23 (3 free",
+          "23 \u2014 3",
+          "23 - 3",
+          "\"23\": {"
+        ],
+        "ignore_case": true,
+        "asked_by": "which pool has the most free subscriptions",
+        "rationale": "pool 23 has 3 available; pools 27 and 31 have 2 and pool 36 has 0, so the maximum is unique"
+      }
+    ],
+    "counts": [
+      {
+        "id": "pool-23-free",
+        "value": 3,
+        "nouns": [
+          "free",
+          "available",
+          "unassigned",
+          "not in use",
+          "unused",
+          "spare"
+        ],
+        "window": 5,
+        "asked_by": "how many free ones does it have",
+        "rationale": "pool 23's available is 3; the neighbouring figures are 7 (summary.available), 2 (pools 27 and 31) and 6 (pool 23's total)"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "summary-read-as-one-pool",
+        "ignore_case": true,
+        "none_of": [
+          "can provide all five",
+          "can provide all 5",
+          "can supply all five",
+          "can supply all 5",
+          "can give you all five",
+          "can give you all 5",
+          "can cover all five",
+          "can cover all 5",
+          "can cover the whole session",
+          "can cover the session",
+          "has enough free subscriptions",
+          "has enough free ones",
+          "have enough free subscriptions for the session",
+          "there is enough capacity",
+          "there's enough capacity",
+          "you have enough capacity",
+          "so you can book the session",
+          "you can book the session",
+          "you can book all five",
+          "you can book all 5",
+          "can be booked from one pool",
+          "can be booked from a single pool",
+          "can be served from one pool",
+          "can be served from a single pool",
+          "23 has 5 free",
+          "23 has five free",
+          "23 has 7 free",
+          "23 has seven free",
+          "has 7 free subscriptions",
+          "has seven free subscriptions"
+        ],
+        "rationale": "the plausible wrong answer reads summary.available (7, the sum over four pools) as if one pool could supply five; each form asserts that one pool or the booking covers all five seats, and a denial (\"no pool can provide all five\") is excused by polarity"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

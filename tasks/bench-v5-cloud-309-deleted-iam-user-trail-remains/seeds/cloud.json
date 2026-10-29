@@ -1,0 +1,209 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [
+    {
+      "ec2_instance_id": "ec2-01",
+      "account_id": "930416275108",
+      "instance_id": "i-05d2c8e71a94f3b60",
+      "instance_type": "c6i.8xlarge",
+      "region": "eu-west-3",
+      "az": "eu-west-3b",
+      "state": "running",
+      "launch_time": "2026-09-21T03:14:09Z",
+      "public_ip": "198.51.100.73",
+      "tags": {
+        "Name": "perf-burst-runner-07",
+        "pipeline": "nightly-perf"
+      }
+    },
+    {
+      "ec2_instance_id": "ec2-02",
+      "account_id": "930416275108",
+      "instance_id": "i-0b71f4a93c2e6d508",
+      "instance_type": "t3.small",
+      "region": "eu-west-3",
+      "az": "eu-west-3a",
+      "state": "running",
+      "launch_time": "2026-07-14T10:02:55Z",
+      "public_ip": "198.51.100.12",
+      "tags": {
+        "Name": "perf-jump-host"
+      }
+    },
+    {
+      "ec2_instance_id": "ec2-03",
+      "account_id": "930416275108",
+      "instance_id": "i-0e48a2d71b9c3f065",
+      "instance_type": "m6i.large",
+      "region": "us-east-1",
+      "az": "us-east-1c",
+      "state": "stopped",
+      "launch_time": "2026-06-30T15:40:21Z",
+      "public_ip": "",
+      "tags": {
+        "Name": "perf-results-db"
+      }
+    }
+  ],
+  "events": [
+    {
+      "event_id": "1f0a7c3e-5d92-4b81-a6e4-8c27d9b05f13",
+      "account_id": "930416275108",
+      "event_name": "PutObject",
+      "event_source": "s3.amazonaws.com",
+      "event_time": "2026-09-19T17:30:12Z",
+      "username": "svc-backup",
+      "resources": []
+    },
+    {
+      "event_id": "8b3e2d61-0c4f-47a9-9d15-e6a8f2c07b94",
+      "account_id": "930416275108",
+      "event_name": "CreateAccessKey",
+      "event_source": "iam.amazonaws.com",
+      "event_time": "2026-09-20T22:41:05Z",
+      "username": "ci-runner",
+      "resources": [
+        {
+          "resourceType": "AWS::IAM::User",
+          "resourceName": "ci-runner"
+        }
+      ]
+    },
+    {
+      "event_id": "c5a91f07-3e6b-4d28-8f40-2b7d1e9a6c53",
+      "account_id": "930416275108",
+      "event_name": "RunInstances",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2026-09-21T03:14:07Z",
+      "username": "ci-runner",
+      "resources": [
+        {
+          "resourceType": "AWS::EC2::Instance",
+          "resourceName": "i-05d2c8e71a94f3b60"
+        }
+      ]
+    },
+    {
+      "event_id": "e27d4b90-6a1c-4f35-b8e2-07c9f3d15a68",
+      "account_id": "930416275108",
+      "event_name": "CreateTags",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2026-09-21T03:14:31Z",
+      "username": "ci-runner",
+      "resources": [
+        {
+          "resourceType": "AWS::EC2::Instance",
+          "resourceName": "i-05d2c8e71a94f3b60"
+        }
+      ]
+    },
+    {
+      "event_id": "4d8c0e25-9b7a-4163-a2f9-5e10b6c83d7f",
+      "account_id": "930416275108",
+      "event_name": "DeleteAccessKey",
+      "event_source": "iam.amazonaws.com",
+      "event_time": "2026-09-22T09:02:31Z",
+      "username": "kfarrow",
+      "resources": [
+        {
+          "resourceType": "AWS::IAM::User",
+          "resourceName": "ci-runner"
+        }
+      ]
+    },
+    {
+      "event_id": "a90f6b3d-2e15-48c7-9a6d-c43e7f08b215",
+      "account_id": "930416275108",
+      "event_name": "DeleteUser",
+      "event_source": "iam.amazonaws.com",
+      "event_time": "2026-09-22T09:02:44Z",
+      "username": "kfarrow",
+      "resources": [
+        {
+          "resourceType": "AWS::IAM::User",
+          "resourceName": "ci-runner"
+        }
+      ]
+    },
+    {
+      "event_id": "7e6c19a4-d8b3-4f02-85a7-31f9e4c0d6b8",
+      "account_id": "930416275108",
+      "event_name": "DescribeInstances",
+      "event_source": "ec2.amazonaws.com",
+      "event_time": "2026-09-23T11:47:58Z",
+      "username": "ci-runner-ro",
+      "resources": []
+    }
+  ],
+  "gcp_projects": [],
+  "iam_users": [
+    {
+      "iam_user_id": "iu-01",
+      "account_id": "930416275108",
+      "username": "ci-runner-ro",
+      "user_id": "AIDA7QK2M4X9RT3WVE5NP",
+      "created": "2026-07-14T09:20:11Z",
+      "password_last_used": "",
+      "access_keys": [
+        {
+          "access_key_id": "AKIA7QK2M4X9CRRO0001",
+          "status": "Active",
+          "created": "2026-07-14T09:21:40Z"
+        }
+      ]
+    },
+    {
+      "iam_user_id": "iu-02",
+      "account_id": "930416275108",
+      "username": "svc-backup",
+      "user_id": "AIDA3HV8B1N6YC4ZQ2LDK",
+      "created": "2026-05-02T13:05:47Z",
+      "password_last_used": "",
+      "access_keys": [
+        {
+          "access_key_id": "AKIA3HV8B1N6BKUP0002",
+          "status": "Inactive",
+          "created": "2026-05-02T13:06:12Z"
+        }
+      ]
+    }
+  ],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sa-6283",
+      "name": "sandbox6283",
+      "account_id": "930416275108",
+      "available": false,
+      "owner": "dvarga",
+      "owner_email": "dvarga@perf-eng.example.org",
+      "envtype": "ocp4-perf-ci",
+      "reservation": "",
+      "zone": "sandbox6283.perf-eng.example.org",
+      "comment": "perf CI runners",
+      "conan_status": "clean",
+      "guid": "z4hrm",
+      "hosted_zone_id": "Z06283PERF",
+      "service_uuid": "svc-6283-z4hrm",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sa-6238",
+      "name": "sandbox6238",
+      "account_id": "930416275180",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "",
+      "zone": "sandbox6238.perf-eng.example.org",
+      "comment": "",
+      "conan_status": "clean",
+      "guid": "",
+      "hosted_zone_id": "Z06238PERF",
+      "service_uuid": "",
+      "annotations": {}
+    }
+  ]
+}

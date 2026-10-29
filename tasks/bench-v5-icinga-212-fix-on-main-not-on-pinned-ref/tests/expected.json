@@ -1,0 +1,171 @@
+{
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "nfs-home-dub-2"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "nfs-home-dub-2"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/fs/check_mount_latency.sh"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/fs/check_mount_latency.sh",
+          "ref": "v3.4.0"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_check_source"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_plugin_version"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "pinned-ref",
+        "any_of": [
+          "v3.4.0"
+        ],
+        "ignore_case": true,
+        "asked_by": "why is it still firing",
+        "rationale": "only the service vars carry the pin"
+      },
+      {
+        "id": "fix-only-on-main",
+        "any_of": [
+          "only on main",
+          "only in main",
+          "not in v3.4.0",
+          "not at v3.4.0",
+          "v3.4.0 does not",
+          "v3.4.0 doesn't",
+          "no autofs skip",
+          "lacks the fix",
+          "without the fix",
+          "predates the fix",
+          "not in the pinned",
+          "not on the pinned"
+        ],
+        "ignore_case": true,
+        "asked_by": "why is it still firing even though it was \"fixed\"",
+        "rationale": "requires comparing the main and tag versions of the script",
+        "derived": true,
+        "note": "The script on main skips autofs mounts ([[ \"$fstype\" == autofs ]] && continue) but the v3.4.0 version, which the service's vars pin as plugin_ref, has no such line, so the fix exists only on main."
+      },
+      {
+        "id": "false-positive",
+        "any_of": [
+          "same false positive",
+          "still the false positive",
+          "is a false positive",
+          "is the false positive",
+          "not NFS latency",
+          "not a real NFS",
+          "not real NFS",
+          "times the automounter",
+          "is the automounter",
+          "not a real latency"
+        ],
+        "ignore_case": true,
+        "asked_by": "Is this a real NFS latency problem",
+        "rationale": "the verdict",
+        "derived": true,
+        "note": "A verdict, so no seed literal: the CRITICAL is /home/autofs/proj's 12.4 s stat() while /home/users and /srv/scratch take 0.02-0.03 s, and the pinned v3.4.0 script still stat()s autofs mounts, so it times the automounter rather than NFS."
+      },
+      {
+        "id": "claimant",
+        "any_of": [
+          "hkowalczyk"
+        ],
+        "ignore_case": true,
+        "asked_by": "who claimed the fix",
+        "rationale": "author of the fix comment"
+      },
+      {
+        "id": "claim-date",
+        "any_of": [
+          "2026-11-15",
+          "Nov 15",
+          "15 Nov",
+          "November 15"
+        ],
+        "ignore_case": true,
+        "asked_by": "and when",
+        "rationale": "entry_time of the fix comment",
+        "derived": true,
+        "note": "The seed carries the time as epoch seconds: hkowalczyk's comment has entry_time 1794752400, which is 2026-11-15 14:20 UTC."
+      },
+      {
+        "id": "since",
+        "any_of": [
+          "amensah"
+        ],
+        "ignore_case": true,
+        "asked_by": "what has happened since",
+        "rationale": "the later comment reporting recurrence"
+      }
+    ],
+    "counts": [],
+    "forbidden": [
+      {
+        "id": "real-latency",
+        "none_of": [
+          "real NFS latency problem",
+          "NFS server is slow",
+          "is a real latency",
+          "genuine latency problem",
+          "fix is deployed",
+          "fix is live"
+        ],
+        "ignore_case": true,
+        "rationale": "trusting the comment's 'fixed' or reading 12.4 s as NFS",
+        "attributed_to": [
+          "comment claims",
+          "comment says",
+          "claimed the fix",
+          "was \"fixed\"",
+          "not a real NFS latency"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

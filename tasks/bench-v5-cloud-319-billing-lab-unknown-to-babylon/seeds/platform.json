@@ -1,0 +1,79 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [
+    {
+      "babylon_anarchy_subject_id": "bas-319-1",
+      "cluster": "east",
+      "name": "rhdp.ocp4-ai-sno.prod.w2hqm",
+      "namespace": "babylon-anarchy-rhdp",
+      "governor": "rhdp.ocp4-ai-sno.prod",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "w2hqm",
+        "env_type": "ocp4-ai-sno"
+      },
+      "resource_claim": {
+        "name": "ocp4-ai-sno-w2hqm",
+        "namespace": "user-abrennan-redhat-com"
+      },
+      "requester_email": "abrennan@rhdp-sbx.example.net"
+    },
+    {
+      "babylon_anarchy_subject_id": "bas-319-2",
+      "cluster": "east",
+      "name": "rhdp.ocp4-ai-sno.prod.d8kts",
+      "namespace": "babylon-anarchy-rhdp",
+      "governor": "rhdp.ocp4-ai-sno.prod",
+      "current_state": "stopped",
+      "desired_state": "stopped",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "d8kts",
+        "env_type": "ocp4-ai-sno"
+      },
+      "resource_claim": {
+        "name": "ocp4-ai-sno-d8kts",
+        "namespace": "user-hsoderberg-redhat-com"
+      },
+      "requester_email": "hsoderberg@rhdp-sbx.example.net"
+    },
+    {
+      "babylon_anarchy_subject_id": "bas-319-3",
+      "cluster": "west",
+      "name": "rhdp.rhel9-workshop.prod.h6vpb",
+      "namespace": "babylon-anarchy-rhdp",
+      "governor": "rhdp.rhel9-workshop.prod",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "h6vpb",
+        "env_type": "rhel9-workshop"
+      },
+      "resource_claim": {
+        "name": "rhel9-workshop-h6vpb",
+        "namespace": "user-ochukwu-redhat-com"
+      },
+      "requester_email": "ochukwu@rhdp-sbx.example.net"
+    }
+  ],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

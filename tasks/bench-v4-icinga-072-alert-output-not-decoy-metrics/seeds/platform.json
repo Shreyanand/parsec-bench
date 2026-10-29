@@ -1,0 +1,136 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [
+    {
+      "name": "tamarack-worker-a-4xk9p",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "tamarack-worker-a-4xk9p",
+      "provider_id": "kubevirt://tamarack-worker-a-4xk9p",
+      "cluster": "ocpv-tamarack",
+      "ocpv_machine_id": "ocpv-tamarack-tamarack-worker-a-4xk9p"
+    },
+    {
+      "name": "tamarack-worker-a-h7v2m",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "tamarack-worker-a-h7v2m",
+      "provider_id": "kubevirt://tamarack-worker-a-h7v2m",
+      "cluster": "ocpv-tamarack",
+      "ocpv_machine_id": "ocpv-tamarack-tamarack-worker-a-h7v2m"
+    },
+    {
+      "name": "tamarack-worker-a-q3n8d",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "tamarack-worker-a-q3n8d",
+      "provider_id": "kubevirt://tamarack-worker-a-q3n8d",
+      "cluster": "ocpv-tamarack",
+      "ocpv_machine_id": "ocpv-tamarack-tamarack-worker-a-q3n8d"
+    },
+    {
+      "name": "tamarack-worker-b-6tq4z",
+      "namespace": "openshift-machine-api",
+      "phase": "Running",
+      "node": "tamarack-worker-b-6tq4z",
+      "provider_id": "kubevirt://tamarack-worker-b-6tq4z",
+      "cluster": "ocpv-tamarack",
+      "ocpv_machine_id": "ocpv-tamarack-tamarack-worker-b-6tq4z"
+    },
+    {
+      "name": "tamarack-worker-b-j9w5c",
+      "namespace": "openshift-machine-api",
+      "phase": "Provisioned",
+      "node": "",
+      "provider_id": "kubevirt://tamarack-worker-b-j9w5c",
+      "cluster": "ocpv-tamarack",
+      "ocpv_machine_id": "ocpv-tamarack-tamarack-worker-b-j9w5c"
+    },
+    {
+      "name": "tamarack-worker-b-r2f7k",
+      "namespace": "openshift-machine-api",
+      "phase": "Provisioned",
+      "node": "",
+      "provider_id": "kubevirt://tamarack-worker-b-r2f7k",
+      "cluster": "ocpv-tamarack",
+      "ocpv_machine_id": "ocpv-tamarack-tamarack-worker-b-r2f7k"
+    }
+  ],
+  "ocpv_machinesets": [
+    {
+      "name": "tamarack-worker-a",
+      "namespace": "openshift-machine-api",
+      "replicas": 3,
+      "ready_replicas": 3,
+      "available_replicas": 3,
+      "cluster": "ocpv-tamarack",
+      "ocpv_machineset_id": "ocpv-tamarack-tamarack-worker-a"
+    },
+    {
+      "name": "tamarack-worker-b",
+      "namespace": "openshift-machine-api",
+      "replicas": 3,
+      "ready_replicas": 1,
+      "available_replicas": 1,
+      "cluster": "ocpv-tamarack",
+      "ocpv_machineset_id": "ocpv-tamarack-tamarack-worker-b"
+    }
+  ],
+  "ocpv_namespaces": [
+    {
+      "cluster": "ocpv-tamarack",
+      "namespace": "lab-quokka-7",
+      "status": "Active",
+      "ocpv_namespace_id": "ocpv-tamarack-lab-quokka-7"
+    }
+  ],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [
+    {
+      "splunk_ocp_log_entry_id": "ocp-quokka-1",
+      "time": "2026-09-21T14:02:48Z",
+      "cluster": "ocpv-tamarack",
+      "namespace": "lab-quokka-7",
+      "pod": "quokka-api-6d9f7c5b8-2lqrx",
+      "container": "api",
+      "image": "quay.io/example/quokka-api:2.3",
+      "level": "WARN",
+      "message": "CPU throttled for 47% of CFS periods over 5m (cpu limit 500m)"
+    },
+    {
+      "splunk_ocp_log_entry_id": "ocp-quokka-2",
+      "time": "2026-09-21T14:03:11Z",
+      "cluster": "ocpv-tamarack",
+      "namespace": "lab-quokka-7",
+      "pod": "quokka-api-6d9f7c5b8-2lqrx",
+      "container": "api",
+      "image": "quay.io/example/quokka-api:2.3",
+      "level": "ERROR",
+      "message": "worker pool saturated: 64/64 workers busy, request queue depth 212"
+    },
+    {
+      "splunk_ocp_log_entry_id": "ocp-quokka-3",
+      "time": "2026-09-21T14:03:40Z",
+      "cluster": "ocpv-tamarack",
+      "namespace": "lab-quokka-7",
+      "pod": "quokka-api-6d9f7c5b8-2lqrx",
+      "container": "api",
+      "image": "quay.io/example/quokka-api:2.3",
+      "level": "INFO",
+      "message": "readiness probe succeeded after 3 failures"
+    }
+  ],
+  "workshops": []
+}

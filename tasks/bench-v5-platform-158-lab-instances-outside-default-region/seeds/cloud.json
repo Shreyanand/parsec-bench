@@ -1,0 +1,92 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [
+    {
+      "ec2_instance_id": "ec2-158-1",
+      "account_id": "418092736615",
+      "instance_id": "i-07b3e19ac25d4f861",
+      "instance_type": "t3.medium",
+      "region": "ap-southeast-2",
+      "az": "ap-southeast-2a",
+      "state": "stopped",
+      "launch_time": "2026-11-09T10:19:44Z",
+      "public_ip": "",
+      "tags": {
+        "Name": "bastion",
+        "guid": "n7rkd",
+        "AnsibleGroup": "bastions"
+      }
+    },
+    {
+      "ec2_instance_id": "ec2-158-2",
+      "account_id": "418092736615",
+      "instance_id": "i-0a58d2c47e91b3f06",
+      "instance_type": "m6i.xlarge",
+      "region": "ap-southeast-2",
+      "az": "ap-southeast-2a",
+      "state": "running",
+      "launch_time": "2026-11-09T10:19:46Z",
+      "public_ip": "",
+      "tags": {
+        "Name": "node1",
+        "guid": "n7rkd",
+        "AnsibleGroup": "nodes"
+      }
+    },
+    {
+      "ec2_instance_id": "ec2-158-3",
+      "account_id": "418092736615",
+      "instance_id": "i-0f19c6e8b2d70a45c",
+      "instance_type": "m6i.xlarge",
+      "region": "ap-southeast-2",
+      "az": "ap-southeast-2b",
+      "state": "running",
+      "launch_time": "2026-11-09T10:19:46Z",
+      "public_ip": "",
+      "tags": {
+        "Name": "node2",
+        "guid": "n7rkd",
+        "AnsibleGroup": "nodes"
+      }
+    }
+  ],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sbx-158-1",
+      "account_id": "418092736615",
+      "name": "sandbox5824",
+      "available": false,
+      "guid": "n7rkd",
+      "owner": "lab-ops",
+      "owner_email": "lab-ops@example.com",
+      "envtype": "rhel-hardening",
+      "reservation": "",
+      "zone": "sandbox5824.lab.example.net",
+      "hosted_zone_id": "Z05118263QJ7MWR4XK2PB",
+      "comment": "provisioned for n7rkd",
+      "conan_status": "in-use",
+      "service_uuid": "8b2e41f6-5c07-4d19-a3e8-71f0c6d2b958"
+    },
+    {
+      "sandbox_account_id": "sbx-158-2",
+      "account_id": "418092736617",
+      "name": "sandbox5826",
+      "available": true,
+      "guid": "",
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "",
+      "zone": "sandbox5826.lab.example.net",
+      "hosted_zone_id": "Z0822913LPD5TK7NZ3QAW",
+      "comment": "conan cleanup completed",
+      "conan_status": "clean",
+      "service_uuid": "2d7f90a4-1e6b-4c85-b0f3-9a64e2c1d870"
+    }
+  ]
+}

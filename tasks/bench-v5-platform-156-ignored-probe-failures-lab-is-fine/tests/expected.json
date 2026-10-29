@@ -1,0 +1,229 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "east",
+          "job_id": 6031958
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_vms",
+          "namespace": "sandbox-w2hcd-imgbuild"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "no-rerun",
+        "any_of": [
+          "no need to re-run",
+          "no need to rerun",
+          "not need to be re-run",
+          "not need to be rerun",
+          "n't need to be re-run",
+          "n't need to be rerun",
+          "not need a re-run",
+          "n't need a re-run",
+          "not need a rerun",
+          "n't need a rerun",
+          "not need to re-run",
+          "n't need to re-run",
+          "not need to rerun",
+          "n't need to rerun",
+          "no re-run",
+          "no rerun",
+          "nothing to re-run",
+          "nothing to rerun",
+          "came up completely",
+          "came up fully",
+          "fully provisioned",
+          "provisioned completely",
+          "lab is complete",
+          "lab is ready",
+          "ready for the session",
+          "do not re-run",
+          "don't re-run",
+          "do not rerun",
+          "don't rerun",
+          "re-run needed: no",
+          "rerun needed: no",
+          "re-run: no",
+          "rerun: no",
+          "re-run required: no",
+          "rerun required: no",
+          "need to re-run: no",
+          "need to rerun: no",
+          "re-run is not necessary",
+          "rerun is not necessary",
+          "re-run is unnecessary",
+          "rerun is unnecessary"
+        ],
+        "ignore_case": true,
+        "asked_by": "or do I need to re-run the provisioning before the session",
+        "rationale": "the non-finding the user must act on: the lab is complete",
+        "derived": true,
+        "note": "the job is successful, the three runner_on_failed events are ignored probes, and list_vms shows both VMs Running and ready."
+      },
+      {
+        "id": "ignored",
+        "any_of": [
+          "ignoring",
+          "ignore_errors",
+          "errors ignored",
+          "ignored",
+          "failed: false",
+          "failed=false",
+          "failed false",
+          "tolerated",
+          "expected to fail",
+          "expected failures",
+          "allowed to fail"
+        ],
+        "ignore_case": true,
+        "asked_by": "Tell me what those three failed tasks were",
+        "rationale": "why three failed tasks did not fail the job: each event ends in ...ignoring and carries failed: false",
+        "derived": true,
+        "note": "the three runner_on_failed events (counters 9, 12, 15) have failed: false and stdout ending '...ignoring'."
+      },
+      {
+        "id": "not-found",
+        "any_of": [
+          "not found",
+          "did not exist",
+          "didn't exist",
+          "does not exist",
+          "doesn't exist",
+          "nothing to clean up",
+          "nothing to delete",
+          "no existing",
+          "none existed",
+          "absent",
+          "did not yet exist",
+          "didn't yet exist"
+        ],
+        "ignore_case": true,
+        "asked_by": "Tell me what those three failed tasks were",
+        "rationale": "what each probe hit: the object it looked for was not there yet, which is normal for a new order",
+        "derived": true,
+        "note": "each ignored event's error_msg is a Kubernetes 'not found' for the VM, the DataVolume or the secret."
+      },
+      {
+        "id": "probe-task",
+        "any_of": [
+          "existing image-builder",
+          "leftover DataVolume",
+          "DataVolume",
+          "SSH key secret",
+          "existing lab SSH key",
+          "w2hcd-lab-ssh",
+          "image-builder-rootdisk"
+        ],
+        "ignore_case": true,
+        "asked_by": "Tell me what those three failed tasks were",
+        "rationale": "names at least one of the three probe tasks or its object, which only the job events carry"
+      },
+      {
+        "id": "vm-name",
+        "any_of": [
+          "rhel9-client"
+        ],
+        "ignore_case": true,
+        "asked_by": "what state each one is in",
+        "rationale": "the second VM; only list_vms (or the events) name it"
+      }
+    ],
+    "counts": [
+      {
+        "id": "vms-running",
+        "value": 2,
+        "nouns": [
+          "VMs",
+          "VM",
+          "virtual machines",
+          "virtual machine",
+          "VirtualMachines",
+          "VirtualMachine"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "both VMs",
+          "both virtual machines",
+          "both VirtualMachines",
+          "both are running",
+          "both running",
+          "both are Running",
+          "2/2",
+          "two of two"
+        ],
+        "ignore_case": true,
+        "asked_by": "how many there are",
+        "rationale": "list_vms returns two VMs, both Running and ready",
+        "derived": true,
+        "note": "list_vms count is 2: image-builder and rhel9-client, both status Running, ready true."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "partial-failure",
+        "none_of": [
+          "the job partially failed",
+          "job partly failed",
+          "provisioning is incomplete",
+          "provisioning was incomplete",
+          "the lab is incomplete",
+          "lab is only partly",
+          "lab did not come up completely",
+          "lab didn't come up completely",
+          "the lab is broken",
+          "a VM is missing",
+          "is missing a VM",
+          "VMs are missing",
+          "provisioning partially failed"
+        ],
+        "ignore_case": true,
+        "rationale": "every probe failure was ignored, the job succeeded and both VMs run"
+      },
+      {
+        "id": "rerun-needed",
+        "none_of": [
+          "you need to re-run",
+          "you need to rerun",
+          "needs to be re-run",
+          "needs to be rerun",
+          "you should re-run",
+          "you should rerun",
+          "re-run the provisioning before",
+          "rerun the provisioning before",
+          "recommend re-running",
+          "recommend rerunning",
+          "must be re-run",
+          "must be rerun",
+          "needs a re-run",
+          "needs a rerun",
+          "re-provision the lab",
+          "reprovision the lab"
+        ],
+        "ignore_case": true,
+        "rationale": "nothing failed that a re-run would fix; re-provisioning would only cost the session time"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

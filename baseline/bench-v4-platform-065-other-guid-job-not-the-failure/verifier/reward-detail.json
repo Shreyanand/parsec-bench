@@ -1,0 +1,129 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 73381
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "cluster": "east",
+          "guid": "k7vdn"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "ocp4-cluster",
+          "created_after": "2026-10-01"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 73381
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "partner0",
+          "job_id": 73381
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "event0",
+          "job_id": 73381
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "lab-healthy",
+        "any_of": [
+          "healthy: true",
+          "healthy=true",
+          "healthy = true",
+          "healthy is true",
+          "healthy true",
+          "healthy: `true`",
+          "healthy: **true**",
+          "healthy:** true",
+          "healthy:** **true**",
+          "healthy**: true",
+          "healthy`: true",
+          "healthy` is `true",
+          "healthy` = `true",
+          "healthy`: `true",
+          "healthy flag is true",
+          "healthy flag true",
+          "healthy | true",
+          "healthy (true)",
+          "healthy: yes",
+          "healthy? yes",
+          "healthy\": true",
+          "healthy -> true",
+          "healthy \u2192 true",
+          "healthy: (true)",
+          "healthy as true",
+          "healthy is `true`",
+          "health: true",
+          "health status: true",
+          "healthy status: true",
+          "is healthy",
+          "are healthy",
+          "and healthy",
+          "also healthy",
+          "reports healthy",
+          "reports itself healthy",
+          "reports it as healthy",
+          "marked healthy",
+          "shows healthy",
+          "reported healthy",
+          "is reported healthy",
+          "appears healthy",
+          "looks healthy",
+          "is currently healthy",
+          "healthy: **yes**"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the subject row carries healthy: true; an answer states it as the flag or as a positive",
+        "asked_by": "plus the lab's health",
+        "rationale": "the AnarchySubject reports healthy: true, which contradicts a failed-job story; only the subject lookup gives it"
+      }
+    ],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

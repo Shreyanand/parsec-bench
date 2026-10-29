@@ -1,0 +1,155 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [
+    {
+      "marketplace_agreement_id": "mkt-r01",
+      "account_id": "391774208516",
+      "account_name": "rhdp-data-eng-01",
+      "agreement_id": "agmt-b4w9t2k7x1qe",
+      "product_name": "Brightmoor Query Accelerator",
+      "product_id": "prod-bqa71c4e",
+      "vendor_name": "Brightmoor Analytics",
+      "agreement_start": "2026-01-15T00:00:00Z",
+      "agreement_end": "2027-01-14T00:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "estimated_cost": 12480,
+      "estimated_cost_usd": 12480,
+      "offer_type": "PrivateOffer",
+      "terms": [
+        {
+          "type": "Configurable"
+        }
+      ],
+      "last_updated": "2026-10-11T03:30:00Z"
+    },
+    {
+      "marketplace_agreement_id": "mkt-r02",
+      "account_id": "391774208562",
+      "account_name": "rhdp-data-eng-02",
+      "agreement_id": "agmt-k8c3n6v0p5ra",
+      "product_name": "Brightmoor Query Accelerator",
+      "product_id": "prod-bqa71c4e",
+      "vendor_name": "Brightmoor Analytics",
+      "agreement_start": "2026-05-01T00:00:00Z",
+      "agreement_end": "2027-04-30T00:00:00Z",
+      "auto_renew": false,
+      "status": "ACTIVE",
+      "classification": "SaaS (Contract)",
+      "currency": "USD",
+      "estimated_cost": 7350,
+      "estimated_cost_usd": 7350,
+      "offer_type": "PrivateOffer",
+      "terms": [
+        {
+          "type": "Configurable"
+        }
+      ],
+      "last_updated": "2026-10-11T03:30:00Z"
+    },
+    {
+      "marketplace_agreement_id": "mkt-r03",
+      "account_id": "457102938841",
+      "account_name": "rhdp-demo-sales-04",
+      "agreement_id": "agmt-f2j7m4d9s6tu",
+      "product_name": "Brightmoor Lineage Catalog",
+      "product_id": "prod-blc39a8d",
+      "vendor_name": "Brightmoor Analytics",
+      "agreement_start": "2026-03-01T00:00:00Z",
+      "agreement_end": "2027-02-28T00:00:00Z",
+      "auto_renew": false,
+      "status": "ACTIVE",
+      "classification": "SaaS (Contract)",
+      "currency": "USD",
+      "estimated_cost": 4125,
+      "estimated_cost_usd": 4125,
+      "offer_type": "PrivateOffer",
+      "terms": [
+        {
+          "type": "Configurable"
+        }
+      ],
+      "last_updated": "2026-10-11T03:30:00Z"
+    },
+    {
+      "marketplace_agreement_id": "mkt-r04",
+      "account_id": "391774208516",
+      "account_name": "rhdp-data-eng-01",
+      "agreement_id": "agmt-a6h1q8w3z0yc",
+      "product_name": "Tessaline Stream Monitor",
+      "product_id": "prod-tsm52e0b",
+      "vendor_name": "Tessaline Corp",
+      "agreement_start": "2026-02-01T00:00:00Z",
+      "agreement_end": "2027-01-31T00:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "estimated_cost": 8800,
+      "estimated_cost_usd": 8800,
+      "offer_type": "PrivateOffer",
+      "terms": [
+        {
+          "type": "Configurable"
+        }
+      ],
+      "last_updated": "2026-10-11T03:30:00Z"
+    },
+    {
+      "marketplace_agreement_id": "mkt-r05",
+      "account_id": "457102938841",
+      "account_name": "rhdp-demo-sales-04",
+      "agreement_id": "agmt-m0r5e2y8u4ib",
+      "product_name": "Ondric Backup Vault",
+      "product_id": "prod-obv84f1c",
+      "vendor_name": "Ondric Systems",
+      "agreement_start": "2026-06-10T00:00:00Z",
+      "agreement_end": "2027-06-09T00:00:00Z",
+      "auto_renew": false,
+      "status": "ACTIVE",
+      "classification": "SaaS (Contract)",
+      "currency": "USD",
+      "estimated_cost": 5640,
+      "estimated_cost_usd": 5640,
+      "offer_type": "PrivateOffer",
+      "terms": [
+        {
+          "type": "Configurable"
+        }
+      ],
+      "last_updated": "2026-10-11T03:30:00Z"
+    },
+    {
+      "marketplace_agreement_id": "mkt-r06",
+      "account_id": "512664093370",
+      "account_name": "rhdp-edge-lab-09",
+      "agreement_id": "agmt-p9x2c7l1v3ng",
+      "product_name": "Tessaline Stream Monitor",
+      "product_id": "prod-tsm52e0b",
+      "vendor_name": "Tessaline Corp",
+      "agreement_start": "2026-04-20T00:00:00Z",
+      "agreement_end": "2027-04-19T00:00:00Z",
+      "auto_renew": false,
+      "status": "ACTIVE",
+      "classification": "SaaS (Contract)",
+      "currency": "USD",
+      "estimated_cost": 3900,
+      "estimated_cost_usd": 3900,
+      "offer_type": "PrivateOffer",
+      "terms": [
+        {
+          "type": "Configurable"
+        }
+      ],
+      "last_updated": "2026-10-11T03:30:00Z"
+    }
+  ],
+  "sandbox_accounts": []
+}

@@ -1,0 +1,159 @@
+{
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "mysql-ro-lon-3"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/db/check_repl_lag.py"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "icinga/conf.d/commands/db.conf"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "legitimate",
+        "any_of": [
+          "alert is legitimate",
+          "is legitimate",
+          "not a false alarm",
+          "isn't a false alarm",
+          "correctly configured",
+          "alert is correct",
+          "alert is valid",
+          "alert is real",
+          "is genuine",
+          "is a real",
+          "engineer is wrong"
+        ],
+        "ignore_case": true,
+        "asked_by": "is the alert legitimate",
+        "rationale": "the verdict",
+        "derived": true,
+        "note": "A verdict, so no seed literal: the service's vars set repl_lag_crit 300, db.conf passes it as --critical, and the reading is 340 s, so the CRITICAL is correct."
+      },
+      {
+        "id": "vars-mapping",
+        "any_of": [
+          "$repl_lag_crit$",
+          "repl_lag_crit",
+          "repl_lag_warn"
+        ],
+        "ignore_case": true,
+        "asked_by": "with which warning and critical thresholds does Icinga actually run this check",
+        "rationale": "the macro links the command config to the service vars; it occurs only in db.conf and the service row"
+      },
+      {
+        "id": "defaults-only-fallback",
+        "any_of": [
+          "fallback",
+          "only when",
+          "only apply",
+          "only applies",
+          "overrid",
+          "only used when",
+          "not passed",
+          "when no",
+          "if no"
+        ],
+        "ignore_case": true,
+        "asked_by": "Settle it",
+        "rationale": "why the script default does not govern this check",
+        "derived": true,
+        "note": "db.conf's mysql-repl-lag passes --warning $repl_lag_warn$ and --critical $repl_lag_crit$ whenever the service sets them (its header says the plugin defaults apply only when a service sets none), and repl-lag sets 120/300, so the script's 300/600 defaults are not used."
+      }
+    ],
+    "counts": [
+      {
+        "id": "effective-warn",
+        "value": 120,
+        "nouns": [
+          "seconds",
+          "s",
+          "warning",
+          "warn"
+        ],
+        "window": 4,
+        "asked_by": "which warning and critical thresholds",
+        "rationale": "vars.repl_lag_warn; in neither the alert output text nor the script",
+        "extra_any_of": [
+          "120 s",
+          "120s",
+          "120 seconds"
+        ]
+      },
+      {
+        "id": "effective-crit",
+        "value": 300,
+        "nouns": [
+          "seconds",
+          "s",
+          "critical",
+          "crit"
+        ],
+        "window": 4,
+        "asked_by": "which warning and critical thresholds",
+        "rationale": "vars.repl_lag_crit; also in the output, so it proves less than effective-warn",
+        "extra_any_of": [
+          "300 s critical",
+          "critical of 300",
+          "critical threshold of 300",
+          "crit 300"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "calls-it-false",
+        "none_of": [
+          "is a false alarm",
+          "is a false positive",
+          "alert is bogus",
+          "threshold mismatch",
+          "is misconfigured",
+          "should be 600",
+          "critical is 600",
+          "critical threshold is 600"
+        ],
+        "ignore_case": true,
+        "rationale": "the script-default reading",
+        "attributed_to": [
+          "engineer says",
+          "engineer's claim",
+          "engineer claims",
+          "the claim that",
+          "by default",
+          "defaults to",
+          "default to"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

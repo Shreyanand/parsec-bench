@@ -1,0 +1,121 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/ocp4_workload_edge_mirror/tasks/main.yml",
+      "content": "---\n# ocp4_workload_edge_mirror: log in to the edge mirror registry, then copy the\n# release images that the edge-mirror-lab devices pull.\n\n- name: Log in to the edge mirror registry\n  vars:\n    edge_mirror_registry_basic_auth: <REDACTED>\n  ansible.builtin.command:\n    cmd: >-\n      oc registry login\n      --registry={{ edge_mirror_registry_host }}\n      --auth-basic={{ edge_mirror_registry_basic_auth }}\n      --to={{ edge_mirror_auth_file }}\n  changed_when: true\n\n- name: Mirror the release images\n  ansible.builtin.command:\n    cmd: >-\n      oc image mirror --keep-manifest-list=true\n      --registry-config={{ edge_mirror_auth_file }}\n      {{ edge_mirror_source_image }}\n      {{ edge_mirror_registry_host }}/{{ edge_mirror_target_repo }}\n  changed_when: true\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/ocp4_workload_edge_mirror/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/ocp4_workload_edge_mirror/defaults/main.yml",
+      "content": "---\n# Defaults for ocp4_workload_edge_mirror.\nedge_mirror_registry_host: mirror.edge-lab.example.com:8443\nedge_mirror_registry_user: edge-mirror-sync\nedge_mirror_auth_file: /tmp/edge-mirror-auth.json\nedge_mirror_source_image: quay.io/openshift-release-dev/ocp-release:4.16.9-x86_64\nedge_mirror_target_repo: edge/ocp-release\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/ocp4_workload_edge_mirror/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/ocp4_workload_edge_mirror/tasks/main.yml",
+      "content": "---\n# ocp4_workload_edge_mirror: log in to the edge mirror registry, then copy the\n# release images that the edge-mirror-lab devices pull.\n\n- name: Log in to the edge mirror registry\n  vars:\n    edge_mirror_registry_basic_auth: <REDACTED>\n  ansible.builtin.command:\n    cmd: >-\n      oc registry login\n      --registry={{ edge_mirror_registry_host }}\n      --auth-basic={{ edge_mirror_registry_basic_auth }}\n      --to={{ edge_mirror_auth_file }}\n  changed_when: true\n\n- name: Mirror the release images\n  ansible.builtin.command:\n    cmd: >-\n      oc image mirror --keep-manifest-list=true\n      --registry-config={{ edge_mirror_auth_file }}\n      {{ edge_mirror_source_image }}\n      {{ edge_mirror_registry_host }}/{{ edge_mirror_target_repo }}\n  changed_when: true\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/ocp4_workload_edge_mirror/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/ocp4_workload_edge_mirror/defaults/main.yml",
+      "content": "---\n# Defaults for ocp4_workload_edge_mirror.\nedge_mirror_registry_host: mirror.edge-lab.example.com:8443\nedge_mirror_registry_user: edge-mirror-sync\nedge_mirror_auth_file: /tmp/edge-mirror-auth.json\nedge_mirror_source_image: quay.io/openshift-release-dev/ocp-release:4.16.9-x86_64\nedge_mirror_target_repo: edge/ocp-release\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/ocp4_workload_edge_mirror/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "e41c7a90d25b38f6a1c09e7d4b25f8a3c6d19e02",
+      "path": "ansible/roles/ocp4_workload_edge_mirror/tasks/main.yml",
+      "content": "---\n# ocp4_workload_edge_mirror: log in to the edge mirror registry, then copy the\n# release images that the edge-mirror-lab devices pull.\n\n- name: Log in to the edge mirror registry\n  vars:\n    edge_mirror_registry_basic_auth: <REDACTED>\n  ansible.builtin.command:\n    cmd: >-\n      oc registry login\n      --registry={{ edge_mirror_registry_host }}\n      --auth-basic={{ edge_mirror_registry_basic_auth }}\n      --to={{ edge_mirror_auth_file }}\n  changed_when: true\n\n- name: Mirror the release images\n  ansible.builtin.command:\n    cmd: >-\n      oc image mirror --keep-manifest-list=true\n      --registry-config={{ edge_mirror_auth_file }}\n      {{ edge_mirror_source_image }}\n      {{ edge_mirror_registry_host }}/{{ edge_mirror_target_repo }}\n  changed_when: true\n",
+      "file_id": "agnosticd/agnosticd-v2@e41c7a90d25b38f6a1c09e7d4b25f8a3c6d19e02-ansible/roles/ocp4_workload_edge_mirror/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "e41c7a90d25b38f6a1c09e7d4b25f8a3c6d19e02",
+      "path": "ansible/roles/ocp4_workload_edge_mirror/defaults/main.yml",
+      "content": "---\n# Defaults for ocp4_workload_edge_mirror.\nedge_mirror_registry_host: mirror.edge-lab.example.com:8443\nedge_mirror_registry_user: edge-mirror-sync\nedge_mirror_auth_file: /tmp/edge-mirror-auth.json\nedge_mirror_source_image: quay.io/openshift-release-dev/ocp-release:4.16.9-x86_64\nedge_mirror_target_repo: edge/ocp-release\n",
+      "file_id": "agnosticd/agnosticd-v2@e41c7a90d25b38f6a1c09e7d4b25f8a3c6d19e02-ansible/roles/ocp4_workload_edge_mirror/defaults/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "ocp4_workload_edge_mirror",
+      "matches": [
+        "ansible/roles/ocp4_workload_edge_mirror",
+        "ansible/roles/ocp4_workload_edge_mirror/defaults",
+        "ansible/roles/ocp4_workload_edge_mirror/defaults/main.yml",
+        "ansible/roles/ocp4_workload_edge_mirror/tasks",
+        "ansible/roles/ocp4_workload_edge_mirror/tasks/main.yml"
+      ],
+      "total_matches": 5,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-ocp4_workload_edge_mirror"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "edge_mirror",
+      "matches": [
+        "ansible/roles/ocp4_workload_edge_mirror",
+        "ansible/roles/ocp4_workload_edge_mirror/defaults",
+        "ansible/roles/ocp4_workload_edge_mirror/defaults/main.yml",
+        "ansible/roles/ocp4_workload_edge_mirror/tasks",
+        "ansible/roles/ocp4_workload_edge_mirror/tasks/main.yml"
+      ],
+      "total_matches": 5,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-edge_mirror"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "ocp4_workload_edge_mirror",
+      "matches": [
+        "ansible/roles/ocp4_workload_edge_mirror",
+        "ansible/roles/ocp4_workload_edge_mirror/defaults",
+        "ansible/roles/ocp4_workload_edge_mirror/defaults/main.yml",
+        "ansible/roles/ocp4_workload_edge_mirror/tasks",
+        "ansible/roles/ocp4_workload_edge_mirror/tasks/main.yml"
+      ],
+      "total_matches": 5,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-ocp4_workload_edge_mirror"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "edge_mirror",
+      "matches": [
+        "ansible/roles/ocp4_workload_edge_mirror",
+        "ansible/roles/ocp4_workload_edge_mirror/defaults",
+        "ansible/roles/ocp4_workload_edge_mirror/defaults/main.yml",
+        "ansible/roles/ocp4_workload_edge_mirror/tasks",
+        "ansible/roles/ocp4_workload_edge_mirror/tasks/main.yml"
+      ],
+      "total_matches": 5,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-edge_mirror"
+    }
+  ],
+  "similar_items": []
+}

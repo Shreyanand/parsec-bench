@@ -1,0 +1,62 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_model_registry/defaults/main.yml"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "ocp4_workload_model_registry_instance_name"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "line",
+        "any_of": [
+          "line 17",
+          "line #17",
+          "line no. 17",
+          "line number 17",
+          "L17",
+          ":17",
+          "(17)",
+          "line: 17",
+          "| 17 |"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the variable is the 17th line of the fetched defaults file.",
+        "asked_by": "the line that sets it",
+        "rationale": "counted from the seeded file; graded as a required fact, not a citation line, because an honest answer names the file more than once"
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 1,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

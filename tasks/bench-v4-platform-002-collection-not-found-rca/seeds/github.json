@@ -1,0 +1,181 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "account": "sandboxes_gpte",
+      "directory": "ans-bu-wksp-rhel-90",
+      "path": "sandboxes_gpte/ans-bu-wksp-rhel-90/prod.yaml",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "sandboxes_gpte-sandboxes_gpte/ans-bu-wksp-rhel-90/prod.yaml"
+    }
+  ],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible.cfg",
+      "content": "[defaults]\nhost_key_checking = False\nstdout_callback = yaml\n# collections_path deliberately narrow while we debug the EE build\ncollections_path = /runner/project/collections\n\n[ssh_connection]\npipelining = True\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible.cfg"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible.cfg",
+      "content": "[defaults]\nhost_key_checking = False\nstdout_callback = yaml\n# collections_path deliberately narrow while we debug the EE build\ncollections_path = /runner/project/collections\n\n[ssh_connection]\npipelining = True\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible.cfg"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "collections_path",
+      "matches": [
+        "ansible.cfg",
+        "ansible/requirements.yml",
+        "README.md"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-collections_path"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "ansible.cfg",
+      "matches": [
+        "ansible.cfg",
+        "ansible/requirements.yml",
+        "README.md"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-ansible.cfg"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "core_workloads",
+      "matches": [
+        "ansible.cfg",
+        "ansible/requirements.yml",
+        "README.md"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-core_workloads"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "collections",
+      "matches": [
+        "ansible.cfg",
+        "ansible/requirements.yml",
+        "README.md"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-collections"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "requirements_collections",
+      "matches": [
+        "ansible.cfg",
+        "ansible/requirements.yml",
+        "README.md"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-requirements_collections"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "collections_path",
+      "matches": [
+        "ansible.cfg",
+        "ansible/requirements.yml",
+        "README.md"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-collections_path"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "ansible.cfg",
+      "matches": [
+        "ansible.cfg",
+        "ansible/requirements.yml",
+        "README.md"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-ansible.cfg"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "core_workloads",
+      "matches": [
+        "ansible.cfg",
+        "ansible/requirements.yml",
+        "README.md"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-core_workloads"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "collections",
+      "matches": [
+        "ansible.cfg",
+        "ansible/requirements.yml",
+        "README.md"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-collections"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "requirements_collections",
+      "matches": [
+        "ansible.cfg",
+        "ansible/requirements.yml",
+        "README.md"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-requirements_collections"
+    }
+  ],
+  "similar_items": []
+}

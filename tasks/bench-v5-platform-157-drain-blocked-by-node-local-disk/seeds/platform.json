@@ -1,0 +1,403 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [
+    {
+      "id": "aap2-east-5530718",
+      "job_id": 5530718,
+      "job_name": "ocpv-node-maintenance",
+      "status": "successful",
+      "failed": false,
+      "started": "2026-11-05T21:00:14Z",
+      "finished": "2026-11-05T21:17:52Z",
+      "duration_seconds": 1058,
+      "launch_type": "manual",
+      "job_explanation": "",
+      "template_name": "ocpv-node-maintenance",
+      "env_type": "",
+      "guid": "",
+      "action": "",
+      "cloud_provider": "cnv",
+      "display_name": "ocpv-node-maintenance",
+      "controller": "east"
+    }
+  ],
+  "job_events": [
+    {
+      "job_event_id": "east-5530718-3",
+      "job_id": 5530718,
+      "controller": "east",
+      "event_key": "5530718-3",
+      "counter": 3,
+      "event": "runner_on_ok",
+      "task": "Cordon the node",
+      "play": "Put an OpenShift Virtualization node into maintenance",
+      "role": "ocpv_node_maintenance",
+      "host": "localhost",
+      "failed": false,
+      "changed": true,
+      "stdout": "changed: [localhost] => node/tarn-wrk-03 cordoned (spec.unschedulable=true)",
+      "error_msg": ""
+    },
+    {
+      "job_event_id": "east-5530718-6",
+      "job_id": 5530718,
+      "controller": "east",
+      "event_key": "5530718-6",
+      "counter": 6,
+      "event": "runner_on_ok",
+      "task": "List VirtualMachineInstances on the node",
+      "play": "Put an OpenShift Virtualization node into maintenance",
+      "role": "ocpv_node_maintenance",
+      "host": "localhost",
+      "failed": false,
+      "changed": false,
+      "stdout": "ok: [localhost] => 4 VMIs on tarn-wrk-03: kestrel-crm-prod/kcrm-web-1, kestrel-crm-prod/kcrm-web-2, kestrel-crm-prod/kcrm-batch-1, kestrel-crm-prod/kcrm-cache-1; condition LiveMigratable=True on 4 of 4",
+      "error_msg": ""
+    },
+    {
+      "job_event_id": "east-5530718-9",
+      "job_id": 5530718,
+      "controller": "east",
+      "event_key": "5530718-9",
+      "counter": 9,
+      "event": "runner_on_ok",
+      "task": "Live-migrate the VMIs off the node",
+      "play": "Put an OpenShift Virtualization node into maintenance",
+      "role": "ocpv_node_maintenance",
+      "host": "localhost",
+      "failed": false,
+      "changed": true,
+      "stdout": "changed: [localhost] => created 4 VirtualMachineInstanceMigration objects",
+      "error_msg": ""
+    },
+    {
+      "job_event_id": "east-5530718-12",
+      "job_id": 5530718,
+      "controller": "east",
+      "event_key": "5530718-12",
+      "counter": 12,
+      "event": "runner_on_ok",
+      "task": "Wait for the migrations to complete",
+      "play": "Put an OpenShift Virtualization node into maintenance",
+      "role": "ocpv_node_maintenance",
+      "host": "localhost",
+      "failed": false,
+      "changed": false,
+      "stdout": "ok: [localhost] => 4 of 4 VirtualMachineInstanceMigrations completed (kcrm-web-1 -> tarn-wrk-05, kcrm-web-2 -> tarn-wrk-01, kcrm-batch-1 -> tarn-wrk-05, kcrm-cache-1 -> tarn-wrk-01); 0 VMIs left on tarn-wrk-03",
+      "error_msg": ""
+    },
+    {
+      "job_event_id": "east-5530718-15",
+      "job_id": 5530718,
+      "controller": "east",
+      "event_key": "5530718-15",
+      "counter": 15,
+      "event": "runner_on_ok",
+      "task": "Evict the remaining pods",
+      "play": "Put an OpenShift Virtualization node into maintenance",
+      "role": "ocpv_node_maintenance",
+      "host": "localhost",
+      "failed": false,
+      "changed": true,
+      "stdout": "changed: [localhost] => node/tarn-wrk-03: 11 pods evicted",
+      "error_msg": ""
+    }
+  ],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [
+    {
+      "ocpv_namespace_id": "ons-157-1",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "status": "Active"
+    }
+  ],
+  "ocpv_pvcs": [
+    {
+      "ocpv_pvc_id": "opvc-157-1",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-api-1-rootdisk",
+      "status": "Bound",
+      "storage_class": "odf-ceph-rbd-virt",
+      "size": "40Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteMany"
+      ]
+    },
+    {
+      "ocpv_pvc_id": "opvc-157-2",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-api-2-rootdisk",
+      "status": "Bound",
+      "storage_class": "odf-ceph-rbd-virt",
+      "size": "40Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteMany"
+      ]
+    },
+    {
+      "ocpv_pvc_id": "opvc-157-3",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-db-a-rootdisk",
+      "status": "Bound",
+      "storage_class": "odf-ceph-rbd-virt",
+      "size": "40Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteMany"
+      ]
+    },
+    {
+      "ocpv_pvc_id": "opvc-157-4",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-db-a-pgdata",
+      "status": "Bound",
+      "storage_class": "lvms-vg-ssd",
+      "size": "500Gi",
+      "volume_mode": "Filesystem",
+      "access_modes": [
+        "ReadWriteOnce"
+      ]
+    },
+    {
+      "ocpv_pvc_id": "opvc-157-5",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-db-b-rootdisk",
+      "status": "Bound",
+      "storage_class": "odf-ceph-rbd-virt",
+      "size": "40Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteMany"
+      ]
+    },
+    {
+      "ocpv_pvc_id": "opvc-157-6",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-db-b-pgdata",
+      "status": "Bound",
+      "storage_class": "lvms-vg-ssd",
+      "size": "500Gi",
+      "volume_mode": "Filesystem",
+      "access_modes": [
+        "ReadWriteOnce"
+      ]
+    },
+    {
+      "ocpv_pvc_id": "opvc-157-7",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-mq-1-rootdisk",
+      "status": "Bound",
+      "storage_class": "odf-ceph-rbd-virt",
+      "size": "30Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteMany"
+      ]
+    }
+  ],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [
+    {
+      "ocpv_vm_id": "ovm-157-1",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-api-1",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "tarn-wrk-04",
+      "ip": "10.129.14.21",
+      "vcpus": 4,
+      "memory": "8Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        },
+        {
+          "name": "cloudinitdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "persistentVolumeClaim": "escrow-api-1-rootdisk"
+        },
+        {
+          "name": "cloudinitdisk",
+          "cloudInitNoCloud": {}
+        }
+      ]
+    },
+    {
+      "ocpv_vm_id": "ovm-157-2",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-api-2",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "tarn-wrk-06",
+      "ip": "10.130.6.58",
+      "vcpus": 4,
+      "memory": "8Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        },
+        {
+          "name": "cloudinitdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "persistentVolumeClaim": "escrow-api-2-rootdisk"
+        },
+        {
+          "name": "cloudinitdisk",
+          "cloudInitNoCloud": {}
+        }
+      ]
+    },
+    {
+      "ocpv_vm_id": "ovm-157-3",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-db-a",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "tarn-wrk-02",
+      "ip": "10.128.2.77",
+      "vcpus": 8,
+      "memory": "32Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        },
+        {
+          "name": "pgdata",
+          "bus": "virtio"
+        },
+        {
+          "name": "cloudinitdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "persistentVolumeClaim": "escrow-db-a-rootdisk"
+        },
+        {
+          "name": "pgdata",
+          "persistentVolumeClaim": "escrow-db-a-pgdata"
+        },
+        {
+          "name": "cloudinitdisk",
+          "cloudInitNoCloud": {}
+        }
+      ]
+    },
+    {
+      "ocpv_vm_id": "ovm-157-4",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-db-b",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "tarn-wrk-06",
+      "ip": "10.130.6.61",
+      "vcpus": 8,
+      "memory": "32Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        },
+        {
+          "name": "pgdata",
+          "bus": "virtio"
+        },
+        {
+          "name": "cloudinitdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "persistentVolumeClaim": "escrow-db-b-rootdisk"
+        },
+        {
+          "name": "pgdata",
+          "persistentVolumeClaim": "escrow-db-b-pgdata"
+        },
+        {
+          "name": "cloudinitdisk",
+          "cloudInitNoCloud": {}
+        }
+      ]
+    },
+    {
+      "ocpv_vm_id": "ovm-157-5",
+      "cluster": "ocpv-tarn",
+      "namespace": "fin-escrow-prod",
+      "name": "escrow-mq-1",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "tarn-wrk-06",
+      "ip": "10.130.6.64",
+      "vcpus": 2,
+      "memory": "4Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        },
+        {
+          "name": "cloudinitdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "persistentVolumeClaim": "escrow-mq-1-rootdisk"
+        },
+        {
+          "name": "cloudinitdisk",
+          "cloudInitNoCloud": {}
+        }
+      ]
+    }
+  ],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

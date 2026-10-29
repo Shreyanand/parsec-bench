@@ -1,0 +1,155 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_vms",
+          "namespace": "sandbox-hq3vt-rhel9-vm-lab"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_machines",
+          "cluster": "ocpv07"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "stuck-machine",
+        "any_of": [
+          "cnv-metal-b-x6dtm"
+        ],
+        "ignore_case": true,
+        "asked_by": "Name any Machine that is not Running",
+        "rationale": "the one ocpv07 Machine whose phase is not Running. Its name carries its MachineSet's name as a prefix (the OpenShift <machineset>-<suffix> convention), so it also identifies the short set; no separate set-name fact, because a required 'cnv-metal-b' would make the decoy claim 'cnv-metal-b is fully ready' unforbiddable (hazard 12)"
+      },
+      {
+        "id": "stuck-phase",
+        "any_of": [
+          "Provisioning"
+        ],
+        "asked_by": "give the phase it is stuck in",
+        "rationale": "the Machine's own phase field. Case-insensitive so 'stuck in provisioning' counts; the word does not appear in the instruction",
+        "ignore_case": true
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "infra-declared-healthy",
+        "none_of": [
+          "yes, both machinesets are",
+          "yes, both machinesets have",
+          "cnv-metal-b are both fully ready",
+          "every machineset has the replicas it wants ready, and every machine is up.",
+          "replicas 4, ready 4",
+          "cnv-metal-b has 2 of 2",
+          "cnv-metal-b has 2 ready",
+          "cnv-metal-b: replicas 2",
+          "x6dtm: running",
+          "x6dtm (running)",
+          "x6dtm | running",
+          "x6dtm - running",
+          "x6dtm \u2013 running",
+          "x6dtm \u2014 running",
+          "x6dtm: phase running"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "ocpv14"
+        ],
+        "rationale": "precision over recall (hazard 8). Only forms that cannot sit inside their own negation, an exception clause or a forward-looking remediation: an affirmative 'yes, both machinesets are/have'; the two set names declared ready together; the instruction's two questions answered as one affirmative sentence (ending at its full stop, so 'every Machine is up except ...' does not match); cnv-metal-b at 4 ready of 4 ('replicas 4, ready 4'; 'cnv-metal-b: 4/4', '4 desired, 4 ready' and 'desired 4, ready 4' were dropped because honest remediation targets use them); the decoy reading of cnv-metal-b with ocpv14's 2/2 numbers; and the stuck Machine listed, tabulated or enumerated as Running. No form may carry the full Machine name or the phase word (hazard 12), so enumerations ending '... and cnv-metal-b-x6dtm are all Running' and 'x6dtm was Provisioning briefly' cannot be forbidden Bare 'x6dtm is running' / 'x6dtm are (all) running' are absent: they sit inside 'once x6dtm is Running' and 'All Machines except cnv-metal-b-x6dtm are Running', and 'x6dtm is running, like every other machine' sits inside 'once x6dtm is Running, like every other Machine'. attributed_to 'ocpv14' excuses a sentence that describes the other cluster's set"
+      }
+    ],
+    "counts": [
+      {
+        "id": "degraded-ready-of-desired",
+        "value": 3,
+        "nouns": [
+          "4",
+          "four"
+        ],
+        "window": 10,
+        "extra_any_of": [
+          "3 of 4",
+          "3 of the 4",
+          "3 of its 4",
+          "3 out of 4",
+          "3 out of the 4",
+          "3 out of its 4",
+          "3/4",
+          "3 / 4",
+          "three of four",
+          "three of the four",
+          "three of its four",
+          "three out of four",
+          "three out of the four",
+          "three out of its four",
+          "3 ready out of 4",
+          "3 ready of 4",
+          "3 ready replicas out of 4",
+          "3 replicas ready out of 4",
+          "three ready out of four",
+          "three ready replicas out of four",
+          "4 desired, 3 ready",
+          "4 desired, only 3 ready",
+          "4 desired but only 3",
+          "4 desired replicas, 3 ready",
+          "4 desired replicas but only 3",
+          "3 ready, 4 desired",
+          "3 ready vs 4 desired",
+          "3 ready versus 4 desired",
+          "3 ready and 4 desired",
+          "desired 4, ready 3",
+          "ready 3, desired 4",
+          "desired: 4, ready: 3",
+          "ready: 3, desired: 4",
+          "replicas: 4, ready_replicas: 3",
+          "replicas 4, ready 3",
+          "replicas: 4, ready: 3",
+          "replicas=4, ready_replicas=3",
+          "ready_replicas: 3, replicas: 4",
+          "ready_replicas=3, replicas=4",
+          "wants 4 but only 3",
+          "wants 4 replicas but only 3",
+          "wants 4 replicas and only 3",
+          "wants 4, only 3",
+          "four desired, three ready",
+          "three ready, four desired",
+          "wants four but only three",
+          "wants four replicas but only three",
+          "three ready replicas against four",
+          "3 ready replicas against 4",
+          "3 ready against 4",
+          "one short of its 4",
+          "one short of 4",
+          "one short of its four",
+          "all but one of its 4",
+          "all but one of the 4",
+          "all but one of 4",
+          "all but one of its four",
+          "all but one of the four",
+          "three replicas are ready out of the four",
+          "3 replicas are ready out of the 4"
+        ],
+        "asked_by": "say how many of its replicas are ready out of how many desired",
+        "rationale": "cnv-metal-b on ocpv07: ready_replicas 3 of replicas 4, graded as the PAIR. The numeric rule is the ready value 3 (digit-guarded, so 13 or 1.3 do not count) within the window of a 4 or 'four' token (a noun match only at a token start that ends at a word boundary, so the proximity rule does not count 14 or 40; the extra_any_of forms are plain substrings and carry no such guard). A lone 3 or a lone 4 earns nothing under the proximity rule unless the other number happens to fall within the 10-token window, so an agent that quotes replicas: 4 off the row with no 3 nearby and declares everything ready banks nothing. extra_any_of keeps the pair notations whose numbers sit further apart. No other row on either cluster carries a 3 or a 4 (the healthy set and the decoy are both 2/2)"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

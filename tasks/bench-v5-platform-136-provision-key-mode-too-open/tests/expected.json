@@ -1,0 +1,131 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 552816
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles/bastion_provision_key/tasks/main.yml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "key-too-open",
+        "any_of": [
+          "too open",
+          "UNPROTECTED PRIVATE KEY",
+          "bad permissions",
+          "permissions 0644",
+          "permissions of 0644",
+          "0644 permissions",
+          "mode 0644",
+          "mode \"0644\"",
+          "mode: \"0644\"",
+          "mode 644",
+          "world-readable",
+          "world readable",
+          "readable by others",
+          "readable by group and others",
+          "accessible by others",
+          "group- and world-readable"
+        ],
+        "ignore_case": true,
+        "asked_by": "what made the SSH connection fail",
+        "rationale": "the cause the job log states inside the UNREACHABLE message; an agent that reads only the last line sees just 'Permission denied (publickey)'"
+      },
+      {
+        "id": "writing-task",
+        "any_of": [
+          "Write the provisioning private key",
+          "bastion_provision_key"
+        ],
+        "ignore_case": true,
+        "asked_by": "which task in the content set that up",
+        "rationale": "the log names the task and role that wrote the key file; the UNREACHABLE play does not"
+      },
+      {
+        "id": "fix-mode",
+        "any_of": [
+          "0600",
+          "0400",
+          "mode 600",
+          "mode: 600",
+          "mode to 600",
+          "mode of 600",
+          "mode 400",
+          "mode: 400",
+          "mode to 400",
+          "chmod 600",
+          "chmod 400",
+          "u=rw",
+          "readable only by its owner",
+          "readable only by the owner",
+          "readable only by the file owner",
+          "only readable by the owner",
+          "only readable by its owner",
+          "owner-only",
+          "owner only"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what should change in that task",
+        "rationale": "the remedy: a private key mode that ssh accepts, set in the task that wrote the key",
+        "note": "the fetched tasks/main.yml writes the key with mode \"0644\" and the job log shows ssh refusing a key with permissions 0644 as too open; ssh accepts a private key only when it is not readable by group or others, so the line must become 0600 or 0400 (owner-only)."
+      }
+    ],
+    "citations": [
+      {
+        "id": "mode-line",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles/bastion_provision_key/tasks/main.yml",
+        "line": 15,
+        "asked_by": "cite the offending line as `owner/repo:path:line`",
+        "rationale": "the line number is counted from the seeded task file; the log names the task's first line (10), not the mode line, so only the fetch supplies it"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "bastion-rejected-key",
+        "none_of": [
+          "bastion rejected the key",
+          "bastion refused the key",
+          "bastion rejected our key",
+          "bastion refused our key",
+          "key is not authorized on the bastion",
+          "key isn't authorized on the bastion",
+          "key is missing from authorized_keys",
+          "key was missing from authorized_keys",
+          "public key was never installed",
+          "wrong key pair",
+          "key pair does not match",
+          "key pair doesn't match",
+          "key pair mismatch"
+        ],
+        "ignore_case": true,
+        "rationale": "ssh never offered the key, so the bastion never judged it; blaming the bastion's authorized_keys or the EC2 key pair is the reading of 'Permission denied (publickey)' that the earlier lines of the same message refute"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

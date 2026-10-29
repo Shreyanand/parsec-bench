@@ -1,0 +1,218 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [
+    {
+      "babylon_catalog_item_id": "linnet-rhel-sec.compliance-lab.prod",
+      "cluster": "linnet",
+      "ci_name": "rhel-sec.compliance-lab",
+      "display_name": "RHEL Compliance Automation Lab",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "3e8a51c6-0d47-4b9f-b2a6-f07c94d81e35",
+      "keywords": [
+        "rhel",
+        "compliance",
+        "openscap"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "siskin-aap.rulebook-first-steps.prod",
+      "cluster": "siskin",
+      "ci_name": "aap.rulebook-first-steps",
+      "display_name": "EDA Rulebook Starter",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "2f9b6d03-81ce-4a57-9e2d-c4a7105b38e6",
+      "keywords": [
+        "ansible",
+        "eda",
+        "rulebooks"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "siskin-edge-ai.camera-lab.prod",
+      "cluster": "siskin",
+      "ci_name": "edge-ai.camera-lab",
+      "display_name": "Edge AI Camera Lab",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "7a3e19c5-d264-4f0b-a891-5be2c07d94f1",
+      "keywords": [
+        "edge",
+        "ai",
+        "camera",
+        "microshift"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "siskin-ocp-virt.vm-onboard-lab.prod",
+      "cluster": "siskin",
+      "ci_name": "ocp-virt.vm-onboard-lab",
+      "display_name": "OpenShift Virtualization VM Onboarding Lab",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "c58d2a70-3f19-4e6b-b0d4-9a61e7f2c385",
+      "keywords": [
+        "virtualization",
+        "mtv",
+        "onboarding"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "siskin-ocp.image-builds-lab.prod",
+      "cluster": "siskin",
+      "ci_name": "ocp.image-builds-lab",
+      "display_name": "Buildah Container Lab",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": true,
+      "asset_uuid": "05e7b4c9-2ad8-4f61-8c3e-71f9d0a6b2e4",
+      "keywords": [
+        "buildah",
+        "containers"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "siskin-rhel-sec.compliance-lab-v2.prod",
+      "cluster": "siskin",
+      "ci_name": "rhel-sec.compliance-lab-v2",
+      "display_name": "RHEL Compliance Automation Lab (v2)",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "b16f3e84-5c07-49a2-9d1b-38e7a4c0f925",
+      "keywords": [
+        "rhel",
+        "compliance",
+        "openscap",
+        "remediation"
+      ]
+    }
+  ],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [
+    {
+      "babylon_workshop_id": "siskin-edge-ai-camera-dec",
+      "cluster": "siskin",
+      "namespace": "user-mbaptiste-redhat-com",
+      "name": "edge-ai-camera-dec",
+      "display_name": "Edge AI Camera Lab - December cohort",
+      "catalog_item": "edge-ai.camera-lab.prod",
+      "workshop_id": "k2wfn",
+      "multiworkshop": "",
+      "description": "December cohort of the edge AI camera lab.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-12-07T08:00:00Z",
+        "end": "2026-12-11T18:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 0,
+        "active": 0,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 12,
+      "user_assignments_count": 0,
+      "resource_claims_count": 0,
+      "resource_claims": []
+    },
+    {
+      "babylon_workshop_id": "siskin-image-builds-dec",
+      "cluster": "siskin",
+      "namespace": "user-mbaptiste-redhat-com",
+      "name": "image-builds-dec",
+      "display_name": "Buildah Container Lab - December cohort",
+      "catalog_item": "ocp.image-builds-lab.prod",
+      "workshop_id": "s6gqa",
+      "multiworkshop": "",
+      "description": "December cohort of the Buildah container lab.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-12-07T08:00:00Z",
+        "end": "2026-12-11T18:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 0,
+        "active": 0,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 20,
+      "user_assignments_count": 0,
+      "resource_claims_count": 0,
+      "resource_claims": []
+    },
+    {
+      "babylon_workshop_id": "siskin-rhel-compliance-dec",
+      "cluster": "siskin",
+      "namespace": "user-mbaptiste-redhat-com",
+      "name": "rhel-compliance-dec",
+      "display_name": "RHEL Compliance Automation - December cohort",
+      "catalog_item": "rhel-sec.compliance-lab.prod",
+      "workshop_id": "p8dtj",
+      "multiworkshop": "",
+      "description": "December cohort of the RHEL compliance automation lab.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-12-07T08:00:00Z",
+        "end": "2026-12-11T18:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 0,
+        "active": 0,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 18,
+      "user_assignments_count": 0,
+      "resource_claims_count": 0,
+      "resource_claims": []
+    },
+    {
+      "babylon_workshop_id": "siskin-rulebook-steps-dec",
+      "cluster": "siskin",
+      "namespace": "user-mbaptiste-redhat-com",
+      "name": "rulebook-steps-dec",
+      "display_name": "Rulebook First Steps - December cohort",
+      "catalog_item": "aap.rulebook-first-steps.prod",
+      "workshop_id": "r4yhc",
+      "multiworkshop": "",
+      "description": "December cohort of Rulebook First Steps.",
+      "open_registration": true,
+      "lifespan": {
+        "start": "2026-12-07T08:00:00Z",
+        "end": "2026-12-11T18:00:00Z"
+      },
+      "provision_count": {
+        "ordered": 0,
+        "active": 0,
+        "failed": 0,
+        "retries": 0
+      },
+      "user_count": 15,
+      "user_assignments_count": 0,
+      "resource_claims_count": 0,
+      "resource_claims": []
+    }
+  ],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,201 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml",
+      "content": "---\n- name: Render the ClusterIssuer manifest\n  ansible.builtin.template:\n    src: cluster-issuer.yaml.j2\n    dest: /tmp/kestrel-cluster-issuer.yaml\n    mode: \"0644\"\n\n- name: Apply the ClusterIssuer\n  kubernetes.core.k8s:\n    state: present\n    src: /tmp/kestrel-cluster-issuer.yaml\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml",
+      "content": "---\n# Defaults for ocp4_workload_kestrel_ingress.\nkestrel_ingress_issuer_name: kestrel-letsencrypt\nkestrel_ingress_acme_server: https://acme-v02.api.letsencrypt.org/directory\nkestrel_ingress_acme_email: kestrel-lab-admins@example.com\n\n# ACME solver for the ClusterIssuer.\nkestrel_ingress_acme_solver: route53-delegated\nkestrel_ingress_aws_region: us-east-1\nkestrel_ingress_router_class: openshift-default\n\n# kestrel_ingress_dns_zone has no default. The template reads it only when\n# kestrel_ingress_acme_solver is route53-delegated.\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/templates/cluster-issuer.yaml.j2",
+      "content": "{# Rendered by ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml.\n   Solver choice and inputs: ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml. #}\napiVersion: cert-manager.io/v1\nkind: ClusterIssuer\nmetadata:\n  name: {{ kestrel_ingress_issuer_name }}\nspec:\n  acme:\n    server: {{ kestrel_ingress_acme_server }}\n    email: {{ kestrel_ingress_acme_email }}\n    solvers:\n{% if kestrel_ingress_acme_solver == 'route53-delegated' %}\n      - selector:\n          dnsZones:\n            - {{ kestrel_ingress_dns_zone }}\n        dns01:\n          route53:\n            region: {{ kestrel_ingress_aws_region }}\n{% elif kestrel_ingress_acme_solver == 'http01-router' %}\n      - http01:\n          ingress:\n            ingressClassName: {{ kestrel_ingress_router_class }}\n{% endif %}\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/ocp4_workload_kestrel_ingress/templates/cluster-issuer.yaml.j2"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress",
+      "content": "defaults/\ntasks/\ntemplates/",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/ocp4_workload_kestrel_ingress"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/templates",
+      "content": "cluster-issuer.yaml.j2",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/ocp4_workload_kestrel_ingress/templates"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml",
+      "content": "---\n- name: Render the ClusterIssuer manifest\n  ansible.builtin.template:\n    src: cluster-issuer.yaml.j2\n    dest: /tmp/kestrel-cluster-issuer.yaml\n    mode: \"0644\"\n\n- name: Apply the ClusterIssuer\n  kubernetes.core.k8s:\n    state: present\n    src: /tmp/kestrel-cluster-issuer.yaml\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml",
+      "content": "---\n# Defaults for ocp4_workload_kestrel_ingress.\nkestrel_ingress_issuer_name: kestrel-letsencrypt\nkestrel_ingress_acme_server: https://acme-v02.api.letsencrypt.org/directory\nkestrel_ingress_acme_email: kestrel-lab-admins@example.com\n\n# ACME solver for the ClusterIssuer.\nkestrel_ingress_acme_solver: route53-delegated\nkestrel_ingress_aws_region: us-east-1\nkestrel_ingress_router_class: openshift-default\n\n# kestrel_ingress_dns_zone has no default. The template reads it only when\n# kestrel_ingress_acme_solver is route53-delegated.\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/templates/cluster-issuer.yaml.j2",
+      "content": "{# Rendered by ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml.\n   Solver choice and inputs: ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml. #}\napiVersion: cert-manager.io/v1\nkind: ClusterIssuer\nmetadata:\n  name: {{ kestrel_ingress_issuer_name }}\nspec:\n  acme:\n    server: {{ kestrel_ingress_acme_server }}\n    email: {{ kestrel_ingress_acme_email }}\n    solvers:\n{% if kestrel_ingress_acme_solver == 'route53-delegated' %}\n      - selector:\n          dnsZones:\n            - {{ kestrel_ingress_dns_zone }}\n        dns01:\n          route53:\n            region: {{ kestrel_ingress_aws_region }}\n{% elif kestrel_ingress_acme_solver == 'http01-router' %}\n      - http01:\n          ingress:\n            ingressClassName: {{ kestrel_ingress_router_class }}\n{% endif %}\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/ocp4_workload_kestrel_ingress/templates/cluster-issuer.yaml.j2"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress",
+      "content": "defaults/\ntasks/\ntemplates/",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/ocp4_workload_kestrel_ingress"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/templates",
+      "content": "cluster-issuer.yaml.j2",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/ocp4_workload_kestrel_ingress/templates"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "be00cc29d313fc9f0f8af389a6f288c283da1144",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml",
+      "content": "---\n- name: Render the ClusterIssuer manifest\n  ansible.builtin.template:\n    src: cluster-issuer.yaml.j2\n    dest: /tmp/kestrel-cluster-issuer.yaml\n    mode: \"0644\"\n\n- name: Apply the ClusterIssuer\n  kubernetes.core.k8s:\n    state: present\n    src: /tmp/kestrel-cluster-issuer.yaml\n",
+      "file_id": "agnosticd/agnosticd-v2@be00cc29d313fc9f0f8af389a6f288c283da1144-ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "be00cc29d313fc9f0f8af389a6f288c283da1144",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml",
+      "content": "---\n# Defaults for ocp4_workload_kestrel_ingress.\nkestrel_ingress_issuer_name: kestrel-letsencrypt\nkestrel_ingress_acme_server: https://acme-v02.api.letsencrypt.org/directory\nkestrel_ingress_acme_email: kestrel-lab-admins@example.com\n\n# ACME solver for the ClusterIssuer.\nkestrel_ingress_acme_solver: route53-delegated\nkestrel_ingress_aws_region: us-east-1\nkestrel_ingress_router_class: openshift-default\n\n# kestrel_ingress_dns_zone has no default. The template reads it only when\n# kestrel_ingress_acme_solver is route53-delegated.\n",
+      "file_id": "agnosticd/agnosticd-v2@be00cc29d313fc9f0f8af389a6f288c283da1144-ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "be00cc29d313fc9f0f8af389a6f288c283da1144",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/templates/cluster-issuer.yaml.j2",
+      "content": "{# Rendered by ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml.\n   Solver choice and inputs: ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml. #}\napiVersion: cert-manager.io/v1\nkind: ClusterIssuer\nmetadata:\n  name: {{ kestrel_ingress_issuer_name }}\nspec:\n  acme:\n    server: {{ kestrel_ingress_acme_server }}\n    email: {{ kestrel_ingress_acme_email }}\n    solvers:\n{% if kestrel_ingress_acme_solver == 'route53-delegated' %}\n      - selector:\n          dnsZones:\n            - {{ kestrel_ingress_dns_zone }}\n        dns01:\n          route53:\n            region: {{ kestrel_ingress_aws_region }}\n{% elif kestrel_ingress_acme_solver == 'http01-router' %}\n      - http01:\n          ingress:\n            ingressClassName: {{ kestrel_ingress_router_class }}\n{% endif %}\n",
+      "file_id": "agnosticd/agnosticd-v2@be00cc29d313fc9f0f8af389a6f288c283da1144-ansible/roles/ocp4_workload_kestrel_ingress/templates/cluster-issuer.yaml.j2"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "be00cc29d313fc9f0f8af389a6f288c283da1144",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress",
+      "content": "defaults/\ntasks/\ntemplates/",
+      "file_id": "agnosticd/agnosticd-v2@be00cc29d313fc9f0f8af389a6f288c283da1144-ansible/roles/ocp4_workload_kestrel_ingress"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "be00cc29d313fc9f0f8af389a6f288c283da1144",
+      "path": "ansible/roles/ocp4_workload_kestrel_ingress/templates",
+      "content": "cluster-issuer.yaml.j2",
+      "file_id": "agnosticd/agnosticd-v2@be00cc29d313fc9f0f8af389a6f288c283da1144-ansible/roles/ocp4_workload_kestrel_ingress/templates"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "ocp4_workload_kestrel_ingress",
+      "matches": [
+        "ansible/roles/ocp4_workload_kestrel_ingress",
+        "ansible/roles/ocp4_workload_kestrel_ingress/defaults",
+        "ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml",
+        "ansible/roles/ocp4_workload_kestrel_ingress/tasks",
+        "ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml",
+        "ansible/roles/ocp4_workload_kestrel_ingress/templates",
+        "ansible/roles/ocp4_workload_kestrel_ingress/templates/cluster-issuer.yaml.j2"
+      ],
+      "total_matches": 7,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-ocp4_workload_kestrel_ingress"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "kestrel_ingress",
+      "matches": [
+        "ansible/roles/ocp4_workload_kestrel_ingress",
+        "ansible/roles/ocp4_workload_kestrel_ingress/defaults",
+        "ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml",
+        "ansible/roles/ocp4_workload_kestrel_ingress/tasks",
+        "ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml",
+        "ansible/roles/ocp4_workload_kestrel_ingress/templates",
+        "ansible/roles/ocp4_workload_kestrel_ingress/templates/cluster-issuer.yaml.j2"
+      ],
+      "total_matches": 7,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-kestrel_ingress"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "ocp4_workload_kestrel_ingress",
+      "matches": [
+        "ansible/roles/ocp4_workload_kestrel_ingress",
+        "ansible/roles/ocp4_workload_kestrel_ingress/defaults",
+        "ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml",
+        "ansible/roles/ocp4_workload_kestrel_ingress/tasks",
+        "ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml",
+        "ansible/roles/ocp4_workload_kestrel_ingress/templates",
+        "ansible/roles/ocp4_workload_kestrel_ingress/templates/cluster-issuer.yaml.j2"
+      ],
+      "total_matches": 7,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-ocp4_workload_kestrel_ingress"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "kestrel_ingress",
+      "matches": [
+        "ansible/roles/ocp4_workload_kestrel_ingress",
+        "ansible/roles/ocp4_workload_kestrel_ingress/defaults",
+        "ansible/roles/ocp4_workload_kestrel_ingress/defaults/main.yml",
+        "ansible/roles/ocp4_workload_kestrel_ingress/tasks",
+        "ansible/roles/ocp4_workload_kestrel_ingress/tasks/main.yml",
+        "ansible/roles/ocp4_workload_kestrel_ingress/templates",
+        "ansible/roles/ocp4_workload_kestrel_ingress/templates/cluster-issuer.yaml.j2"
+      ],
+      "total_matches": 7,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-kestrel_ingress"
+    }
+  ],
+  "similar_items": []
+}

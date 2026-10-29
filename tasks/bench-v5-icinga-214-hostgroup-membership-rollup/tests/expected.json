@@ -1,0 +1,133 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "down-a02",
+        "any_of": [
+          "kio-bdx-a02"
+        ],
+        "ignore_case": true,
+        "asked_by": "which of those hosts are down",
+        "rationale": "a02 is in kiosk-fleet-bdx and has attrs.state 1"
+      },
+      {
+        "id": "down-b01",
+        "any_of": [
+          "kio-bdx-b01"
+        ],
+        "ignore_case": true,
+        "asked_by": "which of those hosts are down",
+        "rationale": "b01 is in kiosk-fleet-bdx and has attrs.state 1"
+      },
+      {
+        "id": "a02-output",
+        "any_of": [
+          "lost 100%",
+          "100% lost",
+          "100% loss",
+          "100% packet loss",
+          "packet loss 100%",
+          "packet loss of 100%",
+          "100 % loss",
+          "lost 100 %",
+          "loss of 100%",
+          "loss: 100%",
+          "loss = 100%",
+          "all packets lost",
+          "rta nan"
+        ],
+        "ignore_case": true,
+        "asked_by": "what Icinga's latest check reported for each down one",
+        "rationale": "a02's last_check_result.output"
+      },
+      {
+        "id": "b01-output",
+        "any_of": [
+          "no ARP reply",
+          "no ARP",
+          "ARP reply",
+          "ARP response",
+          "ARP request",
+          "ARP timeout",
+          "ARP fail"
+        ],
+        "ignore_case": true,
+        "asked_by": "what Icinga's latest check reported for each down one",
+        "rationale": "b01's last_check_result.output; the decoy c01 says 'TTL ran out in transit'"
+      }
+    ],
+    "counts": [
+      {
+        "id": "members",
+        "value": 5,
+        "nouns": [
+          "hosts",
+          "members",
+          "machines",
+          "kiosks",
+          "kiosk-fleet-bdx",
+          "group"
+        ],
+        "window": 6,
+        "asked_by": "How many hosts are members of it",
+        "rationale": "five hosts carry kiosk-fleet-bdx in attrs.groups; kio-bdx-c01/c02 are in kiosk-staging-bdx and the store has 8 hosts"
+      },
+      {
+        "id": "down-count",
+        "value": 2,
+        "nouns": [
+          "down",
+          "hosts",
+          "offline",
+          "failing",
+          "of them",
+          "members"
+        ],
+        "window": 5,
+        "asked_by": "which of those hosts are down",
+        "rationale": "a02 and b01; counting the DOWN staging host c01 gives 3"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "staging-host-counted",
+        "none_of": [
+          "3 hosts are down",
+          "three hosts are down",
+          "3 of the 5",
+          "three of the five",
+          "3 of 5",
+          "three of five",
+          "3 of the 6",
+          "three of the six",
+          "6 hosts in kiosk-fleet-bdx",
+          "six hosts in kiosk-fleet-bdx",
+          "kio-bdx-c01 is in kiosk-fleet-bdx",
+          "kio-bdx-c01 is a member of kiosk-fleet-bdx"
+        ],
+        "ignore_case": true,
+        "rationale": "counting kio-bdx-c01 (DOWN, but in kiosk-staging-bdx) as a fleet member, which a name-prefix reading does"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

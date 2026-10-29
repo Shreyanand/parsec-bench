@@ -1,0 +1,56 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/claims_warehouse_rds/tasks/main.yml",
+      "content": "---\n# claims_warehouse_rds: the PostgreSQL warehouse behind the claims analytics lab\n- name: Generate the warehouse admin password\n  ansible.builtin.set_fact:\n    claims_warehouse_db_password: >-\n      {{ lookup('ansible.builtin.password', '/dev/null',\n                length=16, chars=['ascii_letters', 'digits', 'punctuation']) }}\n  no_log: true\n\n- name: Create the claims warehouse PostgreSQL instance\n  amazon.aws.rds_instance:\n    id: \"claims-wh-{{ guid }}\"\n    engine: postgres\n    engine_version: \"16.4\"\n    db_instance_class: db.m6g.large\n    allocated_storage: 100\n    master_username: whadmin\n    master_user_password: \"{{ claims_warehouse_db_password }}\"\n    region: \"{{ aws_region }}\"\n    wait: true\n  register: r_claims_wh_db\n\n- name: Store the warehouse endpoint for the workshop users\n  ansible.builtin.set_fact:\n    claims_warehouse_endpoint: \"{{ r_claims_wh_db.endpoint.address }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/claims_warehouse_rds/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/claims_warehouse_rds/tasks/main.yml",
+      "content": "---\n# claims_warehouse_rds: the PostgreSQL warehouse behind the claims analytics lab\n- name: Generate the warehouse admin password\n  ansible.builtin.set_fact:\n    claims_warehouse_db_password: >-\n      {{ lookup('ansible.builtin.password', '/dev/null',\n                length=16, chars=['ascii_letters', 'digits', 'punctuation']) }}\n  no_log: true\n\n- name: Create the claims warehouse PostgreSQL instance\n  amazon.aws.rds_instance:\n    id: \"claims-wh-{{ guid }}\"\n    engine: postgres\n    engine_version: \"16.4\"\n    db_instance_class: db.m6g.large\n    allocated_storage: 100\n    master_username: whadmin\n    master_user_password: \"{{ claims_warehouse_db_password }}\"\n    region: \"{{ aws_region }}\"\n    wait: true\n  register: r_claims_wh_db\n\n- name: Store the warehouse endpoint for the workshop users\n  ansible.builtin.set_fact:\n    claims_warehouse_endpoint: \"{{ r_claims_wh_db.endpoint.address }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/claims_warehouse_rds/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "e3a91c07b5d24f68a0c2e7d19b4f3a6c85d0e2f1",
+      "path": "ansible/roles/claims_warehouse_rds/tasks/main.yml",
+      "content": "---\n# claims_warehouse_rds: the PostgreSQL warehouse behind the claims analytics lab\n- name: Generate the warehouse admin password\n  ansible.builtin.set_fact:\n    claims_warehouse_db_password: >-\n      {{ lookup('ansible.builtin.password', '/dev/null',\n                length=16, chars=['ascii_letters', 'digits', 'punctuation']) }}\n  no_log: true\n\n- name: Create the claims warehouse PostgreSQL instance\n  amazon.aws.rds_instance:\n    id: \"claims-wh-{{ guid }}\"\n    engine: postgres\n    engine_version: \"16.4\"\n    db_instance_class: db.m6g.large\n    allocated_storage: 100\n    master_username: whadmin\n    master_user_password: \"{{ claims_warehouse_db_password }}\"\n    region: \"{{ aws_region }}\"\n    wait: true\n  register: r_claims_wh_db\n\n- name: Store the warehouse endpoint for the workshop users\n  ansible.builtin.set_fact:\n    claims_warehouse_endpoint: \"{{ r_claims_wh_db.endpoint.address }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@e3a91c07b5d24f68a0c2e7d19b4f3a6c85d0e2f1-ansible/roles/claims_warehouse_rds/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/claims_warehouse_rds/defaults/main.yml",
+      "content": "---\n# claims_warehouse_rds defaults\nclaims_warehouse_db_name: claims\nclaims_warehouse_db_port: 5432\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/claims_warehouse_rds/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/claims_warehouse_rds/defaults/main.yml",
+      "content": "---\n# claims_warehouse_rds defaults\nclaims_warehouse_db_name: claims\nclaims_warehouse_db_port: 5432\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/claims_warehouse_rds/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "e3a91c07b5d24f68a0c2e7d19b4f3a6c85d0e2f1",
+      "path": "ansible/roles/claims_warehouse_rds/defaults/main.yml",
+      "content": "---\n# claims_warehouse_rds defaults\nclaims_warehouse_db_name: claims\nclaims_warehouse_db_port: 5432\n",
+      "file_id": "agnosticd/agnosticd-v2@e3a91c07b5d24f68a0c2e7d19b4f3a6c85d0e2f1-ansible/roles/claims_warehouse_rds/defaults/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

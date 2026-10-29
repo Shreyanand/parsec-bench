@@ -1,0 +1,112 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 726350
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "devsecops-pipeline-lab"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "devsecops-pipeline-lab",
+          "state": "all"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "secure-supply-chain-lab"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "appdev_bu/secure-supply-chain-lab/common.yaml"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "appdev_bu/devsecops-pipeline-lab"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "appdev_bu"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "secure-supply-chain-lab"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "devsecops-pipeline-lab"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "stale-template",
+        "any_of": [
+          "still points at the old name",
+          "still uses the old name",
+          "still references the old",
+          "stale job template",
+          "job template is stale",
+          "points at the old name",
+          "order the lab as",
+          "order it as"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what to do about it",
+        "rationale": "the synthesis: the job's template name against the rename",
+        "note": "the failing job's template is still RHDP appdev_bu.devsecops-pipeline-lab.prod-provision while closed PR 6123 renamed the item to secure-supply-chain-lab and lookup_catalog_item reports devsecops-pipeline-lab missing, so the template or order must move to the new name."
+      }
+    ],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

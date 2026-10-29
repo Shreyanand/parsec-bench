@@ -1,0 +1,153 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "nfs-home-dub-2",
+          "service": "mount-latency",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "nfs-home-dub-2",
+          "service": "mount-latency"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "search": "mount-latency"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "search": "check_mount_latency"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "nfs-home-dub-2"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "search": "check_mount"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-scripts",
+          "search": "check_mount_latency"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "search": "plugins"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "mount-latency"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/fs/check_mount_latency.sh",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/fs/check_mount_latency.sh",
+          "ref": "v3.4.0"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "fix-only-on-main",
+        "any_of": [
+          "only on main",
+          "only in main",
+          "not in v3.4.0",
+          "not at v3.4.0",
+          "v3.4.0 does not",
+          "v3.4.0 doesn't",
+          "no autofs skip",
+          "lacks the fix",
+          "without the fix",
+          "predates the fix",
+          "not in the pinned",
+          "not on the pinned"
+        ],
+        "ignore_case": true,
+        "asked_by": "why is it still firing even though it was \"fixed\"",
+        "rationale": "requires comparing the main and tag versions of the script",
+        "derived": true,
+        "note": "The script on main skips autofs mounts ([[ \"$fstype\" == autofs ]] && continue) but the v3.4.0 version, which the service's vars pin as plugin_ref, has no such line, so the fix exists only on main."
+      },
+      {
+        "id": "claim-date",
+        "any_of": [
+          "2026-11-15",
+          "Nov 15",
+          "15 Nov",
+          "November 15"
+        ],
+        "ignore_case": true,
+        "asked_by": "and when",
+        "rationale": "entry_time of the fix comment",
+        "derived": true,
+        "note": "The seed carries the time as epoch seconds: hkowalczyk's comment has entry_time 1794752400, which is 2026-11-15 14:20 UTC."
+      }
+    ],
+    "required_total": 6,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

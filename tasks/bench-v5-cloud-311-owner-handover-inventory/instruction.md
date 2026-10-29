@@ -1,0 +1,1 @@
+Oriana Velasquez is moving to the networking team on 2026-11-02, and I'm collecting everything she has to hand over. Her sandbox username is ovelasquez. Please list every AWS sandbox account that has her recorded as the owner, giving the AWS account id and the env type each one runs, and tell me how many there are in total.

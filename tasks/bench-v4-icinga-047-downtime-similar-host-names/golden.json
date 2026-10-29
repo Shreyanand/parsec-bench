@@ -1,0 +1,16 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_downtimes",
+        "host": "checkout-web"
+      },
+      "result": {
+        "result": "[{\"name\":\"checkout-web!7d2c41e8-95ab-4f0e-b3c6-1e8f0a57d924\",\"type\":\"Downtime\",\"attrs\":{\"host_name\":\"checkout-web\",\"service_name\":\"\",\"author\":\"ikarlsson\",\"comment\":\"Database failover rehearsal - checkout writes are paused while the DBA team switches primaries.\",\"entry_time\":1794301920.0,\"start_time\":1794661200.0,\"end_time\":1794675600.0,\"fixed\":true,\"duration\":0.0,\"was_cancelled\":false}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The downtime on checkout-web was scheduled by ikarlsson. Its comment gives the reason as a database failover rehearsal: checkout writes are paused while the DBA team switches primaries.\n\nIt is a fixed downtime from 2026-11-14 13:00 UTC to 2026-11-14 17:00 UTC, four hours."
+}

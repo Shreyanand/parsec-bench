@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "name": "pay-gw-02!tls-cert-expiry!5c0e9b1a-3f6d-4c2e-9a71-d84b20f7c613",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "pay-gw-02",
+        "service_name": "tls-cert-expiry",
+        "author": "dvasquez",
+        "text": "OPSREQ-5417 - renewal is blocked until the CA change window opens. Leave the WARNING in place; do not restart the gateway to clear it.",
+        "entry_time": 1790503200
+      }
+    },
+    {
+      "name": "pay-gw-02!queue-backlog!a9472e6d-08bc-4f15-b3d0-6e2c91f4a58b",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "pay-gw-02",
+        "service_name": "queue-backlog",
+        "author": "mtanaka",
+        "text": "Backlog builds while the settlement batch runs and drains on its own once it finishes. Expected behaviour, nothing to escalate.",
+        "entry_time": 1790510400
+      }
+    },
+    {
+      "name": "ledger-db-01!replication-lag!e17d3c58-92a4-4b6f-8c05-3fa1b7d92e40",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "ledger-db-01",
+        "service_name": "replication-lag",
+        "author": "dvasquez",
+        "text": "CHG-77310 - replica rebuild in progress; lag is expected until it completes.",
+        "entry_time": 1790496000
+      }
+    }
+  ],
+  "downtimes": [],
+  "hosts": [
+    {
+      "name": "ledger-db-01",
+      "type": "Host",
+      "attrs": {
+        "display_name": "Ledger DB 01",
+        "host_name": "ledger-db-01",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ledger-db"
+        ],
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.61 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "pay-gw-02",
+      "type": "Host",
+      "attrs": {
+        "display_name": "Payments gateway 02",
+        "host_name": "pay-gw-02",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "payments-edge"
+        ],
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.93 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "ledger-db-01!replication-lag",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Replication lag",
+        "host_name": "ledger-db-01",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ledger-db"
+        ],
+        "last_check_result": {
+          "output": "PGSQL WARNING - replication lag 412 s",
+          "state": 1,
+          "exit_status": 1
+        }
+      }
+    },
+    {
+      "name": "pay-gw-02!queue-backlog",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Outbound queue backlog",
+        "host_name": "pay-gw-02",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "payments-edge"
+        ],
+        "last_check_result": {
+          "output": "QUEUE WARNING - 3870 messages pending",
+          "state": 1,
+          "exit_status": 1
+        }
+      }
+    },
+    {
+      "name": "pay-gw-02!tls-cert-expiry",
+      "type": "Service",
+      "attrs": {
+        "display_name": "TLS certificate expiry",
+        "host_name": "pay-gw-02",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "payments-edge"
+        ],
+        "last_check_result": {
+          "output": "SSL WARNING - certificate expires in 9 days",
+          "state": 1,
+          "exit_status": 1
+        }
+      }
+    }
+  ]
+}

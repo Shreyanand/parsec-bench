@@ -1,0 +1,118 @@
+{
+  "answer": {
+    "counts": [
+      {
+        "asked_by": "report the critical replication-lag threshold it uses",
+        "id": "lag-crit",
+        "nouns": [
+          "seconds",
+          "critical",
+          "REPLICA_LAG_CRIT",
+          "lag"
+        ],
+        "rationale": "appears only inside the relocated script, so it cannot be had without completing the recovery",
+        "value": 900,
+        "window": 6
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "invented-ipa-fault",
+        "ignore_case": true,
+        "none_of": [
+          "replication is broken",
+          "replication has failed",
+          "the CA subsystem is down",
+          "replica is unhealthy",
+          "IPA is down"
+        ],
+        "rationale": "the check never ran, so nothing is known about IPA's actual health. An agent that reads UNKNOWN as a failing replica asserts one of these; none appears in any seed"
+      }
+    ],
+    "required": [
+      {
+        "any_of": [
+          "checks/identity/ipa/check_ipa_health.sh"
+        ],
+        "asked_by": "Work out where the script actually lives now, report that path",
+        "id": "real-path",
+        "ignore_case": true,
+        "rationale": "only search_github_repo supplies it; the stale path from the alert output is a different string"
+      },
+      {
+        "any_of": [
+          "actually lives",
+          "moved",
+          "no longer",
+          "now lives",
+          "old path",
+          "out of date",
+          "out-of-date",
+          "outdated",
+          "points at the old",
+          "relocated",
+          "stale",
+          "still points",
+          "wrong path"
+        ],
+        "asked_by": "Say plainly what is wrong with the check's configuration",
+        "derived": true,
+        "id": "stale-config",
+        "ignore_case": true,
+        "note": "the diagnosis is a synthesis: the check_command path and the repository's actual path differ, which no single seed string states. Every form here entails knowing where the script actually is, or that the configured path is outdated as configuration -- which is why 'does not exist', 'nonexistent' and 'misconfigured' are deliberately NOT forms: the seeded check output already says 'check plugin not found', so an answer that never read the repository could satisfy them.",
+        "rationale": "the recovery report. An agent that finds the script and answers the threshold question without saying the check config is wrong has missed the actual fault"
+      }
+    ]
+  },
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  },
+  "schema": "bench/v4",
+  "tool_calls": {
+    "expected": [
+      {
+        "args": {
+          "action": "get_services",
+          "detailed": true,
+          "host": "replica3-ops"
+        },
+        "name": "query_icinga"
+      },
+      {
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring"
+        },
+        "name": "search_github_repo"
+      },
+      {
+        "args": {
+          "owner": "rhpds",
+          "path": "checks/identity/ipa/check_ipa_health.sh",
+          "repo": "rhdp-monitoring"
+        },
+        "name": "fetch_github_file"
+      }
+    ],
+    "forbidden": [
+      {
+        "args": {
+          "action": "search_services"
+        },
+        "name": "query_icinga"
+      },
+      {
+        "args": {
+          "action": "list_alerts"
+        },
+        "name": "query_icinga"
+      }
+    ],
+    "match": "ordered-subsequence"
+  },
+  "weights": {
+    "answer": 0.7,
+    "tool_calls": 0.3
+  }
+}

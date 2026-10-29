@@ -1,0 +1,47 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "coldroom-plc-vlc-2"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_problems"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "coldroom-plc-vlc-2"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

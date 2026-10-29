@@ -1,0 +1,45 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sandbox4718",
+      "name": "sandbox4718",
+      "account_id": "702918364257",
+      "available": false,
+      "owner": "mkessler",
+      "owner_email": "mkessler@example.org",
+      "envtype": "rhel-edge-fleet",
+      "reservation": "",
+      "zone": "sandbox4718.opentlc.com",
+      "comment": "provision failed - AAP2 job not linked",
+      "conan_status": "in-use",
+      "guid": "wq4ke",
+      "hosted_zone_id": "Z07ED4718QKVN",
+      "service_uuid": "5b0e9c2a-71d4-4f3e-9a86-2d41c7e05b18",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sandbox4719",
+      "name": "sandbox4719",
+      "account_id": "702918364258",
+      "available": false,
+      "owner": "tadeyemi",
+      "owner_email": "tadeyemi@example.org",
+      "envtype": "rhel-edge-fleet",
+      "reservation": "",
+      "zone": "sandbox4719.opentlc.com",
+      "comment": "provision failed - AAP2 job not linked",
+      "conan_status": "in-use",
+      "guid": "fn8tj",
+      "hosted_zone_id": "Z07ED4719RWPM",
+      "service_uuid": "e83f1d06-2c9b-4b57-8e10-94a6f3c2d7a1",
+      "annotations": {}
+    }
+  ]
+}

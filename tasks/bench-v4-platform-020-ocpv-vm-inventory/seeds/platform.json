@@ -1,0 +1,144 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [
+    {
+      "cluster": "ocpv-infra01",
+      "namespace": "sandbox-tk8vn-ocp4-cluster-cnv",
+      "status": "Active",
+      "ocpv_namespace_id": "ocpv-infra01-sandbox-tk8vn-ocp4-cluster-cnv"
+    }
+  ],
+  "ocpv_pvcs": [
+    {
+      "name": "bastion-rootdisk",
+      "status": "Bound",
+      "storage_class": "ocs-storagecluster-ceph-rbd",
+      "size": "60Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteOnce"
+      ],
+      "ocpv_pvc_id": "bastion-rootdisk",
+      "cluster": "ocpv-infra01",
+      "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+    },
+    {
+      "name": "master-0-rootdisk",
+      "status": "Bound",
+      "storage_class": "ocs-storagecluster-ceph-rbd",
+      "size": "120Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteOnce"
+      ],
+      "ocpv_pvc_id": "master-0-rootdisk",
+      "cluster": "ocpv-infra01",
+      "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+    },
+    {
+      "name": "worker-0-rootdisk",
+      "status": "Pending",
+      "storage_class": "ocs-storagecluster-ceph-rbd",
+      "size": "120Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteOnce"
+      ],
+      "ocpv_pvc_id": "worker-0-rootdisk",
+      "cluster": "ocpv-infra01",
+      "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+    }
+  ],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [
+    {
+      "name": "bastion",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "cnv-worker-03",
+      "ip": "10.128.4.21",
+      "vcpus": 2,
+      "memory": "8Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "size": "60Gi"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "type": "dataVolume"
+        }
+      ],
+      "ocpv_vm_id": "bastion",
+      "cluster": "ocpv-infra01",
+      "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+    },
+    {
+      "name": "master-0",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "cnv-worker-01",
+      "ip": "10.128.4.22",
+      "vcpus": 8,
+      "memory": "32Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "size": "120Gi"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "type": "dataVolume"
+        }
+      ],
+      "ocpv_vm_id": "master-0",
+      "cluster": "ocpv-infra01",
+      "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+    },
+    {
+      "name": "worker-0",
+      "status": "Stopped",
+      "ready": false,
+      "phase": "Succeeded",
+      "node": "",
+      "ip": "",
+      "vcpus": 8,
+      "memory": "32Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "size": "120Gi"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "type": "dataVolume"
+        }
+      ],
+      "ocpv_vm_id": "worker-0",
+      "cluster": "ocpv-infra01",
+      "namespace": "sandbox-tk8vn-ocp4-cluster-cnv"
+    }
+  ],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

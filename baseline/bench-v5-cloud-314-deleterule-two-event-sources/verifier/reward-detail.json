@@ -1,0 +1,48 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "\nSELECT eventTime, eventName, eventSource, userIdentity.arn, userIdentity.type, userIdentity.sessionContext.sessionIssuer.arn AS assumedRoleArn, requestParameters, recipientAccountId\nFROM cloudtrail_events\nWHERE eventName = 'DeleteRule'\n  AND recipientAccountId = '274619035821'\n  AND eventTime >= '2026-09-17T13:00:00Z'\n  AND eventTime <= '2026-09-17T15:00:00Z'\nORDER BY eventTime ASC\n"
+        }
+      },
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "\nSELECT eventTime, eventName, eventSource, userIdentity, requestParameters, responseElements\nFROM cloudtrail_events\nWHERE eventName = 'DeleteRule'\n  AND recipientAccountId = '274619035821'\n  AND eventTime >= '2026-09-17T13:00:00Z'\n  AND eventTime <= '2026-09-17T15:00:00Z'\nORDER BY eventTime ASC\n"
+        }
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "274619035821",
+          "action": "lookup_events",
+          "filters": {
+            "event_name": "DeleteRule"
+          }
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

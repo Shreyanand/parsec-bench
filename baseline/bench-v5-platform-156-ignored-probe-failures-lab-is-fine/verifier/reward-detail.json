@@ -1,0 +1,108 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 6031958
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "east",
+          "job_id": 6031958,
+          "failed_only": true
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "template_name": "w2hcd"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "east",
+          "job_id": 6031958,
+          "failed_only": false
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "w2hcd"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "find_namespace",
+          "namespace": "sandbox-w2hcd"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "owner": "w2hcd"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.babylon_guid, p.uuid, p.status, p.account, p.provisioned_at, p.retired_at, p.annotations FROM provisions p WHERE p.babylon_guid = 'w2hcd' ORDER BY p.provisioned_at DESC LIMIT 5"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "find_namespace",
+          "namespace": "sandbox-w2hcd-rhel"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "find_namespace",
+          "namespace": "sandbox-w2hcd-image-builder"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_vms",
+          "namespace": "sandbox-w2hcd-imgbuild"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

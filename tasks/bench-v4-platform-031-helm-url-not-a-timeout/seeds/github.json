@@ -1,0 +1,113 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "account": "agd-v2",
+      "directory": "cnv-roadshow-showroom",
+      "path": "agd-v2/cnv-roadshow-showroom/prod.yaml",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "agd-v2-agd-v2/cnv-roadshow-showroom/prod.yaml"
+    }
+  ],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_showroom/defaults/main.yml",
+      "content": "---\nocp4_workload_showroom_name: \"showroom\"\nocp4_workload_showroom_namespace: \"showroom-{{ guid | default('00000') }}\"\n\nocp4_workload_showroom_deployment_type: helm\n\n# The helm client is fetched from the OpenShift mirror. The download URL is\n# composed from the two variables below plus a fixed filename:\n#   {{ ocp4_workload_showroom_tools_root_url }}/helm/{{ ocp4_workload_showroom_helm_version }}/helm-linux-amd64.tar.gz\nocp4_workload_showroom_tools_root_url: https://mirror.openshift.com/pub/openshift-v4/clients\nocp4_workload_showroom_helm_version: latest\n\nocp4_workload_showroom_terminal_image: quay.io/rhpds/openshift-showroom-terminal-ocp:latest\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_showroom/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_showroom/defaults/main.yml",
+      "content": "---\nocp4_workload_showroom_name: \"showroom\"\nocp4_workload_showroom_namespace: \"showroom-{{ guid | default('00000') }}\"\n\nocp4_workload_showroom_deployment_type: helm\n\n# The helm client is fetched from the OpenShift mirror. The download URL is\n# composed from the two variables below plus a fixed filename:\n#   {{ ocp4_workload_showroom_tools_root_url }}/helm/{{ ocp4_workload_showroom_helm_version }}/helm-linux-amd64.tar.gz\nocp4_workload_showroom_tools_root_url: https://mirror.openshift.com/pub/openshift-v4/clients\nocp4_workload_showroom_helm_version: latest\n\nocp4_workload_showroom_terminal_image: quay.io/rhpds/openshift-showroom-terminal-ocp:latest\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_showroom/defaults/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "ocp4_workload_showroom",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_showroom/defaults/main.yml"
+      ],
+      "total_matches": 1,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-ocp4_workload_showroom"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "helm",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_showroom/defaults/main.yml"
+      ],
+      "total_matches": 1,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-helm"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "tools_root_url",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_showroom/defaults/main.yml"
+      ],
+      "total_matches": 1,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-tools_root_url"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "ocp4_workload_showroom",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_showroom/defaults/main.yml"
+      ],
+      "total_matches": 1,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-ocp4_workload_showroom"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "helm",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_showroom/defaults/main.yml"
+      ],
+      "total_matches": 1,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-helm"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "tools_root_url",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_showroom/defaults/main.yml"
+      ],
+      "total_matches": 1,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-tools_root_url"
+    }
+  ],
+  "similar_items": []
+}

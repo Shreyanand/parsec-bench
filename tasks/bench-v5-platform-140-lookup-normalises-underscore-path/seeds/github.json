@@ -1,0 +1,97 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "account": "knowledge_bu",
+      "directory": "retrieval-lab",
+      "path": "knowledge_bu/retrieval-lab",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "dev.yaml",
+        "prod.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "rhpds/agnosticv-knowledge_bu/retrieval-lab"
+    }
+  ],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/agnosticv_resolve/tasks/main.yml",
+      "content": "---\n# agnosticv_resolve: locate the ordered catalog item in the agnosticv checkout\n- name: Report the requested catalog item\n  ansible.builtin.debug:\n    msg: \"Resolving {{ agnosticv_item }} (stage {{ agnosticv_stage }}) from {{ agnosticv_repo }}@{{ agnosticv_ref }}\"\n\n- name: Check that the catalog item directory exists\n  ansible.builtin.stat:\n    path: \"{{ agnosticv_checkout }}/{{ agnosticv_item }}\"\n  register: r_item_dir\n\n- name: Stop when the catalog item is missing\n  ansible.builtin.assert:\n    that: r_item_dir.stat.exists\n    fail_msg: \"Catalog item directory {{ agnosticv_item }} not found in {{ agnosticv_repo }}@{{ agnosticv_ref }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/agnosticv_resolve/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/agnosticv_resolve/tasks/main.yml",
+      "content": "---\n# agnosticv_resolve: locate the ordered catalog item in the agnosticv checkout\n- name: Report the requested catalog item\n  ansible.builtin.debug:\n    msg: \"Resolving {{ agnosticv_item }} (stage {{ agnosticv_stage }}) from {{ agnosticv_repo }}@{{ agnosticv_ref }}\"\n\n- name: Check that the catalog item directory exists\n  ansible.builtin.stat:\n    path: \"{{ agnosticv_checkout }}/{{ agnosticv_item }}\"\n  register: r_item_dir\n\n- name: Stop when the catalog item is missing\n  ansible.builtin.assert:\n    that: r_item_dir.stat.exists\n    fail_msg: \"Catalog item directory {{ agnosticv_item }} not found in {{ agnosticv_repo }}@{{ agnosticv_ref }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/agnosticv_resolve/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "3d81f0b6c2a947e5d18b0c6f4a2e93b75d0c1e48",
+      "path": "ansible/roles/agnosticv_resolve/tasks/main.yml",
+      "content": "---\n# agnosticv_resolve: locate the ordered catalog item in the agnosticv checkout\n- name: Report the requested catalog item\n  ansible.builtin.debug:\n    msg: \"Resolving {{ agnosticv_item }} (stage {{ agnosticv_stage }}) from {{ agnosticv_repo }}@{{ agnosticv_ref }}\"\n\n- name: Check that the catalog item directory exists\n  ansible.builtin.stat:\n    path: \"{{ agnosticv_checkout }}/{{ agnosticv_item }}\"\n  register: r_item_dir\n\n- name: Stop when the catalog item is missing\n  ansible.builtin.assert:\n    that: r_item_dir.stat.exists\n    fail_msg: \"Catalog item directory {{ agnosticv_item }} not found in {{ agnosticv_repo }}@{{ agnosticv_ref }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@3d81f0b6c2a947e5d18b0c6f4a2e93b75d0c1e48-ansible/roles/agnosticv_resolve/tasks/main.yml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "knowledge_bu/retrieval-lab/common.yaml",
+      "content": "---\n# retrieval-lab: retrieval-augmented generation lab on OpenShift AI\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Retrieval Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\nretrieval_lab_vector_store: pgvector\nretrieval_lab_model: granite-3-8b-instruct\n",
+      "file_id": "rhpds/agnosticv@HEAD-knowledge_bu/retrieval-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "knowledge_bu/retrieval-lab/common.yaml",
+      "content": "---\n# retrieval-lab: retrieval-augmented generation lab on OpenShift AI\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Retrieval Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\nretrieval_lab_vector_store: pgvector\nretrieval_lab_model: granite-3-8b-instruct\n",
+      "file_id": "rhpds/agnosticv@main-knowledge_bu/retrieval-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "knowledge_bu/retrieval-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 2d\n",
+      "file_id": "rhpds/agnosticv@HEAD-knowledge_bu/retrieval-lab/prod.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "knowledge_bu/retrieval-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 2d\n",
+      "file_id": "rhpds/agnosticv@main-knowledge_bu/retrieval-lab/prod.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "knowledge_bu/retrieval-lab/dev.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: true\n",
+      "file_id": "rhpds/agnosticv@HEAD-knowledge_bu/retrieval-lab/dev.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "knowledge_bu/retrieval-lab/dev.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: true\n",
+      "file_id": "rhpds/agnosticv@main-knowledge_bu/retrieval-lab/dev.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

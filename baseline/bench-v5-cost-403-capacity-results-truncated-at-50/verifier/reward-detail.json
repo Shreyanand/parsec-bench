@@ -1,0 +1,59 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aws_capacity_manager",
+        "args": {
+          "metric": "utilization",
+          "group_by": "instance-type"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "bottom-five-unknowable",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "can't name them",
+          "cannot name them",
+          "can't identify",
+          "cannot identify",
+          "not in the list",
+          "not in the result",
+          "were dropped",
+          "were cut",
+          "are cut",
+          "are missing from",
+          "not shown",
+          "aren't shown",
+          "not visible",
+          "aren't visible",
+          "not the lowest overall"
+        ],
+        "asked_by": "the five instance types with the least unused cost",
+        "rationale": "the list is sorted worst-first and capped, so the smallest 13 are exactly the ones cut",
+        "note": "The result is sorted by unused cost worst-first, results_truncated is true and only 50 of totals.total_dimensions 63 rows are listed, so the 13 types with the least unused cost are exactly the ones cut and the bottom five cannot be named from it."
+      }
+    ],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

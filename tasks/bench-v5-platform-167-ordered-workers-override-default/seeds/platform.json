@@ -1,0 +1,159 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [
+    {
+      "babylon_component_id": "fulmar-ocp4.etcd-perf-lab.prod",
+      "cluster": "fulmar",
+      "name": "ocp4.etcd-perf-lab.prod",
+      "cloud_provider": "ec2",
+      "env_type": "ocp4-etcd-perf",
+      "platform": "rhpds",
+      "expected_instances": [
+        {
+          "purpose": "bastion",
+          "instance_type": "t3a.small",
+          "count": 1
+        },
+        {
+          "purpose": "master",
+          "instance_type": "c6i.xlarge",
+          "count": 3
+        },
+        {
+          "purpose": "worker_node",
+          "instance_type": "m6i.xlarge",
+          "count": 2
+        }
+      ],
+      "definition": {
+        "cloud_provider": "ec2",
+        "env_type": "ocp4-etcd-perf",
+        "bastion_instance_type": "t3a.small",
+        "master_instance_type": "c6i.xlarge",
+        "master_instance_count": 3,
+        "worker_instance_type": "m6i.xlarge",
+        "worker_instance_count": 2,
+        "__meta__": {
+          "deployer": {
+            "scm_ref": "etcd-perf-1.8.4"
+          }
+        }
+      },
+      "scm_ref": "etcd-perf-1.8.4",
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "ocp4/etcd-perf-lab/prod.yaml"
+    },
+    {
+      "babylon_component_id": "eider-ocp4.etcd-perf-lab.prod",
+      "cluster": "eider",
+      "name": "ocp4.etcd-perf-lab.prod",
+      "cloud_provider": "ec2",
+      "env_type": "ocp4-etcd-perf",
+      "platform": "rhpds",
+      "expected_instances": [
+        {
+          "purpose": "bastion",
+          "instance_type": "t3a.small",
+          "count": 1
+        },
+        {
+          "purpose": "master",
+          "instance_type": "c6i.xlarge",
+          "count": 3
+        },
+        {
+          "purpose": "worker_node",
+          "instance_type": "m7i.large",
+          "count": 3
+        }
+      ],
+      "definition": {
+        "cloud_provider": "ec2",
+        "env_type": "ocp4-etcd-perf",
+        "bastion_instance_type": "t3a.small",
+        "master_instance_type": "c6i.xlarge",
+        "master_instance_count": 3,
+        "worker_instance_type": "m7i.large",
+        "worker_instance_count": 3,
+        "__meta__": {
+          "deployer": {
+            "scm_ref": "etcd-perf-1.7.0"
+          }
+        }
+      },
+      "scm_ref": "etcd-perf-1.7.0",
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "ocp4/etcd-perf-lab/prod.yaml"
+    }
+  ],
+  "babylon_deployments": [
+    {
+      "babylon_deployment_id": "fulmar-user-tkariuki-redhat-com-ocp4-etcd-perf-lab-k3dzr",
+      "cluster": "fulmar",
+      "name": "ocp4-etcd-perf-lab-k3dzr",
+      "namespace": "user-tkariuki-redhat-com",
+      "catalog_item": "ocp4.etcd-perf-lab.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "3c7f0a19-e842-4b6d-95a3-d1e60b8f274c",
+      "healthy": true,
+      "ready": true,
+      "state": "started",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "k3dzr",
+        "env_type": "ocp4-etcd-perf",
+        "aws_region": "eu-west-1",
+        "master_instance_count": 3,
+        "worker_instance_count": 6,
+        "worker_instance_type": "r6i.xlarge"
+      },
+      "lifespan": {
+        "start": "2026-11-09T07:15:00Z",
+        "end": "2026-11-23T07:15:00Z"
+      }
+    },
+    {
+      "babylon_deployment_id": "fulmar-user-tkariuki-redhat-com-ocp4-etcd-perf-lab-u8bwn",
+      "cluster": "fulmar",
+      "name": "ocp4-etcd-perf-lab-u8bwn",
+      "namespace": "user-tkariuki-redhat-com",
+      "catalog_item": "ocp4.etcd-perf-lab.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "3c7f0a19-e842-4b6d-95a3-d1e60b8f274c",
+      "healthy": true,
+      "ready": true,
+      "state": "stopped",
+      "current_state": "stopped",
+      "desired_state": "stopped",
+      "instance_vars": {
+        "guid": "u8bwn",
+        "env_type": "ocp4-etcd-perf",
+        "aws_region": "eu-west-1",
+        "master_instance_count": 3,
+        "worker_instance_count": 4,
+        "worker_instance_type": "m6i.xlarge"
+      },
+      "lifespan": {
+        "start": "2026-11-02T10:40:00Z",
+        "end": "2026-11-16T10:40:00Z"
+      }
+    }
+  ],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,65 @@
+{
+  "catalog_items": [
+    {
+      "found": false,
+      "path": "appdev_bu/devsecops-pipeline-lab",
+      "message": "Catalog item devsecops-pipeline-lab is not in the agnosticv index; showing near matches.",
+      "catalog_item_id": "rhpds/agnosticv-appdev_bu/devsecops-pipeline-lab"
+    }
+  ],
+  "files": [],
+  "pull_requests": [
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "pr_number": 6123,
+      "title": "Rename devsecops-pipeline-lab to secure-supply-chain-lab",
+      "branch": "rename-devsecops-pipeline-lab",
+      "state": "closed",
+      "author": "ihalvorsen",
+      "url": "https://github.com/rhpds/agnosticv/pull/6123",
+      "created_at": "2026-10-06T09:12:00Z",
+      "updated_at": "2026-10-07T13:40:22Z",
+      "files": [
+        "appdev_bu/devsecops-pipeline-lab/common.yaml",
+        "appdev_bu/devsecops-pipeline-lab/prod.yaml",
+        "appdev_bu/secure-supply-chain-lab/common.yaml",
+        "appdev_bu/secure-supply-chain-lab/prod.yaml"
+      ],
+      "pull_request_id": "rhpds-agnosticv-pr-6123"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "pr_number": 6158,
+      "title": "Bump secure-supply-chain-lab lifespan to 5d",
+      "branch": "supply-chain-lifespan",
+      "state": "open",
+      "author": "tokonkwo",
+      "url": "https://github.com/rhpds/agnosticv/pull/6158",
+      "created_at": "2026-10-09T08:30:00Z",
+      "updated_at": "2026-10-09T08:30:00Z",
+      "files": [
+        "appdev_bu/secure-supply-chain-lab/prod.yaml"
+      ],
+      "pull_request_id": "rhpds-agnosticv-pr-6158"
+    }
+  ],
+  "repo_search_results": [],
+  "similar_items": [
+    {
+      "name": "devsecops-pipeline-lab-partner",
+      "repo": "partner-agnosticv",
+      "account": "partner_devsecops",
+      "path": "partner_devsecops/devsecops-pipeline-lab-partner",
+      "similar_item_id": "partner_devsecops-devsecops-pipeline-lab-partner"
+    },
+    {
+      "name": "secure-supply-chain-lab",
+      "repo": "agnosticv",
+      "account": "appdev_bu",
+      "path": "appdev_bu/secure-supply-chain-lab",
+      "similar_item_id": "appdev_bu-secure-supply-chain-lab"
+    }
+  ]
+}

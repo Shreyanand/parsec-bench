@@ -1,0 +1,95 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "aap2-ctl-west-01.mgmt.example.net"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "aap2-ctl-west-01.mgmt.example.net"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "controller": "west",
+          "job_id": 6907233
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "explanation",
+        "any_of": [
+          "marked as running at system start up",
+          "system start up",
+          "system startup",
+          "must have not shut down properly",
+          "did not shut down properly"
+        ],
+        "ignore_case": true,
+        "asked_by": "find out why the job actually failed",
+        "rationale": "only job_explanation says the controller restarted under the job"
+      },
+      {
+        "id": "inside-window",
+        "any_of": [
+          "inside that window",
+          "within the window",
+          "inside the window",
+          "during the maintenance",
+          "during the downtime",
+          "falls inside",
+          "falls within",
+          "in the middle of the reboot",
+          "during the reboot"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "check whether anything was scheduled on it around that time",
+        "rationale": "the synthesis: job finished 22:14:31, window 22:00-23:00",
+        "note": "get_job shows the job ran 2026-10-07T21:40:05Z to 22:14:31Z, and get_downtimes shows CHG-58312's fixed downtime on the controller host from start_time 1791410400 to end_time 1791414000 (2026-10-07 22:00 to 23:00 UTC), so the job ended inside the reboot window."
+      },
+      {
+        "id": "relaunch",
+        "any_of": [
+          "relaunch",
+          "rerun",
+          "run it again",
+          "launch it again"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what we should do",
+        "rationale": "no code fix; the job just needs to run again",
+        "note": "the job_explanation says the job was marked failed because it was still running when the controller started up again, not because a task failed, and the CHG-58312 window had ended by 23:00 UTC, so the remedy is to run the job again rather than rewrite the role."
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "find_namespace",
+          "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_pvcs",
+          "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab",
+          "cluster": "ocpv-cobalt"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_storage_classes",
+          "cluster": "ocpv-cobalt"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_pvs",
+          "cluster": "ocpv-cobalt"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_vms",
+          "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab",
+          "cluster": "ocpv-cobalt"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_pods",
+          "namespace": "sandbox-r7tbm-rhel-ha-cluster-lab",
+          "cluster": "ocpv-cobalt"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "get_node_resources",
+          "cluster": "ocpv-cobalt"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "nodes_top",
+          "cluster": "ocpv-cobalt"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "sandbox-r7tbm"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

@@ -1,0 +1,286 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "event0",
+          "job_id": 9917306
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "finserv_bu/payments-eventbus-lab/common.yaml"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_kafka_topics/tasks/workload.yml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "operator-workload",
+        "ignore_case": true,
+        "any_of": [
+          "ocp4_workload_streams_operator",
+          "streams_operator"
+        ],
+        "asked_by": "why the KafkaTopic kind did not exist when that step ran",
+        "rationale": "the workload that installs the KafkaTopic CRD. In the item's workloads list and the role's comment; the job log never names it, because it never ran"
+      },
+      {
+        "id": "pr",
+        "ignore_case": true,
+        "any_of": [
+          "31588"
+        ],
+        "asked_by": "which pull request introduced the problem",
+        "rationale": "the change behind the failures. Only in a closed (merged) agnosticv PR, which the default open-only PR search does not return"
+      },
+      {
+        "id": "sorted",
+        "ignore_case": true,
+        "any_of": [
+          "alphabetical",
+          "alphabetically",
+          "alphabetised",
+          "alphabetized",
+          "alphabetic",
+          "sorted",
+          "sorting",
+          "sorts the",
+          "reordered",
+          "re-ordered",
+          "reorders",
+          "reordering",
+          "re-ordering",
+          "changed the order",
+          "changed the workload order",
+          "changes the order",
+          "new order",
+          "order of the workloads",
+          "workload order",
+          "order of the workloads list",
+          "workloads list order"
+        ],
+        "asked_by": "what it changed",
+        "rationale": "what the PR did: it reordered the workloads list. Its title says so, and claims no functional change"
+      },
+      {
+        "id": "ran-before-operator",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "before the operator",
+          "before ocp4_workload_streams_operator",
+          "before streams_operator",
+          "before the streams operator",
+          "before the Strimzi operator",
+          "ahead of the operator",
+          "ahead of ocp4_workload_streams_operator",
+          "ahead of the streams operator",
+          "ahead of the Strimzi operator",
+          "after ocp4_workload_kafka_topics",
+          "after kafka_topics",
+          "after the topics",
+          "operator runs last",
+          "operator ran last",
+          "operator is last",
+          "operator now runs last",
+          "operator now last",
+          "last in the list",
+          "had not run yet",
+          "hadn't run yet",
+          "had not yet run",
+          "hadn't yet run",
+          "has not run yet",
+          "not run yet",
+          "not yet run",
+          "never ran",
+          "never got to run",
+          "did not run before",
+          "didn't run before",
+          "was not installed yet",
+          "wasn't installed yet",
+          "not installed yet",
+          "not yet installed",
+          "CRD did not exist yet",
+          "CRDs did not exist yet",
+          "CRD didn't exist yet",
+          "CRDs didn't exist yet",
+          "CRD was not there yet",
+          "before the CRD",
+          "before its CRD",
+          "before the KafkaTopic CRD",
+          "before the Strimzi CRDs",
+          "hadn't been installed",
+          "had not been installed",
+          "not been installed",
+          "hadn't been run",
+          "had not been run",
+          "comes last",
+          "come last",
+          "listed last",
+          "runs last",
+          "ran last",
+          "now last",
+          "is last",
+          "kafka_topics runs first",
+          "kafka_topics ran first",
+          "topics run first",
+          "topics ran first",
+          "topics runs first",
+          "before reaching it",
+          "before reaching the operator",
+          "never reached the operator",
+          "never reached ocp4_workload_streams_operator"
+        ],
+        "asked_by": "why the KafkaTopic kind did not exist when that step ran",
+        "note": "the list order in common.yaml joined with the role's stated dependency and the log's run order; no seed string says the topics ran before the operator",
+        "rationale": "the mechanism: the consumer of the CRD runs before its installer"
+      },
+      {
+        "id": "fix-order",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "move ocp4_workload_streams_operator",
+          "move streams_operator",
+          "move the streams operator",
+          "move the operator",
+          "put ocp4_workload_streams_operator",
+          "put the operator",
+          "put the streams operator",
+          "ocp4_workload_streams_operator before",
+          "ocp4_workload_streams_operator ahead",
+          "ocp4_workload_streams_operator first",
+          "ocp4_workload_streams_operator back",
+          "ocp4_workload_streams_operator above",
+          "streams_operator before",
+          "streams_operator above",
+          "operator before the topics",
+          "operator before ocp4_workload_kafka_topics",
+          "operator above",
+          "restore the original order",
+          "restore the previous order",
+          "restore the order",
+          "restore the dependency order",
+          "reorder the workloads",
+          "re-order the workloads",
+          "reorder the list",
+          "revert",
+          "list the operator first",
+          "list it before",
+          "order the operator first",
+          "run the operator first",
+          "run ocp4_workload_streams_operator first",
+          "install the operator first",
+          "listed before",
+          "listed ahead",
+          "comes before ocp4_workload_kafka_topics",
+          "runs before ocp4_workload_kafka_topics",
+          "is before ocp4_workload_kafka_topics",
+          "precedes ocp4_workload_kafka_topics",
+          "precede ocp4_workload_kafka_topics"
+        ],
+        "asked_by": "how to fix the item",
+        "note": "the remedy follows from the mechanism; no seed string prescribes it",
+        "rationale": "the fix is in the item's workload order, not in the operator version the event lead wants pinned"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "api-removed",
+        "ignore_case": true,
+        "none_of": [
+          "dropped the v1beta2",
+          "dropped kafka.strimzi.io/v1beta2",
+          "dropped the kafka.strimzi.io/v1beta2",
+          "removed the v1beta2",
+          "removed kafka.strimzi.io/v1beta2",
+          "removed the kafka.strimzi.io/v1beta2",
+          "v1beta2 was removed",
+          "v1beta2 API was removed",
+          "v1beta2 has been removed",
+          "v1beta2 was dropped",
+          "v1beta2 has been dropped",
+          "v1beta2 is no longer served",
+          "new Strimzi release broke",
+          "Strimzi release broke",
+          "operator release broke",
+          "operator upgrade broke",
+          "pin the Strimzi operator to an older",
+          "pin the operator to an older"
+        ],
+        "attributed_to": [
+          "lead's theory",
+          "lead's belief",
+          "lead's idea",
+          "lead's claim",
+          "lead is convinced",
+          "event lead thinks",
+          "theory that the Strimzi",
+          "idea that the Strimzi",
+          "claim that the Strimzi",
+          "belief that the Strimzi"
+        ],
+        "rationale": "the decoy the instruction voices: an upstream API removal. The CRD is simply not installed yet; the topics role and the job's run order show it"
+      },
+      {
+        "id": "kafka-bump",
+        "ignore_case": true,
+        "none_of": [
+          "Kafka 3.8 bump broke",
+          "Kafka 3.8 bump caused",
+          "Kafka bump caused",
+          "Kafka bump broke",
+          "Kafka version bump caused",
+          "caused by the Kafka bump",
+          "caused by the Kafka 3.8",
+          "due to the Kafka bump",
+          "due to the Kafka 3.8",
+          "#31602 caused",
+          "#31602 broke",
+          "#31602 introduced",
+          "31602 caused",
+          "31602 broke",
+          "31602 introduced",
+          "31602 is the cause",
+          "PR 31602 is responsible",
+          "#31602 is responsible"
+        ],
+        "rationale": "the second single-hop reading: the open PR the default PR search returns. It is unmerged, so it cannot have changed what ran"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "comments": [
+    {
+      "name": "web-01.example.net!comment-0001",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "web-01.example.net",
+        "author": "alice",
+        "text": "Investigating intermittent latency reported by users.",
+        "entry_time": 1719835200,
+        "entry_type": "user",
+        "persistent": true
+      }
+    },
+    {
+      "name": "db-01.example.net!comment-0001",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "db-01.example.net",
+        "author": "bob",
+        "text": "Disk usage warning acknowledged; cleanup scheduled overnight.",
+        "entry_time": 1719921600,
+        "entry_type": "user",
+        "persistent": true
+      }
+    },
+    {
+      "name": "cache-01.example.net!comment-0001",
+      "type": "Comment",
+      "attrs": {
+        "host_name": "cache-01.example.net",
+        "author": "carol",
+        "text": "Host recovered after redis service restart.",
+        "entry_time": 1720008000,
+        "entry_type": "user",
+        "persistent": false
+      }
+    }
+  ],
+  "downtimes": [
+    {
+      "name": "web-01.example.net!downtime-0001",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "web-01.example.net",
+        "author": "maintenance-bot",
+        "comment": "Kernel patching window",
+        "start_time": 1720483200,
+        "end_time": 1720490400,
+        "fixed": true,
+        "duration": 7200
+      }
+    },
+    {
+      "name": "db-01.example.net!downtime-0001",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "db-01.example.net",
+        "author": "dba-team",
+        "comment": "Database engine minor upgrade",
+        "start_time": 1720569600,
+        "end_time": 1720576800,
+        "fixed": true,
+        "duration": 7200
+      }
+    },
+    {
+      "name": "cache-01.example.net!downtime-0001",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "cache-01.example.net",
+        "author": "ops",
+        "comment": "Memory replacement maintenance",
+        "start_time": 1720656000,
+        "end_time": 1720663200,
+        "fixed": true,
+        "duration": 7200
+      }
+    }
+  ],
+  "hosts": [
+    {
+      "name": "web-01.example.net",
+      "type": "Host",
+      "attrs": {
+        "display_name": "web-01",
+        "address": "10.0.10.11",
+        "state": 0,
+        "state_type": 1,
+        "last_check": 1720411200,
+        "check_command": "hostalive",
+        "vars": {
+          "os": "linux",
+          "role": "web"
+        }
+      }
+    },
+    {
+      "name": "db-01.example.net",
+      "type": "Host",
+      "attrs": {
+        "display_name": "db-01",
+        "address": "10.0.20.21",
+        "state": 1,
+        "state_type": 1,
+        "last_check": 1720411260,
+        "check_command": "hostalive",
+        "vars": {
+          "os": "linux",
+          "role": "database"
+        }
+      }
+    },
+    {
+      "name": "cache-01.example.net",
+      "type": "Host",
+      "attrs": {
+        "display_name": "cache-01",
+        "address": "10.0.30.31",
+        "state": 0,
+        "state_type": 1,
+        "last_check": 1720411320,
+        "check_command": "hostalive",
+        "vars": {
+          "os": "linux",
+          "role": "cache"
+        }
+      }
+    },
+    {
+      "name": "mail-01.example.net",
+      "type": "Host",
+      "attrs": {
+        "display_name": "mail-01",
+        "address": "10.0.40.41",
+        "state": 0,
+        "state_type": 1,
+        "last_check": 1720411380,
+        "check_command": "hostalive",
+        "vars": {
+          "os": "linux",
+          "role": "mail"
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "web-01.example.net!http",
+      "type": "Service",
+      "attrs": {
+        "host_name": "web-01.example.net",
+        "display_name": "HTTP",
+        "state": 0,
+        "state_type": 1,
+        "last_check": 1720411205,
+        "check_command": "http",
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "web-01.example.net!cpu",
+      "type": "Service",
+      "attrs": {
+        "host_name": "web-01.example.net",
+        "display_name": "CPU Load",
+        "state": 1,
+        "state_type": 1,
+        "last_check": 1720411210,
+        "check_command": "load",
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "db-01.example.net!mysql",
+      "type": "Service",
+      "attrs": {
+        "host_name": "db-01.example.net",
+        "display_name": "MySQL",
+        "state": 2,
+        "state_type": 1,
+        "last_check": 1720411265,
+        "check_command": "mysql",
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "db-01.example.net!disk",
+      "type": "Service",
+      "attrs": {
+        "host_name": "db-01.example.net",
+        "display_name": "Disk Usage",
+        "state": 1,
+        "state_type": 1,
+        "last_check": 1720411270,
+        "check_command": "disk",
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "cache-01.example.net!redis",
+      "type": "Service",
+      "attrs": {
+        "host_name": "cache-01.example.net",
+        "display_name": "Redis",
+        "state": 0,
+        "state_type": 1,
+        "last_check": 1720411325,
+        "check_command": "tcp",
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "cache-01.example.net!memory",
+      "type": "Service",
+      "attrs": {
+        "host_name": "cache-01.example.net",
+        "display_name": "Memory",
+        "state": 0,
+        "state_type": 1,
+        "last_check": 1720411330,
+        "check_command": "memory",
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "mail-01.example.net!smtp",
+      "type": "Service",
+      "attrs": {
+        "host_name": "mail-01.example.net",
+        "display_name": "SMTP",
+        "state": 0,
+        "state_type": 1,
+        "last_check": 1720411385,
+        "check_command": "smtp",
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "mail-01.example.net!queue",
+      "type": "Service",
+      "attrs": {
+        "host_name": "mail-01.example.net",
+        "display_name": "Mail Queue",
+        "state": 1,
+        "state_type": 1,
+        "last_check": 1720411390,
+        "check_command": "mailq",
+        "enable_notifications": true
+      }
+    }
+  ]
+}

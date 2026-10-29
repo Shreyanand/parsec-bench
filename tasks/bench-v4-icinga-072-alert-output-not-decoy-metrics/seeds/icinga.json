@@ -1,0 +1,108 @@
+{
+  "comments": [],
+  "downtimes": [],
+  "hosts": [
+    {
+      "name": "ocpv-hemlock-api.virt.example.net",
+      "type": "Host",
+      "attrs": {
+        "display_name": "ocpv-hemlock-api.virt.example.net",
+        "host_name": "ocpv-hemlock-api.virt.example.net",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ocpv-clusters"
+        ],
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.63 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "ocpv-tamarack-api.virt.example.net",
+      "type": "Host",
+      "attrs": {
+        "display_name": "ocpv-tamarack-api.virt.example.net",
+        "host_name": "ocpv-tamarack-api.virt.example.net",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ocpv-clusters"
+        ],
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.58 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "ocpv-hemlock-api.virt.example.net!cluster-operators",
+      "type": "Service",
+      "attrs": {
+        "display_name": "[OCP-V] ClusterOperator Health",
+        "host_name": "ocpv-hemlock-api.virt.example.net",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ocpv-clusters"
+        ],
+        "last_check_result": {
+          "output": "OK - 33 of 33 cluster operators Available, none Degraded or Progressing",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "ocpv-tamarack-api.virt.example.net!api-readyz",
+      "type": "Service",
+      "attrs": {
+        "display_name": "[OCP-V] Kube API Readiness",
+        "host_name": "ocpv-tamarack-api.virt.example.net",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ocpv-clusters"
+        ],
+        "last_check_result": {
+          "output": "HTTP OK: /readyz answered in 0.052 second response time",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "ocpv-tamarack-api.virt.example.net!cluster-operators",
+      "type": "Service",
+      "attrs": {
+        "display_name": "[OCP-V] ClusterOperator Health",
+        "host_name": "ocpv-tamarack-api.virt.example.net",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ocpv-clusters"
+        ],
+        "last_check_result": {
+          "output": "CRITICAL - 1 of 33 cluster operators degraded: openshift-samples Degraded=True reason=FailedImageImports: import of imagestream openshift/wren-builder-jdk21 failed: manifest unknown: registry.tamarack.example.net/builders/wren-jdk21:1.4",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    }
+  ]
+}

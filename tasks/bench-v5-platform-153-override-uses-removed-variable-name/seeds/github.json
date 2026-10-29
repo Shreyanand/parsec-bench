@@ -1,0 +1,56 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "file_id": "rhpds/agnosticv@HEAD-network_bu/netbox-automation-lab/common.yaml",
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "network_bu/netbox-automation-lab/common.yaml",
+      "content": "---\n# NetBox source-of-truth automation lab\n__meta__:\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: v2.12.0\n  catalog:\n    display_name: NetBox Automation Lab\n    category: Workshops\n\ncloud_provider: none\nconfig: openshift-workloads\nworkloads:\n- ocp4_workload_netbox_ipam\n\n# Attendees import about 45 GiB of device and IPAM history in module 2.\nocp4_workload_netbox_ipam_db_storage_gi: 60\nocp4_workload_netbox_ipam_superuser: admin\n"
+    },
+    {
+      "file_id": "rhpds/agnosticv@main-network_bu/netbox-automation-lab/common.yaml",
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "network_bu/netbox-automation-lab/common.yaml",
+      "content": "---\n# NetBox source-of-truth automation lab\n__meta__:\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: v2.12.0\n  catalog:\n    display_name: NetBox Automation Lab\n    category: Workshops\n\ncloud_provider: none\nconfig: openshift-workloads\nworkloads:\n- ocp4_workload_netbox_ipam\n\n# Attendees import about 45 GiB of device and IPAM history in module 2.\nocp4_workload_netbox_ipam_db_storage_gi: 60\nocp4_workload_netbox_ipam_superuser: admin\n"
+    },
+    {
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+      "content": "---\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\nocp4_workload_netbox_ipam_namespace: netbox\nocp4_workload_netbox_ipam_version: \"4.1.6\"\nocp4_workload_netbox_ipam_superuser: admin\n\n# PostgreSQL volume, as a Kubernetes quantity.\n# v2.12.0: replaces ocp4_workload_netbox_ipam_db_storage_gi, which is removed\n# and no longer read.\nocp4_workload_netbox_ipam_db_storage_size: 10Gi\nocp4_workload_netbox_ipam_redis_storage_size: 2Gi\n"
+    },
+    {
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+      "content": "---\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\nocp4_workload_netbox_ipam_namespace: netbox\nocp4_workload_netbox_ipam_version: \"4.1.6\"\nocp4_workload_netbox_ipam_superuser: admin\n\n# PostgreSQL volume, as a Kubernetes quantity.\n# v2.12.0: replaces ocp4_workload_netbox_ipam_db_storage_gi, which is removed\n# and no longer read.\nocp4_workload_netbox_ipam_db_storage_size: 10Gi\nocp4_workload_netbox_ipam_redis_storage_size: 2Gi\n"
+    },
+    {
+      "file_id": "agnosticd/agnosticd-v2@v2.12.0-ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "v2.12.0",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+      "content": "---\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\nocp4_workload_netbox_ipam_namespace: netbox\nocp4_workload_netbox_ipam_version: \"4.1.6\"\nocp4_workload_netbox_ipam_superuser: admin\n\n# PostgreSQL volume, as a Kubernetes quantity.\n# v2.12.0: replaces ocp4_workload_netbox_ipam_db_storage_gi, which is removed\n# and no longer read.\nocp4_workload_netbox_ipam_db_storage_size: 10Gi\nocp4_workload_netbox_ipam_redis_storage_size: 2Gi\n"
+    },
+    {
+      "file_id": "agnosticd/agnosticd-v2@v2.11.0-ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "v2.11.0",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+      "content": "---\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\nocp4_workload_netbox_ipam_namespace: netbox\nocp4_workload_netbox_ipam_version: \"4.0.11\"\nocp4_workload_netbox_ipam_superuser: admin\n\n# PostgreSQL volume size in GiB.\nocp4_workload_netbox_ipam_db_storage_gi: 30\nocp4_workload_netbox_ipam_redis_storage_gi: 2\n"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

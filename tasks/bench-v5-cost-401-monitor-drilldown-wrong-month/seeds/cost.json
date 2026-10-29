@@ -1,0 +1,61 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [
+    {
+      "cost_monitor_result_id": "cmr-drill-2705-acctsvc",
+      "endpoint": "drilldown",
+      "_dashboard_link": "https://spendwatch.ops.example.net/v/acct-drill?account=270514938826",
+      "results": [
+        {
+          "account_id": "270514938826",
+          "provider": "aws",
+          "start_date": "2026-08-01",
+          "end_date": "2026-08-31",
+          "service": "Amazon Elastic Compute Cloud - Compute",
+          "cost": 14206.4
+        },
+        {
+          "account_id": "270514938826",
+          "provider": "aws",
+          "start_date": "2026-08-01",
+          "end_date": "2026-08-31",
+          "service": "Amazon Relational Database Service",
+          "cost": 3881.15
+        },
+        {
+          "account_id": "270514938826",
+          "provider": "aws",
+          "start_date": "2026-08-01",
+          "end_date": "2026-08-31",
+          "service": "Amazon Simple Storage Service",
+          "cost": 1207.92
+        },
+        {
+          "account_id": "270514938826",
+          "provider": "aws",
+          "start_date": "2026-08-01",
+          "end_date": "2026-08-31",
+          "service": "AmazonCloudWatch",
+          "cost": 642.1
+        },
+        {
+          "account_id": "270514938826",
+          "provider": "aws",
+          "start_date": "2026-08-01",
+          "end_date": "2026-08-31",
+          "service": "AWS Data Transfer",
+          "cost": 418.77
+        }
+      ]
+    }
+  ],
+  "gcp_cost_results": [],
+  "periods": []
+}

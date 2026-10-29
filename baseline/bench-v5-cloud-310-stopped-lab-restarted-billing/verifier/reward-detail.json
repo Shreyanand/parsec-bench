@@ -1,0 +1,75 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "account_id": "645190837226"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_actions",
+          "guid": "q7fwd",
+          "sandbox_comment": "AI serving lab"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "\nSELECT p.babylon_guid, p.catalog_id, p.provisioned_at, p.retired_at, p.status,\n       u.email AS user_email, p.account\nFROM provisions p\nLEFT JOIN users u ON p.user_id = u.id\nWHERE p.babylon_guid = 'q7fwd'\nORDER BY p.provisioned_at DESC\nLIMIT 5\n"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "\nSELECT month_ts, service, usage_date, unblended_cost\nFROM provision_cost\nWHERE account_id = '645190837226'\n  AND month_ts IN ('2026-09', '2026-10')\n  AND usage_date BETWEEN '2026-09-28' AND '2026-10-05'\n  AND service ILIKE '%EC2%'\nORDER BY usage_date\n"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "645190837226"
+          ],
+          "start_date": "2026-09-28",
+          "end_date": "2026-10-05"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "compute-total",
+        "any_of": [
+          "1,473.75",
+          "1473.75",
+          "1 473.75"
+        ],
+        "ignore_case": true,
+        "asked_by": "the week's EC2 compute total",
+        "rationale": "the stored SERVICE group amount; total_cost 1,603.95 includes EBS and is a different figure"
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

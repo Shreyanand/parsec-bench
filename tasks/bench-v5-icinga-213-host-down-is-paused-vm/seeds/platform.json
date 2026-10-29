@@ -1,0 +1,87 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [
+    {
+      "ocpv_namespace_id": "ocpv-juniper-sandbox-kx7q2-bastion",
+      "cluster": "ocpv-juniper",
+      "namespace": "sandbox-kx7q2-bastion",
+      "status": "Active"
+    }
+  ],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [
+    {
+      "ocpv_vm_id": "ocpv-juniper/sandbox-kx7q2-bastion/bastion-kx7q2",
+      "cluster": "ocpv-juniper",
+      "namespace": "sandbox-kx7q2-bastion",
+      "name": "bastion-kx7q2",
+      "status": "Paused",
+      "ready": false,
+      "phase": "Running",
+      "node": "cnv-worker-12",
+      "ip": "10.131.22.47",
+      "vcpus": 2,
+      "memory": "4Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "type": "dataVolume",
+          "dataVolume": "bastion-kx7q2-rootdisk"
+        }
+      ],
+      "condition": {
+        "type": "Paused",
+        "status": "True",
+        "reason": "IOError",
+        "message": "VMI was paused, low-level IO error detected on disk rootdisk"
+      }
+    },
+    {
+      "ocpv_vm_id": "ocpv-juniper/sandbox-kx7q2-bastion/showroom-kx7q2",
+      "cluster": "ocpv-juniper",
+      "namespace": "sandbox-kx7q2-bastion",
+      "name": "showroom-kx7q2",
+      "status": "Running",
+      "ready": true,
+      "phase": "Running",
+      "node": "cnv-worker-07",
+      "ip": "10.131.22.48",
+      "vcpus": 2,
+      "memory": "8Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "type": "dataVolume",
+          "dataVolume": "showroom-kx7q2-rootdisk"
+        }
+      ]
+    }
+  ],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

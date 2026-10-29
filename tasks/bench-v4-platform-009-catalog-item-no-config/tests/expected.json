@@ -1,0 +1,96 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 90409
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {}
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "undefined-variable",
+        "any_of": [
+          "sandbox_aws_region"
+        ],
+        "ignore_case": true,
+        "asked_by": "Report the undefined variable",
+        "rationale": "the literal only a real log read supplies"
+      },
+      {
+        "id": "config-unavailable",
+        "any_of": [
+          "not found",
+          "was not found",
+          "no exact match",
+          "does not exist",
+          "not in the index",
+          "no catalog item",
+          "could not be found",
+          "not present"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the break is lookup_catalog_item returning found:false with near misses, which the bundle models explicitly (SKILL.md:232-234). An absent FILE could not be used: the simulation invents unseeded files -- see the edit log",
+        "asked_by": "say whether the catalog item was found",
+        "rationale": "the chain-break report. An agent that invents plausible configuration instead of saying the file was not there fails this and trips the forbidden list"
+      }
+    ],
+    "counts": [
+      {
+        "id": "pr-number",
+        "value": 4127,
+        "nouns": [
+          "pull request",
+          "PR",
+          "#4127",
+          "pr"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "#4127"
+        ],
+        "asked_by": "check whether a pull request is pending for it and give the pull\nrequest number",
+        "rationale": "only search_agnosticv_prs supplies it, so the third leg of the chain cannot be skipped. This is the suite's only search_agnosticv_prs scenario"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "invented-config",
+        "none_of": [
+          "common.yaml sets",
+          "common.yaml defines",
+          "the overlay sets",
+          "configuration sets",
+          "region is set to"
+        ],
+        "ignore_case": true,
+        "rationale": "an agent that could not read common.yaml and filled the gap with a plausible value asserts one of these. Every form is a claim ABOUT the file's contents and none contains the variable name, which is a required fact -- a forbidden form carrying it would let a fabricating answer bank that fact, and did: see the edit log"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

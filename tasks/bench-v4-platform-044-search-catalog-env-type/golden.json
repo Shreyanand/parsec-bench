@@ -1,0 +1,61 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "search_catalog",
+        "cluster": "east",
+        "env_type": "aws"
+      },
+      "result": {
+        "cluster": "east",
+        "items": [
+          {
+            "ci_name": "summit-labs.edge-observability-aws",
+            "display_name": "Edge Observability Lab (AWS)",
+            "namespace": "babylon-catalog-event",
+            "stage": "event",
+            "multiuser": true,
+            "asset_uuid": "3f696994-5b7b-4e6f-8056-435d13ca1c00",
+            "keywords": [
+              "rhel",
+              "edge",
+              "observability",
+              "workshop"
+            ]
+          },
+          {
+            "ci_name": "summit-labs.edge-manager-aws",
+            "display_name": "Edge Manager Fleet Lab (AWS)",
+            "namespace": "babylon-catalog-prod",
+            "stage": "prod",
+            "multiuser": false,
+            "asset_uuid": "b6cb7e9c-1088-4a32-ab97-c035968e6027",
+            "keywords": [
+              "rhel",
+              "edge",
+              "fleet"
+            ]
+          },
+          {
+            "ci_name": "sandboxes-gpte.satellite-patching-aws",
+            "display_name": "Satellite Patching Lab (AWS)",
+            "namespace": "babylon-catalog-dev",
+            "stage": "dev",
+            "multiuser": false,
+            "asset_uuid": "123be796-5d67-4e50-b0f0-bb4a0722085c",
+            "keywords": [
+              "satellite",
+              "patching"
+            ]
+          }
+        ],
+        "count": 3,
+        "total_scanned": 5,
+        "truncated": false
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "I searched the catalog on east with env_type aws. That filter matches the substring \"aws\" in each item's ci_name, so it returned three AWS items on east, and only one of them is the Edge Observability lab:\n\n- ci_name: summit-labs.edge-observability-aws (display name \"Edge Observability Lab (AWS)\")\n- asset UUID: 3f696994-5b7b-4e6f-8056-435d13ca1c00\n- namespace: babylon-catalog-event (stage event)\n\nThe other two AWS matches, summit-labs.edge-manager-aws and sandboxes-gpte.satellite-patching-aws, are different labs."
+}

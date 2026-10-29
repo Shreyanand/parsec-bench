@@ -1,0 +1,107 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [
+    {
+      "capacity_metric_result_id": "cmr-odcr-0922-util-account",
+      "capacity_totals_id": "ct-odcr-0922-util",
+      "capacity_window_id": "cw-odcr-0922-168h",
+      "metric": "utilization",
+      "group_by": "account-id",
+      "period": {
+        "capacity_window_id": "cw-odcr-0922-168h",
+        "start": "2026-09-22T06:00:00Z",
+        "end": "2026-09-29T06:00:00Z"
+      },
+      "results": [
+        {
+          "dimension": "352907184460",
+          "avg_utilization_pct": 60.0,
+          "total_capacity_hrs": 4528.0,
+          "unused_capacity_hrs": 1811.2,
+          "total_estimated_cost_usd": 2264.0,
+          "unused_estimated_cost_usd": 905.6,
+          "reservation_count": 28
+        },
+        {
+          "dimension": "486210937155",
+          "avg_utilization_pct": 70.0,
+          "total_capacity_hrs": 4116.0,
+          "unused_capacity_hrs": 1234.8,
+          "total_estimated_cost_usd": 2058.0,
+          "unused_estimated_cost_usd": 617.4,
+          "reservation_count": 26
+        },
+        {
+          "dimension": "819374025638",
+          "avg_utilization_pct": 90.0,
+          "total_capacity_hrs": 2352.0,
+          "unused_capacity_hrs": 235.2,
+          "total_estimated_cost_usd": 1176.0,
+          "unused_estimated_cost_usd": 117.6,
+          "reservation_count": 15
+        }
+      ],
+      "totals": {
+        "capacity_totals_id": "ct-odcr-0922-util",
+        "total_estimated_cost_usd": 5498.0,
+        "unused_estimated_cost_usd": 1640.6,
+        "overall_utilization_pct": 70.2,
+        "total_dimensions": 3
+      }
+    },
+    {
+      "capacity_metric_result_id": "cmr-odcr-0922-unused-account",
+      "capacity_totals_id": "ct-odcr-0922-unused",
+      "capacity_window_id": "cw-odcr-0922-168h",
+      "metric": "unused_cost",
+      "group_by": "account-id",
+      "period": {
+        "capacity_window_id": "cw-odcr-0922-168h",
+        "start": "2026-09-22T06:00:00Z",
+        "end": "2026-09-29T06:00:00Z"
+      },
+      "results": [],
+      "totals": {
+        "capacity_totals_id": "ct-odcr-0922-unused",
+        "total_estimated_cost_usd": 0.0,
+        "unused_estimated_cost_usd": 0.0,
+        "overall_utilization_pct": 0.0,
+        "total_dimensions": 0,
+        "transient_excluded": 3,
+        "transient_cost_usd": 1640.6
+      }
+    }
+  ],
+  "capacity_totals": [
+    {
+      "capacity_totals_id": "ct-odcr-0922-util",
+      "total_estimated_cost_usd": 5498.0,
+      "unused_estimated_cost_usd": 1640.6,
+      "overall_utilization_pct": 70.2,
+      "total_dimensions": 3
+    },
+    {
+      "capacity_totals_id": "ct-odcr-0922-unused",
+      "total_estimated_cost_usd": 0.0,
+      "unused_estimated_cost_usd": 0.0,
+      "overall_utilization_pct": 0.0,
+      "total_dimensions": 0,
+      "transient_excluded": 3,
+      "transient_cost_usd": 1640.6
+    }
+  ],
+  "capacity_windows": [
+    {
+      "capacity_window_id": "cw-odcr-0922-168h",
+      "start": "2026-09-22T06:00:00Z",
+      "end": "2026-09-29T06:00:00Z"
+    }
+  ],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": []
+}

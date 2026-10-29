@@ -1,0 +1,161 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "controller": "partner0",
+          "job_id": 8217744
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_aap2_logs",
+          "controller": "partner0"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "exec-node",
+        "any_of": [
+          "exnode-lyo-07"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which execution node ended up running it",
+        "rationale": "only the controller logs name the node; get_job carries no node field"
+      },
+      {
+        "id": "capacity",
+        "any_of": [
+          "capacity",
+          "no free forks",
+          "0 of 144",
+          "no forks available",
+          "forks were available",
+          "forks available",
+          "forks free",
+          "fork capacity"
+        ],
+        "ignore_case": true,
+        "asked_by": "why did it wait",
+        "rationale": "the scheduler's own reason for leaving the job pending, from the Splunk AAP index",
+        "derived": true,
+        "note": "the awx.main.scheduler rows at 14:04:13 and 14:27:45 say the instance group had insufficient capacity: 0 of 144 forks available while 24 jobs ran."
+      },
+      {
+        "id": "instance-group",
+        "any_of": [
+          "velo-partner-ee"
+        ],
+        "ignore_case": true,
+        "asked_by": "why did it wait",
+        "rationale": "the group whose capacity was exhausted; it appears only in the logs"
+      }
+    ],
+    "counts": [
+      {
+        "id": "run-minutes",
+        "value": 27,
+        "nouns": [
+          "minutes",
+          "minute",
+          "min",
+          "mins"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "1648",
+          "1,648",
+          "27.5",
+          "27m",
+          "27:28",
+          "27 min",
+          "nearly 28",
+          "about 28"
+        ],
+        "ignore_case": true,
+        "asked_by": "How long did the playbook itself actually run",
+        "rationale": "the job's own run time (duration_seconds 1648), not the 75 minutes end to end",
+        "derived": true,
+        "note": "duration_seconds is 1648 s, from started 14:51:37 to finished 15:19:05: 27 min 28 s."
+      },
+      {
+        "id": "wait-minutes",
+        "value": 47,
+        "nouns": [
+          "minutes",
+          "minute",
+          "min",
+          "mins"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "47m",
+          "47:25",
+          "0:47",
+          "2845",
+          "2,845",
+          "nearly 48",
+          "about 48",
+          "47 min"
+        ],
+        "ignore_case": true,
+        "asked_by": "How long did the order wait before the job started",
+        "rationale": "created 14:04:12 (Splunk) to started 14:51:37 (get_job); no field holds it",
+        "derived": true,
+        "note": "the job was created pending at 14:04:12 (awx.main.scheduler) and started at 14:51:37 (get_job): 47 min 25 s."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "playbook-slow",
+        "none_of": [
+          "the playbook was slow",
+          "the playbook itself was slow",
+          "the playbook has become slow",
+          "playbook ran slowly",
+          "playbook is slow",
+          "playbook took 75",
+          "playbook ran for 75",
+          "the job ran for 75",
+          "the job ran for about 75",
+          "job took 75 minutes to run",
+          "the provisioning playbook has slowed",
+          "playbook got slower",
+          "playbook has slowed down"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "engineer's theory",
+          "partner's theory",
+          "their theory",
+          "theory that the playbook",
+          "the partner thinks",
+          "the partner believes",
+          "their engineer thinks",
+          "their engineer believes",
+          "the engineer thinks",
+          "the partner says",
+          "suspicion that the playbook",
+          "the partner's claim"
+        ],
+        "rationale": "the playbook ran 27.5 minutes, inside the promise; the time went to the queue"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [],
+          "start_date": "2026-08-17",
+          "end_date": "2026-08-24",
+          "group_by": "LINKED_ACCOUNT"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "top-1",
+        "ignore_case": true,
+        "any_of": [
+          "731904268155"
+        ],
+        "asked_by": "Which three spent the most, and how much did each spend",
+        "rationale": "the largest item under the org-wide entry ($4,618.27); stored first, so it is also what a stored-order reader gets right"
+      },
+      {
+        "id": "top-2",
+        "ignore_case": true,
+        "any_of": [
+          "647201958830"
+        ],
+        "asked_by": "Which three spent the most, and how much did each spend",
+        "rationale": "second largest ($3,388.91) but fifth in stored order, so it is missed by an answer that takes the first three keys"
+      },
+      {
+        "id": "top-3",
+        "ignore_case": true,
+        "any_of": [
+          "958316072648"
+        ],
+        "asked_by": "Which three spent the most, and how much did each spend",
+        "rationale": "third largest ($2,947.63)"
+      }
+    ],
+    "counts": [
+      {
+        "id": "accounts-with-spend",
+        "value": 9,
+        "derived": true,
+        "note": "The org-wide entry's items map has 9 keys, one per linked account; accounts_queried is 0 because the query passed no account filter.",
+        "nouns": [
+          "accounts",
+          "member accounts",
+          "linked accounts"
+        ],
+        "window": 4,
+        "asked_by": "How many member accounts had any spend in that week",
+        "rationale": "counted from the item keys, not from accounts_queried (0 on an org-wide query)"
+      },
+      {
+        "id": "accounts-over-1000",
+        "value": 5,
+        "derived": true,
+        "note": "Items above $1,000: 731904268155, 647201958830, 958316072648, 296318704453, 104829375561; 519073846224 at $977.32 is just below.",
+        "nouns": [
+          "accounts",
+          "account"
+        ],
+        "window": 5,
+        "asked_by": "How many accounts went over $1,000",
+        "rationale": "needs every item read and compared; the $977.32 near miss and the $1,203.18 / $1,640.75 accounts outside the top three make a skim wrong"
+      },
+      {
+        "id": "org-total",
+        "value": 16116,
+        "nouns": [
+          "total"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "16,116.10",
+          "16116.10",
+          "16,116.1 "
+        ],
+        "asked_by": "what was the org-wide total",
+        "rationale": "total_cost as stored"
+      }
+    ],
+    "forbidden": []
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

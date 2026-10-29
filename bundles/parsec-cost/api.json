@@ -1,0 +1,1367 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "parsec cost tools",
+    "version": "1.0.0",
+    "description": "The cost tools as parsec implements them, derived from vendor/parsec at 28e2c40. Request parameters come from each tool's input_schema in src/agent/tool_definitions.py; response shapes come from the dict each tool's function actually assembles. query_aws_pricing is deliberately absent from this service: it reads a repo-local static table (data/ec2_pricing.json) with no runtime network call, so it is not a backend we cannot touch. Account ids, subscription names, dates and dimension names used as examples are all literals occurring in parsec's own source; none come from a trace export."
+  },
+  "components": {
+    "schemas": {
+      "Period": {
+        "x-primary-key": "period_id",
+        "type": "object",
+        "description": "The resolved query window. AWS Cost Explorer treats `end` as exclusive, so query_aws_costs bumps it by a day when end <= start (src/tools/aws_costs.py:48-53).",
+        "properties": {
+          "period_id": {
+            "type": "string",
+            "description": "Storage identity for the `periods` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "start": {
+            "type": "string",
+            "description": "YYYY-MM-DD."
+          },
+          "end": {
+            "type": "string",
+            "description": "YYYY-MM-DD."
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "period_id"
+        ]
+      },
+      "DailyCost": {
+        "type": "object",
+        "description": "One day's cost for one dimension value (src/tools/aws_costs.py:159-161).",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "YYYY-MM-DD."
+          },
+          "cost": {
+            "type": "number",
+            "description": "Rounded to 4 decimal places."
+          }
+        },
+        "required": [
+          "date",
+          "cost"
+        ]
+      },
+      "DimensionCost": {
+        "type": "object",
+        "description": "Cost for one value of the grouping dimension, with its daily series (src/tools/aws_costs.py:156-161).",
+        "properties": {
+          "cost": {
+            "type": "number",
+            "description": "Accumulated across the window at src/tools/aws_costs.py:158, then rounded to 2 decimal places in the post-accumulation pass at src/tools/aws_costs.py:166-169 -- so the returned value is rounded, unlike the 4-decimal `daily[].cost` entries it sums."
+          },
+          "daily": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyCost"
+            }
+          }
+        },
+        "required": [
+          "cost",
+          "daily"
+        ]
+      },
+      "AccountCost": {
+        "x-primary-key": "account_cost_id",
+        "type": "object",
+        "description": "One account's costs, keyed by dimension value (src/tools/aws_costs.py:152-162).",
+        "properties": {
+          "account_cost_id": {
+            "type": "string",
+            "description": "Storage identity for the `account_costs` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "account_id": {
+            "type": "string",
+            "description": "Either the literal string `org-wide` or a 12-digit AWS account id. The selector is structural -- how many grouping keys the Cost Explorer group carries -- not whether the request supplied an account filter: `len(keys) == 1` is tested first and substitutes `org-wide` (src/tools/aws_costs.py:141-143). Two keys, and so a 12-digit id read from `keys[1]` (src/tools/aws_costs.py:149), arise only when at least one 12-digit numeric account id survived validation *and* group_by is SERVICE or INSTANCE_TYPE, because the second LINKED_ACCOUNT group dimension is appended under exactly those two conditions (src/tools/aws_costs.py:77-80); so a LINKED_ACCOUNT-grouped query yields `org-wide` even when filtered, as does the historical-data retry that drops the filter and collapses GroupBy to the primary dimension (src/tools/aws_costs.py:113-119). Not constrained to an enum here because the id half is open-ended."
+          },
+          "items": {
+            "type": "object",
+            "description": "Keyed by the grouping dimension's value, e.g. an AWS service name when group_by is SERVICE.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DimensionCost"
+            }
+          },
+          "total": {
+            "type": "number",
+            "description": "The account's cost across every dimension value. Accumulated at src/tools/aws_costs.py:162, then rounded to 2 decimal places in the same post-accumulation pass at src/tools/aws_costs.py:166-169."
+          }
+        },
+        "required": [
+          "account_id",
+          "items",
+          "total",
+          "account_cost_id"
+        ]
+      },
+      "AwsCostResult": {
+        "x-primary-key": "aws_cost_result_id",
+        "type": "object",
+        "description": "query_aws_costs' full response (src/tools/aws_costs.py:171-177).",
+        "properties": {
+          "period_id": {
+            "type": "string",
+            "description": "Reporting period this result covers."
+          },
+          "aws_cost_result_id": {
+            "type": "string",
+            "description": "Storage identity for the `aws_cost_results` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "accounts_queried": {
+            "type": "integer",
+            "description": "Count of account_ids that passed the 12-digit numeric filter. An empty account_ids list means an org-wide query, so this may be 0."
+          },
+          "period": {
+            "type": "object",
+            "description": "The Period this result covers, returned inline as an object on the result. **Simulation storage: keep this INLINE on the stored row as an object with the fields below, never as a reference string to the Period collection.** A reference string drops the dates the response carries, and two earlier freezes flipped this field between the two shapes (2026-09-15 to inline, 2026-10-06 back to a string), so it is pinned here.",
+            "properties": {
+              "period_id": {
+                "type": "string",
+                "description": "Storage identity for the `periods` collection. Synthetic: the simulation store keys rows by it."
+              },
+              "start": {
+                "type": "string",
+                "description": "YYYY-MM-DD."
+              },
+              "end": {
+                "type": "string",
+                "description": "YYYY-MM-DD."
+              }
+            },
+            "additionalProperties": true
+          },
+          "group_by": {
+            "type": "string",
+            "enum": [
+              "SERVICE",
+              "INSTANCE_TYPE",
+              "LINKED_ACCOUNT"
+            ],
+            "description": "Upper-cased echo of the request's group_by."
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountCost"
+            }
+          },
+          "total_cost": {
+            "type": "number",
+            "description": "Rounded to 2 decimal places."
+          }
+        },
+        "required": [
+          "accounts_queried",
+          "period",
+          "group_by",
+          "results",
+          "total_cost",
+          "period_id",
+          "aws_cost_result_id"
+        ]
+      },
+      "QueryAwsCostsRequest": {
+        "type": "object",
+        "properties": {
+          "account_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of 12-digit AWS account IDs to query. An empty list means an org-wide query."
+          },
+          "start_date": {
+            "type": "string",
+            "description": "Start date in YYYY-MM-DD format."
+          },
+          "end_date": {
+            "type": "string",
+            "description": "End date in YYYY-MM-DD format."
+          },
+          "group_by": {
+            "type": "string",
+            "enum": [
+              "SERVICE",
+              "INSTANCE_TYPE",
+              "LINKED_ACCOUNT"
+            ],
+            "default": "SERVICE",
+            "description": "Dimension to group costs by."
+          }
+        },
+        "required": [
+          "account_ids",
+          "start_date",
+          "end_date"
+        ]
+      },
+      "GcpCostResult": {
+        "x-primary-key": "gcp_cost_result_id",
+        "type": "object",
+        "description": "query_gcp_costs' full response (src/tools/gcp_costs.py:129-135). Costs include credits: the BigQuery projection sums cost plus each row's credit amounts (src/tools/gcp_costs.py:65). `period` echoes the request's two dates unmodified (src/tools/gcp_costs.py:130) -- unlike query_aws_costs, this tool applies no exclusive-end adjustment, so the shared Period schema's note about that bump describes the AWS tool only.",
+        "properties": {
+          "period_id": {
+            "type": "string",
+            "description": "Reporting period this result covers."
+          },
+          "gcp_cost_result_id": {
+            "type": "string",
+            "description": "Storage identity for the `gcp_cost_results` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "period": {
+            "type": "object",
+            "description": "The Period this result covers, returned inline as an object on the result. **Simulation storage: keep this INLINE on the stored row as an object with the fields below, never as a reference string to the Period collection.** A reference string drops the dates the response carries, and two earlier freezes flipped this field between the two shapes (2026-09-15 to inline, 2026-10-06 back to a string), so it is pinned here.",
+            "properties": {
+              "period_id": {
+                "type": "string",
+                "description": "Storage identity for the `periods` collection. Synthetic: the simulation store keys rows by it."
+              },
+              "start": {
+                "type": "string",
+                "description": "YYYY-MM-DD."
+              },
+              "end": {
+                "type": "string",
+                "description": "YYYY-MM-DD."
+              }
+            },
+            "additionalProperties": true
+          },
+          "group_by": {
+            "type": "string",
+            "enum": [
+              "SERVICE",
+              "PROJECT"
+            ],
+            "description": "Upper-cased echo of the request's group_by (src/tools/gcp_costs.py:131). Constrained here to the two values the tool's input_schema declares; the implementation validates nothing, so any other value would be echoed upper-cased and grouped as if it were SERVICE (src/tools/gcp_costs.py:106-109)."
+          },
+          "breakdown": {
+            "type": "array",
+            "description": "One entry per grouping-dimension value, sorted by cost descending (src/tools/gcp_costs.py:124-127). **Simulation storage: keep this INLINE on the stored `gcp_cost_results` row as an array of objects with the fields below, never as a reference to, or a join against, another collection.** There is no separate breakdown collection: the row's own `breakdown` array is the only stored copy, and query_gcp_costs returns it verbatim, in stored order. An earlier spec declared a separate breakdown-item entity with no key back to its parent row, so a join on it could never match and the simulation returned an empty breakdown on about half its calls (2026-10-08); the entity was removed and the breakdown pinned inline for that reason.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The GCP service name or project id, per group_by -- or the literal string `unknown` when the row's own field is null or empty (src/tools/gcp_costs.py:106-109)."
+                },
+                "cost": {
+                  "type": "number",
+                  "description": "Rounded to 2 decimal places (src/tools/gcp_costs.py:125)."
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "daily_rows": {
+            "type": "integer",
+            "description": "Number of BigQuery rows the query returned, not a series: `len(rows)`, where one row is appended per result row (src/tools/gcp_costs.py:113-121, :133). A row-count diagnostic, capped by the query's own LIMIT 5000 (src/tools/gcp_costs.py:92)."
+          },
+          "total_cost": {
+            "type": "number",
+            "description": "Rounded to 2 decimal places (src/tools/gcp_costs.py:134)."
+          }
+        },
+        "required": [
+          "period",
+          "group_by",
+          "breakdown",
+          "daily_rows",
+          "total_cost",
+          "period_id",
+          "gcp_cost_result_id"
+        ]
+      },
+      "QueryGcpCostsRequest": {
+        "type": "object",
+        "properties": {
+          "start_date": {
+            "type": "string",
+            "description": "Start date in YYYY-MM-DD format."
+          },
+          "end_date": {
+            "type": "string",
+            "description": "End date in YYYY-MM-DD format."
+          },
+          "group_by": {
+            "type": "string",
+            "enum": [
+              "SERVICE",
+              "PROJECT"
+            ],
+            "default": "SERVICE",
+            "description": "Dimension to group costs by."
+          },
+          "filter_services": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional list of GCP service names to filter by."
+          },
+          "filter_projects": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional list of GCP project IDs to filter by."
+          }
+        },
+        "required": [
+          "start_date",
+          "end_date"
+        ]
+      },
+      "AzureServiceCost": {
+        "x-primary-key": "azure_service_cost_id",
+        "type": "object",
+        "description": "One meter category's cost within a subscription, with its subcategory split. Built identically by both query paths (src/tools/azure_costs.py:105-112 in the cache path, src/tools/azure_costs.py:216-223 in the blob path).",
+        "properties": {
+          "azure_service_cost_id": {
+            "type": "string",
+            "description": "Storage identity for the `azure_service_costs` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "cost": {
+            "type": "number",
+            "description": "The meter category's cost within this subscription. Accumulated at src/tools/azure_costs.py:110 (cache) and src/tools/azure_costs.py:218 (blobs), then rounded to 2 decimal places in the post-accumulation pass at src/tools/azure_costs.py:128 and src/tools/azure_costs.py:236."
+          },
+          "meter_subcategories": {
+            "type": "object",
+            "description": "Keyed by MeterSubCategory, each key carrying that subcategory's summed cost rounded to 2 decimal places (src/tools/azure_costs.py:129-131, src/tools/azure_costs.py:237-239). A billing row whose MeterSubCategory is empty contributes no key at all (src/tools/azure_costs.py:111, src/tools/azure_costs.py:220), so this object is always present but may be empty.",
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "cost",
+          "meter_subcategories",
+          "azure_service_cost_id"
+        ]
+      },
+      "AzureSubscriptionCost": {
+        "x-primary-key": "azure_subscription_cost_id",
+        "type": "object",
+        "description": "One subscription's costs, keyed by meter category. Built identically by both query paths (src/tools/azure_costs.py:95-101 in the cache path, src/tools/azure_costs.py:204-209 in the blob path).",
+        "properties": {
+          "azure_subscription_cost_id": {
+            "type": "string",
+            "description": "Storage identity for the `azure_subscription_costs` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "subscription_name": {
+            "type": "string",
+            "description": "The Azure subscription name the billing rows were grouped by, e.g. pool-01-374 (src/tools/azure_costs.py:96, src/tools/azure_costs.py:205)."
+          },
+          "services": {
+            "type": "object",
+            "description": "Keyed by MeterCategory, e.g. 'Virtual Machines' (src/tools/azure_costs.py:104-105, src/tools/azure_costs.py:215-216).",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AzureServiceCost"
+            }
+          },
+          "total": {
+            "type": "number",
+            "description": "The subscription's cost across every meter category. Accumulated at src/tools/azure_costs.py:117 (cache) and src/tools/azure_costs.py:225 (blobs), then rounded to 2 decimal places at src/tools/azure_costs.py:125 and src/tools/azure_costs.py:233."
+          },
+          "gpu_cost": {
+            "type": "number",
+            "description": "The portion of `total` whose MeterSubCategory names a GPU VM series, accumulated at src/tools/azure_costs.py:120-121 and src/tools/azure_costs.py:228-229 and rounded to 2 decimal places at src/tools/azure_costs.py:126 and src/tools/azure_costs.py:234. The test is a substring match for NC, ND or NV against the upper-cased subcategory (src/tools/azure_costs.py:407-412), so it also counts any other subcategory containing one of those two-letter sequences."
+          }
+        },
+        "required": [
+          "subscription_name",
+          "services",
+          "total",
+          "gpu_cost",
+          "azure_subscription_cost_id"
+        ]
+      },
+      "AzureCostFromCache": {
+        "x-primary-key": "azure_cost_result_id",
+        "type": "object",
+        "description": "Returned on the cache path, which requires both that the SQLite billing cache file exists and that its billing_rows table is non-empty (src/tools/azure_costs.py:133-145). Those two conditions are necessary but not sufficient: the cache query or result assembly raising diverts to the blob path even when both hold (src/tools/azure_costs.py:147-150). This is the normal path. The gate is an unfiltered `SELECT COUNT(*) FROM billing_rows` (src/tools/azure_costs.py:57-58): it asks whether the cache holds *any* data at all, not whether it holds data matching the requested window or meter_filter. So a populated cache that matches nothing still returns this shape, with an empty `results` array and a `total_cost` of 0.0 -- it does not fall through to the blob path. `period` echoes the request's two dates unmodified (src/tools/azure_costs.py:137), so the shared Period schema's note about an exclusive-end bump describes query_aws_costs only.",
+        "properties": {
+          "period_id": {
+            "type": "string",
+            "description": "Reporting period this result covers. In the simulation store this is the `periods` row's opaque `period_id`, copied from the matched row -- never a string built out of the requested dates."
+          },
+          "azure_cost_result_id": {
+            "type": "string",
+            "description": "Storage identity for the `azure_cost_results` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "source": {
+            "type": "string",
+            "const": "cache",
+            "description": "Always the literal `cache` on this path -- the key is assigned once, unconditionally (src/tools/azure_costs.py:138)."
+          },
+          "cache_last_refresh": {
+            "type": "string",
+            "description": "The cache's `last_refresh` metadata value, or the literal string `unknown` when the cache_metadata table carries no such key (src/tools/azure_costs.py:139). That fallback also covers every read failure, because _get_cache_metadata swallows any exception and returns an empty dict (src/tools/azure_costs.py:29-38) -- so this is not guaranteed to be a parseable timestamp."
+          },
+          "period": {
+            "type": "object",
+            "description": "The Period this result covers, returned inline as an object on the result. **Simulation storage: keep this INLINE on the stored row as an object with the fields below, never as a reference string to the Period collection.** A reference string drops the dates the response carries, and two earlier freezes flipped this field between the two shapes (2026-09-15 to inline, 2026-10-06 back to a string), so it is pinned here.",
+            "properties": {
+              "period_id": {
+                "type": "string",
+                "description": "Storage identity for the `periods` collection. Synthetic: the simulation store keys rows by it."
+              },
+              "start": {
+                "type": "string",
+                "description": "YYYY-MM-DD."
+              },
+              "end": {
+                "type": "string",
+                "description": "YYYY-MM-DD."
+              }
+            },
+            "additionalProperties": true
+          },
+          "subscriptions_queried": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "The count of subscription names the request supplied, or the literal string `all` when it supplied none (src/tools/azure_costs.py:136). Not integer-only: the else branch substitutes a string."
+          },
+          "meter_filter": {
+            "type": "string",
+            "description": "Echo of the request's meter_filter, present only when the request supplied a truthy one -- the key is added conditionally after the dict is assembled (src/tools/azure_costs.py:143-144). Absent rather than null when no filter was given, which is why it is not in `required`."
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AzureSubscriptionCost"
+            },
+            "description": "One entry per subscription that had matching rows (src/tools/azure_costs.py:140)."
+          },
+          "total_cost": {
+            "type": "number",
+            "description": "Summed across every subscription and rounded to 2 decimal places (src/tools/azure_costs.py:141)."
+          }
+        },
+        "required": [
+          "source",
+          "cache_last_refresh",
+          "period",
+          "subscriptions_queried",
+          "results",
+          "total_cost",
+          "period_id",
+          "azure_cost_result_id"
+        ]
+      },
+      "AzureCostFromBlobs": {
+        "x-primary-key": "azure_cost_result_id",
+        "type": "object",
+        "description": "Returned when the tool cannot serve the query from the SQLite cache at all, which happens exactly four ways: the cache file does not exist, so the cache is never tried (src/tools/azure_costs.py:22-26, gated at src/tools/azure_costs.py:283); it exists but fails to open (src/tools/azure_costs.py:50-53); it opens but its billing_rows table is empty (src/tools/azure_costs.py:57-60); or the cache query itself raises (src/tools/azure_costs.py:147-150). Each of those last three returns None from _query_from_cache, which is what the tool falls through on (src/tools/azure_costs.py:285-288). Note what is *not* on that list: a populated cache holding no rows that match the requested window or meter_filter does not reach this path, because the gate is an unfiltered row count -- that case returns AzureCostFromCache with an empty results array. This path streams billing CSVs from Azure Blob Storage instead, and is the slower one. It has two success returns, not one: the main assembly (src/tools/azure_costs.py:241-251) and an early return for 'no blobs matched the date range' (src/tools/azure_costs.py:185-192). They differ -- only the main one carries `blobs_processed`, only the early one carries `note` -- so both are declared here as optional properties, and `required` holds only the five fields both returns always set. `period` echoes the request's two dates unmodified (src/tools/azure_costs.py:187, src/tools/azure_costs.py:243).",
+        "properties": {
+          "period_id": {
+            "type": "string",
+            "description": "Reporting period this result covers. In the simulation store this is the `periods` row's opaque `period_id`, copied from the matched row -- never a string built out of the requested dates."
+          },
+          "azure_cost_result_id": {
+            "type": "string",
+            "description": "Storage identity for the `azure_cost_results` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "source": {
+            "type": "string",
+            "const": "live",
+            "description": "Always the literal `live` on this path -- both of its success returns assign exactly that (src/tools/azure_costs.py:188, src/tools/azure_costs.py:244)."
+          },
+          "blobs_processed": {
+            "type": "integer",
+            "description": "How many billing CSV blobs were streamed: len(blobs) (src/tools/azure_costs.py:245). Absent from the no-blobs early return (src/tools/azure_costs.py:185-192), which is the one case in which it would have been 0."
+          },
+          "note": {
+            "type": "string",
+            "description": "Present only on the no-blobs early return, where it is the fixed string 'No billing CSV blobs found for the date range' (src/tools/azure_costs.py:191). The main assembly sets no note at all (src/tools/azure_costs.py:241-251), so this is not a general caveat about the live path."
+          },
+          "period": {
+            "type": "object",
+            "description": "The Period this result covers, returned inline as an object on the result. **Simulation storage: keep this INLINE on the stored row as an object with the fields below, never as a reference string to the Period collection.** A reference string drops the dates the response carries, and two earlier freezes flipped this field between the two shapes (2026-09-15 to inline, 2026-10-06 back to a string), so it is pinned here.",
+            "properties": {
+              "period_id": {
+                "type": "string",
+                "description": "Storage identity for the `periods` collection. Synthetic: the simulation store keys rows by it."
+              },
+              "start": {
+                "type": "string",
+                "description": "YYYY-MM-DD."
+              },
+              "end": {
+                "type": "string",
+                "description": "YYYY-MM-DD."
+              }
+            },
+            "additionalProperties": true
+          },
+          "subscriptions_queried": {
+            "type": [
+              "integer",
+              "string",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "description": "Three forms occur on this path, because its two returns disagree. The main assembly sets the *count* of subscription names the request supplied, or the literal string `all` when it supplied none (src/tools/azure_costs.py:242). The no-blobs early return instead sets the supplied *list itself*, or that same literal `all` -- it is `subscription_names or \"all\"`, not `len(...)` (src/tools/azure_costs.py:186). Declared as the union of all three, because narrowing it to the main assembly's integer would misdescribe the early return."
+          },
+          "meter_filter": {
+            "type": "string",
+            "description": "Echo of the request's meter_filter, present only when the request supplied a truthy one, and only on the main assembly -- the key is added conditionally after that dict is built (src/tools/azure_costs.py:249-250). Absent rather than null otherwise."
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AzureSubscriptionCost"
+            },
+            "description": "One entry per subscription that had matching rows (src/tools/azure_costs.py:246); always empty on the no-blobs early return (src/tools/azure_costs.py:189)."
+          },
+          "total_cost": {
+            "type": "number",
+            "description": "Summed across every subscription and rounded to 2 decimal places (src/tools/azure_costs.py:247); 0.0 on the no-blobs early return (src/tools/azure_costs.py:190)."
+          }
+        },
+        "required": [
+          "source",
+          "period",
+          "subscriptions_queried",
+          "results",
+          "total_cost",
+          "period_id",
+          "azure_cost_result_id"
+        ]
+      },
+      "QueryAzureCostsRequest": {
+        "type": "object",
+        "properties": {
+          "subscription_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional list of Azure subscription names (e.g. pool-01-374). If omitted, queries all subscriptions (src/agent/tool_definitions.py:131-138)."
+          },
+          "start_date": {
+            "type": "string",
+            "description": "Start date in YYYY-MM-DD format."
+          },
+          "end_date": {
+            "type": "string",
+            "description": "End date in YYYY-MM-DD format."
+          },
+          "meter_filter": {
+            "type": "string",
+            "description": "Optional case-insensitive search string matched against MeterCategory and MeterSubCategory (e.g. 'Page Blob', 'Virtual Machines', 'NC Series') (src/agent/tool_definitions.py:147-154). Optional only in the input schema: on the blob path a query naming neither subscription_names nor meter_filter is refused in-band (src/tools/azure_costs.py:164-171)."
+          }
+        },
+        "required": [
+          "start_date",
+          "end_date"
+        ]
+      },
+      "CapacityWindow": {
+        "x-primary-key": "capacity_window_id",
+        "type": "object",
+        "description": "The resolved metric window. Deliberately not `Period`: this tool formats both bounds with _ISO_DATETIME_FMT, \"%Y-%m-%dT%H:%M:%SZ\" (src/tools/aws_capacity_manager.py:15), at src/tools/aws_capacity_manager.py:443-446, so they are second-precision UTC datetimes rather than the YYYY-MM-DD dates the other three cost tools in this spec return, which is why it does not reuse `Period`. The window is also not simply the last `hours` hours: `end` is the current time truncated to the hour and then lagged four hours, because the Capacity Manager data pipeline runs 3-4h behind, and `start` is that `end` minus the 2160-capped `hours` (src/tools/aws_capacity_manager.py:399-402). Both bounds may then be narrowed to whatever range the API says it actually holds, discovered by probing it and parsing the range out of an InvalidParameterValue error message (src/tools/aws_capacity_manager.py:320-370, called at src/tools/aws_capacity_manager.py:407-413) -- so a returned window can be shorter than the request asked for, and this field is the only place the response says so.",
+        "properties": {
+          "capacity_window_id": {
+            "type": "string",
+            "description": "Storage identity for the `capacity_windows` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Second-precision and Z-suffixed, never offset-formatted, because strftime is given a literal Z rather than %z (src/tools/aws_capacity_manager.py:15)."
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Same format as `start`. Its minutes, seconds and microseconds are zero unless clamping moved it, since the hour truncation happens before the four-hour lag (src/tools/aws_capacity_manager.py:401)."
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "capacity_window_id"
+        ]
+      },
+      "CapacityDimensionEntry": {
+        "type": "object",
+        "description": "One grouping-dimension value's capacity metrics, built inline at src/tools/aws_capacity_manager.py:174-205 and appended at src/tools/aws_capacity_manager.py:207. Only `dimension` is always present: every metric field below is assigned under an `if <metric>_vals:` guard, so it is absent -- not null, not zero -- whenever the API returned no non-None datapoint for that metric over the window. Which metrics are even requested depends on the preset: metric=utilization asks for all six (src/tools/aws_capacity_manager.py:18-25), metric=unused_cost asks for only two (src/tools/aws_capacity_manager.py:27-30, selected at src/tools/aws_capacity_manager.py:425), so on that preset only `unused_estimated_cost_usd` and `unused_capacity_hrs` can ever accompany `dimension`. Entries are sorted by `unused_estimated_cost_usd` descending, with a missing key sorting as 0 (src/tools/aws_capacity_manager.py:210-213), and the list is then capped at 50 (src/tools/aws_capacity_manager.py:231-233).",
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "description": "The value of whichever dimension `group_by` selected -- an instance type, an account id, a reservation id and so on. Also, and not only in error cases, the literal string `unknown`: the aggregator maps the kebab-case group_by name to the API's PascalCase response key and falls back to `unknown` for any datapoint lacking that key (src/tools/aws_capacity_manager.py:127-145). Because that key lookup itself falls back to the raw group_by string when the name is not in its map (src/tools/aws_capacity_manager.py:144), and nothing validates group_by at run time, a group_by outside the request enum collapses every entry's dimension to `unknown`. Not constrained to an enum here: the real values are open-ended. An instance type such as g4dn.xlarge is one such value (src/agent/tool_definitions.py:398-401)."
+          },
+          "avg_utilization_pct": {
+            "type": "number",
+            "description": "Mean of the window's reservation-avg-utilization-inst datapoints, which are already percentages, rounded to 1 decimal place (src/tools/aws_capacity_manager.py:176-179)."
+          },
+          "total_capacity_hrs": {
+            "type": "number",
+            "description": "Sum of the window's reservation-total-capacity-hrs-inst datapoints, rounded to 1 decimal place (src/tools/aws_capacity_manager.py:182-185)."
+          },
+          "unused_capacity_hrs": {
+            "type": "number",
+            "description": "Sum of the window's reservation-unused-total-capacity-hrs-inst datapoints, rounded to 1 decimal place (src/tools/aws_capacity_manager.py:187-190)."
+          },
+          "total_estimated_cost_usd": {
+            "type": "number",
+            "description": "Sum of the window's reservation-total-estimated-cost datapoints, rounded to 2 decimal places (src/tools/aws_capacity_manager.py:192-195)."
+          },
+          "unused_estimated_cost_usd": {
+            "type": "number",
+            "description": "Sum of the window's reservation-unused-total-estimated-cost datapoints, rounded to 2 decimal places (src/tools/aws_capacity_manager.py:197-200). This is the sort key for `results`."
+          },
+          "reservation_count": {
+            "type": "integer",
+            "description": "The *maximum* reservation-total-count datapoint seen in the window, not a sum -- peak concurrent reservations (src/tools/aws_capacity_manager.py:202-205)."
+          }
+        },
+        "required": [
+          "dimension"
+        ]
+      },
+      "CapacityTotals": {
+        "x-primary-key": "capacity_totals_id",
+        "type": "object",
+        "description": "Roll-up across the dimension entries that survived the transient filter, built at src/tools/aws_capacity_manager.py:219-224 and then augmented conditionally at src/tools/aws_capacity_manager.py:226-233. The four required keys are always set; the last three are not. Every accumulator behind them sums only non-transient dimensions, because the transient branch `continue`s before any accumulation happens (src/tools/aws_capacity_manager.py:166-172). The two cost roll-ups accumulate the *unrounded* per-dimension sums and round once at the end, so neither need equal the sum of the rounded values in `results`.",
+        "properties": {
+          "capacity_totals_id": {
+            "type": "string",
+            "description": "Storage identity for the `capacity_totals` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "total_estimated_cost_usd": {
+            "type": "number",
+            "description": "Rounded to 2 decimal places (src/tools/aws_capacity_manager.py:220). 0.0 whenever the preset never requested that metric, which is exactly the case for metric=unused_cost (src/tools/aws_capacity_manager.py:27-30)."
+          },
+          "unused_estimated_cost_usd": {
+            "type": "number",
+            "description": "Rounded to 2 decimal places (src/tools/aws_capacity_manager.py:221). Requested by both presets, so this one is meaningful on either."
+          },
+          "overall_utilization_pct": {
+            "type": "number",
+            "description": "(1 - total_unused_hrs / total_capacity_hrs) * 100, rounded to 1 decimal place, and exactly 0.0 -- not null, not 100.0 -- whenever total_capacity_hrs is 0, including the metric=unused_cost case where the total-capacity metric was never requested at all (src/tools/aws_capacity_manager.py:215-217)."
+          },
+          "total_dimensions": {
+            "type": "integer",
+            "description": "len(results) at the moment this dict is built (src/tools/aws_capacity_manager.py:223): after transient dimensions were dropped, but before the 50-entry cap. So it can exceed the length of `results` while still counting fewer dimensions than the API returned."
+          },
+          "transient_excluded": {
+            "type": "integer",
+            "description": "How many dimension values were dropped for carrying fewer than 24 hourly reservation-total-count datapoints -- normal short-lived provisioning rather than waste (min_hours defaults to 24 at src/tools/aws_capacity_manager.py:113 and this operation never overrides it, src/tools/aws_capacity_manager.py:439). Present only when that filter both applied and dropped something (src/tools/aws_capacity_manager.py:226-228), and it applies only when group_by is account-id or reservation-id (src/tools/aws_capacity_manager.py:153) -- for the other seven groupings this key never appears, and no transient filtering happens at all."
+          },
+          "transient_cost_usd": {
+            "type": "number",
+            "description": "The unused estimated cost attributed to those dropped dimensions, rounded to 2 decimal places (src/tools/aws_capacity_manager.py:228). Appears and disappears together with transient_excluded."
+          },
+          "results_truncated": {
+            "type": "boolean",
+            "description": "Present, and then always true, only when more than 50 dimension entries survived and the list was cut to 50 (src/tools/aws_capacity_manager.py:231-233). Absent rather than false otherwise -- unlike the same-named field on CapacityInventoryResult, which is always present."
+          }
+        },
+        "required": [
+          "total_estimated_cost_usd",
+          "unused_estimated_cost_usd",
+          "overall_utilization_pct",
+          "total_dimensions",
+          "capacity_totals_id"
+        ]
+      },
+      "CapacityMetricResult": {
+        "x-primary-key": "capacity_metric_result_id",
+        "type": "object",
+        "description": "The response for every metric preset other than inventory, assembled inline at src/tools/aws_capacity_manager.py:441-450 from the aggregator's (results, totals) pair (src/tools/aws_capacity_manager.py:439).",
+        "properties": {
+          "capacity_totals_id": {
+            "type": "string",
+            "description": "Totals row for this metric result."
+          },
+          "capacity_window_id": {
+            "type": "string",
+            "description": "Window this metric result covers."
+          },
+          "capacity_metric_result_id": {
+            "type": "string",
+            "description": "Storage identity for the `capacity_metric_results` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "metric": {
+            "type": "string",
+            "description": "Echo of the request's `metric`, unvalidated: the assembly assigns the parameter verbatim (src/tools/aws_capacity_manager.py:442) and the only branch on it anywhere is `metric == \"inventory\"` (src/tools/aws_capacity_manager.py:415). So this shape carries whatever the caller sent, provided it was not that -- in practice `utilization` or `unused_cost`, the two remaining values the input contract permits (src/agent/tool_definitions.py:373-381), noting that anything not equal to `unused_cost` silently takes the utilization metric set (src/tools/aws_capacity_manager.py:425). Deliberately *not* declared as an enum: the implementation constrains nothing here, so an enum would assert a guarantee the source does not make."
+          },
+          "period": {
+            "type": "object",
+            "description": "The CapacityWindow this result covers, returned inline as an object on the result. **Simulation storage: keep this INLINE on the stored row as an object with the fields below, never as a reference string to the CapacityWindow collection.** A reference string drops the dates the response carries, and two earlier freezes flipped this field between the two shapes (2026-09-15 to inline, 2026-10-06 back to a string), so it is pinned here.",
+            "properties": {
+              "capacity_window_id": {
+                "type": "string",
+                "description": "Storage identity for the `capacity_windows` collection. Synthetic: the simulation store keys rows by it."
+              },
+              "start": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Second-precision and Z-suffixed, never offset-formatted, because strftime is given a literal Z rather than %z (src/tools/aws_capacity_manager.py:15)."
+              },
+              "end": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Same format as `start`. Its minutes, seconds and microseconds are zero unless clamping moved it, since the hour truncation happens before the four-hour lag (src/tools/aws_capacity_manager.py:401)."
+              }
+            },
+            "additionalProperties": true
+          },
+          "group_by": {
+            "type": "string",
+            "description": "The grouping dimension actually used: the request's `group_by` when it supplied one -- again echoed unvalidated -- otherwise the per-metric default, which is `account-id` for both presets that reach this shape (src/tools/aws_capacity_manager.py:33-36, resolved at src/tools/aws_capacity_manager.py:427). The `instance-type` fallback in that same expression is reachable only for a metric value outside the input contract's enum, since both permitted values are keys of that map. Not an enum, for the same reason as `metric`."
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CapacityDimensionEntry"
+            },
+            "description": "One entry per surviving dimension value, worst unused cost first, at most 50 (src/tools/aws_capacity_manager.py:210-233). Empty when the API returned no datapoints, in which case `totals` is still present with its four required keys zeroed."
+          },
+          "totals": {
+            "type": "object",
+            "description": "The CapacityTotals this result covers, returned inline as an object on the result. **Simulation storage: keep this INLINE on the stored row as an object with the fields below, never as a reference string to the CapacityTotals collection.** A reference string drops the dates the response carries, and two earlier freezes flipped this field between the two shapes (2026-09-15 to inline, 2026-10-06 back to a string), so it is pinned here.",
+            "properties": {
+              "capacity_totals_id": {
+                "type": "string",
+                "description": "Storage identity for the `capacity_totals` collection. Synthetic: the simulation store keys rows by it."
+              },
+              "total_estimated_cost_usd": {
+                "type": "number",
+                "description": "Rounded to 2 decimal places (src/tools/aws_capacity_manager.py:220). 0.0 whenever the preset never requested that metric, which is exactly the case for metric=unused_cost (src/tools/aws_capacity_manager.py:27-30)."
+              },
+              "unused_estimated_cost_usd": {
+                "type": "number",
+                "description": "Rounded to 2 decimal places (src/tools/aws_capacity_manager.py:221). Requested by both presets, so this one is meaningful on either."
+              },
+              "overall_utilization_pct": {
+                "type": "number",
+                "description": "(1 - total_unused_hrs / total_capacity_hrs) * 100, rounded to 1 decimal place, and exactly 0.0 -- not null, not 100.0 -- whenever total_capacity_hrs is 0, including the metric=unused_cost case where the total-capacity metric was never requested at all (src/tools/aws_capacity_manager.py:215-217)."
+              },
+              "total_dimensions": {
+                "type": "integer",
+                "description": "len(results) at the moment this dict is built (src/tools/aws_capacity_manager.py:223): after transient dimensions were dropped, but before the 50-entry cap. So it can exceed the length of `results` while still counting fewer dimensions than the API returned."
+              },
+              "transient_excluded": {
+                "type": "integer",
+                "description": "How many dimension values were dropped for carrying fewer than 24 hourly reservation-total-count datapoints -- normal short-lived provisioning rather than waste (min_hours defaults to 24 at src/tools/aws_capacity_manager.py:113 and this operation never overrides it, src/tools/aws_capacity_manager.py:439). Present only when that filter both applied and dropped something (src/tools/aws_capacity_manager.py:226-228), and it applies only when group_by is account-id or reservation-id (src/tools/aws_capacity_manager.py:153) -- for the other seven groupings this key never appears, and no transient filtering happens at all."
+              },
+              "transient_cost_usd": {
+                "type": "number",
+                "description": "The unused estimated cost attributed to those dropped dimensions, rounded to 2 decimal places (src/tools/aws_capacity_manager.py:228). Appears and disappears together with transient_excluded."
+              },
+              "results_truncated": {
+                "type": "boolean",
+                "description": "Present, and then always true, only when more than 50 dimension entries survived and the list was cut to 50 (src/tools/aws_capacity_manager.py:231-233). Absent rather than false otherwise -- unlike the same-named field on CapacityInventoryResult, which is always present."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "metric",
+          "period",
+          "group_by",
+          "results",
+          "totals",
+          "capacity_totals_id",
+          "capacity_window_id",
+          "capacity_metric_result_id"
+        ]
+      },
+      "CapacityInventoryResult": {
+        "type": "object",
+        "description": "The response for metric=inventory, built by _query_inventory (src/tools/aws_capacity_manager.py:310-317) and returned from the tool unchanged (src/tools/aws_capacity_manager.py:415-422). A different shape entirely: no period, no group_by, no totals. That path also ignores the request's `group_by`, always grouping by reservation-id, and requests only three of the six metrics (src/tools/aws_capacity_manager.py:250-261). All six keys are set unconditionally by that single return, so all six are required -- there are no conditional keys here, in contrast to CapacityTotals. Its truncation cap is 100 entries, not the metric path's 50.",
+        "properties": {
+          "metric": {
+            "type": "string",
+            "const": "inventory",
+            "description": "Always the literal `inventory`, hard-coded in the return rather than echoed from the request (src/tools/aws_capacity_manager.py:311) -- which is why this one is a const while CapacityMetricResult's `metric` is unconstrained."
+          },
+          "persistent_reservations": {
+            "type": "integer",
+            "description": "How many reservations survived the transient filter, counted before the 100-entry cap (src/tools/aws_capacity_manager.py:305, src/tools/aws_capacity_manager.py:312) -- so it exceeds the length of `reservations` exactly when results_truncated is true."
+          },
+          "transient_excluded": {
+            "type": "integer",
+            "description": "How many reservations carried fewer than 24 hourly reservation-total-count datapoints and were dropped as normal provisioning churn (src/tools/aws_capacity_manager.py:280-286; min_hours defaults to 24 at src/tools/aws_capacity_manager.py:243 and the tool does not override it, src/tools/aws_capacity_manager.py:416-422). Always present; 0 when none were dropped. Unlike the metric path, this filter is unconditional here, because this path always groups by reservation-id."
+          },
+          "transient_cost_usd": {
+            "type": "number",
+            "description": "Unused estimated cost attributed to those dropped reservations, rounded to 2 decimal places (src/tools/aws_capacity_manager.py:314), summed from per-reservation values that were themselves already rounded (src/tools/aws_capacity_manager.py:281). Always present; 0.0 when none were dropped."
+          },
+          "results_truncated": {
+            "type": "boolean",
+            "description": "Always present, and true only when more than 100 reservations survived the transient filter (src/tools/aws_capacity_manager.py:306-308)."
+          },
+          "reservations": {
+            "type": "array",
+            "description": "The surviving reservations, worst unused cost first (src/tools/aws_capacity_manager.py:300-303), capped at 100 (src/tools/aws_capacity_manager.py:306-308). Each entry is the four-field dict built at src/tools/aws_capacity_manager.py:288-297, modelled inline rather than as its own component schema because it is built inside _query_inventory's body and is not a store entity in its own right.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "reservation_id": {
+                  "type": "string",
+                  "description": "The ODCR id, read from the datapoint's Dimension.ReservationId, or the literal string `unknown` when that key is absent (src/tools/aws_capacity_manager.py:266). Open-ended, so not an enum."
+                },
+                "avg_utilization_pct": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "description": "Mean of the reservation's utilization datapoints, rounded to 1 decimal place, or explicitly null -- not absent, and not 0.0 -- when the API returned none (src/tools/aws_capacity_manager.py:291-293)."
+                },
+                "unused_estimated_cost_usd": {
+                  "type": "number",
+                  "description": "Sum of the reservation's unused-cost datapoints rounded to 2 decimal places, or 0.0 when there were none (src/tools/aws_capacity_manager.py:281)."
+                },
+                "hours_active": {
+                  "type": "integer",
+                  "description": "Count of reservation-total-count datapoints, one per hour of the window, which is the quantity the transient filter thresholds at 24 (src/tools/aws_capacity_manager.py:280-283). So it is always at least 24 for an entry that appears here."
+                }
+              },
+              "required": [
+                "reservation_id",
+                "avg_utilization_pct",
+                "unused_estimated_cost_usd",
+                "hours_active"
+              ]
+            }
+          }
+        },
+        "required": [
+          "metric",
+          "persistent_reservations",
+          "transient_excluded",
+          "transient_cost_usd",
+          "results_truncated",
+          "reservations"
+        ]
+      },
+      "QueryAwsCapacityManagerRequest": {
+        "type": "object",
+        "description": "Every parameter is optional: the tool's input_schema declares `required: []` (src/agent/tool_definitions.py:416). The defaults recorded below are not in that input_schema, which declares none -- they come from the implementation's own signature (src/tools/aws_capacity_manager.py:373-379) and are documented in its docstring (src/tools/aws_capacity_manager.py:381-390).",
+        "properties": {
+          "metric": {
+            "type": "string",
+            "enum": [
+              "utilization",
+              "unused_cost",
+              "inventory"
+            ],
+            "default": "utilization",
+            "description": "Metric preset (src/agent/tool_definitions.py:373-381). `utilization` requests all six reservation metrics; `unused_cost` requests only the two unused-capacity ones; `inventory` takes a separate code path and returns CapacityInventoryResult rather than CapacityMetricResult. Nothing validates this at run time -- an unrecognised value is treated as `utilization` (src/tools/aws_capacity_manager.py:425) and echoed back verbatim in the response."
+          },
+          "group_by": {
+            "type": "string",
+            "enum": [
+              "instance-type",
+              "instance-family",
+              "account-id",
+              "resource-region",
+              "availability-zone-id",
+              "reservation-id",
+              "reservation-state",
+              "tenancy",
+              "instance-platform"
+            ],
+            "description": "Dimension to group results by (src/agent/tool_definitions.py:383-397). Defaults to `account-id` for both metric presets that use it (src/tools/aws_capacity_manager.py:33-36), and is ignored entirely by metric=inventory, which always groups by reservation-id (src/tools/aws_capacity_manager.py:257). Choosing account-id or reservation-id additionally switches on the transient-dimension filter, which the other seven values leave off (src/tools/aws_capacity_manager.py:153)."
+          },
+          "instance_type": {
+            "type": "string",
+            "description": "Filter to a specific EC2 instance type, e.g. g4dn.xlarge (src/agent/tool_definitions.py:398-401). Applied as a reservation filter rather than a grouping (src/tools/aws_capacity_manager.py:39-76)."
+          },
+          "account_id": {
+            "type": "string",
+            "description": "Filter to a specific 12-digit AWS account id (src/agent/tool_definitions.py:402-405). Also applied as a filter, independently of group_by (src/tools/aws_capacity_manager.py:39-76)."
+          },
+          "reservation_state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "expired",
+              "cancelled",
+              "pending",
+              "failed"
+            ],
+            "default": "active",
+            "description": "Filter by reservation state (src/agent/tool_definitions.py:406-410). The filter condition is added only when the value is truthy, so an empty string means no state filter at all rather than an empty match (src/tools/aws_capacity_manager.py:46-55)."
+          },
+          "hours": {
+            "type": "integer",
+            "default": 168,
+            "description": "Hours of history to query: 168 (7 days) by default, and silently capped to 2160 (90 days) rather than rejected (src/agent/tool_definitions.py:411-414, capped at src/tools/aws_capacity_manager.py:399). The window this produces is lagged and may be narrowed further -- see CapacityWindow."
+          }
+        },
+        "required": []
+      },
+      "CostMonitorResult": {
+        "x-primary-key": "cost_monitor_result_id",
+        "type": "object",
+        "description": "Deliberately not a description of the cost-monitor payload. query_cost_monitor GETs the internal cost-monitor data service and returns `response.json()` verbatim (src/tools/cost_monitor.py:89-98); parsec's own agent prompt says the same in as many words -- \"Varies by endpoint. Always includes `_dashboard_link` URL if configured\" (config/prompts/cost_agent.md:174-175). The only keys parsec itself contributes are the two below, and it contributes them only when a dashboard URL is configured: for an object payload it sets `_dashboard_link` on the payload in place (src/tools/cost_monitor.py:93-94); for an array payload it rebuilds the response as {results, _dashboard_link} (src/tools/cost_monitor.py:95-96). Everything else sits at the top level beside `_dashboard_link` and comes from the upstream service, which nothing in vendor/parsec describes -- so `additionalProperties` stays open, `required` is empty, and no upstream field is invented here. Consequently the coverage/drift check anchored to query_cost_monitor is *vacuously* green for this schema: it can only ever see these two keys, exactly as it can only see `content` for the github spec's FileContent. A green test here is no evidence that this models the real API. Two consequences of the config gate are worth stating outright: with `cost_monitor.dashboard_url` unset -- and the empty string is both the code fallback (src/tools/cost_monitor.py:18-21) and the tracked config value (config/config.yaml:65) -- `_dashboard_link` is absent, and an array payload is then returned as a bare JSON array rather than an object at all, despite the function's `-> dict` annotation; and `results` never appears for an object payload.",
+        "properties": {
+          "cost_monitor_result_id": {
+            "type": "string",
+            "description": "Storage identity for the `cost_monitor_results` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "endpoint": {
+            "type": "string",
+            "description": "**Simulation storage scope:** which cost-monitor endpoint -- summary, breakdown, drilldown or providers -- this stored payload answers. parsec never returns it: the endpoint picks the upstream URL (src/tools/cost_monitor.py:57-74), so the store needs it to know which row answers which call. Matched exactly against the request's `endpoint`. Never echo it in the response."
+          },
+          "_dashboard_link": {
+            "type": "string",
+            "description": "The configured user-facing cost-monitor dashboard URL, attached by parsec rather than returned by the upstream service (src/tools/cost_monitor.py:92-96). Absent whenever `cost_monitor.dashboard_url` is empty, which is its default."
+          },
+          "results": {
+            "type": "array",
+            "description": "Present only when the upstream payload was a JSON array *and* a dashboard URL is configured, in which case parsec moves the array under this key (src/tools/cost_monitor.py:95-96). No element schema is declared: the elements are upstream's, and parsec commits to nothing about them, so `items` is left unconstrained rather than guessed at. In the simulation, the elements are whatever the stored `cost_monitor_results` row holds, echoed unchanged; `items` being unconstrained is not licence to invent elements."
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "cost_monitor_result_id",
+          "endpoint"
+        ]
+      },
+      "QueryCostMonitorRequest": {
+        "type": "object",
+        "description": "The tool's declared input_schema (src/agent/tool_definitions.py:320-359). The one default recorded below is the implementation signature's (src/tools/cost_monitor.py:24-32), not the input_schema's, which declares none. Two things the per-parameter prose below does not repeat: `start_date` and `end_date` are put in the query string for all four endpoints (src/tools/cost_monitor.py:52), as is `providers` (src/tools/cost_monitor.py:83-86), so where a description says \"for breakdown\" or \"for drilldown\" that scoping is the upstream service's or the docstring's, not something parsec enforces; and no date-format validation happens here at all, unlike query_aws_costs and query_gcp_costs, so a malformed date reaches the upstream service rather than producing an in-band error.",
+        "properties": {
+          "endpoint": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "breakdown",
+              "drilldown",
+              "providers"
+            ],
+            "description": "Which cost-monitor endpoint to call (src/agent/tool_definitions.py:323-327). This is an action selector rather than a filter: it picks the upstream URL (src/tools/cost_monitor.py:57-74) and thereby decides which of the remaining parameters are forwarded at all. Unlike this spec's other request enums it *is* enforced at run time -- an unrecognised value falls through to an else branch that returns the in-band error envelope without issuing any request (src/tools/cost_monitor.py:76-79). Note the vocabulary collision: `providers` is both a value here (the upstream provider-sync endpoint, described as sync status at src/agent/tool_definitions.py:316-318) and the name of an unrelated filter parameter below."
+          },
+          "start_date": {
+            "type": "string",
+            "description": "Start date in YYYY-MM-DD format (src/agent/tool_definitions.py:328-331, src/tools/cost_monitor.py:38). Forwarded for every endpoint, including `providers` (src/tools/cost_monitor.py:52)."
+          },
+          "end_date": {
+            "type": "string",
+            "description": "End date in YYYY-MM-DD format (src/agent/tool_definitions.py:332-335, src/tools/cost_monitor.py:39). Forwarded for every endpoint, including `providers` (src/tools/cost_monitor.py:52)."
+          },
+          "providers": {
+            "type": "string",
+            "description": "Comma-separated provider filter, e.g. `aws` or `aws,azure` (src/agent/tool_definitions.py:336-339). Split on commas, each entry trimmed and empty entries dropped (src/tools/cost_monitor.py:55), then sent as one repeated `providers` query parameter per surviving entry, because the upstream FastAPI service expects repeats rather than a joined string (src/tools/cost_monitor.py:53-54, src/tools/cost_monitor.py:83-86). No enum: nothing here validates provider names, and parsec never enumerates the accepted set for this parameter."
+          },
+          "group_by": {
+            "type": "string",
+            "enum": [
+              "LINKED_ACCOUNT",
+              "INSTANCE_TYPE"
+            ],
+            "description": "For the breakdown endpoint: how to group results (src/agent/tool_definitions.py:340-344). Forwarded only when non-empty, and only on that endpoint (src/tools/cost_monitor.py:62-63). The implementation does not check the value against these two, so this enum states the declared input contract, not a run-time constraint."
+          },
+          "top_n": {
+            "type": "integer",
+            "default": 25,
+            "description": "For the breakdown endpoint: how many top results to return (src/agent/tool_definitions.py:345-348). The default of 25 comes from the signature (src/tools/cost_monitor.py:30); on the breakdown endpoint it is forwarded unconditionally, stringified, so the default is sent whenever the caller omits the parameter (src/tools/cost_monitor.py:64)."
+          },
+          "drilldown_type": {
+            "type": "string",
+            "enum": [
+              "account_services",
+              "instance_details"
+            ],
+            "description": "For the drilldown endpoint: which drill-down to perform (src/agent/tool_definitions.py:349-353). Forwarded only when non-empty (src/tools/cost_monitor.py:68-69) and, like group_by, not validated locally."
+          },
+          "selected_key": {
+            "type": "string",
+            "description": "For the drilldown endpoint: the account id or instance type to drill into (src/agent/tool_definitions.py:354-357). Forwarded only when non-empty (src/tools/cost_monitor.py:70-71), so omitting it still issues the drilldown request, just without that parameter."
+          }
+        },
+        "required": [
+          "endpoint",
+          "start_date",
+          "end_date"
+        ]
+      }
+    }
+  },
+  "paths": {
+    "/query_aws_costs": {
+      "post": {
+        "operationId": "query_aws_costs",
+        "summary": "Query AWS Cost Explorer for cost data across accounts",
+        "description": "Returns per-account costs broken down by one dimension, each with a daily series, plus an org-level total. Grouping is by SERVICE, INSTANCE_TYPE or LINKED_ACCOUNT. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Resolve the request window to the `periods` row whose `start` and `end` correspond to `start_date` and `end_date`, then read the `aws_cost_results` row with that `period_id` and the `account_costs` it contains; an account, including the org-wide aggregate, appears only if its row is stored. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these five store-authoritative operations, so there is no entity for which a record or field may be generated on demand. Only the documented derivations (a count equal to the length of a returned list, a sum of returned amounts) are computed, and only from returned rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:87",
+          "implementation": "vendor/parsec/src/tools/aws_costs.py:24",
+          "response_assembly": "vendor/parsec/src/tools/aws_costs.py:171-177",
+          "results_item": "vendor/parsec/src/tools/aws_costs.py:152-162",
+          "example_account_id": "vendor/parsec/config/prompts/cost_agent.md:92"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryAwsCostsRequest"
+              },
+              "examples": {
+                "by_service": {
+                  "summary": "One account's spend by service",
+                  "value": {
+                    "account_ids": [
+                      "123456789012"
+                    ],
+                    "start_date": "2026-02-19",
+                    "end_date": "2026-05-13",
+                    "group_by": "SERVICE"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The cost result, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/AwsCostResult"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Every failure path the implementation defines returns this shape in-band rather than raising. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "e.g. 'Dates must be YYYY-MM-DD format', 'Invalid group_by: x. Must be SERVICE, INSTANCE_TYPE, or LINKED_ACCOUNT', or 'AWS Cost Explorer query failed: ...'."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query_gcp_costs": {
+      "post": {
+        "operationId": "query_gcp_costs",
+        "summary": "Query the GCP BigQuery billing export for cost data",
+        "description": "Returns a cost breakdown by service or project over a date range, plus the number of underlying billing rows the query returned. Costs are net of credits. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Resolve the request window to the `periods` row whose `start` and `end` correspond to the request, then read the `gcp_cost_results` row with that `period_id` and `group_by` (SERVICE when the request omits it) and return that row's own stored inline `breakdown` array verbatim, in stored order, with its stored `total_cost`, `daily_rows`, `group_by` and `period`. This operation reads no other collection: there is no breakdown join, and `total_cost` is never recomputed from the breakdown. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these five store-authoritative operations, so there is no entity for which a record or field may be generated on demand. Only the documented derivations (a count equal to the length of a returned list, a sum of returned amounts) are computed, and only from returned rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:160",
+          "implementation": "vendor/parsec/src/tools/gcp_costs.py:24",
+          "response_assembly": "vendor/parsec/src/tools/gcp_costs.py:129-135",
+          "breakdown_item": "vendor/parsec/src/tools/gcp_costs.py:124-127",
+          "credits_in_projection": "vendor/parsec/src/tools/gcp_costs.py:65"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryGcpCostsRequest"
+              },
+              "examples": {
+                "by_project": {
+                  "summary": "Spend by project over a window",
+                  "value": {
+                    "start_date": "2026-02-19",
+                    "end_date": "2026-05-13",
+                    "group_by": "PROJECT"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The cost result, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/GcpCostResult"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Every failure path the implementation defines returns this shape in-band rather than raising. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "One of 'GCP BigQuery not configured' (src/tools/gcp_costs.py:45), 'Dates must be YYYY-MM-DD format' (src/tools/gcp_costs.py:51), or 'GCP BigQuery query failed: ...' (src/tools/gcp_costs.py:139)."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query_azure_costs": {
+      "post": {
+        "operationId": "query_azure_costs",
+        "summary": "Query Azure billing data by subscription and meter",
+        "description": "Returns per-subscription costs split by meter category and subcategory. Served from a SQLite billing cache whenever that cache contains any data at all -- the gate is an unfiltered row-count check (src/tools/azure_costs.py:57-58), so a populated cache holding nothing that matches the request yields an empty `results` array rather than a fallback -- and otherwise by streaming billing CSVs from Azure Blob Storage; the response's `source` field says which, and the two shapes differ. The two response schemas carry the full routing detail. A cache failure is not reported as an error -- _query_from_cache returns None and the tool falls through to the blob path (src/tools/azure_costs.py:281-288). SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): resolve the request window by reading the `periods` collection and finding the row whose `start` and `end` correspond to the requested `start_date` and `end_date`, then select the cached result row by that row's `period_id`. Never derive a `period_id` from the request dates -- a stored row's `period_id` is an opaque synthetic key such as 'p-2026-06' and does not encode the dates. Returning an empty `results` array because a date-derived key matched nothing is a defect, not the documented empty-cache case above: that case is a cache with no matching rows, not a lookup performed on the wrong key. `query_aws_costs` and `query_gcp_costs` resolve the same way. When `azure_cost_results` holds no rows at all, the request takes the live (blob) path, and on that path a request carrying neither `subscription_names` nor `meter_filter` returns the in-band error {\"error\": \"meter_filter is required when querying all subscriptions without cache. ...\"} before any row is read (src/tools/azure_costs.py:164-171). That error, not the empty result, is the answer to an all-subscriptions query with no meter filter against an empty cache: the empty-result rule below applies only after this check passes. Blob storage counts as configured in the simulation, so `Azure blob storage not configured` is never the answer. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these five store-authoritative operations, so there is no entity for which a record or field may be generated on demand. Only the documented derivations (a count equal to the length of a returned list, a sum of returned amounts) are computed, and only from returned rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:119",
+          "implementation": "vendor/parsec/src/tools/azure_costs.py:254",
+          "dispatch": "vendor/parsec/src/tools/azure_costs.py:281-296",
+          "cache_response": "vendor/parsec/src/tools/azure_costs.py:133-145",
+          "blobs_response": "vendor/parsec/src/tools/azure_costs.py:241-251",
+          "blobs_empty_response": "vendor/parsec/src/tools/azure_costs.py:185-192",
+          "results_item": "vendor/parsec/src/tools/azure_costs.py:95-121",
+          "example_subscription_name": "vendor/parsec/config/prompts/shared_context.md:32"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryAzureCostsRequest"
+              },
+              "examples": {
+                "one_subscription_vms": {
+                  "summary": "VM spend for one subscription pool",
+                  "value": {
+                    "subscription_names": [
+                      "pool-01-374"
+                    ],
+                    "start_date": "2026-02-19",
+                    "end_date": "2026-05-13",
+                    "meter_filter": "Virtual Machines"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The cost result from whichever path served it, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/AzureCostFromCache"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AzureCostFromBlobs"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Every failure path the implementation defines returns this shape in-band rather than raising. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "One of 'Dates must be YYYY-MM-DD format' (src/tools/azure_costs.py:279), 'Azure blob storage not configured' (src/tools/azure_costs.py:162), 'meter_filter is required when querying all subscriptions without cache. ...' (src/tools/azure_costs.py:165-171), or 'Azure billing query failed: ...' (src/tools/azure_costs.py:296). The blob path's two reach the caller unchanged, since the tool returns _query_from_blobs' value directly (src/tools/azure_costs.py:293). _query_from_blobs repeats the date-format check and can return that same message (src/tools/azure_costs.py:174-177), but it is unreachable through this operation: query_azure_costs validates both dates before dispatching (src/tools/azure_costs.py:276-279), so only a direct call to the private helper could emit it."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query_aws_capacity_manager": {
+      "post": {
+        "operationId": "query_aws_capacity_manager",
+        "summary": "Query EC2 capacity reservation utilisation, unused cost, or inventory",
+        "description": "Three metric presets over AWS On-Demand Capacity Reservations, read from the payer account in us-east-1 with cross-account visibility. `utilization` and `unused_cost` aggregate hourly Capacity Manager metric data into per-dimension entries plus a roll-up, and return CapacityMetricResult; `inventory` takes a separate code path and returns the reservations themselves as CapacityInventoryResult, with no period, group_by or totals -- the two shapes share only the `metric` key, which is why they are two schemas rather than one with optional fields. Both paths drop short-lived reservations (fewer than 24 hourly datapoints) as normal provisioning churn rather than waste, and both report what they dropped; on the metric path that filtering happens only when group_by is account-id or reservation-id. The queried window is truncated to the hour, lagged four hours behind now for the data pipeline, and may be clamped further to the range the API says it holds -- see CapacityWindow, which is why this operation does not reuse this spec's date-only `Period`. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Resolve the window to the stored `capacity_windows` row, then read the `capacity_metric_results` and `capacity_totals` for it. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these five store-authoritative operations, so there is no entity for which a record or field may be generated on demand. Only the documented derivations (a count equal to the length of a returned list, a sum of returned amounts) are computed, and only from returned rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:362-417",
+          "implementation": "vendor/parsec/src/tools/aws_capacity_manager.py:373",
+          "metric_response": "vendor/parsec/src/tools/aws_capacity_manager.py:441-450",
+          "results_entry": "vendor/parsec/src/tools/aws_capacity_manager.py:174-207",
+          "totals": "vendor/parsec/src/tools/aws_capacity_manager.py:219-233",
+          "inventory_path": "vendor/parsec/src/tools/aws_capacity_manager.py:238-317",
+          "window": "vendor/parsec/src/tools/aws_capacity_manager.py:399-413",
+          "window_clamping": "vendor/parsec/src/tools/aws_capacity_manager.py:320-370",
+          "iso_datetime_format": "vendor/parsec/src/tools/aws_capacity_manager.py:15",
+          "error_envelope": "vendor/parsec/src/tools/aws_capacity_manager.py:452-454"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryAwsCapacityManagerRequest"
+              },
+              "examples": {
+                "unused_by_instance_type": {
+                  "summary": "Where reserved capacity is going to waste",
+                  "value": {
+                    "metric": "unused_cost",
+                    "group_by": "instance-type",
+                    "hours": 168
+                  }
+                },
+                "one_instance_type": {
+                  "summary": "Utilisation for a single GPU instance type",
+                  "value": {
+                    "metric": "utilization",
+                    "instance_type": "g4dn.xlarge"
+                  }
+                },
+                "active_inventory": {
+                  "summary": "The reservations themselves, the second response shape",
+                  "value": {
+                    "metric": "inventory",
+                    "reservation_state": "active"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The metric roll-up, the reservation inventory, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CapacityMetricResult"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CapacityInventoryResult"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Every failure path the implementation defines returns this shape in-band rather than raising. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "Always 'AWS Capacity Manager query failed: ...' with the exception's own text appended -- this operation has exactly one error message, because a single `except Exception` wraps the whole body from session construction onward (src/tools/aws_capacity_manager.py:394, src/tools/aws_capacity_manager.py:452-454) and no path returns an error envelope of its own. That includes the range-probe helper's re-raise of any ClientError it cannot parse a range out of (src/tools/aws_capacity_manager.py:367-368), which is caught here and reported in this form."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query_cost_monitor": {
+      "post": {
+        "operationId": "query_cost_monitor",
+        "summary": "Query the internal cost-monitor data service for cached, aggregated cost data",
+        "description": "Four endpoints over the internal cost-monitor service -- summary (overall costs), breakdown (top accounts or instance types), drilldown (details for a specific account) and providers (sync status) (src/agent/tool_definitions.py:312-319) -- selected by the `endpoint` parameter, which picks the upstream URL (src/tools/cost_monitor.py:57-74). This tool is a passthrough: the upstream payload is returned verbatim with a dashboard link attached when one is configured (src/tools/cost_monitor.py:89-98), so the response structure varies by endpoint and parsec describes none of it. CostMonitorResult therefore models only the two keys parsec itself contributes and says explicitly why it models nothing more; read its description before relying on it, and do not read a green drift check for this operation as evidence of fidelity. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec, whose upstream payload is genuinely unmodelled): the `cost_monitor_results` collection is the sole source of the response. Select the stored row whose `endpoint` field equals the request's `endpoint`; the date and filter arguments do not select a row. Return parsec's shape from that row: when the row has `_dashboard_link`, the object {results, _dashboard_link}; otherwise the bare `results` array itself, as a JSON array. Echo the `results` elements verbatim, with no field renamed, added, recomputed or summarised, and never echo the row's `endpoint` or `cost_monitor_result_id`, which are storage fields. Because parsec declares no payload shape, there is nothing to fall back on: when no stored row answers the request, return an empty `results` array rather than a synthesised summary. A plausible-looking total, trend or dashboard URL that is not in the store is fabricated data, and a caller cannot tell it from a measurement. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these five store-authoritative operations, so there is no entity for which a record or field may be generated on demand. Only the documented derivations (a count equal to the length of a returned list, a sum of returned amounts) are computed, and only from returned rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:310-361",
+          "implementation": "vendor/parsec/src/tools/cost_monitor.py:24",
+          "endpoint_dispatch": "vendor/parsec/src/tools/cost_monitor.py:57-79",
+          "passthrough_and_dashboard_link": "vendor/parsec/src/tools/cost_monitor.py:89-98",
+          "dashboard_url_config": "vendor/parsec/src/tools/cost_monitor.py:18-21",
+          "response_shape_undocumented": "vendor/parsec/config/prompts/cost_agent.md:174-175",
+          "error_envelopes": "vendor/parsec/src/tools/cost_monitor.py:76-79",
+          "error_envelopes_http": "vendor/parsec/src/tools/cost_monitor.py:100-110"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryCostMonitorRequest"
+              },
+              "examples": {
+                "summary_all_providers": {
+                  "summary": "Top-level spend summary across providers",
+                  "value": {
+                    "endpoint": "summary",
+                    "start_date": "2026-02-19",
+                    "end_date": "2026-05-13"
+                  }
+                },
+                "breakdown_by_account": {
+                  "summary": "Top linked accounts for one provider",
+                  "value": {
+                    "endpoint": "breakdown",
+                    "start_date": "2026-02-19",
+                    "end_date": "2026-05-13",
+                    "providers": "aws",
+                    "group_by": "LINKED_ACCOUNT",
+                    "top_n": 25
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The shapes parsec is known to produce: the upstream object payload with _dashboard_link attached, the bare upstream array -- what a JSON array payload becomes when no dashboard URL is configured, which is the shipped default -- or an in-band error envelope. Read that as the shapes evidenced in parsec's source, not as an exhaustiveness claim: a scalar or null upstream payload would match no branch below, and nothing in vendor/parsec either rules one out or attests to one, so none is modelled. `anyOf` rather than `oneOf`, deliberately: CostMonitorResult models an open passthrough with no required properties, so it also admits the error envelope, and `oneOf` -- which demands exactly one matching branch -- would therefore make a perfectly legal error response invalid against this schema. The alternative fix, tightening CostMonitorResult to exclude an `error` key, would buy exclusivity by asserting something about the upstream shape, which this spec refuses to do; `anyOf` asserts strictly less and invents nothing. Type still separates the array case cleanly in both directions -- an array matches only the array branch, and no object matches it. As always here, none of this is a claim about the upstream payload's own structure; see CostMonitorResult.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/CostMonitorResult"
+                    },
+                    {
+                      "type": "array",
+                      "description": "The bare upstream array. When the upstream payload is a JSON array and no dashboard URL is configured, neither branch of the wrapping logic applies -- both are gated on a truthy dashboard URL (src/tools/cost_monitor.py:93, src/tools/cost_monitor.py:95) -- so the payload is returned exactly as response.json() produced it (src/tools/cost_monitor.py:98), with no `results` key and no `_dashboard_link`. This is the shipped default rather than an edge case: `_get_dashboard_url()` falls back to the empty string (src/tools/cost_monitor.py:21) and the tracked config sets `dashboard_url: \"\"` (config/config.yaml:65). The response is then not an object at all, despite the function's `-> dict` annotation, which is why this branch exists. No item schema is declared, for the same reason CostMonitorResult declares none for `results`: nothing in vendor/parsec describes the upstream element shape, so constraining it here would be a guess."
+                    },
+                    {
+                      "type": "object",
+                      "description": "Every failure path the implementation defines returns this shape in-band rather than raising. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state. One caveat on that first sentence for this operation: the base-URL config read happens before the try block (src/tools/cost_monitor.py:49), so a failure there would propagate to the caller instead of returning this shape -- every failure from the request onward is caught, including a bare `except Exception` (src/tools/cost_monitor.py:108-110).",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "One of 'Unknown endpoint: x. Use summary, breakdown, drilldown, or providers.' (src/tools/cost_monitor.py:76-79, the only one returned without any request being made), 'Cannot reach cost-monitor service. It may not be running or accessible from this environment.' (src/tools/cost_monitor.py:100-103), 'cost-monitor API returned <status>: ...' with the upstream body truncated to 500 characters (src/tools/cost_monitor.py:104-107), or 'cost-monitor query failed: ...' for anything else raised inside the request block (src/tools/cost_monitor.py:108-110)."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

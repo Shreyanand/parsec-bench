@@ -1,0 +1,113 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 90403
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible.cfg"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "role-not-found",
+        "any_of": [
+          "agnosticd.core_workloads.base",
+          "was not found"
+        ],
+        "ignore_case": true,
+        "asked_by": "report the error it raised",
+        "rationale": "the literal only a real log read supplies"
+      },
+      {
+        "id": "collections-path",
+        "any_of": [
+          "collections_path"
+        ],
+        "ignore_case": true,
+        "asked_by": "name the setting in it that is wrong",
+        "rationale": "only a real fetch_github_file supplies it, so the second leg of the chain cannot be skipped"
+      },
+      {
+        "id": "why-missing",
+        "any_of": [
+          "requirements_collections",
+          "not installed",
+          "was not installed",
+          "does not include",
+          "misconfigured",
+          "missing from"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "aap2_fix.py KNOWN_PATTERNS[3] explains this as the collection either not being installed or collections_path not including /runner/requirements_collections; the seeded ansible.cfg points only at /runner/project/collections",
+        "asked_by": "Say why the role it names could not be found, based on the Ansible configuration",
+        "rationale": "the synthesis step: reading the setting is not the same as explaining what it excludes"
+      }
+    ],
+    "citations": [
+      {
+        "id": "ansible-cfg",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible.cfg",
+        "asked_by": "Cite the configuration file you read as `owner/repo:path`",
+        "rationale": "the playbook forbids a config claim without an owner/repo:path citation"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-known-pattern",
+        "none_of": [
+          "InvalidClientTokenId",
+          "--private-data-dir",
+          "not in JSON format",
+          "worker stream"
+        ],
+        "ignore_case": true,
+        "rationale": "the signatures of aap2_fix.py's four OTHER KNOWN_PATTERNS; none appears in either seed"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

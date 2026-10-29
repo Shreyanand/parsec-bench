@@ -1,0 +1,165 @@
+{
+ "schema": "bench/v4",
+ "tool_calls": {
+  "match": "ordered-subsequence",
+  "expected": [
+   {
+    "name": "query_aap2",
+    "args": {
+     "action": "get_job_log",
+     "controller": "east",
+     "job_id": 4172093
+    }
+   },
+   {
+    "name": "lookup_catalog_item",
+    "args": {}
+   },
+   {
+    "name": "fetch_github_file",
+    "args": {
+     "owner": "rhpds",
+     "repo": "agnosticv",
+     "path": "rhoai-gpu-labs/llm-finetune-workbench/prod.yaml"
+    }
+   },
+   {
+    "name": "search_agnosticv_prs",
+    "args": {}
+   }
+  ]
+ },
+ "answer": {
+  "fold_markup": true,
+  "required": [
+   {
+    "id": "region",
+    "any_of": [
+     "ca-west-1"
+    ],
+    "ignore_case": true,
+    "asked_by": "where the lab is being built",
+    "rationale": "the effective region. In the log, so alone it proves little; it anchors the inheritance facts"
+   },
+   {
+    "id": "pr",
+    "any_of": [
+     "20417"
+    ],
+    "ignore_case": true,
+    "asked_by": "which change is responsible",
+    "rationale": "the change that moved the region. Reachable only through the PR search keyed on the account the lookup returns; the item's own PR (19862) is the wrong pick"
+   },
+   {
+    "id": "account-yaml",
+    "any_of": [
+     "account.yaml"
+    ],
+    "ignore_case": true,
+    "asked_by": "where the lab's region comes from",
+    "rationale": "the parent layer. Appears in no log and not in the item's files"
+   },
+   {
+    "id": "inherited",
+    "derived": true,
+    "ignore_case": true,
+    "any_of": [
+     "inherit",
+     "does not set",
+     "doesn't set",
+     "not set in",
+     "never sets",
+     "no aws_region",
+     "no region",
+     "account-level",
+     "account level",
+     "account default",
+     "account-wide",
+     "every item under",
+     "every catalog item under"
+    ],
+    "asked_by": "where the lab's region comes from",
+    "note": "no seeded string says the item inherits its region; it is the synthesis of an item file without aws_region and a PR touching the account file",
+    "rationale": "the mechanism: the item's config is unchanged and silent on region, so a parent-layer edit moved it"
+   },
+   {
+    "id": "not-capacity",
+    "derived": true,
+    "ignore_case": true,
+    "any_of": [
+     "not a capacity",
+     "not capacity",
+     "isn't capacity",
+     "not out of capacity",
+     "not a shortage",
+     "rather than capacity",
+     "not supported in",
+     "not offered",
+     "isn't offered",
+     "does not offer",
+     "doesn't offer",
+     "not available in"
+    ],
+    "asked_by": "whether this is the capacity problem again",
+    "note": "the log carries a capacity-reservation warning and an Unsupported error; distinguishing them is a judgement no seeded string makes",
+    "rationale": "the refutation of the decoy: an instance type the zone does not offer fails with Unsupported however much capacity exists"
+   }
+  ],
+  "counts": [],
+  "forbidden": [
+   {
+    "id": "capacity-shortage",
+    "ignore_case": true,
+    "none_of": [
+     "out of GPU capacity",
+     "capacity shortage",
+     "shortage of GPU",
+     "due to insufficient capacity",
+     "caused by insufficient capacity",
+     "AWS is out of",
+     "AWS was out of",
+     "ran out of GPU",
+     "is a capacity issue",
+     "was a capacity issue",
+     "lack of capacity"
+    ],
+    "attributed_to": [
+     "not a capacity shortage",
+     "not a capacity problem",
+     "not out of capacity",
+     "capacity is ruled out",
+     "shortage is ruled out",
+     "the team's assumption is wrong"
+    ],
+    "rationale": "the decoy the instruction voices, backed by a capacity-reservation warning in the log. attributed_to excuses sentences that name it to reject it"
+   },
+   {
+    "id": "item-edited",
+    "ignore_case": true,
+    "none_of": [
+     "workbench config was changed",
+     "someone changed the workbench",
+     "prod.yaml was changed",
+     "the item's config changed",
+     "item's own config changed",
+     "19862 broke",
+     "19862 caused",
+     "caused by #19862",
+     "caused by PR 19862",
+     "caused by pull request 19862",
+     "19862 is responsible",
+     "19862 introduced"
+    ],
+    "rationale": "the nearest-file reading: blame the item or its own last PR (19862, a notebook image bump seven weeks earlier). The item file is unchanged and silent on region"
+   }
+  ]
+ },
+ "completion": {
+  "status": "ok",
+  "nonempty_answer": true
+ },
+ "weights": {
+  "tool_calls": 0.3,
+  "answer": 0.7
+ }
+}

@@ -1,0 +1,115 @@
+{
+ "catalog_items": [],
+ "files": [
+  {
+   "file_id": "rhpds/ee-rhdp-multicloud@HEAD:requirements.yml",
+   "owner": "rhpds",
+   "repo": "ee-rhdp-multicloud",
+   "path": "requirements.yml",
+   "ref": "HEAD",
+   "content": "---\n# Collections baked into quay.io/rhpds/ee-rhdp-multicloud.\n# The image is rebuilt nightly at 03:10 UTC from main and pushed as :latest\n# (.github/workflows/nightly.yml); catalog items use :latest.\ncollections:\n  - name: amazon.aws\n    version: \">=8.0.0,<9.0.0\"\n  - name: kubernetes.core\n    version: \">=5.0.0,<6.0.0\"\n  - name: rhdp.openshift_helpers\n    version: \">=3.2.0\"\n  - name: community.general\n    version: \">=9.0.0,<10.0.0\"\n"
+  },
+  {
+   "file_id": "rhpds/ee-rhdp-multicloud@main:requirements.yml",
+   "owner": "rhpds",
+   "repo": "ee-rhdp-multicloud",
+   "path": "requirements.yml",
+   "ref": "main",
+   "content": "---\n# Collections baked into quay.io/rhpds/ee-rhdp-multicloud.\n# The image is rebuilt nightly at 03:10 UTC from main and pushed as :latest\n# (.github/workflows/nightly.yml); catalog items use :latest.\ncollections:\n  - name: amazon.aws\n    version: \">=8.0.0,<9.0.0\"\n  - name: kubernetes.core\n    version: \">=5.0.0,<6.0.0\"\n  - name: rhdp.openshift_helpers\n    version: \">=3.2.0\"\n  - name: community.general\n    version: \">=9.0.0,<10.0.0\"\n"
+  },
+  {
+   "file_id": "rhpds/ee-rhdp-multicloud@HEAD:execution-environment.yml",
+   "owner": "rhpds",
+   "repo": "ee-rhdp-multicloud",
+   "path": "execution-environment.yml",
+   "ref": "HEAD",
+   "content": "---\nversion: 3\nimages:\n  base_image:\n    name: registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:2.5\ndependencies:\n  galaxy: requirements.yml\n  python: requirements.txt\n"
+  },
+  {
+   "file_id": "rhpds/ee-rhdp-multicloud@main:execution-environment.yml",
+   "owner": "rhpds",
+   "repo": "ee-rhdp-multicloud",
+   "path": "execution-environment.yml",
+   "ref": "main",
+   "content": "---\nversion: 3\nimages:\n  base_image:\n    name: registry.redhat.io/ansible-automation-platform-25/ee-supported-rhel9:2.5\ndependencies:\n  galaxy: requirements.yml\n  python: requirements.txt\n"
+  }
+ ],
+ "pull_requests": [],
+ "repo_search_results": [
+  {
+   "repo_search_result_id": "rhpds/ee-rhdp-multicloud@HEAD-openshift_helpers",
+   "owner": "rhpds",
+   "repo": "ee-rhdp-multicloud",
+   "ref": "HEAD",
+   "search": "openshift_helpers",
+   "matches": [
+    "requirements.yml"
+   ],
+   "total_matches": 1,
+   "truncated": false
+  },
+  {
+   "repo_search_result_id": "rhpds/ee-rhdp-multicloud@main-openshift_helpers",
+   "owner": "rhpds",
+   "repo": "ee-rhdp-multicloud",
+   "ref": "main",
+   "search": "openshift_helpers",
+   "matches": [
+    "requirements.yml"
+   ],
+   "total_matches": 1,
+   "truncated": false
+  },
+  {
+   "repo_search_result_id": "rhpds/ee-rhdp-multicloud@HEAD-rhdp.openshift_helpers",
+   "owner": "rhpds",
+   "repo": "ee-rhdp-multicloud",
+   "ref": "HEAD",
+   "search": "rhdp.openshift_helpers",
+   "matches": [
+    "requirements.yml"
+   ],
+   "total_matches": 1,
+   "truncated": false
+  },
+  {
+   "repo_search_result_id": "rhpds/ee-rhdp-multicloud@main-rhdp.openshift_helpers",
+   "owner": "rhpds",
+   "repo": "ee-rhdp-multicloud",
+   "ref": "main",
+   "search": "rhdp.openshift_helpers",
+   "matches": [
+    "requirements.yml"
+   ],
+   "total_matches": 1,
+   "truncated": false
+  },
+  {
+   "repo_search_result_id": "rhpds/ee-rhdp-multicloud@HEAD-requirements",
+   "owner": "rhpds",
+   "repo": "ee-rhdp-multicloud",
+   "ref": "HEAD",
+   "search": "requirements",
+   "matches": [
+    "requirements.txt",
+    "requirements.yml"
+   ],
+   "total_matches": 2,
+   "truncated": false
+  },
+  {
+   "repo_search_result_id": "rhpds/ee-rhdp-multicloud@main-requirements",
+   "owner": "rhpds",
+   "repo": "ee-rhdp-multicloud",
+   "ref": "main",
+   "search": "requirements",
+   "matches": [
+    "requirements.txt",
+    "requirements.yml"
+   ],
+   "total_matches": 2,
+   "truncated": false
+  }
+ ],
+ "similar_items": []
+}

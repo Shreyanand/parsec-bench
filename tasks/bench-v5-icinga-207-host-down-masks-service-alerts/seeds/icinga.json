@@ -1,0 +1,223 @@
+{
+  "hosts": [
+    {
+      "name": "kvm-rack9-n04",
+      "type": "Host",
+      "attrs": {
+        "display_name": "kvm-rack9-n04",
+        "host_name": "kvm-rack9-n04",
+        "address": "10.9.40.14",
+        "state": 1,
+        "last_state_change": 1794971700,
+        "last_hard_state_change": 1794971700,
+        "last_check": 1794993240,
+        "last_check_result": {
+          "output": "PING CRITICAL - Packet loss = 100%",
+          "state": 2,
+          "exit_status": 2
+        },
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "rack9"
+        ]
+      }
+    },
+    {
+      "name": "dns-cache-02",
+      "type": "Host",
+      "attrs": {
+        "display_name": "dns-cache-02",
+        "host_name": "dns-cache-02",
+        "address": "10.9.2.53",
+        "state": 0,
+        "last_check": 1794993240,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.35 ms",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "core-dns"
+        ]
+      }
+    },
+    {
+      "name": "kvm-rack9-n05",
+      "type": "Host",
+      "attrs": {
+        "display_name": "kvm-rack9-n05",
+        "host_name": "kvm-rack9-n05",
+        "address": "10.9.40.15",
+        "state": 0,
+        "last_check": 1794993180,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.22 ms",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "rack9"
+        ]
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "dns-cache-02!unbound-resolve",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Unbound recursive resolution",
+        "host_name": "dns-cache-02",
+        "state": 2,
+        "last_state_change": 1794987600,
+        "last_check_result": {
+          "output": "DNS CRITICAL - upstream forwarders refused 38 of 40 queries (SERVFAIL)",
+          "state": 2,
+          "exit_status": 2
+        },
+        "state_type": 1,
+        "check_attempt": 3,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_check": 1794993120
+      }
+    },
+    {
+      "name": "dns-cache-02!unbound-cache-hit",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Unbound cache hit ratio",
+        "host_name": "dns-cache-02",
+        "state": 0,
+        "last_state_change": 1794304800,
+        "last_check_result": {
+          "output": "UNBOUND OK - cache hit ratio 0.91",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "check_attempt": 3,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_check": 1794993120
+      }
+    },
+    {
+      "name": "kvm-rack9-n04!libvirtd",
+      "type": "Service",
+      "attrs": {
+        "display_name": "libvirtd daemon",
+        "host_name": "kvm-rack9-n04",
+        "state": 2,
+        "last_state_change": 1794971760,
+        "last_check_result": {
+          "output": "CHECK_BY_SSH CRITICAL - connect to address 10.9.40.14 port 22: Connection timed out",
+          "state": 2,
+          "exit_status": 2
+        },
+        "state_type": 1,
+        "check_attempt": 3,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_check": 1794993120
+      }
+    },
+    {
+      "name": "kvm-rack9-n04!guest-count",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Running guests",
+        "host_name": "kvm-rack9-n04",
+        "state": 3,
+        "last_state_change": 1794971820,
+        "last_check_result": {
+          "output": "CHECK_BY_SSH UNKNOWN - Remote command execution failed: connect to 10.9.40.14 port 22: Connection timed out",
+          "state": 3,
+          "exit_status": 3
+        },
+        "state_type": 1,
+        "check_attempt": 3,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_check": 1794993120
+      }
+    },
+    {
+      "name": "kvm-rack9-n04!ksm-sharing",
+      "type": "Service",
+      "attrs": {
+        "display_name": "KSM page sharing",
+        "host_name": "kvm-rack9-n04",
+        "state": 3,
+        "last_state_change": 1794971820,
+        "last_check_result": {
+          "output": "CHECK_BY_SSH UNKNOWN - Remote command execution failed: connect to 10.9.40.14 port 22: Connection timed out",
+          "state": 3,
+          "exit_status": 3
+        },
+        "state_type": 1,
+        "check_attempt": 3,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_check": 1794993120
+      }
+    },
+    {
+      "name": "kvm-rack9-n04!raid-health",
+      "type": "Service",
+      "attrs": {
+        "display_name": "RAID controller health",
+        "host_name": "kvm-rack9-n04",
+        "state": 3,
+        "last_state_change": 1794971880,
+        "last_check_result": {
+          "output": "CHECK_BY_SSH UNKNOWN - Remote command execution failed: connect to 10.9.40.14 port 22: Connection timed out",
+          "state": 3,
+          "exit_status": 3
+        },
+        "state_type": 1,
+        "check_attempt": 3,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_check": 1794993120
+      }
+    },
+    {
+      "name": "kvm-rack9-n05!libvirtd",
+      "type": "Service",
+      "attrs": {
+        "display_name": "libvirtd daemon",
+        "host_name": "kvm-rack9-n05",
+        "state": 0,
+        "last_state_change": 1794474000,
+        "last_check_result": {
+          "output": "PROCS OK - 1 process with command name 'libvirtd'",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "check_attempt": 3,
+        "max_check_attempts": 3,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "last_check": 1794993120
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

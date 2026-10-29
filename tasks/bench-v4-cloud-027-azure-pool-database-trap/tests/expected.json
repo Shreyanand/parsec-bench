@@ -1,0 +1,135 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "get_subscription",
+          "subscription_name": "pool-01-389",
+          "database": "pools"
+        }
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "action": "list_pools",
+          "database": "pools"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "database": "prod"
+        }
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "database": "production"
+        }
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "database": "default"
+        }
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "database": "azure"
+        }
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "database": "subscriptions"
+        }
+      },
+      {
+        "name": "query_azure_pools",
+        "args": {
+          "database": "main"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "assigned",
+        "any_of": [
+          "is assigned",
+          "in use",
+          "is used",
+          "not available",
+          "used is true"
+        ],
+        "ignore_case": true,
+        "asked_by": "Report whether the subscription is assigned",
+        "rationale": "used is true on this row and false on the neighbouring one, so the value discriminates. The forms are all multi-word: a bare \"assigned\" is a substring of \"unassigned\", which entangles it with the forbidden fact -- check_fact_entanglement caught exactly that, see the edit log",
+        "derived": true,
+        "note": "the seed carries `\"used\": true` as a JSON boolean; every natural English rendering of it (\"is assigned\", \"in use\") is therefore a derivation rather than a seed literal"
+      },
+      {
+        "id": "project-tag",
+        "any_of": [
+          "zt-image-mode-basics"
+        ],
+        "ignore_case": true,
+        "asked_by": "which RHDP project tag it is assigned to",
+        "rationale": "the projecttag field; unguessable, and empty on the other seeded subscription"
+      },
+      {
+        "id": "free-one",
+        "any_of": [
+          "pool-01-390"
+        ],
+        "ignore_case": true,
+        "asked_by": "name one that is free to hand out",
+        "rationale": "the unassigned subscription. parsec's list_pools returns per-pool counts and no subscription names, so only get_pool on pool 01 surfaces it -- a call the contract does not pin, which a correct agent must still make"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-availability",
+        "none_of": [
+          "pool-01-389 is available",
+          "pool-01-389 is unassigned",
+          "389 is not assigned",
+          "389 is free",
+          "389 is unused",
+          "pool-01-389 is free"
+        ],
+        "ignore_case": true,
+        "rationale": "an agent that reads the wrong row reports 389 as free. Every form names 389 explicitly, because the instruction now asks the agent to name an available subscription -- so a bare \"is available\" is a correct statement about pool-01-390 and must not be forbidden"
+      }
+    ],
+    "counts": [
+      {
+        "id": "total",
+        "value": 2,
+        "nouns": [
+          "subscriptions",
+          "subscription",
+          "total"
+        ],
+        "window": 6,
+        "asked_by": "say how many there are in total",
+        "rationale": "the size of the pools database. The subscription names contain 389 and 390, so a bare digit could coincide -- the noun-proximity rule is what makes 2 safe to accept here"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

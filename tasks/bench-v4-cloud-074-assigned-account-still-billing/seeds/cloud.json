@@ -1,0 +1,45 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sba-8137",
+      "name": "sandbox8137",
+      "account_id": "604918372251",
+      "available": false,
+      "owner": "rvashti",
+      "owner_email": "rvashti@example.org",
+      "envtype": "rhel-edge-lab",
+      "reservation": "",
+      "zone": "sandbox8137.opentlc.com",
+      "comment": "assigned on lab order",
+      "conan_status": "in-use",
+      "guid": "mz4tq",
+      "hosted_zone_id": "Z07MQ8137KTRW",
+      "service_uuid": "3c71e0a4-58b2-4d6f-9a18-c2e7d40b9f15",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sba-8138",
+      "name": "sandbox8138",
+      "account_id": "918264503317",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "",
+      "zone": "sandbox8138.opentlc.com",
+      "comment": "cleaned",
+      "conan_status": "clean",
+      "guid": "",
+      "hosted_zone_id": "Z07MQ8138PLDX",
+      "service_uuid": "",
+      "annotations": {}
+    }
+  ]
+}

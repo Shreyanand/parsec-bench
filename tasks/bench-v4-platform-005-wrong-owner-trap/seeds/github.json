@@ -1,0 +1,181 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "account": "agd-v2",
+      "directory": "ocp4-workload-adv-dev-suite",
+      "path": "agd-v2/ocp4-workload-adv-dev-suite/prod.yaml",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "agd-v2-agd-v2/ocp4-workload-adv-dev-suite/prod.yaml"
+    }
+  ],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+      "content": "---\n# ocp4-workload-advanced-developer-suite\nworkload_pipeline_operator_channel: latest\nworkload_gitea_admin_user: opentlc-mgr\nworkload_gitea_version: 1.22.3\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+      "content": "---\n# ocp4-workload-advanced-developer-suite\nworkload_pipeline_operator_channel: latest\nworkload_gitea_admin_user: opentlc-mgr\nworkload_gitea_version: 1.22.3\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "ocp4_workload_advanced_developer_suite",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/defaults/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-ocp4_workload_advanced_developer_suite"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "adv-dev-suite",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/defaults/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-adv-dev-suite"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "advanced_developer_suite",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/defaults/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-advanced_developer_suite"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "gitea",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/defaults/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-gitea"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "roles_ocp_workloads",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/defaults/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-roles_ocp_workloads"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "ocp4_workload_advanced_developer_suite",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/defaults/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-ocp4_workload_advanced_developer_suite"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "adv-dev-suite",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/defaults/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-adv-dev-suite"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "advanced_developer_suite",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/defaults/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-advanced_developer_suite"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "gitea",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/defaults/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-gitea"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "roles_ocp_workloads",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_advanced_developer_suite/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/defaults/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-roles_ocp_workloads"
+    }
+  ],
+  "similar_items": []
+}

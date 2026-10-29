@@ -1,0 +1,45 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sandbox5326",
+      "name": "sandbox5326",
+      "account_id": "486210937155",
+      "available": false,
+      "owner": "dsorensen",
+      "owner_email": "dsorensen@example.org",
+      "envtype": "aap-multi-node",
+      "reservation": "",
+      "zone": "sandbox5326.opentlc.com",
+      "comment": "lab provision retried",
+      "conan_status": "in-use",
+      "guid": "hx7rv",
+      "hosted_zone_id": "Z04HX5326RMTB",
+      "service_uuid": "8d3f61a7-2c94-4b0e-b5d1-6e7a90c2f413",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sandbox5341",
+      "name": "sandbox5341",
+      "account_id": "352907184460",
+      "available": false,
+      "owner": "aokonkwo",
+      "owner_email": "aokonkwo@example.org",
+      "envtype": "aap-multi-node",
+      "reservation": "",
+      "zone": "sandbox5341.opentlc.com",
+      "comment": "",
+      "conan_status": "in-use",
+      "guid": "kq2nb",
+      "hosted_zone_id": "Z09KQ5341WDNC",
+      "service_uuid": "f27b0c94-5e1d-4a83-9c6f-03b8d4e1a5c7",
+      "annotations": {}
+    }
+  ]
+}

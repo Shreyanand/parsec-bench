@@ -1,0 +1,1 @@
+It is 2026-11-25 07:00 UTC and I'm doing the weekly hygiene review of our Icinga. How many open problems does Icinga have in total? Of those, which one has been stuck in its current state for the longest, since when, and how many whole days that is? And which is the most recent to go bad?

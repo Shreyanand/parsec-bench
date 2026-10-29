@@ -1,0 +1,480 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "access_keys": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AccessKey"
+      }
+    },
+    "azure_subscriptions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AzureSubscription"
+      }
+    },
+    "ec2_instances": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Ec2Instance"
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Event"
+      }
+    },
+    "gcp_projects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GcpProject"
+      }
+    },
+    "iam_users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/IamUser"
+      }
+    },
+    "marketplace_agreements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/MarketplaceAgreement"
+      }
+    },
+    "sandbox_accounts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SandboxAccount"
+      }
+    }
+  },
+  "required": [
+    "access_keys",
+    "azure_subscriptions",
+    "ec2_instances",
+    "events",
+    "gcp_projects",
+    "iam_users",
+    "marketplace_agreements",
+    "sandbox_accounts"
+  ],
+  "$defs": {
+    "AccessKey": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "access_key_id",
+      "properties": {
+        "access_key_id": {
+          "type": "string",
+          "description": "Unique IAM access key identifier."
+        },
+        "account_id": {
+          "type": "string",
+          "description": "AWS account this access key belongs to."
+        },
+        "created": {
+          "type": "string",
+          "description": "Creation timestamp of the access key."
+        },
+        "status": {
+          "type": "string",
+          "description": "Current IAM status of the access key."
+        }
+      },
+      "required": [
+        "access_key_id",
+        "account_id",
+        "created",
+        "status"
+      ]
+    },
+    "AzureSubscription": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "azure_subscription_id",
+      "properties": {
+        "azure_subscription_id": {
+          "type": "string",
+          "description": "Unique storage identifier for the Azure subscription record."
+        },
+        "database": {
+          "type": "string",
+          "description": "Cosmos database/container scope where the subscription record is stored."
+        },
+        "id": {
+          "type": "string",
+          "description": "Subscription name or document id, such as a pool-style subscription identifier."
+        },
+        "projecttag": {
+          "type": "string",
+          "description": "Project tag assigned to the subscription when in use."
+        },
+        "used": {
+          "type": "boolean",
+          "description": "Whether the subscription is currently assigned."
+        }
+      },
+      "required": [
+        "azure_subscription_id",
+        "database",
+        "id"
+      ]
+    },
+    "Ec2Instance": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "ec2_instance_id",
+      "properties": {
+        "account_id": {
+          "type": "string",
+          "description": "AWS account this EC2 instance belongs to."
+        },
+        "az": {
+          "type": "string",
+          "description": "Availability zone where the instance is running."
+        },
+        "ec2_instance_id": {
+          "type": "string",
+          "description": "Unique storage identifier for the EC2 instance record."
+        },
+        "instance_id": {
+          "type": "string",
+          "description": "AWS EC2 instance identifier."
+        },
+        "instance_type": {
+          "type": "string",
+          "description": "EC2 instance type, such as t3.medium or g4dn.xlarge."
+        },
+        "launch_time": {
+          "type": "string",
+          "description": "Timestamp when the instance was launched."
+        },
+        "public_ip": {
+          "type": "string",
+          "description": "Public IPv4 address, or empty when none is assigned."
+        },
+        "region": {
+          "type": "string",
+          "description": "AWS region containing the instance."
+        },
+        "state": {
+          "type": "string",
+          "description": "Current EC2 lifecycle state."
+        },
+        "tags": {
+          "type": "object",
+          "description": "Instance tags as a key/value map.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "account_id",
+        "az",
+        "ec2_instance_id",
+        "instance_id",
+        "instance_type",
+        "launch_time",
+        "public_ip",
+        "region",
+        "state",
+        "tags"
+      ]
+    },
+    "Event": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "event_id",
+      "properties": {
+        "account_id": {
+          "type": "string",
+          "description": "AWS account where the event occurred."
+        },
+        "event_id": {
+          "type": "string",
+          "description": "Unique CloudTrail event identifier."
+        },
+        "event_name": {
+          "type": "string",
+          "description": "API action or event name recorded by CloudTrail."
+        },
+        "event_source": {
+          "type": "string",
+          "description": "AWS service endpoint that emitted the event."
+        },
+        "event_time": {
+          "type": "string",
+          "description": "Timestamp string for when the event occurred."
+        },
+        "resources": {
+          "type": "array",
+          "description": "Resources referenced by the event.",
+          "items": {}
+        },
+        "username": {
+          "type": "string",
+          "description": "Username associated with the event, if present."
+        }
+      },
+      "required": [
+        "account_id",
+        "event_id",
+        "event_name",
+        "event_source",
+        "event_time",
+        "resources",
+        "username"
+      ]
+    },
+    "GcpProject": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "gcp_project_id",
+      "properties": {
+        "create_time": {
+          "type": "string",
+          "description": "Project creation timestamp string."
+        },
+        "gcp_project_id": {
+          "type": "string",
+          "description": "Unique storage identifier for the GCP project record."
+        },
+        "labels": {
+          "type": "object",
+          "description": "Project labels as a key/value map.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable display name of the project."
+        },
+        "parent": {
+          "type": "string",
+          "description": "Parent resource reference for the project."
+        },
+        "project_id": {
+          "type": "string",
+          "description": "GCP project identifier."
+        },
+        "state": {
+          "type": "string",
+          "description": "Lifecycle state reported for the project."
+        }
+      },
+      "required": [
+        "create_time",
+        "gcp_project_id",
+        "labels",
+        "name",
+        "parent",
+        "project_id",
+        "state"
+      ]
+    },
+    "IamUser": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "iam_user_id",
+      "properties": {
+        "access_keys": {
+          "type": "array",
+          "description": "Access keys associated with the IAM user.",
+          "items": {}
+        },
+        "account_id": {
+          "type": "string",
+          "description": "AWS account this IAM user belongs to."
+        },
+        "created": {
+          "type": "string",
+          "description": "Timestamp when the IAM user was created."
+        },
+        "iam_user_id": {
+          "type": "string",
+          "description": "Unique storage identifier for the IAM user record."
+        },
+        "password_last_used": {
+          "type": "string",
+          "description": "Timestamp of last console password use, or empty when never used."
+        },
+        "user_id": {
+          "type": "string",
+          "description": "AWS IAM user identifier."
+        },
+        "username": {
+          "type": "string",
+          "description": "IAM username."
+        }
+      },
+      "required": [
+        "access_keys",
+        "account_id",
+        "created",
+        "iam_user_id",
+        "password_last_used",
+        "user_id",
+        "username"
+      ]
+    },
+    "MarketplaceAgreement": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "marketplace_agreement_id",
+      "properties": {
+        "account_id": {
+          "type": "string",
+          "description": "AWS account that owns the marketplace agreement."
+        },
+        "account_name": {
+          "type": "string",
+          "description": "Human-readable name of the owning AWS account."
+        },
+        "agreement_end": {
+          "type": "string",
+          "description": "Agreement end date or timestamp."
+        },
+        "agreement_id": {
+          "type": "string",
+          "description": "Marketplace agreement identifier from AWS."
+        },
+        "agreement_start": {
+          "type": "string",
+          "description": "Agreement start date or timestamp."
+        },
+        "auto_renew": {
+          "type": "boolean",
+          "description": "Whether the agreement is configured to auto-renew."
+        },
+        "classification": {
+          "type": "string",
+          "description": "Agreement classification such as SaaS, upfront, or pay-as-you-go."
+        },
+        "currency": {
+          "type": "string",
+          "description": "Currency used for the estimated cost."
+        },
+        "estimated_cost": {
+          "type": "number",
+          "description": "Estimated agreement cost from the inventory record."
+        },
+        "estimated_cost_usd": {
+          "type": "number",
+          "description": "Estimated agreement cost in USD from live enrichment."
+        },
+        "last_updated": {
+          "type": "string",
+          "description": "Timestamp when the inventory record was last refreshed."
+        },
+        "marketplace_agreement_id": {
+          "type": "string",
+          "description": "Unique storage identifier for the marketplace agreement record."
+        },
+        "offer_type": {
+          "type": "string",
+          "description": "Offer type associated with the agreement."
+        },
+        "product_id": {
+          "type": "string",
+          "description": "Marketplace product identifier."
+        },
+        "product_name": {
+          "type": "string",
+          "description": "Marketplace product name."
+        },
+        "status": {
+          "type": "string",
+          "description": "Current agreement status."
+        },
+        "terms": {
+          "type": "array",
+          "description": "Accepted agreement terms.",
+          "items": {}
+        },
+        "vendor_name": {
+          "type": "string",
+          "description": "Vendor or publisher name for the product."
+        }
+      },
+      "required": [
+        "marketplace_agreement_id"
+      ]
+    },
+    "SandboxAccount": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "sandbox_account_id",
+      "properties": {
+        "account_id": {
+          "type": "string",
+          "description": "AWS account id assigned to the sandbox."
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Additional metadata map for the sandbox account."
+        },
+        "available": {
+          "type": "boolean",
+          "description": "Whether the sandbox is currently available for use."
+        },
+        "comment": {
+          "type": "string",
+          "description": "Free-text comment or provisioning note."
+        },
+        "conan_status": {
+          "type": "string",
+          "description": "Cleanup or lifecycle status for the sandbox."
+        },
+        "envtype": {
+          "type": "string",
+          "description": "Environment type deployed in the sandbox."
+        },
+        "guid": {
+          "type": "string",
+          "description": "Provisioning or reservation GUID associated with the sandbox."
+        },
+        "hosted_zone_id": {
+          "type": "string",
+          "description": "Route53 hosted zone identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "Sandbox account name."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Current owner of the sandbox."
+        },
+        "owner_email": {
+          "type": "string",
+          "description": "Owner email address."
+        },
+        "reservation": {
+          "type": "string",
+          "description": "Reservation type or usage category."
+        },
+        "sandbox_account_id": {
+          "type": "string",
+          "description": "Unique storage identifier for the sandbox account record."
+        },
+        "service_uuid": {
+          "type": "string",
+          "description": "Service UUID associated with the sandbox."
+        },
+        "zone": {
+          "type": "string",
+          "description": "DNS zone assigned to the sandbox."
+        }
+      },
+      "required": [
+        "sandbox_account_id"
+      ]
+    }
+  }
+}

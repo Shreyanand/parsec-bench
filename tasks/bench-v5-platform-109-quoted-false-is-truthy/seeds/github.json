@@ -1,0 +1,56 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_vision_inference/templates/machineset-gpu.yaml.j2",
+      "content": "---\n# GPU worker pool for the inference demo. Scaled to zero unless GPU is enabled.\napiVersion: machine.openshift.io/v1beta1\nkind: MachineSet\nmetadata:\n  name: \"{{ cluster_infra_id }}-gpu-{{ aws_region }}a\"\n  namespace: openshift-machine-api\nspec:\n  replicas: {% if vision_inference_gpu_enabled %}1{% else %}0{% endif %}\n\n  selector:\n    matchLabels:\n      machine.openshift.io/cluster-api-machineset: \"{{ cluster_infra_id }}-gpu-{{ aws_region }}a\"\n  template:\n    spec:\n      providerSpec:\n        value:\n          instanceType: \"{{ vision_inference_gpu_instance_type }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_vision_inference/templates/machineset-gpu.yaml.j2"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_vision_inference/templates/machineset-gpu.yaml.j2",
+      "content": "---\n# GPU worker pool for the inference demo. Scaled to zero unless GPU is enabled.\napiVersion: machine.openshift.io/v1beta1\nkind: MachineSet\nmetadata:\n  name: \"{{ cluster_infra_id }}-gpu-{{ aws_region }}a\"\n  namespace: openshift-machine-api\nspec:\n  replicas: {% if vision_inference_gpu_enabled %}1{% else %}0{% endif %}\n\n  selector:\n    matchLabels:\n      machine.openshift.io/cluster-api-machineset: \"{{ cluster_infra_id }}-gpu-{{ aws_region }}a\"\n  template:\n    spec:\n      providerSpec:\n        value:\n          instanceType: \"{{ vision_inference_gpu_instance_type }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_vision_inference/templates/machineset-gpu.yaml.j2"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "d29e7b41c0a58f63e2b1d07c94a6f3e85b0c2d71",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_vision_inference/templates/machineset-gpu.yaml.j2",
+      "content": "---\n# GPU worker pool for the inference demo. Scaled to zero unless GPU is enabled.\napiVersion: machine.openshift.io/v1beta1\nkind: MachineSet\nmetadata:\n  name: \"{{ cluster_infra_id }}-gpu-{{ aws_region }}a\"\n  namespace: openshift-machine-api\nspec:\n  replicas: {% if vision_inference_gpu_enabled %}1{% else %}0{% endif %}\n\n  selector:\n    matchLabels:\n      machine.openshift.io/cluster-api-machineset: \"{{ cluster_infra_id }}-gpu-{{ aws_region }}a\"\n  template:\n    spec:\n      providerSpec:\n        value:\n          instanceType: \"{{ vision_inference_gpu_instance_type }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@d29e7b41c0a58f63e2b1d07c94a6f3e85b0c2d71-ansible/roles_ocp_workloads/ocp4_workload_vision_inference/templates/machineset-gpu.yaml.j2"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_vision_inference/tasks/workload.yml",
+      "content": "---\n- name: Print the workload settings\n  ansible.builtin.debug:\n    var: vision_inference_gpu_enabled\n\n- name: Create the GPU MachineSet\n  kubernetes.core.k8s:\n    state: present\n    template: machineset-gpu.yaml.j2\n\n- name: Wait for the GPU MachineSet to report its desired ready replicas\n  kubernetes.core.k8s:\n    state: present\n    template: machineset-gpu.yaml.j2\n  register: vision_ms\n  until: vision_ms.result.status.readyReplicas | default(0) == vision_ms.result.spec.replicas\n  retries: 40\n  delay: 30\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_vision_inference/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_vision_inference/tasks/workload.yml",
+      "content": "---\n- name: Print the workload settings\n  ansible.builtin.debug:\n    var: vision_inference_gpu_enabled\n\n- name: Create the GPU MachineSet\n  kubernetes.core.k8s:\n    state: present\n    template: machineset-gpu.yaml.j2\n\n- name: Wait for the GPU MachineSet to report its desired ready replicas\n  kubernetes.core.k8s:\n    state: present\n    template: machineset-gpu.yaml.j2\n  register: vision_ms\n  until: vision_ms.result.status.readyReplicas | default(0) == vision_ms.result.spec.replicas\n  retries: 40\n  delay: 30\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_vision_inference/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "d29e7b41c0a58f63e2b1d07c94a6f3e85b0c2d71",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_vision_inference/tasks/workload.yml",
+      "content": "---\n- name: Print the workload settings\n  ansible.builtin.debug:\n    var: vision_inference_gpu_enabled\n\n- name: Create the GPU MachineSet\n  kubernetes.core.k8s:\n    state: present\n    template: machineset-gpu.yaml.j2\n\n- name: Wait for the GPU MachineSet to report its desired ready replicas\n  kubernetes.core.k8s:\n    state: present\n    template: machineset-gpu.yaml.j2\n  register: vision_ms\n  until: vision_ms.result.status.readyReplicas | default(0) == vision_ms.result.spec.replicas\n  retries: 40\n  delay: 30\n",
+      "file_id": "agnosticd/agnosticd-v2@d29e7b41c0a58f63e2b1d07c94a6f3e85b0c2d71-ansible/roles_ocp_workloads/ocp4_workload_vision_inference/tasks/workload.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

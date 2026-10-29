@@ -1,0 +1,354 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_ocpv_cluster",
+      "args": {
+        "action": "list_vms",
+        "cluster": "ocpv-tarn",
+        "namespace": "fin-escrow-prod"
+      },
+      "result": {
+        "cluster": "ocpv-tarn",
+        "namespace": "fin-escrow-prod",
+        "vms": [
+          {
+            "name": "escrow-api-1",
+            "status": "Running",
+            "ready": true,
+            "phase": "Running",
+            "node": "tarn-wrk-04",
+            "ip": "10.129.14.21",
+            "vcpus": 4,
+            "memory": "8Gi",
+            "disks": [
+              {
+                "name": "rootdisk",
+                "bus": "virtio"
+              },
+              {
+                "name": "cloudinitdisk",
+                "bus": "virtio"
+              }
+            ],
+            "volumes": [
+              {
+                "name": "rootdisk",
+                "persistentVolumeClaim": "escrow-api-1-rootdisk"
+              },
+              {
+                "name": "cloudinitdisk",
+                "cloudInitNoCloud": {}
+              }
+            ]
+          },
+          {
+            "name": "escrow-api-2",
+            "status": "Running",
+            "ready": true,
+            "phase": "Running",
+            "node": "tarn-wrk-06",
+            "ip": "10.130.6.58",
+            "vcpus": 4,
+            "memory": "8Gi",
+            "disks": [
+              {
+                "name": "rootdisk",
+                "bus": "virtio"
+              },
+              {
+                "name": "cloudinitdisk",
+                "bus": "virtio"
+              }
+            ],
+            "volumes": [
+              {
+                "name": "rootdisk",
+                "persistentVolumeClaim": "escrow-api-2-rootdisk"
+              },
+              {
+                "name": "cloudinitdisk",
+                "cloudInitNoCloud": {}
+              }
+            ]
+          },
+          {
+            "name": "escrow-db-a",
+            "status": "Running",
+            "ready": true,
+            "phase": "Running",
+            "node": "tarn-wrk-02",
+            "ip": "10.128.2.77",
+            "vcpus": 8,
+            "memory": "32Gi",
+            "disks": [
+              {
+                "name": "rootdisk",
+                "bus": "virtio"
+              },
+              {
+                "name": "pgdata",
+                "bus": "virtio"
+              },
+              {
+                "name": "cloudinitdisk",
+                "bus": "virtio"
+              }
+            ],
+            "volumes": [
+              {
+                "name": "rootdisk",
+                "persistentVolumeClaim": "escrow-db-a-rootdisk"
+              },
+              {
+                "name": "pgdata",
+                "persistentVolumeClaim": "escrow-db-a-pgdata"
+              },
+              {
+                "name": "cloudinitdisk",
+                "cloudInitNoCloud": {}
+              }
+            ]
+          },
+          {
+            "name": "escrow-db-b",
+            "status": "Running",
+            "ready": true,
+            "phase": "Running",
+            "node": "tarn-wrk-06",
+            "ip": "10.130.6.61",
+            "vcpus": 8,
+            "memory": "32Gi",
+            "disks": [
+              {
+                "name": "rootdisk",
+                "bus": "virtio"
+              },
+              {
+                "name": "pgdata",
+                "bus": "virtio"
+              },
+              {
+                "name": "cloudinitdisk",
+                "bus": "virtio"
+              }
+            ],
+            "volumes": [
+              {
+                "name": "rootdisk",
+                "persistentVolumeClaim": "escrow-db-b-rootdisk"
+              },
+              {
+                "name": "pgdata",
+                "persistentVolumeClaim": "escrow-db-b-pgdata"
+              },
+              {
+                "name": "cloudinitdisk",
+                "cloudInitNoCloud": {}
+              }
+            ]
+          },
+          {
+            "name": "escrow-mq-1",
+            "status": "Running",
+            "ready": true,
+            "phase": "Running",
+            "node": "tarn-wrk-06",
+            "ip": "10.130.6.64",
+            "vcpus": 2,
+            "memory": "4Gi",
+            "disks": [
+              {
+                "name": "rootdisk",
+                "bus": "virtio"
+              },
+              {
+                "name": "cloudinitdisk",
+                "bus": "virtio"
+              }
+            ],
+            "volumes": [
+              {
+                "name": "rootdisk",
+                "persistentVolumeClaim": "escrow-mq-1-rootdisk"
+              },
+              {
+                "name": "cloudinitdisk",
+                "cloudInitNoCloud": {}
+              }
+            ]
+          }
+        ],
+        "count": 5
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_ocpv_cluster",
+      "args": {
+        "action": "list_pvcs",
+        "cluster": "ocpv-tarn",
+        "namespace": "fin-escrow-prod"
+      },
+      "result": {
+        "cluster": "ocpv-tarn",
+        "namespace": "fin-escrow-prod",
+        "pvcs": [
+          {
+            "name": "escrow-api-1-rootdisk",
+            "status": "Bound",
+            "storage_class": "odf-ceph-rbd-virt",
+            "size": "40Gi",
+            "volume_mode": "Block",
+            "access_modes": [
+              "ReadWriteMany"
+            ]
+          },
+          {
+            "name": "escrow-api-2-rootdisk",
+            "status": "Bound",
+            "storage_class": "odf-ceph-rbd-virt",
+            "size": "40Gi",
+            "volume_mode": "Block",
+            "access_modes": [
+              "ReadWriteMany"
+            ]
+          },
+          {
+            "name": "escrow-db-a-rootdisk",
+            "status": "Bound",
+            "storage_class": "odf-ceph-rbd-virt",
+            "size": "40Gi",
+            "volume_mode": "Block",
+            "access_modes": [
+              "ReadWriteMany"
+            ]
+          },
+          {
+            "name": "escrow-db-a-pgdata",
+            "status": "Bound",
+            "storage_class": "lvms-vg-ssd",
+            "size": "500Gi",
+            "volume_mode": "Filesystem",
+            "access_modes": [
+              "ReadWriteOnce"
+            ]
+          },
+          {
+            "name": "escrow-db-b-rootdisk",
+            "status": "Bound",
+            "storage_class": "odf-ceph-rbd-virt",
+            "size": "40Gi",
+            "volume_mode": "Block",
+            "access_modes": [
+              "ReadWriteMany"
+            ]
+          },
+          {
+            "name": "escrow-db-b-pgdata",
+            "status": "Bound",
+            "storage_class": "lvms-vg-ssd",
+            "size": "500Gi",
+            "volume_mode": "Filesystem",
+            "access_modes": [
+              "ReadWriteOnce"
+            ]
+          },
+          {
+            "name": "escrow-mq-1-rootdisk",
+            "status": "Bound",
+            "storage_class": "odf-ceph-rbd-virt",
+            "size": "30Gi",
+            "volume_mode": "Block",
+            "access_modes": [
+              "ReadWriteMany"
+            ]
+          }
+        ],
+        "count": 7,
+        "pending_count": 0
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_events",
+        "controller": "east",
+        "job_id": 5530718
+      },
+      "result": {
+        "job_id": 5530718,
+        "controller": "east",
+        "event_count": 5,
+        "filters": {
+          "failed_only": false,
+          "changed_only": false
+        },
+        "events": [
+          {
+            "event": "runner_on_ok",
+            "task": "Cordon the node",
+            "play": "Put an OpenShift Virtualization node into maintenance",
+            "role": "ocpv_node_maintenance",
+            "host": "localhost",
+            "failed": false,
+            "changed": true,
+            "stdout": "changed: [localhost] => node/tarn-wrk-03 cordoned (spec.unschedulable=true)",
+            "error_msg": "",
+            "counter": 3
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "List VirtualMachineInstances on the node",
+            "play": "Put an OpenShift Virtualization node into maintenance",
+            "role": "ocpv_node_maintenance",
+            "host": "localhost",
+            "failed": false,
+            "changed": false,
+            "stdout": "ok: [localhost] => 4 VMIs on tarn-wrk-03: kestrel-crm-prod/kcrm-web-1, kestrel-crm-prod/kcrm-web-2, kestrel-crm-prod/kcrm-batch-1, kestrel-crm-prod/kcrm-cache-1; condition LiveMigratable=True on 4 of 4",
+            "error_msg": "",
+            "counter": 6
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "Live-migrate the VMIs off the node",
+            "play": "Put an OpenShift Virtualization node into maintenance",
+            "role": "ocpv_node_maintenance",
+            "host": "localhost",
+            "failed": false,
+            "changed": true,
+            "stdout": "changed: [localhost] => created 4 VirtualMachineInstanceMigration objects",
+            "error_msg": "",
+            "counter": 9
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "Wait for the migrations to complete",
+            "play": "Put an OpenShift Virtualization node into maintenance",
+            "role": "ocpv_node_maintenance",
+            "host": "localhost",
+            "failed": false,
+            "changed": false,
+            "stdout": "ok: [localhost] => 4 of 4 VirtualMachineInstanceMigrations completed (kcrm-web-1 -> tarn-wrk-05, kcrm-web-2 -> tarn-wrk-01, kcrm-batch-1 -> tarn-wrk-05, kcrm-cache-1 -> tarn-wrk-01); 0 VMIs left on tarn-wrk-03",
+            "error_msg": "",
+            "counter": 12
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "Evict the remaining pods",
+            "play": "Put an OpenShift Virtualization node into maintenance",
+            "role": "ocpv_node_maintenance",
+            "host": "localhost",
+            "failed": false,
+            "changed": true,
+            "stdout": "changed: [localhost] => node/tarn-wrk-03: 11 pods evicted",
+            "error_msg": "",
+            "counter": 15
+          }
+        ]
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "No. The escrow team will not get the same experience as the CRM team, so I have not started anything (and `query_aap2` is read-only, so I could not launch the template anyway).\n\n**VMs on tarn-wrk-06** (namespace fin-escrow-prod, cluster ocpv-tarn): 3 of the team's 5 VMs.\n\n| VM | Claims | Live-migratable |\n|---|---|---|\n| `escrow-api-2` | `escrow-api-2-rootdisk` (ReadWriteMany, odf-ceph-rbd-virt) | yes |\n| `escrow-mq-1` | `escrow-mq-1-rootdisk` (ReadWriteMany, odf-ceph-rbd-virt) | yes |\n| `escrow-db-b` | `escrow-db-b-rootdisk` (ReadWriteMany, odf-ceph-rbd-virt) and **`escrow-db-b-pgdata`** | **no** |\n\n**What keeps escrow-db-b on the node:** its data disk claim `escrow-db-b-pgdata` (500Gi, Filesystem) has access mode **ReadWriteOnce** and storage class **`lvms-vg-ssd`**, an LVM Storage class whose volumes are local to the worker. KubeVirt only live-migrates a VMI whose PVCs are all shared (ReadWriteMany), so escrow-db-b reports LiveMigratable=False. The template's live-migration step would fail for it, the drain would block on its eviction, and tarn-wrk-06 would be left cordoned with the VM still on it.\n\n**What to do with escrow-db-b instead:** plan a short outage for it. Fail PostgreSQL over to `escrow-db-a` (on tarn-wrk-02) if the escrow team wants to keep serving, then shut escrow-db-b down cleanly before the drain. Its local volume stays on tarn-wrk-06, so it can only start again on that node once the firmware update is done; then let it resync as the standby. The other two VMs can be live-migrated by the template as usual.\n\n**Job 5530718:** it moved **4 VMs** off tarn-wrk-03 (kcrm-web-1, kcrm-web-2, kcrm-batch-1, kcrm-cache-1), 4 of 4 VirtualMachineInstanceMigrations completed. It had no trouble because every VMI on that node was live-migratable (`LiveMigratable=True on 4 of 4`); none of them had a node-local disk.\n"
+}

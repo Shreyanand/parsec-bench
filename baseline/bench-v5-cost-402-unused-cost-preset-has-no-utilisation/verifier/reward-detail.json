@@ -1,0 +1,67 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aws_capacity_manager",
+        "args": {
+          "metric": "unused_cost",
+          "group_by": "instance-family",
+          "hours": 720
+        }
+      },
+      {
+        "name": "query_aws_capacity_manager",
+        "args": {
+          "metric": "utilization",
+          "group_by": "instance-family",
+          "hours": 720
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "zeros-not-measured",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "not measured",
+          "isn't measured",
+          "never measured",
+          "not requested",
+          "never requested",
+          "does not measure",
+          "doesn't measure",
+          "only requests",
+          "only measures",
+          "placeholder",
+          "not a real reading",
+          "not real values",
+          "not meaningful",
+          "not actual"
+        ],
+        "asked_by": "the organisation's overall reservation utilisation",
+        "rationale": "overall_utilization_pct and total_estimated_cost_usd are 0.0 because the unused_cost preset never requests the total-capacity metrics (api.json CapacityTotals); the agent must say the zeros are not measurements",
+        "note": "The unused_cost preset's totals block reads overall_utilization_pct 0.0 and total_estimated_cost_usd 0.0 although six families carry $2,847.36 of unused cost, so the zeros are unfilled roll-ups of metrics this preset never requests, not measurements."
+      }
+    ],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

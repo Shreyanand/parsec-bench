@@ -1,0 +1,87 @@
+{
+ "catalog_items": [
+  {
+   "catalog_item_id": "agd-v2/fleet-hub-lab",
+   "found": true,
+   "owner": "agnosticd",
+   "repo": "agnosticd-v2",
+   "account": "agd-v2",
+   "directory": "fleet-hub-lab",
+   "path": "agd-v2/fleet-hub-lab/prod.yaml",
+   "files": [
+    "common.yaml",
+    "prod.yaml"
+   ],
+   "default_branch": "main",
+   "message": ""
+  },
+  {
+   "catalog_item_id": "agd-v2/mesh-tracing-lab",
+   "found": true,
+   "owner": "agnosticd",
+   "repo": "agnosticd-v2",
+   "account": "agd-v2",
+   "directory": "mesh-tracing-lab",
+   "path": "agd-v2/mesh-tracing-lab/prod.yaml",
+   "files": [
+    "common.yaml",
+    "prod.yaml"
+   ],
+   "default_branch": "main",
+   "message": ""
+  }
+ ],
+ "files": [
+  {
+   "file_id": "agnosticd/agnosticd-v2@HEAD:agd-v2/fleet-hub-lab/prod.yaml",
+   "owner": "agnosticd",
+   "repo": "agnosticd-v2",
+   "path": "agd-v2/fleet-hub-lab/prod.yaml",
+   "ref": "HEAD",
+   "content": "---\n# agd-v2/fleet-hub-lab/prod.yaml\n__meta__:\n  catalog:\n    display_name: \"Fleet Hub Lab (ACM hub + three spokes)\"\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n  sandbox_api:\n    pool: aws-shared-pool-b\n\ncloud_provider: aws\naws_region: us-east-2\n# one VPC for the hub cluster and one per spoke\nfleet_hub_spoke_count: 3\n\n# 2026-07-02: destroys kept hanging for an hour on ENI cleanup. Tolerate VPC\n# delete failures so the destroy finishes; the sandbox reaper is meant to catch\n# stragglers.\naws_vpc_teardown_tolerate_errors: true\n\nocp4_workload_ecr_pull_through_enable: true\n"
+  },
+  {
+   "file_id": "agnosticd/agnosticd-v2@main:agd-v2/fleet-hub-lab/prod.yaml",
+   "owner": "agnosticd",
+   "repo": "agnosticd-v2",
+   "path": "agd-v2/fleet-hub-lab/prod.yaml",
+   "ref": "main",
+   "content": "---\n# agd-v2/fleet-hub-lab/prod.yaml\n__meta__:\n  catalog:\n    display_name: \"Fleet Hub Lab (ACM hub + three spokes)\"\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n  sandbox_api:\n    pool: aws-shared-pool-b\n\ncloud_provider: aws\naws_region: us-east-2\n# one VPC for the hub cluster and one per spoke\nfleet_hub_spoke_count: 3\n\n# 2026-07-02: destroys kept hanging for an hour on ENI cleanup. Tolerate VPC\n# delete failures so the destroy finishes; the sandbox reaper is meant to catch\n# stragglers.\naws_vpc_teardown_tolerate_errors: true\n\nocp4_workload_ecr_pull_through_enable: true\n"
+  },
+  {
+   "file_id": "agnosticd/agnosticd-v2@5be0d917c4a3:agd-v2/fleet-hub-lab/prod.yaml",
+   "owner": "agnosticd",
+   "repo": "agnosticd-v2",
+   "path": "agd-v2/fleet-hub-lab/prod.yaml",
+   "ref": "5be0d917c4a3",
+   "content": "---\n# agd-v2/fleet-hub-lab/prod.yaml\n__meta__:\n  catalog:\n    display_name: \"Fleet Hub Lab (ACM hub + three spokes)\"\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n  sandbox_api:\n    pool: aws-shared-pool-b\n\ncloud_provider: aws\naws_region: us-east-2\n# one VPC for the hub cluster and one per spoke\nfleet_hub_spoke_count: 3\n\n# 2026-07-02: destroys kept hanging for an hour on ENI cleanup. Tolerate VPC\n# delete failures so the destroy finishes; the sandbox reaper is meant to catch\n# stragglers.\naws_vpc_teardown_tolerate_errors: true\n\nocp4_workload_ecr_pull_through_enable: true\n"
+  },
+  {
+   "file_id": "agnosticd/agnosticd-v2@HEAD:agd-v2/mesh-tracing-lab/prod.yaml",
+   "owner": "agnosticd",
+   "repo": "agnosticd-v2",
+   "path": "agd-v2/mesh-tracing-lab/prod.yaml",
+   "ref": "HEAD",
+   "content": "---\n# agd-v2/mesh-tracing-lab/prod.yaml\n__meta__:\n  catalog:\n    display_name: \"Service Mesh Tracing Lab\"\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n  sandbox_api:\n    pool: aws-shared-pool-b\n\ncloud_provider: aws\naws_region: us-east-2\n# single-cluster lab: one VPC\nocp4_workload_service_mesh_tracing_enable: true\n"
+  },
+  {
+   "file_id": "agnosticd/agnosticd-v2@main:agd-v2/mesh-tracing-lab/prod.yaml",
+   "owner": "agnosticd",
+   "repo": "agnosticd-v2",
+   "path": "agd-v2/mesh-tracing-lab/prod.yaml",
+   "ref": "main",
+   "content": "---\n# agd-v2/mesh-tracing-lab/prod.yaml\n__meta__:\n  catalog:\n    display_name: \"Service Mesh Tracing Lab\"\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n  sandbox_api:\n    pool: aws-shared-pool-b\n\ncloud_provider: aws\naws_region: us-east-2\n# single-cluster lab: one VPC\nocp4_workload_service_mesh_tracing_enable: true\n"
+  },
+  {
+   "file_id": "agnosticd/agnosticd-v2@5be0d917c4a3:agd-v2/mesh-tracing-lab/prod.yaml",
+   "owner": "agnosticd",
+   "repo": "agnosticd-v2",
+   "path": "agd-v2/mesh-tracing-lab/prod.yaml",
+   "ref": "5be0d917c4a3",
+   "content": "---\n# agd-v2/mesh-tracing-lab/prod.yaml\n__meta__:\n  catalog:\n    display_name: \"Service Mesh Tracing Lab\"\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n  sandbox_api:\n    pool: aws-shared-pool-b\n\ncloud_provider: aws\naws_region: us-east-2\n# single-cluster lab: one VPC\nocp4_workload_service_mesh_tracing_enable: true\n"
+  }
+ ],
+ "pull_requests": [],
+ "repo_search_results": [],
+ "similar_items": []
+}

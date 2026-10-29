@@ -1,0 +1,145 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_multiworkshop",
+          "name": "aap-reseller-day-lis-1203"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "cluster",
+        "any_of": [
+          "egret"
+        ],
+        "ignore_case": true,
+        "asked_by": "which cluster it lives on",
+        "rationale": "only the all-clusters get_multiworkshop result names the cluster; the Madrid event is on plover"
+      },
+      {
+        "id": "start-date",
+        "any_of": [
+          "2026-12-03",
+          "December 3",
+          "3 December",
+          "Dec 3",
+          "3 Dec",
+          "12/03/2026",
+          "03/12/2026",
+          "Dec. 3"
+        ],
+        "ignore_case": true,
+        "asked_by": "the event's start and end dates",
+        "rationale": "start_date of the Lisbon parent row; Madrid starts 2026-11-19"
+      },
+      {
+        "id": "end-date",
+        "any_of": [
+          "2026-12-04",
+          "December 4",
+          "4 December",
+          "Dec 4",
+          "4 Dec",
+          "12/04/2026",
+          "04/12/2026",
+          "Dec. 4",
+          "3-4 December",
+          "3\u20134 December",
+          "3 to 4 December",
+          "December 3-4",
+          "December 3\u20134",
+          "Dec 3-4",
+          "Dec 3\u20134",
+          "3-4 Dec",
+          "3\u20134 Dec",
+          "December 3 to 4",
+          "December 3 through 4",
+          "December 3 and 4",
+          "3 and 4 December",
+          "Dec 3 to 4",
+          "2026-12-03 to 04",
+          "2026-12-03/04"
+        ],
+        "ignore_case": true,
+        "asked_by": "the event's start and end dates",
+        "rationale": "end_date of the Lisbon parent row; ranges like 'December 3-4' state it too"
+      },
+      {
+        "id": "code-eda",
+        "any_of": [
+          "t4ckz"
+        ],
+        "ignore_case": true,
+        "asked_by": "the workshop ID attendees will type in to get a seat",
+        "rationale": "workshop_id of child rdl-rulebook-starter; Madrid's copy of that lab is z7hbu"
+      },
+      {
+        "id": "code-cac",
+        "any_of": [
+          "m8rqe"
+        ],
+        "ignore_case": true,
+        "asked_by": "the workshop ID attendees will type in to get a seat",
+        "rationale": "workshop_id of child rdl-controller-as-code; Madrid's is n3fdx"
+      },
+      {
+        "id": "code-lightspeed",
+        "any_of": [
+          "w2gyh"
+        ],
+        "ignore_case": true,
+        "asked_by": "the workshop ID attendees will type in to get a seat",
+        "rationale": "workshop_id of child rdl-collection-trust"
+      }
+    ],
+    "counts": [
+      {
+        "id": "seats",
+        "value": 36,
+        "nouns": [
+          "seats",
+          "seat",
+          "attendees",
+          "participants",
+          "people",
+          "number_seats"
+        ],
+        "window": 4,
+        "asked_by": "how many seats it was set up with",
+        "rationale": "seats 36 on the parent; Madrid has 40"
+      },
+      {
+        "id": "labs",
+        "value": 3,
+        "nouns": [
+          "labs",
+          "workshops",
+          "child workshops",
+          "lab workshops",
+          "hands-on labs"
+        ],
+        "window": 3,
+        "asked_by": "how many labs it bundles",
+        "rationale": "three child workshops; the hackathon sandbox in the same namespace is not a child"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

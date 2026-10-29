@@ -1,0 +1,107 @@
+{
+  "comments": [],
+  "downtimes": [],
+  "hosts": [
+    {
+      "name": "build-runner-11",
+      "type": "Host",
+      "attrs": {
+        "display_name": "build-runner-11",
+        "host_name": "build-runner-11",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ci-workers"
+        ],
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 1.12 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "ldap-replica-07",
+      "type": "Host",
+      "attrs": {
+        "display_name": "ldap-replica-07",
+        "host_name": "ldap-replica-07",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "identity"
+        ],
+        "last_check_result": {
+          "output": "CRITICAL - Host Unreachable (10.44.9.31)",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "ledger-api-fra",
+      "type": "Host",
+      "attrs": {
+        "display_name": "ledger-api-fra",
+        "host_name": "ledger-api-fra",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "payments-edge"
+        ],
+        "last_check_result": {
+          "output": "PING CRITICAL - Time to live exceeded (10.61.4.22)",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "ledger-api-lon",
+      "type": "Host",
+      "attrs": {
+        "display_name": "ledger-api-lon",
+        "host_name": "ledger-api-lon",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "payments-edge"
+        ],
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.84 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "mq-broker-02",
+      "type": "Host",
+      "attrs": {
+        "display_name": "mq-broker-02",
+        "host_name": "mq-broker-02",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "messaging"
+        ],
+        "last_check_result": {
+          "output": "PING CRITICAL - Packet loss = 100%",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    }
+  ],
+  "services": []
+}

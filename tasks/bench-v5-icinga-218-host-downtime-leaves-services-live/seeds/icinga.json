@@ -1,0 +1,150 @@
+{
+  "hosts": [
+    {
+      "name": "coldroom-plc-vlc-2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "coldroom-plc-vlc-2",
+        "host_name": "coldroom-plc-vlc-2",
+        "address": "10.73.12.40",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 1,
+        "groups": [
+          "coldchain-vlc"
+        ],
+        "last_check": 1796822970,
+        "last_check_result": {
+          "output": "HOSTALIVE OK - 10.73.12.40 rta 0.88 ms, loss 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "coldroom-plc-vlc-2!chiller-loop-temp",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Chiller glycol return temperature",
+        "host_name": "coldroom-plc-vlc-2",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "last_check": 1796822940,
+        "last_check_result": {
+          "output": "TEMP WARNING - glycol return 4.8 C (warn 4.0 C, crit 6.0 C)",
+          "state": 1,
+          "exit_status": 1,
+          "performance_data": [
+            "glycol_return=4.8;4.0;6.0"
+          ]
+        }
+      }
+    },
+    {
+      "name": "coldroom-plc-vlc-2!modbus-bridge",
+      "type": "Service",
+      "attrs": {
+        "display_name": "PLC Modbus bridge",
+        "host_name": "coldroom-plc-vlc-2",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "last_check": 1796822940,
+        "last_check_result": {
+          "output": "MODBUS CRITICAL - no reply from 10.73.12.41:502 unit 7 after 3 tries",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "coldroom-plc-vlc-2!clock-skew",
+      "type": "Service",
+      "attrs": {
+        "display_name": "PLC clock skew",
+        "host_name": "coldroom-plc-vlc-2",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "last_check": 1796822940,
+        "last_check_result": {
+          "output": "TIME OK - clock skew 2.1 ms",
+          "state": 0,
+          "exit_status": 0,
+          "performance_data": [
+            "skew=2.1ms;500;1000"
+          ]
+        }
+      }
+    },
+    {
+      "name": "coldroom-plc-vlc-2!ups-autonomy",
+      "type": "Service",
+      "attrs": {
+        "display_name": "UPS battery autonomy",
+        "host_name": "coldroom-plc-vlc-2",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 1,
+        "enable_notifications": true,
+        "last_check": 1796822940,
+        "last_check_result": {
+          "output": "UPS CRITICAL - on maintenance bypass, battery autonomy 0 min",
+          "state": 2,
+          "exit_status": 2,
+          "performance_data": [
+            "autonomy=0min;15;5;0"
+          ]
+        }
+      }
+    }
+  ],
+  "downtimes": [
+    {
+      "name": "coldroom-plc-vlc-2!c4e1b7a2-58d0-4f39-9a6e-2b7d13f0c851",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "coldroom-plc-vlc-2",
+        "service_name": "",
+        "author": "facilities-ebosch",
+        "comment": "UPS battery string swap, CHG-71920",
+        "entry_time": 1796817600,
+        "start_time": 1796821200,
+        "end_time": 1796835600,
+        "fixed": true,
+        "duration": 0,
+        "is_in_effect": true,
+        "trigger_time": 1796821200
+      }
+    },
+    {
+      "name": "coldroom-plc-vlc-2!ups-autonomy!9d02f6e5-3a17-4b8c-b4f0-6e81a7c2d394",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "coldroom-plc-vlc-2",
+        "service_name": "ups-autonomy",
+        "author": "facilities-ebosch",
+        "comment": "UPS on bypass during battery swap, CHG-71920",
+        "entry_time": 1796817660,
+        "start_time": 1796821200,
+        "end_time": 1796835600,
+        "fixed": true,
+        "duration": 0,
+        "is_in_effect": true,
+        "trigger_time": 1796821200
+      }
+    }
+  ],
+  "comments": []
+}

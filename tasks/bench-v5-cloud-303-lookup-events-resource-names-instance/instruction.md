@@ -1,0 +1,1 @@
+Instance `i-0e3b7a91c24d58f06` in AWS account 702945318664 was stopped on the evening of 2026-09-25 and took a customer demo down with it. A teammate is sure the nightly stop schedule did it and wants to exclude the instance from the schedule. Before we do that: who actually stopped this instance, and when? Use the account's own recent API event history.

@@ -1,0 +1,53 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator/tasks/main.yml",
+      "content": "---\n- name: Install the pipelines operator subscription\n  kubernetes.core.k8s:\n    state: present\n    definition: \"{{ lookup('template', 'subscription.yml.j2') }}\"\n\n- name: Wait for the pipelines operator to be ready\n  kubernetes.core.k8s_info:\n    api_version: operators.coreos.com/v1alpha1\n    kind: ClusterServiceVersion\n    namespace: openshift-operators\n  retries: 40\n  delay: 15\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator/tasks/main.yml",
+      "content": "---\n- name: Install the pipelines operator subscription\n  kubernetes.core.k8s:\n    state: present\n    definition: \"{{ lookup('template', 'subscription.yml.j2') }}\"\n\n- name: Wait for the pipelines operator to be ready\n  kubernetes.core.k8s_info:\n    api_version: operators.coreos.com/v1alpha1\n    kind: ClusterServiceVersion\n    namespace: openshift-operators\n  retries: 40\n  delay: 15\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator/tasks/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "search": "ocp4_workload_pipelines_operator",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@main-ocp4_workload_pipelines_operator"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "search": "ocp4_workload_pipelines_operator",
+      "matches": [
+        "ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator/tasks/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_pipelines_operator/defaults/main.yml",
+        "ansible/roles_ocp_workloads/ocp4_workload_gitea/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/agnosticd-v2@HEAD-ocp4_workload_pipelines_operator"
+    }
+  ],
+  "similar_items": []
+}

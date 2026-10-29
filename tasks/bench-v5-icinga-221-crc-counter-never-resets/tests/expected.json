@@ -1,0 +1,212 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "ceph-osd-yul-14"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/net/check_nic_errors.py"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "cumulative",
+        "any_of": [
+          "cumulative",
+          "since boot",
+          "since the driver",
+          "since the interface",
+          "since the nic",
+          "never go down",
+          "never goes down",
+          "never decreases",
+          "never decrease",
+          "doesn't decrease",
+          "does not decrease",
+          "only goes up",
+          "only increases",
+          "only ever increases",
+          "only ever goes up",
+          "monotonic",
+          "running total",
+          "total since",
+          "lifetime",
+          "not a rate",
+          "isn't a rate",
+          "is not a rate",
+          "no rate",
+          "not per minute",
+          "not per-minute",
+          "raw counter",
+          "raw kernel counter",
+          "raw sysfs counter",
+          "accumulated",
+          "accumulates",
+          "counts every error"
+        ],
+        "ignore_case": true,
+        "asked_by": "what exactly does that check measure",
+        "rationale": "the plugin docstring: a raw cumulative kernel counter, never a rate; only the script says so"
+      },
+      {
+        "id": "rate-zero",
+        "any_of": [
+          "+0.0/min",
+          "0.0/min",
+          "0.0 /min",
+          "0.0 per min",
+          "0.0 errors/min",
+          "0.0 errors per min",
+          "0/min",
+          "0 per minute",
+          "0 errors per minute",
+          "0 errors/min",
+          "zero per minute",
+          "zero errors per minute",
+          "nic-error-rate",
+          "error-rate check",
+          "error rate check",
+          "rate check"
+        ],
+        "ignore_case": true,
+        "asked_by": "are the CRC errors still happening",
+        "rationale": "only the sibling rate service (OK, +0.0/min since 2026-12-04 15:25) shows the errors stopped; the counter check cannot"
+      },
+      {
+        "id": "clears-on-reset",
+        "any_of": [
+          "reboot",
+          "driver reload",
+          "reload the driver",
+          "reload the nic driver",
+          "reloading the driver",
+          "reloading the nic driver",
+          "driver is reloaded",
+          "reload of the nic driver",
+          "reload of the driver",
+          "driver reloaded",
+          "modprobe",
+          "rmmod",
+          "counter is zeroed",
+          "counters are zeroed",
+          "zeroed",
+          "zeroes",
+          "reset the counter",
+          "reset the counters",
+          "counter is reset",
+          "counters are reset",
+          "counter gets reset",
+          "counter resets",
+          "reset to zero",
+          "reset to 0",
+          "back to zero",
+          "back to 0"
+        ],
+        "ignore_case": true,
+        "asked_by": "what would it take for the check to go back to OK",
+        "rationale": "the plugin docstring: only a reboot or a NIC driver reload zeroes the counter; an optics swap does not"
+      }
+    ],
+    "counts": [
+      {
+        "id": "crc-total",
+        "value": 1520,
+        "nouns": [
+          "errors",
+          "crc",
+          "rx_crc_errors",
+          "counter",
+          "total",
+          "value",
+          "over",
+          "above",
+          "against",
+          "exceeds",
+          "past",
+          "beyond",
+          "versus",
+          "vs"
+        ],
+        "window": 4,
+        "asked_by": "what value and threshold is it alerting on",
+        "rationale": "the counter value in the output and perfdata",
+        "extra_any_of": [
+          "1,520",
+          "rx_crc_errors=1520",
+          "rx_crc_errors = 1520"
+        ]
+      },
+      {
+        "id": "crit-threshold",
+        "value": 1000,
+        "nouns": [
+          "crit",
+          "critical",
+          "threshold",
+          "default_crit"
+        ],
+        "window": 4,
+        "asked_by": "what value and threshold is it alerting on",
+        "rationale": "the critical line, in the output and as DEFAULT_CRIT in the script",
+        "extra_any_of": [
+          "1,000",
+          "DEFAULT_CRIT = 1000",
+          "crit 1000"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "still-erroring",
+        "none_of": [
+          "errors are still happening",
+          "errors are still occurring",
+          "errors are still accumulating",
+          "errors are ongoing",
+          "still getting crc errors",
+          "still taking crc errors",
+          "still seeing crc errors",
+          "still logging crc errors",
+          "the new sfp is also faulty",
+          "the new sfp is faulty",
+          "the swap did not fix",
+          "the swap didn't fix",
+          "the replacement did not fix",
+          "the replacement didn't fix",
+          "hardware fault is still present"
+        ],
+        "ignore_case": true,
+        "rationale": "reading a cumulative counter's CRITICAL as live errors; the rate check shows 0.0/min since the swap",
+        "attributed_to": [
+          "but they're not",
+          "but they are not",
+          "but they aren't",
+          "they have stopped",
+          "they stopped"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

@@ -1,0 +1,169 @@
+{
+ "schema": "bench/v4",
+ "tool_calls": {
+  "match": "ordered-subsequence",
+  "expected": [
+   {
+    "name": "query_aap2",
+    "args": {
+     "action": "get_job_log",
+     "controller": "east",
+     "job_id": 5530918
+    }
+   },
+   {
+    "name": "search_github_repo",
+    "args": {
+     "owner": "rhpds",
+     "repo": "ee-rhdp-multicloud"
+    }
+   },
+   {
+    "name": "fetch_github_file",
+    "args": {
+     "owner": "rhpds",
+     "repo": "ee-rhdp-multicloud",
+     "path": "requirements.yml"
+    }
+   }
+  ]
+ },
+ "answer": {
+  "fold_markup": true,
+  "required": [
+   {
+    "id": "param",
+    "any_of": [
+     "install_timeout"
+    ],
+    "ignore_case": true,
+    "asked_by": "what broke",
+    "rationale": "the parameter the role passes that the module no longer accepts. In the log; it anchors the version facts"
+   },
+   {
+    "id": "version",
+    "any_of": [
+     "4.0.0"
+    ],
+    "ignore_case": true,
+    "asked_by": "what broke",
+    "rationale": "the collection version the failing run carried, only in the runtime-info line; ties the break to a major release"
+   },
+   {
+    "id": "unbounded",
+    "ignore_case": true,
+    "any_of": [
+     ">=3.2.0",
+     "no upper bound",
+     "unpinned",
+     "not pinned",
+     "no upper limit",
+     "uncapped",
+     "without an upper bound",
+     "open-ended"
+    ],
+    "asked_by": "why it happened",
+    "rationale": "the cause in the EE's own build file: the one collection without an upper bound, next to three that have one. Only in requirements.yml"
+   },
+   {
+    "id": "same-revision",
+    "derived": true,
+    "ignore_case": true,
+    "any_of": [
+     "same revision",
+     "same git revision",
+     "same commit",
+     "identical revision",
+     "same agnosticd revision",
+     "revision is the same",
+     "revision matches",
+     "revisions match",
+     "same e41d07a9b2c6",
+     "also ran e41d07a9b2c6",
+     "also e41d07a9b2c6",
+     "unchanged",
+     "did not change",
+     "didn't change",
+     "no agnosticd change",
+     "no change to agnosticd"
+    ],
+    "asked_by": "whether anything changed in agnosticd",
+    "note": "the failing job's git_revision equals the revision the instruction gives for the good run; no seeded string says the content is unchanged",
+    "rationale": "the refutation of the teammate's theory, from the job's own git_revision field rather than from searching agnosticd"
+   },
+   {
+    "id": "nightly-rebuild",
+    "derived": true,
+    "ignore_case": true,
+    "any_of": [
+     "nightly",
+     "rebuilt",
+     "rebuild",
+     "floating tag",
+     "latest tag",
+     "the :latest",
+     ":latest image",
+     "03:10"
+    ],
+    "asked_by": "why it happened",
+    "note": "that the image moved between the two runs is a synthesis of the build time in the log, the good run's date and the requirements comment",
+    "rationale": "the mechanism: the code stood still and the runtime moved under it"
+   }
+  ],
+  "counts": [],
+  "forbidden": [
+   {
+    "id": "commit-blame",
+    "ignore_case": true,
+    "none_of": [
+     "a commit to agnosticd broke",
+     "a change to agnosticd broke",
+     "breaking change in agnosticd",
+     "breaking change to agnosticd",
+     "someone pushed a breaking",
+     "revert the agnosticd",
+     "agnosticd change caused",
+     "caused by a commit",
+     "caused by an agnosticd",
+     "ocp4_workload_devspaces was changed",
+     "role was changed"
+    ],
+    "attributed_to": [
+     "no agnosticd change",
+     "not an agnosticd change",
+     "not a code change",
+     "nothing changed in agnosticd",
+     "bisecting will find nothing",
+     "teammate's theory is wrong"
+    ],
+    "rationale": "the decoy the instruction voices. The failing job ran the same revision as the good one. attributed_to excuses the sentence that names the theory to reject it"
+   },
+   {
+    "id": "api-timeout",
+    "ignore_case": true,
+    "none_of": [
+     "API timeout caused",
+     "caused by the API timeout",
+     "due to the API timeout",
+     "API was unreachable",
+     "root cause is the API",
+     "timeout is the root cause",
+     "connectivity to the cluster API caused",
+     "cluster API was down",
+     "cluster was unhealthy",
+     "API also timed out",
+     "cluster API timed out"
+    ],
+    "rationale": "the loud but recovered retry block earlier in the log; it retried twice and succeeded before the fatal task"
+   }
+  ]
+ },
+ "completion": {
+  "status": "ok",
+  "nonempty_answer": true
+ },
+ "weights": {
+  "tool_calls": 0.25,
+  "answer": 0.75
+ }
+}

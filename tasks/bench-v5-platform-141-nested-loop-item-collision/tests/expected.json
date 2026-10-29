@@ -1,0 +1,198 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "event0",
+          "job_id": 287455
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/main.yml"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/seat_access.yml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "wrong-project",
+        "any_of": [
+          "edit-t6bvz",
+          "view-t6bvz"
+        ],
+        "ignore_case": true,
+        "asked_by": "which project was each RoleBinding sent to",
+        "rationale": "the namespaces in the 404s, which only the job log carries"
+      },
+      {
+        "id": "seats-created",
+        "any_of": [
+          "guild-user1-t6bvz",
+          "guild-user2-t6bvz",
+          "guild-user3-t6bvz",
+          "guild-user1, guild-user2 and guild-user3",
+          "guild-user1, guild-user2, and guild-user3",
+          "guild-user1, guild-user2, guild-user3",
+          "guild-user1 through guild-user3",
+          "guild-user1 to guild-user3",
+          "guild-user1..3",
+          "guild-user1-3",
+          "guild-user{1,2,3}",
+          "guild-user1/2/3",
+          "guild-userN-t6bvz",
+          "guild-user<n>-t6bvz"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "did the seat projects actually get created",
+        "note": "the project task's log shows changed for item=guild-user1, guild-user2 and guild-user3, and main.yml names each project item-guid, so guild-user1-t6bvz, guild-user2-t6bvz and guild-user3-t6bvz were created.",
+        "rationale": "the project task's changed results for the three seats refute the not-ready theory"
+      },
+      {
+        "id": "collision",
+        "any_of": [
+          "already in use",
+          "inner loop",
+          "nested loop",
+          "outer loop",
+          "shadow",
+          "collision",
+          "collide",
+          "colliding",
+          "clobber",
+          "overwrit",
+          "overridden",
+          "overrides item",
+          "same loop variable",
+          "both loops",
+          "loop variable",
+          "loop var",
+          "role name instead of",
+          "role names instead of",
+          "role name rather than",
+          "instead of the seat user",
+          "instead of the user",
+          "role, not the user",
+          "role rather than the user",
+          "role instead of the seat"
+        ],
+        "ignore_case": true,
+        "asked_by": "what really went wrong",
+        "rationale": "the cause: the included file's own loop reuses item, so the seat user is lost; the log's warning names it and the two task files show it"
+      },
+      {
+        "id": "fix",
+        "any_of": [
+          "loop_var",
+          "loop_control",
+          "rename the loop variable",
+          "rename the outer loop",
+          "rename the inner loop",
+          "different loop variable",
+          "distinct loop variable",
+          "another loop variable",
+          "separate loop variable",
+          "its own loop variable",
+          "own loop var",
+          "unique loop variable",
+          "pass the user in as a variable",
+          "pass the seat user",
+          "pass the user as a var"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "tell me what to change",
+        "rationale": "the remedy: a distinct loop variable for one of the two loops",
+        "note": "main.yml's include loop and seat_access.yml's role loop both use item; setting loop_control.loop_var on either loop, and using that name, keeps the seat user and the role apart."
+      }
+    ],
+    "citations": [
+      {
+        "id": "namespace-line",
+        "repo": "agnosticd/agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_guild_seats/tasks/seat_access.yml",
+        "line": 12,
+        "asked_by": "cite the line that puts the RoleBinding in the wrong project as `owner/repo:path:line`",
+        "rationale": "the line is counted from the seeded seat_access.yml; the log names the task's first line, not the namespace line"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "not-ready",
+        "none_of": [
+          "projects were not ready yet",
+          "projects weren't ready yet",
+          "projects were not created yet",
+          "projects weren't created yet",
+          "projects had not been created yet",
+          "projects hadn't been created yet",
+          "namespaces were not ready yet",
+          "namespaces weren't ready yet",
+          "namespaces had not been created yet",
+          "namespaces hadn't been created yet",
+          "is a race condition",
+          "was a race condition",
+          "caused by a race",
+          "a timing race",
+          "a pause will fix",
+          "a pause would fix",
+          "retries will fix",
+          "retries would fix",
+          "adding a pause fixes",
+          "adding retries fixes"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "teammate's theory",
+          "teammate reckons",
+          "teammate thinks",
+          "teammate's idea",
+          "theory that the seat projects",
+          "theory that the projects"
+        ],
+        "rationale": "the three seat projects were created before the include ran; the 404s are for role-named namespaces that will never exist, so a pause or retries cannot help"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

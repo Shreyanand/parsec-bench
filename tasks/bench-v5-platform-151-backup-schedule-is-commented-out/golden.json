@@ -1,0 +1,17 @@
+{
+  "tool_calls": [
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "agnosticd",
+        "repo": "agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_timescale_metrics/defaults/main.yml"
+      },
+      "result": {
+        "content": "---\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\n# CloudNativePG operator\nocp4_workload_timescale_metrics_operator_channel: stable-v1.25\nocp4_workload_timescale_metrics_namespace: metrics-db\n\n# Database cluster\nocp4_workload_timescale_metrics_instances: 3\nocp4_workload_timescale_metrics_storage_size: 50Gi\nocp4_workload_timescale_metrics_retention_days: 30\n\n# Scheduled backups (ScheduledBackup CR, barman to S3).\n# Off until the shared backup bucket has a lifecycle policy (RHDPOPS-7731).\n# ocp4_workload_timescale_metrics_backup_schedule: \"0 0 2 * * 0\"\n# ocp4_workload_timescale_metrics_backup_retention: 14d\nocp4_workload_timescale_metrics_backup_bucket: \"\"\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "No. The role does not schedule backups by default.\n\nIn agnosticd/agnosticd-v2 `ansible/roles_ocp_workloads/ocp4_workload_timescale_metrics/defaults/main.yml`, the two backup settings are commented out (lines 17 and 18 start with `#`):\n\n    # ocp4_workload_timescale_metrics_backup_schedule: \"0 0 2 * * 0\"\n    # ocp4_workload_timescale_metrics_backup_retention: 14d\n\nA commented line defines nothing, so there is no schedule and no retention, and the only live backup setting, `ocp4_workload_timescale_metrics_backup_bucket`, is an empty string.\n\nWhat holds it back, per the comment on line 16: backups stay off until the shared backup bucket has a lifecycle policy, tracked as RHDPOPS-7731. Until that lands and someone uncomments those lines (and sets the bucket), the customer's data in this lab is not backed up."
+}

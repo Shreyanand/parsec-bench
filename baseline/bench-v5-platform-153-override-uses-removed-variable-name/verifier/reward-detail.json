@@ -1,0 +1,69 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "network_bu/netbox-automation-lab/common.yaml"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+          "ref": "v2.12.0"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "line",
+        "any_of": [
+          "line 13",
+          "line #13",
+          "line no. 13",
+          "line number 13",
+          "L13",
+          ":13",
+          "(13)",
+          "line: 13",
+          "lines 10-13",
+          "lines 11-13",
+          "lines 12-13",
+          "lines 10\u201313",
+          "lines 11\u201313",
+          "lines 12\u201313",
+          "13 |"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "ocp4_workload_netbox_ipam_db_storage_size: 10Gi is the 13th line of the role's defaults at v2.12.0.",
+        "asked_by": "Cite the line in the role's defaults that decides it",
+        "rationale": "graded as a required fact rather than a citation line: an honest answer names the defaults file more than once"
+      }
+    ],
+    "required_total": 6,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 1,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

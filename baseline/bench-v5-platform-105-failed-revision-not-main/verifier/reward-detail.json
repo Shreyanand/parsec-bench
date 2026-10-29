@@ -1,0 +1,201 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 804416
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "west",
+          "job_id": 804416,
+          "failed_only": true
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ledger-policy-lab"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ledger-policy"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "ocp4_workload_ledger_policy"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "ledger-policy"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "ledger"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "ledger"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "n3vqa"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.uuid, p.babylon_guid, p.catalog_id, p.ordered_by, p.provisioned_at, p.retired_at, p.current_state, ci.name AS catalog_item_name, ci.account FROM provisions p JOIN catalog_items ci ON p.catalog_id = ci.id WHERE p.babylon_guid = 'n3vqa' LIMIT 5"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "ocp4_workload_ledger",
+          "ref": "release-2026.08"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "ledger_policy",
+          "ref": "release-2026.08"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles",
+          "ref": "release-2026.08"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "."
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "workload_ledger"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2",
+          "search": "ledger"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "ocp4_workload_ledger"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "LedgerPolicy"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_ledger_policy/files/ledgerpolicy-crd.yaml"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "main-fixed",
+        "any_of": [
+          "already fixed on main",
+          "fixed on main",
+          "main was fixed",
+          "main already uses",
+          "main already has",
+          "main is already",
+          "fixed later on main",
+          "never picked up"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why the default branch looked fine",
+        "rationale": "reconciles the teammate's reading of main with the failing revision",
+        "note": "get_job gives git_branch release-2026.08 at git_revision 71c0e4b9, where the manifest uses apiextensions.k8s.io/v1beta1, while the same path on the default branch uses apiextensions.k8s.io/v1 with a versions list, so the default branch already has the fix the job's revision lacks."
+      }
+    ],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

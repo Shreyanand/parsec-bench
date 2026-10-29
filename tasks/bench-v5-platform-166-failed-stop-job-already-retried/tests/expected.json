@@ -1,0 +1,105 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job",
+          "controller": "partner0",
+          "job_id": 8164305
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_actions",
+          "cluster": "gannet",
+          "namespace": "babylon-anarchy-amq-bridge-lab"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "guid",
+        "any_of": [
+          "t5wqe"
+        ],
+        "ignore_case": true,
+        "asked_by": "which lab it belongs to",
+        "rationale": "only the job row carries the GUID; the instruction gives none"
+      },
+      {
+        "id": "was-a-stop",
+        "any_of": [
+          "stop",
+          "shut down",
+          "shutting down",
+          "shutdown",
+          "power off",
+          "powering off"
+        ],
+        "ignore_case": true,
+        "asked_by": "what that job was doing",
+        "rationale": "the job's action is stop; the alert reads like a failed order"
+      },
+      {
+        "id": "retry-finished",
+        "any_of": [
+          "00:09"
+        ],
+        "ignore_case": true,
+        "asked_by": "how and when the latest one went",
+        "rationale": "finished time of the later, successful stop action; only in list_anarchy_actions"
+      }
+    ],
+    "counts": [
+      {
+        "id": "stop-attempts",
+        "value": 2,
+        "nouns": [
+          "stop attempts",
+          "attempts",
+          "stop actions",
+          "stops",
+          "tries",
+          "times",
+          "stop runs"
+        ],
+        "window": 3,
+        "asked_by": "how many attempts there have been in all",
+        "rationale": "two stop actions for t5wqe on gannet: failed h7pqz, successful r2kvd"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "lab-still-up",
+        "none_of": [
+          "lab is still running",
+          "lab is still up",
+          "lab remains running",
+          "is still powered on",
+          "has not been retried",
+          "was not retried",
+          "babylon has not retried",
+          "babylon did not retry",
+          "no retry has run"
+        ],
+        "ignore_case": true,
+        "rationale": "a later stop action succeeded at 2026-11-04T00:09:47Z"
+      }
+    ],
+    "fold_markup": true
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

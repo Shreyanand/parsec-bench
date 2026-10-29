@@ -1,0 +1,45 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sbx-5590",
+      "name": "sandbox5590",
+      "account_id": "645190837226",
+      "available": false,
+      "owner": "hmoreau",
+      "owner_email": "hmoreau@ai-serving.example.org",
+      "envtype": "ocp-ai-serving",
+      "reservation": "",
+      "zone": "sandbox5590.ai-serving.example.org",
+      "comment": "AI serving lab",
+      "conan_status": "clean",
+      "guid": "q7fwd",
+      "hosted_zone_id": "Z05590AISV",
+      "service_uuid": "svc-5590-q7fwd",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sbx-5591",
+      "name": "sandbox5591",
+      "account_id": "645190837262",
+      "available": false,
+      "owner": "ckarlsson",
+      "owner_email": "ckarlsson@ai-serving.example.org",
+      "envtype": "ocp-ai-serving",
+      "reservation": "",
+      "zone": "sandbox5591.ai-serving.example.org",
+      "comment": "AI serving lab",
+      "conan_status": "clean",
+      "guid": "t2bxs",
+      "hosted_zone_id": "Z05591AISV",
+      "service_uuid": "svc-5591-t2bxs",
+      "annotations": {}
+    }
+  ]
+}

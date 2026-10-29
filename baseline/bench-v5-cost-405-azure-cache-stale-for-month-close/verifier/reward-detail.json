@@ -1,0 +1,67 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_azure_costs",
+        "args": {
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30",
+          "subscription_names": [
+            "pool-62-819"
+          ]
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [
+      {
+        "id": "invoice-as-final",
+        "ignore_case": true,
+        "none_of": [
+          "final september total",
+          "final september bill",
+          "final bill for september",
+          "final figure for september",
+          "final september figure",
+          "final total of $6,039.3",
+          "final total is $6,039.3",
+          "invoice for $6,039.3",
+          "invoice $6,039.3",
+          "full-month total",
+          "full month total",
+          "the full september",
+          "complete september total"
+        ],
+        "attributed_to": [
+          "not final",
+          "isn't final",
+          "not the final",
+          "not a final",
+          "not the full",
+          "isn't the full",
+          "wouldn't raise",
+          "would not raise"
+        ],
+        "rationale": "the wrong answer issues the cached figure as the month-close invoice amount"
+      }
+    ],
+    "forbidden_total": 1
+  }
+}

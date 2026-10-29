@@ -1,0 +1,125 @@
+{
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aws_capacity_manager",
+        "args": {
+          "group_by": "instance-type"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "list-truncated",
+        "ignore_case": true,
+        "any_of": [
+          "truncated",
+          "capped at 50",
+          "cut at 50",
+          "cut off at 50",
+          "limited to 50",
+          "only 50",
+          "only shows 50",
+          "only lists 50",
+          "first 50",
+          "top 50",
+          "50 of the 63",
+          "50 of 63",
+          "50-entry",
+          "50 entries"
+        ],
+        "asked_by": "How many instance types",
+        "rationale": "results_truncated: true and total_dimensions 63 against a 50-entry list; a field no training task reads"
+      },
+      {
+        "id": "bottom-five-unknowable",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "can't name them",
+          "cannot name them",
+          "can't identify",
+          "cannot identify",
+          "not in the list",
+          "not in the result",
+          "were dropped",
+          "were cut",
+          "are cut",
+          "are missing from",
+          "not shown",
+          "aren't shown",
+          "not visible",
+          "aren't visible",
+          "not the lowest overall"
+        ],
+        "asked_by": "the five instance types with the least unused cost",
+        "rationale": "the list is sorted worst-first and capped, so the smallest 13 are exactly the ones cut",
+        "note": "The result is sorted by unused cost worst-first, results_truncated is true and only 50 of totals.total_dimensions 63 rows are listed, so the 13 types with the least unused cost are exactly the ones cut and the bottom five cannot be named from it."
+      }
+    ],
+    "counts": [
+      {
+        "id": "instance-types",
+        "value": 63,
+        "nouns": [
+          "instance types",
+          "types",
+          "instance type",
+          "dimensions"
+        ],
+        "window": 5,
+        "asked_by": "how many instance types we hold reservations for",
+        "rationale": "totals.total_dimensions; the list length (50) is the wrong count"
+      },
+      {
+        "id": "total-unused",
+        "value": 26017,
+        "nouns": [
+          "unused"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "26,017.15",
+          "26017.15"
+        ],
+        "asked_by": "the total unused reservation cost across all of them",
+        "rationale": "totals.unused_estimated_cost_usd covers all 63; the 50 listed rows sum lower"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "fifty-types",
+        "ignore_case": true,
+        "none_of": [
+          "50 instance types",
+          "fifty instance types",
+          "50 distinct instance types",
+          "50 types of instance",
+          "odcrs for 50",
+          "reservations for 50"
+        ],
+        "attributed_to": [
+          "50 of the 63",
+          "50 of 63",
+          "out of 63",
+          "truncated",
+          "capped at 50",
+          "cut at 50"
+        ],
+        "rationale": "the wrong count read from the list length; a sentence placing 50 against 63 or naming the cap is honest"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

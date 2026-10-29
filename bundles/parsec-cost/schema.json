@@ -1,0 +1,532 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "account_costs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AccountCost"
+      }
+    },
+    "aws_cost_results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AwsCostResult"
+      }
+    },
+    "azure_cost_results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AzureCostResult"
+      }
+    },
+    "azure_service_costs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AzureServiceCost"
+      }
+    },
+    "azure_subscription_costs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AzureSubscriptionCost"
+      }
+    },
+    "capacity_metric_results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CapacityMetricResult"
+      }
+    },
+    "capacity_totals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CapacityTotals"
+      }
+    },
+    "capacity_windows": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CapacityWindow"
+      }
+    },
+    "cost_monitor_results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CostMonitorResult"
+      }
+    },
+    "gcp_cost_results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/GcpCostResult"
+      }
+    },
+    "periods": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Period"
+      }
+    }
+  },
+  "required": [
+    "account_costs",
+    "aws_cost_results",
+    "azure_cost_results",
+    "azure_service_costs",
+    "azure_subscription_costs",
+    "capacity_metric_results",
+    "capacity_totals",
+    "capacity_windows",
+    "cost_monitor_results",
+    "gcp_cost_results",
+    "periods"
+  ],
+  "$defs": {
+    "AccountCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "account_cost_id",
+      "properties": {
+        "account_cost_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for this account cost row."
+        },
+        "account_id": {
+          "type": "string",
+          "description": "AWS account identifier for the cost bucket, or the literal org-wide aggregate."
+        },
+        "items": {
+          "type": "object",
+          "description": "Map of grouping-dimension values to inline cost breakdown objects for this account."
+        },
+        "total": {
+          "type": "number",
+          "description": "Total cost for the account across all grouped items."
+        }
+      },
+      "required": [
+        "account_cost_id",
+        "account_id",
+        "items",
+        "total"
+      ]
+    },
+    "AwsCostResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "aws_cost_result_id",
+      "properties": {
+        "accounts_queried": {
+          "type": "integer",
+          "description": "Count of AWS account IDs included in the query."
+        },
+        "aws_cost_result_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for this AWS cost result."
+        },
+        "group_by": {
+          "type": "string",
+          "enum": [
+            "SERVICE",
+            "INSTANCE_TYPE",
+            "LINKED_ACCOUNT"
+          ],
+          "description": "Dimension used to group AWS costs."
+        },
+        "period": {
+          "type": "object",
+          "description": "Inline reporting period object for this result."
+        },
+        "period_id": {
+          "type": "string",
+          "description": "Identifier of the reporting period covered by this result."
+        },
+        "results": {
+          "type": "array",
+          "description": "Array of per-account cost breakdowns."
+        },
+        "total_cost": {
+          "type": "number",
+          "description": "Total AWS cost across all returned accounts."
+        }
+      },
+      "required": [
+        "accounts_queried",
+        "aws_cost_result_id",
+        "group_by",
+        "period",
+        "period_id",
+        "results",
+        "total_cost"
+      ]
+    },
+    "AzureCostResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "azure_cost_result_id",
+      "properties": {
+        "azure_cost_result_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for this Azure cost result."
+        },
+        "blobs_processed": {
+          "type": "integer",
+          "description": "Number of billing CSV blobs processed on the live path."
+        },
+        "cache_last_refresh": {
+          "type": "string",
+          "description": "Cache refresh marker from the billing cache, or unknown when unavailable."
+        },
+        "meter_filter": {
+          "type": "string",
+          "description": "Optional meter-category or subcategory filter echoed from the request."
+        },
+        "note": {
+          "type": "string",
+          "description": "Optional note, used for the no-matching-blobs live-path response."
+        },
+        "period": {
+          "type": "object",
+          "description": "Inline reporting period object for this result."
+        },
+        "period_id": {
+          "type": "string",
+          "description": "Identifier of the reporting period covered by this result."
+        },
+        "results": {
+          "type": "array",
+          "description": "Array of per-subscription Azure cost breakdowns."
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "cache",
+            "live"
+          ],
+          "description": "Whether the result came from the local cache or live blob processing."
+        },
+        "subscriptions_queried": {
+          "type": "string",
+          "description": "Subscription selection summary; may be a count-like string, all, or a serialized list form depending on path."
+        },
+        "total_cost": {
+          "type": "number",
+          "description": "Total Azure cost across all returned subscriptions."
+        }
+      },
+      "required": [
+        "azure_cost_result_id",
+        "period",
+        "period_id",
+        "results",
+        "source",
+        "subscriptions_queried",
+        "total_cost"
+      ]
+    },
+    "AzureServiceCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "azure_service_cost_id",
+      "properties": {
+        "azure_service_cost_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for this Azure service cost row."
+        },
+        "cost": {
+          "type": "number",
+          "description": "Total cost for the Azure meter category within a subscription."
+        },
+        "meter_subcategories": {
+          "type": "object",
+          "description": "Map of meter subcategory names to their summed costs.",
+          "additionalProperties": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "azure_service_cost_id",
+        "cost",
+        "meter_subcategories"
+      ]
+    },
+    "AzureSubscriptionCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "azure_subscription_cost_id",
+      "properties": {
+        "azure_subscription_cost_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for this Azure subscription cost row."
+        },
+        "gpu_cost": {
+          "type": "number",
+          "description": "Portion of the subscription total attributed to GPU-related usage."
+        },
+        "services": {
+          "type": "object",
+          "description": "Map of meter categories to inline Azure service cost objects."
+        },
+        "subscription_name": {
+          "type": "string",
+          "description": "Azure subscription name represented by this cost breakdown."
+        },
+        "total": {
+          "type": "number",
+          "description": "Total cost for the subscription across all services."
+        }
+      },
+      "required": [
+        "azure_subscription_cost_id",
+        "gpu_cost",
+        "services",
+        "subscription_name",
+        "total"
+      ]
+    },
+    "CapacityMetricResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "capacity_metric_result_id",
+      "properties": {
+        "capacity_metric_result_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for this capacity metric result."
+        },
+        "capacity_totals_id": {
+          "type": "string",
+          "description": "Identifier of the totals row associated with this result."
+        },
+        "capacity_window_id": {
+          "type": "string",
+          "description": "Identifier of the capacity window covered by this result."
+        },
+        "group_by": {
+          "type": "string",
+          "description": "Grouping dimension used for the capacity analysis."
+        },
+        "metric": {
+          "type": "string",
+          "description": "Metric preset requested for the capacity analysis."
+        },
+        "period": {
+          "type": "object",
+          "description": "Inline capacity window object for this result."
+        },
+        "results": {
+          "type": "array",
+          "description": "Array of per-dimension capacity metric entries."
+        },
+        "totals": {
+          "type": "object",
+          "description": "Inline totals object summarizing the returned capacity results."
+        }
+      },
+      "required": [
+        "capacity_metric_result_id",
+        "capacity_totals_id",
+        "capacity_window_id",
+        "group_by",
+        "metric",
+        "period",
+        "results",
+        "totals"
+      ]
+    },
+    "CapacityTotals": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "capacity_totals_id",
+      "properties": {
+        "capacity_totals_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for this capacity totals row."
+        },
+        "overall_utilization_pct": {
+          "type": "number",
+          "description": "Overall utilization percentage across the included dimensions."
+        },
+        "results_truncated": {
+          "type": "boolean",
+          "description": "Whether the result list was truncated after exceeding the maximum returned entries."
+        },
+        "total_dimensions": {
+          "type": "integer",
+          "description": "Count of surviving dimensions before any result-list truncation."
+        },
+        "total_estimated_cost_usd": {
+          "type": "number",
+          "description": "Estimated total cost across included dimensions."
+        },
+        "transient_cost_usd": {
+          "type": "number",
+          "description": "Unused estimated cost attributed to transient dimensions that were excluded."
+        },
+        "transient_excluded": {
+          "type": "integer",
+          "description": "Count of transient dimensions excluded from the totals."
+        },
+        "unused_estimated_cost_usd": {
+          "type": "number",
+          "description": "Estimated unused cost across included dimensions."
+        }
+      },
+      "required": [
+        "capacity_totals_id",
+        "overall_utilization_pct",
+        "total_dimensions",
+        "total_estimated_cost_usd",
+        "unused_estimated_cost_usd"
+      ]
+    },
+    "CapacityWindow": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "capacity_window_id",
+      "properties": {
+        "capacity_window_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for this capacity window."
+        },
+        "end": {
+          "type": "string",
+          "description": "End timestamp of the resolved capacity window in UTC date-time format."
+        },
+        "start": {
+          "type": "string",
+          "description": "Start timestamp of the resolved capacity window in UTC date-time format."
+        }
+      },
+      "required": [
+        "capacity_window_id",
+        "end",
+        "start"
+      ]
+    },
+    "CostMonitorResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "cost_monitor_result_id",
+      "properties": {
+        "_dashboard_link": {
+          "type": "string",
+          "description": "Optional dashboard URL attached by the wrapper service."
+        },
+        "cost_monitor_result_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for this cost monitor result."
+        },
+        "endpoint": {
+          "type": "string",
+          "description": "Cost-monitor endpoint this stored payload corresponds to."
+        },
+        "results": {
+          "type": "array",
+          "description": "Wrapped upstream array payload when a dashboard link is configured."
+        }
+      },
+      "required": [
+        "cost_monitor_result_id",
+        "endpoint"
+      ]
+    },
+    "GcpCostResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "gcp_cost_result_id",
+      "properties": {
+        "breakdown": {
+          "type": "array",
+          "description": "Inline cost breakdown by the selected GCP grouping dimension.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "cost": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "daily_rows": {
+          "type": "integer",
+          "description": "Number of source billing rows returned by the query."
+        },
+        "gcp_cost_result_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for this GCP cost result."
+        },
+        "group_by": {
+          "type": "string",
+          "enum": [
+            "SERVICE",
+            "PROJECT"
+          ],
+          "description": "Dimension used to group GCP costs."
+        },
+        "period": {
+          "type": "object",
+          "description": "Inline reporting period object for this result."
+        },
+        "period_id": {
+          "type": "string",
+          "description": "Identifier of the reporting period covered by this result."
+        },
+        "total_cost": {
+          "type": "number",
+          "description": "Total GCP cost across the reporting period."
+        }
+      },
+      "required": [
+        "breakdown",
+        "daily_rows",
+        "gcp_cost_result_id",
+        "group_by",
+        "period",
+        "period_id",
+        "total_cost"
+      ]
+    },
+    "GcpCostBreakdownItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cost": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Period": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "period_id",
+      "properties": {
+        "end": {
+          "type": "string",
+          "description": "End date of the reporting period in YYYY-MM-DD format."
+        },
+        "period_id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for this reporting period."
+        },
+        "start": {
+          "type": "string",
+          "description": "Start date of the reporting period in YYYY-MM-DD format."
+        }
+      },
+      "required": [
+        "end",
+        "period_id",
+        "start"
+      ]
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_vms",
+          "cluster": "ocpv-tarn",
+          "namespace": "fin-escrow-prod"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_pvcs",
+          "cluster": "ocpv-tarn",
+          "namespace": "fin-escrow-prod"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_babylon_pod_logs",
+          "namespace": "default",
+          "search": "5530718"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "controller": "east",
+          "job_id": 5530718
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 8,
+    "counts_missed": [
+      {
+        "id": "prior-moved",
+        "value": 4,
+        "nouns": [
+          "VMs",
+          "VMIs",
+          "virtual machines",
+          "VirtualMachineInstances",
+          "VirtualMachineInstance",
+          "migrations",
+          "machines",
+          "CRM VMs"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "4 of 4",
+          "four of four",
+          "all four",
+          "all 4",
+          "4/4"
+        ],
+        "ignore_case": true,
+        "asked_by": "how many VMs job 5530718 moved",
+        "rationale": "read from the earlier job's events; the escrow node has 3 VMs, so copying that count gives the wrong number"
+      }
+    ],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

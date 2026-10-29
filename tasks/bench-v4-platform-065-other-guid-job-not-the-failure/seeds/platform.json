@@ -1,0 +1,84 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [
+    {
+      "babylon_anarchy_subject_id": "east-ocp4-cluster.k7vdn",
+      "cluster": "east",
+      "name": "ocp4-cluster.k7vdn",
+      "namespace": "babylon-anarchy-ocp4-cluster",
+      "governor": "ocp4-cluster",
+      "current_state": "provisioning",
+      "desired_state": "started",
+      "healthy": true,
+      "requester_email": "labtester@redhat.com",
+      "instance_vars": {
+        "guid": "k7vdn",
+        "env_type": "ocp4-cluster"
+      },
+      "resource_claim": {
+        "name": "ocp4-cluster-k7vdn",
+        "namespace": "user-labtester-redhat-com"
+      }
+    }
+  ],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [
+    {
+      "babylon_deployment_id": "east-user-labtester-redhat-com-ocp4-cluster-k7vdn",
+      "cluster": "east",
+      "name": "ocp4-cluster-k7vdn",
+      "namespace": "user-labtester-redhat-com",
+      "catalog_item": "ocp4-cluster.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "5e9a1c74-2f08-4d6b-83a7-b0c41d92e6f5",
+      "lifespan": {
+        "default": "3d",
+        "maximum": "5d"
+      },
+      "healthy": true,
+      "ready": false,
+      "state": "provisioning",
+      "current_state": "provisioning",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "k7vdn",
+        "env_type": "ocp4-cluster"
+      }
+    }
+  ],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "job_events": [],
+  "jobs": [
+    {
+      "job_id": 73452,
+      "job_name": "RHPDS agd-v2.ocp4-cluster.prod-m3zpw-provision",
+      "status": "failed",
+      "failed": true,
+      "started": "2026-06-11T13:20:00.000Z",
+      "finished": "2026-06-11T13:24:37.000Z",
+      "duration_seconds": 277,
+      "launch_type": "manual",
+      "job_explanation": "Job failed: subnet pool quota exhausted for the target region",
+      "template_name": "RHPDS agd-v2.ocp4-cluster.prod-m3zpw-provision",
+      "env_type": "prod",
+      "guid": "m3zpw",
+      "action": "provision",
+      "cloud_provider": "aws",
+      "display_name": "ocp4-cluster",
+      "controller": "east",
+      "id": "east-73452"
+    }
+  ],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

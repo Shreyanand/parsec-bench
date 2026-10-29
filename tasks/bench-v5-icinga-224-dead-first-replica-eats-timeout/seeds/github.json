@@ -1,0 +1,24 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "file_id": "rhpds/rhdp-monitoring@HEAD:plugins/idm/check_ldap_bind.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/idm/check_ldap_bind.py",
+      "ref": "HEAD",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_ldap_bind.py - can the SSO broker's service account bind to the IdM directory?\n\nTries the servers in vars.ldap_servers one at a time, in the order they are listed, and\nreports on the first one that accepts the bind. Each server gets CONNECT_RETRIES tries of up\nto CONNECT_TIMEOUT_S seconds each before the plugin moves on to the next one. The plugin\nkeeps no state between runs, so every run begins with the first server in the list.\n\"\"\"\nimport sys\nimport time\n\nimport ldap\n\nCONNECT_TIMEOUT_S = 20\nCONNECT_RETRIES = 2\nBIND_WARN_MS = 500\n\n\ndef try_server(server, bind_dn, password):\n    for _attempt in range(CONNECT_RETRIES):\n        conn = ldap.initialize(f\"ldaps://{server}\")\n        conn.set_option(ldap.OPT_NETWORK_TIMEOUT, CONNECT_TIMEOUT_S)\n        try:\n            start = time.monotonic()\n            conn.simple_bind_s(bind_dn, password)\n            return int((time.monotonic() - start) * 1000)\n        except ldap.SERVER_DOWN:\n            pass\n    return None\n\n\ndef main():\n    servers = sys.argv[1].split(\",\")\n    bind_dn, password = sys.argv[2], sys.argv[3]\n    for server in servers:\n        ms = try_server(server, bind_dn, password)\n        if ms is None:\n            pass\n        else:\n            state = \"WARNING\" if ms > BIND_WARN_MS else \"OK\"\n            print(f\"LDAP {state} - bind to {server} in {ms} ms|bind_ms={ms}ms;{BIND_WARN_MS};;0\")\n            sys.exit(1 if state == \"WARNING\" else 0)\n    print(\"LDAP CRITICAL - no server in \" + \",\".join(servers) + \" accepted the bind\")\n    sys.exit(2)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@main:plugins/idm/check_ldap_bind.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/idm/check_ldap_bind.py",
+      "ref": "main",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_ldap_bind.py - can the SSO broker's service account bind to the IdM directory?\n\nTries the servers in vars.ldap_servers one at a time, in the order they are listed, and\nreports on the first one that accepts the bind. Each server gets CONNECT_RETRIES tries of up\nto CONNECT_TIMEOUT_S seconds each before the plugin moves on to the next one. The plugin\nkeeps no state between runs, so every run begins with the first server in the list.\n\"\"\"\nimport sys\nimport time\n\nimport ldap\n\nCONNECT_TIMEOUT_S = 20\nCONNECT_RETRIES = 2\nBIND_WARN_MS = 500\n\n\ndef try_server(server, bind_dn, password):\n    for _attempt in range(CONNECT_RETRIES):\n        conn = ldap.initialize(f\"ldaps://{server}\")\n        conn.set_option(ldap.OPT_NETWORK_TIMEOUT, CONNECT_TIMEOUT_S)\n        try:\n            start = time.monotonic()\n            conn.simple_bind_s(bind_dn, password)\n            return int((time.monotonic() - start) * 1000)\n        except ldap.SERVER_DOWN:\n            pass\n    return None\n\n\ndef main():\n    servers = sys.argv[1].split(\",\")\n    bind_dn, password = sys.argv[2], sys.argv[3]\n    for server in servers:\n        ms = try_server(server, bind_dn, password)\n        if ms is None:\n            pass\n        else:\n            state = \"WARNING\" if ms > BIND_WARN_MS else \"OK\"\n            print(f\"LDAP {state} - bind to {server} in {ms} ms|bind_ms={ms}ms;{BIND_WARN_MS};;0\")\n            sys.exit(1 if state == \"WARNING\" else 0)\n    print(\"LDAP CRITICAL - no server in \" + \",\".join(servers) + \" accepted the bind\")\n    sys.exit(2)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

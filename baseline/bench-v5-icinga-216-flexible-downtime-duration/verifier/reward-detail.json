@@ -1,0 +1,61 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "edi-relay-lis-03",
+          "service": "as2-inbox-files"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "window-start",
+        "any_of": [
+          "22:00"
+        ],
+        "ignore_case": true,
+        "asked_by": "between which UTC times it is allowed to kick in",
+        "rationale": "start_time 1795298400 is 2026-11-21 22:00 UTC",
+        "derived": true,
+        "note": "Converted from start_time epoch 1795298400 (2026-11-21 22:00 UTC); the seed stores only the epoch."
+      },
+      {
+        "id": "window-end",
+        "any_of": [
+          "06:00",
+          "6:00 am",
+          "6 am",
+          "6am",
+          "6:00am"
+        ],
+        "ignore_case": true,
+        "asked_by": "between which UTC times it is allowed to kick in",
+        "rationale": "end_time 1795327200 is 2026-11-22 06:00 UTC",
+        "derived": true,
+        "note": "Converted from end_time epoch 1795327200 (2026-11-22 06:00 UTC); the seed stores only the epoch."
+      }
+    ],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

@@ -1,0 +1,405 @@
+diff --git a/src/agent/orchestrator.py b/src/agent/orchestrator.py
+index 4be7a24..6090d32 100644
+--- a/src/agent/orchestrator.py
++++ b/src/agent/orchestrator.py
+@@ -402,6 +402,11 @@ _GITHUB_TOOLS = frozenset(
+ 
+ async def _execute_tool(tool_name: str, tool_input: dict) -> dict:
+     """Dispatch a tool call to the appropriate domain handler."""
++    from src.parsecsim.sim_backend import dispatch_simulated, simulation_enabled
++
++    if simulation_enabled():
++        return await dispatch_simulated(tool_name, tool_input)
++
+     # DB and MCP tools (checked first due to dynamic name matching)
+     db_result = await _execute_db_tool(tool_name, tool_input)
+     if db_result is not None:
+diff --git a/src/agent/tool_definitions.py b/src/agent/tool_definitions.py
+index 8601204..47eba0d 100644
+--- a/src/agent/tool_definitions.py
++++ b/src/agent/tool_definitions.py
+@@ -1375,6 +1375,19 @@ _CONDITIONAL_TOOLS: dict[str, bool] = {
+     "query_icinga": _is_icinga_configured(),
+ }
+ 
++# --- simulation redirect (scripts/parsec-patch.sh) ---
++# TOOLS is defined far above this point, and both it and the gate dict are passed
++# in rather than imported back: this runs during this module's own execution, so
++# importing it from sim_backend would see a half-initialised module.
++from src.parsecsim.sim_backend import (  # noqa: E402
++    preflight_routed_tools as _sim_preflight,
++    simulation_enabled as _sim_enabled,
++)
++
++if _sim_enabled():
++    _CONDITIONAL_TOOLS = dict.fromkeys(_CONDITIONAL_TOOLS, True)
++    _sim_preflight({t["name"] for t in TOOLS}, _CONDITIONAL_TOOLS)
++
+ 
+ def _get_reporting_mcp_tools() -> list[dict]:
+     """Return dynamically discovered Reporting MCP tool schemas.
+diff --git a/src/parsecsim/__init__.py b/src/parsecsim/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/parsecsim/routing.py b/src/parsecsim/routing.py
+new file mode 100644
+index 0000000..10ed2b4
+--- /dev/null
++++ b/src/parsecsim/routing.py
+@@ -0,0 +1,79 @@
++"""Which simulated service answers which parsec tool.
++
++The source of truth is sim-specs/<service>/openapi.json -- one OpenAPI path per
++tool -- and tests/test_parsecsim_routing.py compares this map against those
++files in both directions, so a tool added to a spec without an entry here fails
++a test rather than producing a puzzling run-time error.
++
++Kept as a literal rather than derived from the specs at import time: this module
++is copied into parsec by the redirect patch, where sim-specs/ does not exist.
++"""
++
++from __future__ import annotations
++
++#: Published host port per service. The internal port is 8086 in every
++#: container; only the published one differs.
++SERVICE_PORTS: dict[str, int] = {
++    "platform": 8086,
++    "github": 8087,
++    "icinga": 8088,
++    "cost": 8089,
++    "cloud": 8090,
++}
++
++TOOL_SERVICE: dict[str, str] = {
++    # platform -- one service, not four, because these four tools identify the
++    # same provisions by the same strings: a guid names an AAP2 job, the
++    # AnarchySubject and ResourceClaim that launched it, the namespace it
++    # provisioned, and the log lines all three wrote. Splitting them would put
++    # the join keys in separate stores.
++    "query_aap2": "platform",
++    "query_splunk": "platform",
++    "query_ocpv_cluster": "platform",
++    "query_babylon_catalog": "platform",
++    # github
++    "fetch_github_file": "github",
++    "lookup_catalog_item": "github",
++    "search_github_repo": "github",
++    "search_agnosticv_prs": "github",
++    # icinga
++    "query_icinga": "icinga",
++    # cloud
++    "query_azure_pools": "cloud",
++    "query_gcp_projects": "cloud",
++    "query_cloudtrail": "cloud",
++    "query_aws_account": "cloud",
++    "query_aws_account_db": "cloud",
++    "query_marketplace_agreements": "cloud",
++    # cost
++    "query_aws_costs": "cost",
++    "query_gcp_costs": "cost",
++    "query_azure_costs": "cost",
++    "query_aws_capacity_manager": "cost",
++    "query_cost_monitor": "cost",
++}
++
++#: Tools parsec has that no spec models, named so the backend can say *why* a
++#: call cannot be served instead of reporting an unknown tool.
++#: query_provisions_db and the db_* introspection tools are excluded by design --
++#: they are SQL-shaped and fit the harness's filter idiom badly -- and the thirty
++#: scenarios hand the agent the identifier a provisions-DB lookup would have
++#: found.
++UNMODELLED: frozenset[str] = frozenset(
++    {
++        "query_provisions_db",
++        "db_describe_table",
++        "db_list_tables",
++        "db_table_sample",
++        "db_read_knowledge",
++        "query_aws_pricing",
++        "render_chart",
++        "generate_report",
++        "search_github_code",
++    }
++)
++
++
++def service_for(tool: str) -> str | None:
++    """The simulated service that answers `tool`, or None if none does."""
++    return TOOL_SERVICE.get(tool)
+diff --git a/src/parsecsim/sim_backend.py b/src/parsecsim/sim_backend.py
+new file mode 100644
+index 0000000..e9bd2d5
+--- /dev/null
++++ b/src/parsecsim/sim_backend.py
+@@ -0,0 +1,271 @@
++"""Redirect parsec's tool calls to the simulated services.
++
++Installed into parsec by scripts/parsec-patch.sh, which also adds a four-line
++hook at the top of ``orchestrator._execute_tool``. That single function is
++parsec's sole dispatch point for every tool -- ``parsec_mcp.py`` reflects all 22
++tool schemas onto it -- so intercepting there redirects everything without
++faking a backend per tool.
++
++Two contracts this module must keep, both load-bearing:
++
++1. **It returns a dict and never raises.** Every parsec tool returns
++   ``{"error": ...}`` rather than raising, and ``parsec_mcp._make_handler`` sets
++   the MCP ``is_error`` flag from ``"error" in result``. Raising here would
++   surface a transport fault to the model instead of a tool failure it can react
++   to.
++2. **Tool names stay bare.** The interception is inside ``_execute_tool``, below
++   the ``mcp__parsec__`` naming the SDK applies, so the trace records
++   ``query_aap2`` -- which is what the bench verifier matches literally.
++"""
++
++from __future__ import annotations
++
++import asyncio
++import json
++import logging
++import os
++from collections.abc import Iterable, Mapping
++from pathlib import Path
++
++# Relative, deliberately. This module is copied into parsec by
++# scripts/parsec-patch.sh, where it lives at src/parsecsim/ and the package is
++# reached as `src.parsecsim`. An absolute `from parsecsim.routing import ...`
++# resolves in THIS repo, where src/ is the package root, and fails inside parsec
++# with ModuleNotFoundError: No module named 'parsecsim'. A relative import is
++# correct under both layouts. Found by a live run, not by a test -- see
++# test_the_modules_use_relative_imports_so_they_work_inside_parsec.
++from .routing import SERVICE_PORTS, TOOL_SERVICE, UNMODELLED, service_for
++
++logger = logging.getLogger(__name__)
++
++#: Set to any non-empty value to redirect. Off by default so an unset variable
++#: can never silently point a real deployment at a simulator.
++_FLAG = "PARSEC_SIM"
++_TRACE = "PARSEC_SIM_TRACE"
++
++#: Ceiling on one simulated tool call, in seconds. Generous on purpose -- the
++#: harness prompts an LLM to synthesise every response, so 30-60s is normal and a
++#: slow call is not a broken one.
++#:
++#: A timeout is NOT a retry, and CLAUDE.md's "don't add retries to smooth over the
++#: ~29s latency" does not argue against one. Without a ceiling a single hung
++#: simulation stalls a whole suite run forever: the cost harness accepted an MCP
++#: message, answered 202, and then never responded, and a 30-scenario run sat on
++#: that one call for an hour. A bounded wait turns that into an {"error": ...} the
++#: model can react to and the run can move past.
++_TIMEOUT = "PARSEC_SIM_TIMEOUT"
++DEFAULT_TIMEOUT_SECONDS = 300.0
++
++
++def call_timeout() -> float:
++    raw = os.environ.get(_TIMEOUT, "").strip()
++    if not raw:
++        return DEFAULT_TIMEOUT_SECONDS
++    try:
++        value = float(raw)
++    except ValueError:
++        logger.warning("ignoring %s=%r: not a number", _TIMEOUT, raw)
++        return DEFAULT_TIMEOUT_SECONDS
++    return value if value > 0 else DEFAULT_TIMEOUT_SECONDS
++
++
++def simulation_enabled() -> bool:
++    return bool(os.environ.get(_FLAG, "").strip())
++
++
++class RoutedToolsMissing(RuntimeError):
++    """A simulated run whose routed tools parsec would not show the model."""
++
++
++def preflight_routed_tools(
++    available: "Iterable[str]", gates: "Mapping[str, bool]"
++) -> None:
++    """Refuse to start a simulated run that cannot measure what it claims to.
++
++    parsec hides a tool whose real backend is unconfigured -- ``query_icinga``
++    behind ``icinga.mcp_url`` and ``query_splunk`` behind a Splunk credential
++    (``tool_definitions._CONDITIONAL_TOOLS``). Under simulation those gates are
++    meaningless, because the redirect answers every call before a real backend
++    is ever reached; the patch therefore forces them on and calls this to check
++    the result.
++
++    It exists because the alternative is silent. In the 2026-09-07 live run
++    ``query_icinga`` was never exposed, so all eight ``bench-v4-icinga-*``
++    scenarios scored an agent's reaction to a missing tool (mean 0.416) and the
++    icinga harness was never contacted at all; ``query_splunk`` was absent the
++    same way and ``bench-v4-platform-023`` made zero tool calls and still banked
++    0.600 from a refusal. Nothing failed, which is the problem: a reward that
++    measures the wrong thing is worse than no reward.
++
++    The hook in ``_execute_tool`` cannot catch this -- a tool the model was
++    never shown produces no call to intercept -- so the check has to run at
++    import, before any measurement. Both inputs are passed in rather than
++    imported: this runs *during* ``tool_definitions``' own module execution, and
++    importing it back would see a half-initialised module.
++
++    Raises:
++        RoutedToolsMissing: naming every routed tool that is absent or gated
++            off. Deliberately fatal, and deliberately not the in-band
++            ``{"error": ...}`` dict ``dispatch_simulated`` returns: this is a
++            broken harness, not a tool failure an agent could react to.
++    """
++    names = set(available)
++    routed = sorted(TOOL_SERVICE)
++    absent = [n for n in routed if n not in names]
++    gated = [n for n in routed if gates.get(n) is False]
++    if not absent and not gated:
++        return
++    lines = ["simulation is on but parsec would not expose every routed tool:"]
++    if absent:
++        lines.append(f"  absent from TOOLS entirely: {absent}")
++    if gated:
++        lines.append(
++            f"  gated off by an unconfigured backend: {gated} -- under "
++            f"simulation these gates should have been forced on"
++        )
++    lines.append(
++        "  Every tool in parsecsim.routing.TOOL_SERVICE must reach the "
++        "simulation, or the scenarios that need it measure nothing."
++    )
++    raise RoutedToolsMissing("\n".join(lines))
++
++
++def service_url(service: str) -> str | None:
++    """The MCP endpoint for `service`.
++
++    An explicit ``<SERVICE>_MCP_URL`` wins, which is what bench-run.sh exports
++    per declared service. The localhost fallback uses the documented published
++    ports, so a developer running the compose stack needs no configuration.
++    """
++    explicit = os.environ.get(f"{service.upper()}_MCP_URL", "").strip()
++    if explicit:
++        return explicit
++    port = SERVICE_PORTS.get(service)
++    if port is None:
++        return None
++    return f"http://localhost:{port}/mcp/sse"
++
++
++def _result_is_error(result: object) -> bool:
++    """Did this CallToolResult report a tool error?
++
++    The field is spelled differently across mcp majors -- ``is_error`` in 2.x and
++    ``isError`` in 1.x -- and this module ships into **parsec's** dependency tree,
++    which pins only ``mcp>=1.8.0``. So the spelling is not ours to choose and both
++    have to be read.
++
++    Getting this wrong is the exact trap CLAUDE.md records as having bitten this
++    repo three times, and this was the fourth: a live run against parsec's venv
++    (mcp 1.x) raised `'CallToolResult' object has no attribute 'is_error'` on
++    every single tool call, and the agent -- correctly -- diagnosed the harness
++    instead of the scenario.
++
++    Unknown means not an error: a missing flag on a result that carried content is
++    a successful call, and defaulting to True would turn every call into a failure.
++    """
++    for attribute in ("is_error", "isError"):
++        value = getattr(result, attribute, None)
++        if value is not None:
++            return bool(value)
++    return False
++
++
++async def _call_mcp_wire(url: str, tool: str, args: dict) -> tuple[bool, str]:
++    """One MCP tool call, unshaped: (did the harness flag it is_error, its text).
++
++    Stubbed in tests; the only place that touches the wire. Kept apart from
++    `_call_mcp` so a measuring caller (bench.replay.live_call) can still see the
++    is_error flag that `_call_mcp` folds into an ``{"error": ...}`` dict for
++    parsec -- the agent-facing shape is `_call_mcp`'s, and it does not change.
++    """
++    from mcp import ClientSession
++    from mcp.client.sse import sse_client
++
++    async with sse_client(url) as (read, write):
++        async with ClientSession(read, write) as session:
++            await session.initialize()
++            result = await session.call_tool(tool, args)
++
++    texts = [
++        block.text
++        for block in (result.content or [])
++        if getattr(block, "type", None) == "text" and getattr(block, "text", None)
++    ]
++    return _result_is_error(result), "\n".join(texts)
++
++
++def _shape(tool: str, flagged: bool, payload: str) -> dict:
++    """The dict parsec's tools return, from one call's flag and text."""
++    if flagged:
++        return {"error": payload or f"{tool} failed with no message"}
++    try:
++        parsed = json.loads(payload)
++    except (json.JSONDecodeError, TypeError):
++        return {"result": payload}
++    return parsed if isinstance(parsed, dict) else {"result": parsed}
++
++
++async def _call_mcp(url: str, tool: str, args: dict) -> dict:
++    """One MCP tool call, in the shape parsec's tools return."""
++    flagged, payload = await _call_mcp_wire(url, tool, args)
++    return _shape(tool, flagged, payload)
++
++
++def record(tool_name: str, tool_input: dict, result: object) -> None:
++    """Append one call to the trace file, if one is configured.
++
++    Best-effort by design: a measurement that dies because a log could not be
++    written is worse than a measurement with no log. Mirrors the non-fatal
++    tracing rule in src/generic_agent/tracing.py.
++    """
++    path = os.environ.get(_TRACE, "").strip()
++    if not path:
++        return
++    entry = {
++        "name": tool_name,
++        "arguments": tool_input,
++        "result": result,
++        "is_error": isinstance(result, dict) and "error" in result,
++    }
++    try:
++        with Path(path).open("a", encoding="utf-8") as handle:
++            handle.write(json.dumps(entry, default=str) + "\n")
++    except Exception:  # noqa: BLE001 - tracing is never fatal
++        logger.debug("could not append to %s", path, exc_info=True)
++
++
++async def dispatch_simulated(tool_name: str, tool_input: dict) -> dict:
++    """Serve one parsec tool call from the simulated services."""
++    if tool_name in UNMODELLED:
++        result = {
++            "error": (
++                f"{tool_name} is not modelled by the simulation. The benchmark "
++                f"excludes it deliberately; the question should be answerable "
++                f"from the identifiers you were given."
++            )
++        }
++        record(tool_name, tool_input, result)
++        return result
++
++    service = service_for(tool_name)
++    url = service_url(service) if service else None
++    if url is None:
++        result = {"error": f"no simulated service answers {tool_name}"}
++        record(tool_name, tool_input, result)
++        return result
++
++    try:
++        result = await asyncio.wait_for(
++            _call_mcp(url, tool_name, tool_input or {}), timeout=call_timeout())
++    except asyncio.TimeoutError:
++        seconds = call_timeout()
++        logger.error("simulated %s timed out after %.0fs", tool_name, seconds)
++        result = {"error": (
++            f"{tool_name} did not respond within {seconds:.0f}s. The simulated "
++            f"service accepted the request and never answered; treat this as the "
++            f"tool being unavailable rather than as a result.")}
++    except Exception as exc:  # noqa: BLE001 - parity with every parsec tool
++        logger.exception("simulated %s failed", tool_name)
++        result = {"error": str(exc)}
++    record(tool_name, tool_input, result)
++    return result

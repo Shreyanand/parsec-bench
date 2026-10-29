@@ -1,0 +1,198 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [
+    {
+      "babylon_deployment_id": "skua-user-lmoreau-redhat-com-gitops-day-hq8vs",
+      "cluster": "skua",
+      "name": "gitops-day-hq8vs",
+      "namespace": "user-lmoreau-redhat-com",
+      "catalog_item": "ocp4.gitops-day.event",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "8b5e2d71-04c9-4f3a-a6d8-e19c37b0f452",
+      "healthy": true,
+      "ready": true,
+      "state": "started",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "hq8vs",
+        "env_type": "ocp4-gitops-day"
+      },
+      "lifespan": {
+        "start": "2026-11-18T07:30:00Z",
+        "end": "2026-11-25T07:30:00Z"
+      }
+    },
+    {
+      "babylon_deployment_id": "skua-user-pferreira-redhat-com-gitops-day-pw3nd",
+      "cluster": "skua",
+      "name": "gitops-day-pw3nd",
+      "namespace": "user-pferreira-redhat-com",
+      "catalog_item": "ocp4.gitops-day.event",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "8b5e2d71-04c9-4f3a-a6d8-e19c37b0f452",
+      "healthy": false,
+      "ready": false,
+      "state": "failed",
+      "current_state": "failed",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "pw3nd",
+        "env_type": "ocp4-gitops-day"
+      },
+      "lifespan": {
+        "start": "2026-11-18T07:30:00Z",
+        "end": "2026-11-25T07:30:00Z"
+      }
+    },
+    {
+      "babylon_deployment_id": "skua-user-jnakashima-redhat-com-gitops-day-cx9tl",
+      "cluster": "skua",
+      "name": "gitops-day-cx9tl",
+      "namespace": "user-jnakashima-redhat-com",
+      "catalog_item": "ocp4.gitops-day.event",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "8b5e2d71-04c9-4f3a-a6d8-e19c37b0f452",
+      "healthy": true,
+      "ready": true,
+      "state": "stopped",
+      "current_state": "stopped",
+      "desired_state": "stopped",
+      "instance_vars": {
+        "guid": "cx9tl",
+        "env_type": "ocp4-gitops-day"
+      },
+      "lifespan": {
+        "start": "2026-11-18T07:30:00Z",
+        "end": "2026-11-25T07:30:00Z"
+      }
+    },
+    {
+      "babylon_deployment_id": "skua-user-jnakashima-redhat-com-podman-lab-dr4hw",
+      "cluster": "skua",
+      "name": "podman-lab-dr4hw",
+      "namespace": "user-jnakashima-redhat-com",
+      "catalog_item": "rhel.podman-lab.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "f07a4c38-9d21-4e65-b3f0-52c8e6a1d97b",
+      "healthy": true,
+      "ready": true,
+      "state": "started",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "dr4hw",
+        "env_type": "rhel-podman-lab"
+      },
+      "lifespan": {
+        "start": "2026-11-12T16:00:00Z",
+        "end": "2026-11-26T16:00:00Z"
+      }
+    },
+    {
+      "babylon_deployment_id": "skua-user-ebrennan-redhat-com-gitops-day-ej5rm",
+      "cluster": "skua",
+      "name": "gitops-day-ej5rm",
+      "namespace": "user-ebrennan-redhat-com",
+      "catalog_item": "ocp4.gitops-day.event",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "8b5e2d71-04c9-4f3a-a6d8-e19c37b0f452",
+      "healthy": true,
+      "ready": true,
+      "state": "started",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "ej5rm",
+        "env_type": "ocp4-gitops-day"
+      },
+      "lifespan": {
+        "start": "2026-11-18T07:30:00Z",
+        "end": "2026-11-25T07:30:00Z"
+      }
+    },
+    {
+      "babylon_deployment_id": "skua-user-ebrennan-redhat-com-gitops-day-fk2zb",
+      "cluster": "skua",
+      "name": "gitops-day-fk2zb",
+      "namespace": "user-ebrennan-redhat-com",
+      "catalog_item": "ocp4.gitops-day.event",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "8b5e2d71-04c9-4f3a-a6d8-e19c37b0f452",
+      "healthy": true,
+      "ready": true,
+      "state": "started",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "fk2zb",
+        "env_type": "ocp4-gitops-day"
+      },
+      "lifespan": {
+        "start": "2026-11-18T09:05:00Z",
+        "end": "2026-11-25T09:05:00Z"
+      }
+    },
+    {
+      "babylon_deployment_id": "skua-user-mlindgren-redhat-com-podman-lab-gm7yd",
+      "cluster": "skua",
+      "name": "podman-lab-gm7yd",
+      "namespace": "user-mlindgren-redhat-com",
+      "catalog_item": "rhel.podman-lab.prod",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "f07a4c38-9d21-4e65-b3f0-52c8e6a1d97b",
+      "healthy": true,
+      "ready": true,
+      "state": "stopped",
+      "current_state": "stopped",
+      "desired_state": "stopped",
+      "instance_vars": {
+        "guid": "gm7yd",
+        "env_type": "rhel-podman-lab"
+      },
+      "lifespan": {
+        "start": "2026-11-10T11:20:00Z",
+        "end": "2026-11-24T11:20:00Z"
+      }
+    },
+    {
+      "babylon_deployment_id": "albatross-user-kdasgupta-redhat-com-gitops-day-yt6wc",
+      "cluster": "albatross",
+      "name": "gitops-day-yt6wc",
+      "namespace": "user-kdasgupta-redhat-com",
+      "catalog_item": "ocp4.gitops-day.event",
+      "catalog_namespace": "babylon-catalog-prod",
+      "asset_uuid": "8b5e2d71-04c9-4f3a-a6d8-e19c37b0f452",
+      "healthy": true,
+      "ready": true,
+      "state": "started",
+      "current_state": "started",
+      "desired_state": "started",
+      "instance_vars": {
+        "guid": "yt6wc",
+        "env_type": "ocp4-gitops-day"
+      },
+      "lifespan": {
+        "start": "2026-11-18T07:30:00Z",
+        "end": "2026-11-25T07:30:00Z"
+      }
+    }
+  ],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

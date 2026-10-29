@@ -1,0 +1,165 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "main",
+      "path": "roles/create_inventory/tasks/main.yml",
+      "content": "---\n- name: Build the VM inventory\n  ansible.builtin.set_fact:\n    cnv_vm_spec: \"{{ vm_spec_literal | to_json }}\"\n  vars:\n    vm_spec_literal: \"{'cores': 4, 'memory': '16Gi'}\"\n\n- name: Apply the VM inventory\n  ansible.builtin.include_tasks: apply_inventory.yml\n",
+      "file_id": "agnosticd/cloud_provider_openshift_cnv@main-roles/create_inventory/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "HEAD",
+      "path": "roles/create_inventory/tasks/main.yml",
+      "content": "---\n- name: Build the VM inventory\n  ansible.builtin.set_fact:\n    cnv_vm_spec: \"{{ vm_spec_literal | to_json }}\"\n  vars:\n    vm_spec_literal: \"{'cores': 4, 'memory': '16Gi'}\"\n\n- name: Apply the VM inventory\n  ansible.builtin.include_tasks: apply_inventory.yml\n",
+      "file_id": "agnosticd/cloud_provider_openshift_cnv@HEAD-roles/create_inventory/tasks/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "main",
+      "search": "Build the VM inventory",
+      "matches": [
+        "roles/create_inventory/tasks/main.yml",
+        "roles/create_inventory/defaults/main.yml",
+        "roles/apply_inventory/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/cloud_provider_openshift_cnv@main-Build-the-VM-inventory"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "main",
+      "search": "to_json",
+      "matches": [
+        "roles/create_inventory/tasks/main.yml",
+        "roles/create_inventory/defaults/main.yml",
+        "roles/apply_inventory/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/cloud_provider_openshift_cnv@main-to_json"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "main",
+      "search": "create_inventory",
+      "matches": [
+        "roles/create_inventory/tasks/main.yml",
+        "roles/create_inventory/defaults/main.yml",
+        "roles/apply_inventory/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/cloud_provider_openshift_cnv@main-create_inventory"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "main",
+      "search": "cnv_vm_spec",
+      "matches": [
+        "roles/create_inventory/tasks/main.yml",
+        "roles/create_inventory/defaults/main.yml",
+        "roles/apply_inventory/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/cloud_provider_openshift_cnv@main-cnv_vm_spec"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "main",
+      "search": "inventory",
+      "matches": [
+        "roles/create_inventory/tasks/main.yml",
+        "roles/create_inventory/defaults/main.yml",
+        "roles/apply_inventory/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/cloud_provider_openshift_cnv@main-inventory"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "HEAD",
+      "search": "Build the VM inventory",
+      "matches": [
+        "roles/create_inventory/tasks/main.yml",
+        "roles/create_inventory/defaults/main.yml",
+        "roles/apply_inventory/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/cloud_provider_openshift_cnv@HEAD-Build-the-VM-inventory"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "HEAD",
+      "search": "to_json",
+      "matches": [
+        "roles/create_inventory/tasks/main.yml",
+        "roles/create_inventory/defaults/main.yml",
+        "roles/apply_inventory/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/cloud_provider_openshift_cnv@HEAD-to_json"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "HEAD",
+      "search": "create_inventory",
+      "matches": [
+        "roles/create_inventory/tasks/main.yml",
+        "roles/create_inventory/defaults/main.yml",
+        "roles/apply_inventory/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/cloud_provider_openshift_cnv@HEAD-create_inventory"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "HEAD",
+      "search": "cnv_vm_spec",
+      "matches": [
+        "roles/create_inventory/tasks/main.yml",
+        "roles/create_inventory/defaults/main.yml",
+        "roles/apply_inventory/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/cloud_provider_openshift_cnv@HEAD-cnv_vm_spec"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "cloud_provider_openshift_cnv",
+      "ref": "HEAD",
+      "search": "inventory",
+      "matches": [
+        "roles/create_inventory/tasks/main.yml",
+        "roles/create_inventory/defaults/main.yml",
+        "roles/apply_inventory/tasks/main.yml"
+      ],
+      "total_matches": 3,
+      "truncated": false,
+      "repo_search_result_id": "agnosticd/cloud_provider_openshift_cnv@HEAD-inventory"
+    }
+  ],
+  "similar_items": []
+}

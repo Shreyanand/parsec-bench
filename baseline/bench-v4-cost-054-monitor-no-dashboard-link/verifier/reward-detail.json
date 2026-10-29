@@ -1,0 +1,34 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "providers",
+          "start_date": "2026-08-01",
+          "end_date": "2026-08-31"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

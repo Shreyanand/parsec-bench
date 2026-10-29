@@ -1,0 +1,25 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [
+    {
+      "id": "pool-01-389",
+      "used": true,
+      "projecttag": "zt-image-mode-basics",
+      "azure_subscription_id": "pool-01-389",
+      "database": "pools"
+    },
+    {
+      "id": "pool-01-390",
+      "used": false,
+      "projecttag": "",
+      "azure_subscription_id": "pool-01-390",
+      "database": "pools"
+    }
+  ],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": []
+}

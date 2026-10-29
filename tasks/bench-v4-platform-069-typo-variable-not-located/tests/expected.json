@@ -1,0 +1,65 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 58204
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles/ocp4_workload_edge_mirror/tasks/main.yml"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "undefined-variable",
+        "any_of": [
+          "edge_mirror_regsitry_auth"
+        ],
+        "ignore_case": true,
+        "asked_by": "Tell me the exact variable name the error says is undefined",
+        "rationale": "the misspelled name exactly as the fatal line prints it. It is in the job log and the failed event only, never in the instruction, in any github file or in any repo_search_results row. It is the one required fact the log alone earns. An answer that reports the file's variable as the undefined one never writes this spelling"
+      },
+      {
+        "id": "credential-variable",
+        "any_of": [
+          "edge_mirror_registry_basic_auth"
+        ],
+        "ignore_case": true,
+        "asked_by": "Tell me which variable the failing task passes as its registry credential",
+        "rationale": "the near-miss the failing task really references, visible in the fetched tasks/main.yml on the unredacted --auth-basic line and as the key of the redacted vars line. Fetch-only and not guessable from the log: un-swapping 'regsitry' gives edge_mirror_registry_auth, which neither contains nor is contained in this name"
+      },
+      {
+        "id": "credential-option",
+        "any_of": [
+          "auth-basic"
+        ],
+        "ignore_case": true,
+        "asked_by": "and through which option",
+        "rationale": "the oc registry login flag the credential goes through. It occurs only in the fetched tasks/main.yml, never in the log or the instruction, so only the fetch earns it"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

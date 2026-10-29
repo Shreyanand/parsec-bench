@@ -1,0 +1,185 @@
+{
+ "schema": "bench/v4",
+ "tool_calls": {
+  "match": "ordered-subsequence",
+  "expected": [
+   {
+    "name": "query_aap2",
+    "args": {
+     "action": "get_job_log",
+     "controller": "west",
+     "job_id": 2817734
+    }
+   },
+   {
+    "name": "lookup_catalog_item",
+    "args": {}
+   },
+   {
+    "name": "fetch_github_file",
+    "args": {
+     "owner": "agnosticd",
+     "repo": "agnosticd-v2",
+     "path": "agd-v2/edge-ai-inference-lab/prod.yaml"
+    }
+   },
+   {
+    "name": "query_splunk",
+    "args": {
+     "action": "search_aap2_logs",
+     "controller": "west"
+    }
+   }
+  ]
+ },
+ "answer": {
+  "fold_markup": true,
+  "required": [
+   {
+    "id": "instance-group",
+    "any_of": [
+     "exec-pool-b"
+    ],
+    "ignore_case": true,
+    "asked_by": "check the item's config",
+    "rationale": "where this item's jobs run. Only in prod.yaml's deployer block (and in the Splunk rows reached through it); the job log never names it"
+   },
+   {
+    "id": "containers-full",
+    "any_of": [
+     "/var/lib/containers",
+     "100% used",
+     "100% full",
+     "at 100%"
+    ],
+    "ignore_case": true,
+    "asked_by": "what actually ran out of space",
+    "rationale": "the volume that filled. Only in the controller's Splunk rows"
+   },
+   {
+    "id": "prune-disabled",
+    "ignore_case": true,
+    "any_of": [
+     "podman-image-prune",
+     "image prune",
+     "image-prune",
+     "prune timer",
+     "pruning",
+     "not re-enabled",
+     "MW-4471",
+     "unused EE images",
+     "212 unused"
+    ],
+    "asked_by": "why it happened",
+    "rationale": "the cause behind the full disk: image cleanup left off after a maintenance. Only in one Splunk row"
+   },
+   {
+    "id": "localhost-not-bastion",
+    "derived": true,
+    "ignore_case": true,
+    "any_of": [
+     "localhost",
+     "execution node",
+     "exec node",
+     "aap-exec-b0",
+     "inside the execution environment",
+     "inside the EE",
+     "job container",
+     "not the bastion",
+     "not on the bastion"
+    ],
+    "asked_by": "what actually ran out of space",
+    "note": "the log shows the fatal on localhost and the bastion at 4% used; no seeded string states that the bastion is not the host that ran out of space",
+    "rationale": "the locality inference the trap turns on: an ENOSPC on a task delegated to localhost is the controller-side container's disk, not the provisioned host's"
+   },
+   {
+    "id": "fix-wont-help",
+    "derived": true,
+    "ignore_case": true,
+    "any_of": [
+     "would not help",
+     "won't help",
+     "wouldn't help",
+     "will not help",
+     "no effect",
+     "would not change",
+     "doesn't help",
+     "does not help",
+     "not help",
+     "already 200",
+     "only 4%",
+     "4% used"
+    ],
+    "asked_by": "whether that change would help",
+    "note": "a judgement over prod.yaml's 200 GiB bastion volume, the bastion's 4% usage and the pool-specific Splunk rows",
+    "rationale": "the operational conclusion: growing the bastion volume touches a disk that is nearly empty and leaves the cause in place"
+   }
+  ],
+  "counts": [
+   {
+    "id": "failed-jobs",
+    "value": 6,
+    "nouns": [
+     "jobs",
+     "failed",
+     "failures"
+    ],
+    "window": 8,
+    "asked_by": "how many jobs it has failed",
+    "rationale": "the breadth across the pool, from the controller's summary row; the job log alone gives one"
+   }
+  ],
+  "forbidden": [
+   {
+    "id": "bastion-disk",
+    "ignore_case": true,
+    "none_of": [
+     "bastion disk is full",
+     "bastion's disk is full",
+     "bastion disk was full",
+     "bastion ran out of",
+     "bastion filled up",
+     "bastion disk filled",
+     "grow the bastion",
+     "increase bastion_root_volume_size",
+     "raise bastion_root_volume_size",
+     "bastion volume is too small",
+     "bastion root volume is too small",
+     "out of space on the bastion"
+    ],
+    "attributed_to": [
+     "is not the bastion",
+     "wasn't the bastion",
+     "bastion did not run out",
+     "bastion is not full",
+     "colleague's diagnosis is wrong",
+     "would not free"
+    ],
+    "rationale": "the decoy the instruction voices: ENOSPC read as the provisioned host's disk. The bastion is at 4% of 200 GiB. attributed_to excuses the sentence that names the theory to reject it"
+   },
+   {
+    "id": "installer-corrupt",
+    "ignore_case": true,
+    "none_of": [
+     "corrupt download",
+     "download was corrupt",
+     "corrupted tarball",
+     "truncated download",
+     "tarball is corrupt",
+     "tarball was corrupt",
+     "archive is corrupt",
+     "re-download the installer"
+    ],
+    "rationale": "the second plausible single-hop reading of a failed extract; nothing in the evidence supports it"
+   }
+  ]
+ },
+ "completion": {
+  "status": "ok",
+  "nonempty_answer": true
+ },
+ "weights": {
+  "tool_calls": 0.3,
+  "answer": 0.7
+ }
+}

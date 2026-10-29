@@ -1,0 +1,155 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "controller": "west",
+          "job_id": 6620417
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "project-update-id",
+        "any_of": [
+          "6620409"
+        ],
+        "ignore_case": true,
+        "asked_by": "which playbook task failed",
+        "rationale": "only job_explanation names the dependency job; an agent that reads the log finds nothing"
+      },
+      {
+        "id": "project-sync",
+        "any_of": [
+          "project update",
+          "project sync",
+          "project_update",
+          "git sync",
+          "syncing the project",
+          "sync of the project"
+        ],
+        "ignore_case": true,
+        "asked_by": "which playbook task failed",
+        "rationale": "what kind of thing failed: the content sync, not the playbook"
+      },
+      {
+        "id": "never-ran",
+        "any_of": [
+          "never ran",
+          "did not run",
+          "didn't run",
+          "without running",
+          "no task ran",
+          "before any task",
+          "not a single task"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "on which host, and which role I should be fixing",
+        "rationale": "the synthesis: a 2-second job whose dependency failed executed no tasks, so there is no host or role",
+        "note": "get_job for 6620417 shows a 2-second run whose job_explanation is 'Previous Task Failed' naming project_update 6620409, so the job stopped at its project sync before any playbook task ran on any host."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "invented-task",
+        "none_of": [
+          "task failed ",
+          "task failed.",
+          "task failed,",
+          "task failed;",
+          "failed on task",
+          "failing task was",
+          "the task that failed was",
+          "failed on host",
+          "failed on the host",
+          "failed on localhost",
+          "fix the role",
+          "role is broken",
+          "task failed!",
+          "task failed)",
+          "task failed*",
+          "task failed'",
+          "task failed\"",
+          "task failed`",
+          "task failed:*",
+          "task failed:\n",
+          "task failed: a",
+          "task failed: b",
+          "task failed: c",
+          "task failed: d",
+          "task failed: e",
+          "task failed: f",
+          "task failed: g",
+          "task failed: h",
+          "task failed: i",
+          "task failed: j",
+          "task failed: k",
+          "task failed: l",
+          "task failed: m",
+          "task failed: n",
+          "task failed: o",
+          "task failed: p",
+          "task failed: q",
+          "task failed: r",
+          "task failed: s",
+          "task failed: t",
+          "task failed: u",
+          "task failed: v",
+          "task failed: w",
+          "task failed: x",
+          "task failed: y",
+          "task failed: z",
+          "task failed: 0",
+          "task failed: 1",
+          "task failed: 2",
+          "task failed: 3",
+          "task failed: 4",
+          "task failed: 5",
+          "task failed: 6",
+          "task failed: 7",
+          "task failed: 8",
+          "task failed: 9",
+          "task failed: '",
+          "task failed: \"",
+          "task failed: `",
+          "task failed: *",
+          "task failed: [",
+          "task failed: ("
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "no playbook task failed",
+          "no task failed",
+          "never ran",
+          "never started",
+          "not a task failure",
+          "before any task",
+          "without running a single task",
+          "did not run any task",
+          "no task ran",
+          "previous task failed",
+          "nothing to fix in the lab's roles",
+          "failed: none",
+          "failed: nothing",
+          "failed: no task",
+          "failed: no playbook task"
+        ],
+        "rationale": "no task ran; naming one, a host or a role to fix is fabrication"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

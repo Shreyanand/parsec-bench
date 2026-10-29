@@ -1,0 +1,39 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_cost_monitor",
+      "args": {
+        "endpoint": "providers",
+        "start_date": "2026-08-01",
+        "end_date": "2026-08-31"
+      },
+      "result": {
+        "result": [
+          {
+            "provider": "aws",
+            "enabled": true,
+            "sync_status": "synced",
+            "last_sync": "2026-08-31T23:40:00Z",
+            "data_through": "2026-08-31"
+          },
+          {
+            "provider": "azure",
+            "enabled": true,
+            "sync_status": "synced",
+            "last_sync": "2026-08-31T23:25:00Z",
+            "data_through": "2026-08-31"
+          },
+          {
+            "provider": "gcp",
+            "enabled": true,
+            "sync_status": "stale",
+            "last_sync": "2026-08-22T23:35:00Z",
+            "data_through": "2026-08-22"
+          }
+        ]
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "Provider sync status from the cost monitor (`providers` view):\n\n- AWS: synced, data through 2026-08-31\n- Azure: synced, data through 2026-08-31\n- GCP: stale, data through 2026-08-22\n\nGCP is the lagging provider: its last sync was on 2026-08-22, so the August GCP figures are missing the last nine days (August 23 to 31). AWS and Azure both have data for the full month, through August 31.\n\nOn the dashboard link: the cost monitor did not return a dashboard link with this result (there is no `_dashboard_link` in the response), so I can't give you a dashboard URL. I won't guess one. If you need it, it is whatever dashboard URL the cost-monitor integration is configured with."
+}

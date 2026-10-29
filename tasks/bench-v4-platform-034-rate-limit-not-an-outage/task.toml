@@ -1,0 +1,28 @@
+schema_version = "1.3"
+
+[task]
+name = "bench/bench-v4-platform-034-rate-limit-not-an-outage"
+description = "Authored bench scenario (see provenance.md)"
+
+[metadata]
+suite = "bench/v4"
+tranche = "challenge"
+services = ["platform", "github"]
+
+[environment]
+docker_image = "registry.access.redhat.com/ubi9/ubi:latest"
+workdir = "/"
+
+[[environment.mcp_servers]]
+name = "platform"
+url = "${PLATFORM_MCP_URL}"
+
+[[environment.mcp_servers]]
+name = "github"
+url = "${GITHUB_MCP_URL}"
+
+[verifier]
+timeout_sec = 120.0
+
+[agent]
+timeout_sec = 600.0

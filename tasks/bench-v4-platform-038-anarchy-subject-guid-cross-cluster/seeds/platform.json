@@ -1,0 +1,154 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [
+    {
+      "babylon_anarchy_subject_id": "north-rhel9-hana-lab.kx8vn",
+      "cluster": "north",
+      "name": "rhel9-hana-lab.kx8vn",
+      "namespace": "babylon-anarchy-rhel9-hana-lab",
+      "governor": "rhel9-hana-lab",
+      "current_state": "stop-failed",
+      "desired_state": "stopped",
+      "healthy": false,
+      "instance_vars": {
+        "guid": "kx8vn",
+        "env_type": "rhel9-hana-lab"
+      },
+      "resource_claim": {
+        "name": "rhel9-hana-lab-kx8vn",
+        "namespace": "user-dlee-redhat-com"
+      },
+      "tower_jobs": {
+        "stop": {
+          "job_id": 71584,
+          "controller": "prod1"
+        }
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "south-rhel9-hana-lab.wr2pd",
+      "cluster": "south",
+      "name": "rhel9-hana-lab.wr2pd",
+      "namespace": "babylon-anarchy-rhel9-hana-lab",
+      "governor": "rhel9-hana-lab",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "wr2pd",
+        "env_type": "rhel9-hana-lab"
+      },
+      "resource_claim": {
+        "name": "rhel9-hana-lab-wr2pd",
+        "namespace": "user-mfox-redhat-com"
+      },
+      "tower_jobs": {
+        "provision": {
+          "job_id": 71102,
+          "controller": "prod0"
+        }
+      }
+    }
+  ],
+  "babylon_catalog_items": [],
+  "babylon_components": [
+    {
+      "babylon_component_id": "north-rhel9-hana-lab",
+      "cluster": "north",
+      "name": "rhel9-hana-lab",
+      "cloud_provider": "azure",
+      "env_type": "rhel9-hana-lab",
+      "platform": "rhpds",
+      "expected_instances": [
+        {
+          "purpose": "bastion",
+          "instance_type": "Standard_D2s_v5",
+          "count": 1
+        },
+        {
+          "purpose": "control_plane",
+          "instance_type": "Standard_D8s_v5",
+          "count": 1
+        },
+        {
+          "purpose": "worker",
+          "instance_type": "Standard_E16s_v5",
+          "count": 1
+        }
+      ],
+      "scm_url": "https://github.com/agnosticd/agnosticd-v2",
+      "scm_ref": "main",
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "agd-v2/rhel9-hana-lab",
+      "sub_components": [],
+      "definition": {
+        "cloud_provider": "azure",
+        "env_type": "rhel9-hana-lab",
+        "platform": "rhpds",
+        "bastion_instance_type": "Standard_D2s_v5",
+        "bastion_instance_count": 1,
+        "control_plane_instance_type": "Standard_D8s_v5",
+        "control_plane_instance_count": 1,
+        "worker_instance_type": "Standard_E16s_v5",
+        "worker_instance_count": 1,
+        "lifespan": {
+          "default": "12h",
+          "maximum": "36h"
+        }
+      }
+    },
+    {
+      "babylon_component_id": "south-rhel9-hana-lab",
+      "cluster": "south",
+      "name": "rhel9-hana-lab",
+      "cloud_provider": "ec2",
+      "env_type": "rhel9-hana-lab",
+      "platform": "rhpds",
+      "expected_instances": [
+        {
+          "purpose": "bastion",
+          "instance_type": "t3a.medium",
+          "count": 1
+        },
+        {
+          "purpose": "node",
+          "instance_type": "m6i.xlarge",
+          "count": 1
+        }
+      ],
+      "scm_url": "https://github.com/agnosticd/agnosticd-v2",
+      "scm_ref": "main",
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "agd-v2/rhel9-hana-lab",
+      "sub_components": [],
+      "definition": {
+        "cloud_provider": "ec2",
+        "env_type": "rhel9-hana-lab",
+        "platform": "rhpds",
+        "bastion_instance_type": "t3a.medium",
+        "bastion_instance_count": 1,
+        "node_instance_type": "m6i.xlarge",
+        "node_instance_count": 1,
+        "lifespan": {
+          "default": "12h",
+          "maximum": "36h"
+        }
+      }
+    }
+  ],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

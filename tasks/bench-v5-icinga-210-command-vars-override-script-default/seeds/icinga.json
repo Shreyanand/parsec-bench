@@ -1,0 +1,88 @@
+{
+  "hosts": [
+    {
+      "name": "mysql-ro-lon-3",
+      "type": "Host",
+      "attrs": {
+        "display_name": "mysql-ro-lon-3",
+        "host_name": "mysql-ro-lon-3",
+        "address": "10.12.80.33",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "mysql-readers-lon"
+        ],
+        "last_check": 1796397600,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "mysql-ro-lon-3!repl-lag",
+      "type": "Service",
+      "attrs": {
+        "display_name": "MySQL replica lag",
+        "host_name": "mysql-ro-lon-3",
+        "state": 2,
+        "check_attempt": 4,
+        "check_command": "mysql-repl-lag",
+        "last_state_change": 1796396100,
+        "last_hard_state_change": 1796396460,
+        "last_check": 1796397540,
+        "vars": {
+          "plugin": "plugins/db/check_repl_lag.py",
+          "repl_lag_warn": 120,
+          "repl_lag_crit": 300
+        },
+        "last_check_result": {
+          "output": "MYSQL_REPL CRITICAL - Seconds_Behind_Source 340 s > crit 300 s",
+          "performance_data": [
+            "lag=340s;120;300;0"
+          ],
+          "state": 2,
+          "exit_status": 2
+        },
+        "state_type": 1,
+        "max_check_attempts": 4,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    },
+    {
+      "name": "mysql-ro-lon-3!threads-running",
+      "type": "Service",
+      "attrs": {
+        "display_name": "MySQL threads running",
+        "host_name": "mysql-ro-lon-3",
+        "state": 0,
+        "check_attempt": 1,
+        "check_command": "mysql-threads",
+        "last_state_change": 1795860000,
+        "last_check": 1796397480,
+        "vars": {
+          "plugin": "plugins/db/check_threads.py"
+        },
+        "last_check_result": {
+          "output": "MYSQL_THREADS OK - 14 threads running",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "max_check_attempts": 4,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

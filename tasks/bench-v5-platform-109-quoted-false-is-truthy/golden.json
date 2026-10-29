@@ -1,0 +1,62 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_log",
+        "controller": "west",
+        "job_id": 647219
+      },
+      "result": {
+        "job_id": 647219,
+        "job_name": "RHDP ai_bu.vision-inference-demo.prod-m6zjc-1-provision",
+        "status": "failed",
+        "failed": true,
+        "started": "2026-10-08T09:40:03.000Z",
+        "finished": "2026-10-08T10:12:47.000Z",
+        "duration_seconds": 1964,
+        "launch_type": "workflow",
+        "job_explanation": "",
+        "template_name": "RHDP ai_bu.vision-inference-demo.prod-provision",
+        "env_type": "prod",
+        "guid": "m6zjc",
+        "action": "provision",
+        "cloud_provider": "ec2",
+        "display_name": "vision-inference-demo",
+        "controller": "west",
+        "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+        "git_branch": "main",
+        "git_revision": "d29e7b41c0a58f63e2b1d07c94a6f3e85b0c2d71",
+        "log": "PLAY [Install the vision inference workload] ***********************************\n\nTASK [ocp4_workload_vision_inference : Print the workload settings] ******************\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_vision_inference/tasks/workload.yml:2\nok: [localhost] => {\n    \"vision_inference_gpu_enabled\": \"false\"\n}\n\nTASK [ocp4_workload_vision_inference : Create the GPU MachineSet] ********************\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_vision_inference/tasks/workload.yml:6\nchanged: [localhost] => {\"changed\": true, \"method\": \"create\", \"result\": {\"kind\": \"MachineSet\", \"metadata\": {\"name\": \"cluster-m6zjc-7hq2d-gpu-us-east-2a\"}, \"spec\": {\"replicas\": 1}}}\n\nTASK [ocp4_workload_vision_inference : Wait for the GPU MachineSet to report its desired ready replicas] ***\ntask path: /runner/project/ansible/roles_ocp_workloads/ocp4_workload_vision_inference/tasks/workload.yml:11\nFAILED - RETRYING: [localhost]: Wait for the GPU MachineSet to report its desired ready replicas (40 retries left).\nFAILED - RETRYING: [localhost]: Wait for the GPU MachineSet to report its desired ready replicas (39 retries left).\nFAILED - RETRYING: [localhost]: Wait for the GPU MachineSet to report its desired ready replicas (1 retries left).\nfatal: [localhost]: FAILED! => {\"attempts\": 40, \"changed\": false, \"msg\": \"MachineSet cluster-m6zjc-7hq2d-gpu-us-east-2a has readyReplicas 0 of 1 after 40 attempts\", \"result\": {\"spec\": {\"replicas\": 1}, \"status\": {\"replicas\": 1, \"readyReplicas\": 0, \"availableReplicas\": 0}}}\n\nPLAY RECAP *********************************************************************\nlocalhost                  : ok=2    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0\n",
+        "log_original_size": 1754,
+        "log_trimmed_size": 1754
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "agnosticd",
+        "repo": "agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_vision_inference/tasks/workload.yml"
+      },
+      "result": {
+        "content": "---\n- name: Print the workload settings\n  ansible.builtin.debug:\n    var: vision_inference_gpu_enabled\n\n- name: Create the GPU MachineSet\n  kubernetes.core.k8s:\n    state: present\n    template: machineset-gpu.yaml.j2\n\n- name: Wait for the GPU MachineSet to report its desired ready replicas\n  kubernetes.core.k8s:\n    state: present\n    template: machineset-gpu.yaml.j2\n  register: vision_ms\n  until: vision_ms.result.status.readyReplicas | default(0) == vision_ms.result.spec.replicas\n  retries: 40\n  delay: 30\n"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "agnosticd",
+        "repo": "agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_vision_inference/templates/machineset-gpu.yaml.j2"
+      },
+      "result": {
+        "content": "---\n# GPU worker pool for the inference demo. Scaled to zero unless GPU is enabled.\napiVersion: machine.openshift.io/v1beta1\nkind: MachineSet\nmetadata:\n  name: \"{{ cluster_infra_id }}-gpu-{{ aws_region }}a\"\n  namespace: openshift-machine-api\nspec:\n  replicas: {% if vision_inference_gpu_enabled %}1{% else %}0{% endif %}\n\n  selector:\n    matchLabels:\n      machine.openshift.io/cluster-api-machineset: \"{{ cluster_infra_id }}-gpu-{{ aws_region }}a\"\n  template:\n    spec:\n      providerSpec:\n        value:\n          instanceType: \"{{ vision_inference_gpu_instance_type }}\"\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The wait is not the problem. The GPU MachineSet should never have asked for a machine.\n\nThe log's first task prints vision_inference_gpu_enabled as \"false\", in quotes: it arrived as the string \"false\", not the boolean false. The MachineSet template, agnosticd/agnosticd-v2:ansible/roles_ocp_workloads/ocp4_workload_vision_inference/templates/machineset-gpu.yaml.j2:9, sets `replicas: {% if vision_inference_gpu_enabled %}1{% else %}0{% endif %}`. Jinja treats any non-empty string as truthy, so the string \"false\" took the true branch. The MachineSet cluster-m6zjc-7hq2d-gpu-us-east-2a was created with replicas: 1, and the job then waited 40 times for a GPU node nobody wanted. That GPU node not becoming ready is a side effect; with GPU off there should have been 0 replicas to wait for.\n\nFix: make the test boolean, `{% if vision_inference_gpu_enabled | bool %}`. Also set the value as an unquoted boolean false wherever the lab passes it. Then the MachineSet renders with 0 replicas and the wait passes at once.\n"
+}

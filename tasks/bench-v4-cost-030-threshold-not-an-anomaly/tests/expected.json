@@ -1,0 +1,133 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "summary",
+          "start_date": "2026-06-01",
+          "end_date": "2026-06-30"
+        }
+      },
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "419283746501"
+          ],
+          "start_date": "2026-06-01",
+          "end_date": "2026-06-30"
+        }
+      },
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "419283746501"
+          ],
+          "start_date": "2025-06-01",
+          "end_date": "2025-06-30"
+        }
+      },
+      {
+        "name": "query_aws_capacity_manager",
+        "args": {}
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "verdict",
+        "any_of": [
+          "seasonality",
+          "seasonal",
+          "expected",
+          "not an anomaly",
+          "not an incident",
+          "no incident"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the verdict is a synthesis over three periods: June 2026 at 48,200 against June 2025 at 45,700 and May 2026 at 19,400. cost-anomaly-triage's three outcomes are expected seasonality, a legitimate new workload, or an incident",
+        "asked_by": "Give a verdict -- expected seasonality, a legitimate new workload, or an incident",
+        "rationale": "the whole scenario. The year-earlier comparison is what makes seasonality the right call, and an agent that compares only against last month calls it an incident"
+      },
+      {
+        "id": "prior-year",
+        "any_of": [
+          "2025",
+          "a year earlier",
+          "last june",
+          "june 2025",
+          "same month last year"
+        ],
+        "ignore_case": true,
+        "asked_by": "for the same month a year earlier, 2025-06-01 to 2025-06-30",
+        "rationale": "proves the third call happened -- without it the seasonality verdict is a guess rather than a finding"
+      }
+    ],
+    "counts": [
+      {
+        "id": "observed",
+        "value": 48200,
+        "nouns": [
+          "observed",
+          "spend",
+          "USD",
+          "june"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "48,200",
+          "$48,200"
+        ],
+        "asked_by": "the observed spend",
+        "rationale": "from the monitor result and confirmed by the cost query"
+      },
+      {
+        "id": "threshold",
+        "value": 30000,
+        "nouns": [
+          "threshold",
+          "limit",
+          "USD"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "30,000",
+          "$30,000"
+        ],
+        "asked_by": "the threshold it crossed",
+        "rationale": "only query_cost_monitor supplies it, so the first call cannot be skipped"
+      },
+      {
+        "id": "utilisation",
+        "value": 97,
+        "nouns": [
+          "utilisation",
+          "utilization",
+          "utilised",
+          "used"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "97.7"
+        ],
+        "asked_by": "the overall utilisation figure that supports it",
+        "rationale": "only query_aws_capacity_manager supplies it; 97.7% utilisation is what rules out waste as the cause, and this is the suite's only use of that tool"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

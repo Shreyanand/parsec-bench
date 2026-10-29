@@ -1,0 +1,250 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "wiki-ber-01"
+      },
+      "result": {
+        "result": "[{\"name\":\"wiki-ber-01!https\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"HTTPS\",\"host_name\":\"wiki-ber-01\",\"state\":0,\"enable_active_checks\":true,\"check_interval\":21600,\"last_state_change\":1787130300,\"last_check\":1794898800,\"last_check_result\":{\"output\":\"HTTP OK: HTTP/1.1 200 OK - 9634 bytes in 0.087 second response time\",\"state\":0,\"exit_status\":0,\"execution_end\":1794898800},\"state_type\":1,\"check_attempt\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}},{\"name\":\"wiki-ber-01!https-cert-validity\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"HTTPS certificate validity\",\"host_name\":\"wiki-ber-01\",\"state\":0,\"enable_active_checks\":true,\"check_interval\":21600,\"last_state_change\":1794877200,\"last_check\":1794898800,\"last_check_result\":{\"output\":\"SSL OK - Certificate 'wiki-ber-01.corp.example.net' will expire on 2027-02-15 10:42 +0000.\",\"state\":0,\"exit_status\":0,\"execution_end\":1794898800},\"state_type\":1,\"check_attempt\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "jira-ber-02"
+      },
+      "result": {
+        "result": "[{\"name\":\"jira-ber-02!https\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"HTTPS\",\"host_name\":\"jira-ber-02\",\"state\":0,\"enable_active_checks\":true,\"check_interval\":21600,\"last_state_change\":1788348000,\"last_check\":1794898800,\"last_check_result\":{\"output\":\"HTTP OK: HTTP/1.1 200 OK - 18421 bytes in 0.212 second response time\",\"state\":0,\"exit_status\":0,\"execution_end\":1794898800},\"state_type\":1,\"check_attempt\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}},{\"name\":\"jira-ber-02!https-cert-validity\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"HTTPS certificate validity\",\"host_name\":\"jira-ber-02\",\"state\":1,\"enable_active_checks\":true,\"check_interval\":21600,\"last_state_change\":1793365200,\"last_check\":1794898800,\"last_check_result\":{\"output\":\"SSL WARNING - Certificate 'jira-ber-02.corp.example.net' expires in 12 days (2026-11-29 08:15 +0000).\",\"state\":1,\"exit_status\":1,\"execution_end\":1794898800},\"state_type\":1,\"check_attempt\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "find_jobs",
+        "controller": "west",
+        "template_name": "tls-cert-renew"
+      },
+      "result": {
+        "total": 3,
+        "jobs": [
+          {
+            "job_id": 6702291,
+            "job_name": "tls-cert-renew",
+            "status": "successful",
+            "failed": false,
+            "started": "2026-11-17T01:00:01Z",
+            "finished": "2026-11-17T01:03:51Z",
+            "duration_seconds": 227,
+            "template_name": "tls-cert-renew",
+            "controller": "west"
+          },
+          {
+            "job_id": 6655170,
+            "job_name": "tls-cert-renew",
+            "status": "successful",
+            "failed": false,
+            "started": "2026-11-10T01:00:04Z",
+            "finished": "2026-11-10T01:02:40Z",
+            "duration_seconds": 157,
+            "template_name": "tls-cert-renew",
+            "controller": "west"
+          },
+          {
+            "job_id": 6610042,
+            "job_name": "tls-cert-renew",
+            "status": "successful",
+            "failed": false,
+            "started": "2026-11-03T01:00:05Z",
+            "finished": "2026-11-03T01:02:37Z",
+            "duration_seconds": 154,
+            "template_name": "tls-cert-renew",
+            "controller": "west"
+          }
+        ]
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_events",
+        "controller": "west",
+        "job_id": 6702291
+      },
+      "result": {
+        "job_id": 6702291,
+        "controller": "west",
+        "event_count": 13,
+        "filters": {
+          "failed_only": false,
+          "changed_only": false
+        },
+        "events": [
+          {
+            "event": "runner_on_ok",
+            "task": "Gathering Facts",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "wiki-ber-01",
+            "failed": false,
+            "changed": false,
+            "stdout": "ok: [wiki-ber-01]",
+            "error_msg": "",
+            "counter": 1
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "Gathering Facts",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "conf-ber-03",
+            "failed": false,
+            "changed": false,
+            "stdout": "ok: [conf-ber-03]",
+            "error_msg": "",
+            "counter": 2
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "Gathering Facts",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "git-ber-01",
+            "failed": false,
+            "changed": false,
+            "stdout": "ok: [git-ber-01]",
+            "error_msg": "",
+            "counter": 3
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "Read certificate expiry",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "wiki-ber-01",
+            "failed": false,
+            "changed": false,
+            "stdout": "ok: [wiki-ber-01] => days_left=27",
+            "error_msg": "",
+            "counter": 4
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "Read certificate expiry",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "conf-ber-03",
+            "failed": false,
+            "changed": false,
+            "stdout": "ok: [conf-ber-03] => days_left=71",
+            "error_msg": "",
+            "counter": 5
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "Read certificate expiry",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "git-ber-01",
+            "failed": false,
+            "changed": false,
+            "stdout": "ok: [git-ber-01] => days_left=48",
+            "error_msg": "",
+            "counter": 6
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "Request a renewed certificate from the internal CA",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "wiki-ber-01",
+            "failed": false,
+            "changed": true,
+            "stdout": "changed: [wiki-ber-01]",
+            "error_msg": "",
+            "counter": 7
+          },
+          {
+            "event": "runner_on_skipped",
+            "task": "Request a renewed certificate from the internal CA",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "conf-ber-03",
+            "failed": false,
+            "changed": false,
+            "stdout": "skipping: [conf-ber-03] => days_left 71 > 30",
+            "error_msg": "",
+            "counter": 8
+          },
+          {
+            "event": "runner_on_skipped",
+            "task": "Request a renewed certificate from the internal CA",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "git-ber-01",
+            "failed": false,
+            "changed": false,
+            "stdout": "skipping: [git-ber-01] => days_left 48 > 30",
+            "error_msg": "",
+            "counter": 9
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "Install the renewed certificate",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "wiki-ber-01",
+            "failed": false,
+            "changed": true,
+            "stdout": "changed: [wiki-ber-01] => /etc/pki/tls/certs/wiki-ber-01.crt notAfter=2027-02-15T10:42:00Z",
+            "error_msg": "",
+            "counter": 10
+          },
+          {
+            "event": "runner_on_skipped",
+            "task": "Install the renewed certificate",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "conf-ber-03",
+            "failed": false,
+            "changed": false,
+            "stdout": "skipping: [conf-ber-03]",
+            "error_msg": "",
+            "counter": 11
+          },
+          {
+            "event": "runner_on_skipped",
+            "task": "Install the renewed certificate",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "git-ber-01",
+            "failed": false,
+            "changed": false,
+            "stdout": "skipping: [git-ber-01]",
+            "error_msg": "",
+            "counter": 12
+          },
+          {
+            "event": "runner_on_ok",
+            "task": "Reload httpd",
+            "play": "Renew TLS certificates due within 30 days",
+            "role": "tls_cert_renew",
+            "host": "wiki-ber-01",
+            "failed": false,
+            "changed": true,
+            "stdout": "changed: [wiki-ber-01]",
+            "error_msg": "",
+            "counter": 13
+          }
+        ]
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "No. The 2026-11-17 run renewed only one of the two.\n\n**What Icinga reports now (last check 07:00 UTC):**\n- `wiki-ber-01`: OK, the certificate now expires on **2027-02-15** 10:42 UTC. It was renewed.\n- `jira-ber-02`: still WARNING, the certificate expires on **2026-11-29** 08:15 UTC (12 days away).\n\n**What the job shows:** the run is job 6702291 on west (01:00 to 01:03 UTC, successful). Its events cover three hosts: wiki-ber-01, conf-ber-03 and git-ber-01. On wiki-ber-01 it read `days_left=27`, requested a new certificate, installed it (notAfter 2027-02-15) and reloaded httpd. The other two were skipped as not yet due. **jira-ber-02 does not appear anywhere in the run's events.** The job never ran against it: not a failure, and not a skip because it was not due. The host is not in the template's inventory or limit. The two earlier runs (6655170 on 2026-11-10 and 6610042 on 2026-11-03) are also green, so jira-ber-02 has probably been missed every week.\n\n**Before 2026-11-29:** renew jira-ber-02's certificate manually now (or run the template with jira-ber-02 explicitly targeted), then add jira-ber-02 to the inventory that `tls-cert-renew` uses so the weekly run covers it. Once it is renewed, the Icinga warning will clear on its next check.\n"
+}

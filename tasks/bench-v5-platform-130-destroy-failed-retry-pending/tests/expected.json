@@ -1,0 +1,117 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_actions"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_anarchy_action"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "not-destroyed",
+        "any_of": [
+          "not been torn down",
+          "hasn't been torn down",
+          "not torn down",
+          "not been destroyed",
+          "hasn't been destroyed",
+          "not destroyed",
+          "not yet destroyed",
+          "still exists",
+          "isn't destroyed",
+          "not actually destroyed",
+          "is not gone",
+          "isn't gone",
+          "not gone"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "list_anarchy_subjects shows j8tvd with desired_state destroyed but current_state destroy-failed, and list_anarchy_actions shows its destroy action t8n3q failed (finished 2026-10-09T02:41:30Z) while the retry p2x9m is still pending (after 2026-10-13T06:00:00Z, no finished time), so the environment has not been torn down.",
+        "asked_by": "Is that environment really gone?",
+        "rationale": "desired destroyed, current destroy-failed, the destroy failed and its retry has not run"
+      },
+      {
+        "id": "subject-state",
+        "any_of": [
+          "destroy-failed"
+        ],
+        "ignore_case": true,
+        "asked_by": "what state it's actually in",
+        "rationale": "only the subject row carries it; the instruction never says it"
+      },
+      {
+        "id": "failed-on",
+        "any_of": [
+          "2026-10-09",
+          "9 October",
+          "October 9",
+          "Oct 9",
+          "10-09"
+        ],
+        "ignore_case": true,
+        "asked_by": "what happened when the teardown was attempted (and when)",
+        "rationale": "the failed destroy's finished date"
+      },
+      {
+        "id": "retry-after",
+        "any_of": [
+          "2026-10-13",
+          "13 October",
+          "October 13",
+          "Oct 13",
+          "10-13"
+        ],
+        "ignore_case": true,
+        "asked_by": "whether another attempt is lined up and when it can run",
+        "rationale": "the pending destroy's after; it has no finished time"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "claims-destroyed",
+        "none_of": [
+          "has been destroyed",
+          "was destroyed on",
+          "is destroyed",
+          "was successfully destroyed",
+          "has been torn down",
+          "teardown completed",
+          "teardown succeeded",
+          "destroy succeeded",
+          "is already gone",
+          "it is gone"
+        ],
+        "ignore_case": true,
+        "rationale": "reading desired_state destroyed, or the existence of a destroy action, as done"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

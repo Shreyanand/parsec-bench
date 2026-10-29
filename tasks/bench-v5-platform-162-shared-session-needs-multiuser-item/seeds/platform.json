@@ -1,0 +1,100 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [
+    {
+      "babylon_catalog_item_id": "avocet-ocp.knative-eventing.prod",
+      "cluster": "avocet",
+      "ci_name": "ocp.knative-eventing",
+      "display_name": "Knative Eventing Primer",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": true,
+      "asset_uuid": "1d7e4b90-6a2c-4f35-b8e1-93c0a5f27d64",
+      "keywords": [
+        "knative",
+        "eventing",
+        "openshift"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "avocet-rhoai.model-serving-lab.prod",
+      "cluster": "avocet",
+      "ci_name": "rhoai.model-serving-lab",
+      "display_name": "OpenShift AI Serving Lab",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": true,
+      "asset_uuid": "8c41f2d7-e05b-4a9c-9f63-2b7d18e4c5a0",
+      "keywords": [
+        "openshift ai",
+        "rhoai",
+        "jupyter",
+        "kserve"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "avocet-rhoai.datasci-workshop.prod",
+      "cluster": "avocet",
+      "ci_name": "rhoai.datasci-workshop",
+      "display_name": "Red Hat OpenShift AI Workshop",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "e3a95c18-74fd-4b20-a6c9-5f08d2b913e7",
+      "keywords": [
+        "openshift ai",
+        "rhoai",
+        "workshop",
+        "datasci"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "avocet-rhel.image-mode-lab.prod",
+      "cluster": "avocet",
+      "ci_name": "rhel.image-mode-lab",
+      "display_name": "RHEL Image Mode Lab",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": false,
+      "asset_uuid": "4b6f0e27-c18a-4d93-87e5-a29d63f10b5c",
+      "keywords": [
+        "rhel",
+        "bootc",
+        "image mode"
+      ]
+    },
+    {
+      "babylon_catalog_item_id": "curlew-rhoai.datasci-workshop.prod",
+      "cluster": "curlew",
+      "ci_name": "rhoai.datasci-workshop",
+      "display_name": "Red Hat OpenShift AI Workshop",
+      "namespace": "babylon-catalog-prod",
+      "stage": "prod",
+      "multiuser": true,
+      "asset_uuid": "a07c3e51-9d2b-4f86-b4e0-6e15c8d29f73",
+      "keywords": [
+        "openshift ai",
+        "rhoai",
+        "workshop",
+        "datasci"
+      ]
+    }
+  ],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

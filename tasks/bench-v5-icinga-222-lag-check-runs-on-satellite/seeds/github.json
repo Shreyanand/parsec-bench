@@ -1,0 +1,24 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "file_id": "rhpds/rhdp-monitoring@HEAD:plugins/db/check_pg_standby_lag.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/db/check_pg_standby_lag.py",
+      "ref": "HEAD",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_pg_standby_lag.py - replay lag of a PostgreSQL hot standby, in seconds.\n\nConnects to the PostgreSQL server on the machine the plugin runs on: PGHOST defaults to the\nlocal socket directory /var/run/postgresql, and there is no --host flag. Schedule the\nservice on the standby's own Icinga agent (command_endpoint = the database host). Run anywhere\nelse, it reads whichever PostgreSQL happens to be local there.\n\nIf the server it reaches is not in recovery (pg_is_in_recovery() returns false: a primary or a\nstandalone server), there is no replay to fall behind, so the plugin reports 0 s and exits OK.\nIt prints nothing to say that this happened.\n\"\"\"\nimport os\nimport sys\n\nimport psycopg2\n\nPGHOST = os.environ.get(\"PGHOST\", \"/var/run/postgresql\")\nWARN_S = 60\nCRIT_S = 300\n\n\ndef replay_lag(conn):\n    cur = conn.cursor()\n    cur.execute(\"SELECT pg_is_in_recovery()\")\n    if not cur.fetchone()[0]:\n        return 0\n    cur.execute(\"SELECT COALESCE(date_part('epoch', now() - pg_last_xact_replay_timestamp()), 0)\")\n    return int(cur.fetchone()[0])\n\n\ndef main():\n    conn = psycopg2.connect(host=PGHOST, dbname=\"postgres\", user=\"nagios\")\n    lag = replay_lag(conn)\n    perf = f\"replay_lag={lag}s;{WARN_S};{CRIT_S};0\"\n    if lag > CRIT_S:\n        print(f\"PG_LAG CRITICAL - replay lag {lag} s|{perf}\"); sys.exit(2)\n    if lag > WARN_S:\n        print(f\"PG_LAG WARNING - replay lag {lag} s|{perf}\"); sys.exit(1)\n    print(f\"PG_LAG OK - replay lag {lag} s|{perf}\"); sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@main:plugins/db/check_pg_standby_lag.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/db/check_pg_standby_lag.py",
+      "ref": "main",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_pg_standby_lag.py - replay lag of a PostgreSQL hot standby, in seconds.\n\nConnects to the PostgreSQL server on the machine the plugin runs on: PGHOST defaults to the\nlocal socket directory /var/run/postgresql, and there is no --host flag. Schedule the\nservice on the standby's own Icinga agent (command_endpoint = the database host). Run anywhere\nelse, it reads whichever PostgreSQL happens to be local there.\n\nIf the server it reaches is not in recovery (pg_is_in_recovery() returns false: a primary or a\nstandalone server), there is no replay to fall behind, so the plugin reports 0 s and exits OK.\nIt prints nothing to say that this happened.\n\"\"\"\nimport os\nimport sys\n\nimport psycopg2\n\nPGHOST = os.environ.get(\"PGHOST\", \"/var/run/postgresql\")\nWARN_S = 60\nCRIT_S = 300\n\n\ndef replay_lag(conn):\n    cur = conn.cursor()\n    cur.execute(\"SELECT pg_is_in_recovery()\")\n    if not cur.fetchone()[0]:\n        return 0\n    cur.execute(\"SELECT COALESCE(date_part('epoch', now() - pg_last_xact_replay_timestamp()), 0)\")\n    return int(cur.fetchone()[0])\n\n\ndef main():\n    conn = psycopg2.connect(host=PGHOST, dbname=\"postgres\", user=\"nagios\")\n    lag = replay_lag(conn)\n    perf = f\"replay_lag={lag}s;{WARN_S};{CRIT_S};0\"\n    if lag > CRIT_S:\n        print(f\"PG_LAG CRITICAL - replay lag {lag} s|{perf}\"); sys.exit(2)\n    if lag > WARN_S:\n        print(f\"PG_LAG WARNING - replay lag {lag} s|{perf}\"); sys.exit(1)\n    print(f\"PG_LAG OK - replay lag {lag} s|{perf}\"); sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

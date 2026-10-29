@@ -1,0 +1,309 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "partner0",
+          "job_id": 7731456
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "datalake_bu/telemetry-datamart-lab/common.yaml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "expired-token",
+        "ignore_case": true,
+        "any_of": [
+          "ExpiredToken",
+          "token included in the request is expired",
+          "token had expired",
+          "token has expired",
+          "token was expired",
+          "token expired",
+          "tokens expired",
+          "session expired",
+          "session had expired",
+          "session has expired",
+          "session was expired",
+          "credentials expired",
+          "credentials had expired",
+          "credentials have expired",
+          "credentials were expired"
+        ],
+        "asked_by": "what AWS actually rejected",
+        "rationale": "the error AWS returned. In the log; every reader earns it, and it is the code that separates expiry from revocation"
+      },
+      {
+        "id": "session-setting",
+        "ignore_case": true,
+        "any_of": [
+          "sandbox_aws_session_duration"
+        ],
+        "asked_by": "which setting in the item has to change",
+        "rationale": "the variable that sets the session lifetime. Only in the catalog item's common.yaml"
+      },
+      {
+        "id": "session-seconds",
+        "ignore_case": true,
+        "any_of": [
+          "3600",
+          "3,600"
+        ],
+        "asked_by": "why the credentials stopped working",
+        "rationale": "the configured lifetime in seconds. Only in common.yaml; the log never states it"
+      },
+      {
+        "id": "outlived",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "longer than the session",
+          "longer than its session",
+          "longer than the credential",
+          "outlived",
+          "outlasted",
+          "outlasts",
+          "outlives",
+          "exceeds the session",
+          "exceeded the session",
+          "exceeds the one-hour",
+          "exceeded the one-hour",
+          "longer than one hour",
+          "longer than an hour",
+          "longer than 1 hour",
+          "longer than 60 minutes",
+          "more than an hour",
+          "more than one hour",
+          "over an hour",
+          "expired mid-run",
+          "expired mid run",
+          "expired during the run",
+          "expired during the job",
+          "expired partway",
+          "expired part-way",
+          "expired before the job finished",
+          "expired before the run finished",
+          "before the run finished",
+          "before the job finished",
+          "before the job could finish",
+          "before the run could finish",
+          "session lifetime",
+          "lifetime of the session",
+          "session reached its",
+          "reached the end of",
+          "ran out",
+          "used up the hour",
+          "used up its hour",
+          "hour was up",
+          "hour had passed",
+          "past its expiry",
+          "past the session",
+          "after the session ended",
+          "longer than the hour",
+          "longer than its lifetime",
+          "outran",
+          "run out",
+          "session ended",
+          "session ran out",
+          "session had ended"
+        ],
+        "asked_by": "why the credentials stopped working",
+        "note": "join of the session length (common.yaml) with the run's timeline (log); no seed string says the run outlasted the session",
+        "rationale": "the mechanism: a one-shot assumed-role session shorter than the provision, so the last AWS call lands after expiry"
+      },
+      {
+        "id": "rotation-not-cause",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "not the rotation",
+          "not the key rotation",
+          "not the access-key rotation",
+          "not the access key rotation",
+          "not because of the rotation",
+          "not because of the key rotation",
+          "not caused by the rotation",
+          "not caused by the key rotation",
+          "not due to the rotation",
+          "not due to the key rotation",
+          "rotation did not",
+          "rotation didn't",
+          "rotation does not",
+          "rotation doesn't",
+          "rotation is not",
+          "rotation was not",
+          "rotation isn't",
+          "rotation wasn't",
+          "rotation is unrelated",
+          "rotation was unrelated",
+          "unrelated to the rotation",
+          "unrelated to the key rotation",
+          "nothing to do with the rotation",
+          "nothing to do with the key rotation",
+          "rotation had nothing",
+          "rotation has nothing",
+          "rotation cannot explain",
+          "rotation can't explain",
+          "rotation does not explain",
+          "rotation doesn't explain",
+          "rotation did not cause",
+          "rotation didn't cause",
+          "InvalidClientTokenId",
+          "rotation is ruled out",
+          "rotation ruled out",
+          "rules out the rotation",
+          "ruled out the rotation",
+          "not revoked",
+          "weren't revoked",
+          "were not revoked",
+          "wasn't revoked",
+          "was not revoked",
+          "no revocation",
+          "doesn't hold",
+          "does not hold",
+          "after the rotation, worked",
+          "after the rotation worked",
+          "after the rotation still worked",
+          "after the rotation succeeded",
+          "after the rotation, succeeded",
+          "still worked after",
+          "worked after the rotation",
+          "succeeded after the rotation",
+          "survived the rotation"
+        ],
+        "asked_by": "whether the rotation explains it",
+        "note": "from the log alone: AWS calls succeeded after 14:30 (bucket created 14:54:11) and the code is ExpiredToken, not a revoked-key error",
+        "rationale": "the refutation of the decoy the instruction voices"
+      }
+    ],
+    "counts": [
+      {
+        "id": "minutes-after-assume",
+        "value": 60,
+        "nouns": [
+          "minutes",
+          "minute",
+          "min",
+          "mins"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "one hour",
+          "an hour after",
+          "1 hour after",
+          "an hour into",
+          "one hour into",
+          "1 hour into",
+          "an hour later",
+          "one hour later",
+          "1 hour later",
+          "1h after",
+          "exactly an hour",
+          "just over an hour",
+          "hour after the role",
+          "hour after the session"
+        ],
+        "asked_by": "how many minutes after the role was assumed",
+        "note": "14:06:53 assume-role to 15:06:58 fatal, a difference of the log's own timestamps",
+        "rationale": "the timing that ties the failure to the session lifetime rather than to the 14:30 rotation"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "rotation-revoked",
+        "ignore_case": true,
+        "none_of": [
+          "rotation revoked",
+          "rotation invalidated",
+          "rotation killed",
+          "rotation broke",
+          "rotation cut off",
+          "revoked the keys",
+          "revoked our keys",
+          "revoked the credentials",
+          "keys were revoked",
+          "credentials were revoked",
+          "caused by the key rotation",
+          "caused by the access-key rotation",
+          "caused by the rotation",
+          "due to the key rotation",
+          "due to the access-key rotation",
+          "due to the rotation",
+          "re-issue the keys",
+          "reissue the keys",
+          "re-issue the access keys",
+          "reissue the access keys",
+          "re-issued keys will fix",
+          "new keys will fix"
+        ],
+        "attributed_to": [
+          "assumption that the rotation",
+          "theory that the rotation",
+          "idea that the rotation",
+          "suspicion that the rotation",
+          "claim that the rotation",
+          "idea is that",
+          "theory is that",
+          "assumption is that",
+          "reading is that",
+          "claim is that",
+          "if the rotation had",
+          "had the rotation",
+          "if the keys had been",
+          "if the credentials had been",
+          "if the rotation were",
+          "if the rotation was"
+        ],
+        "rationale": "the decoy the instruction voices: the 14:30 rotation killed the credentials. The session worked after 14:30 and the code is ExpiredToken"
+      },
+      {
+        "id": "clock-skew",
+        "ignore_case": true,
+        "none_of": [
+          "clock skew caused",
+          "caused by clock skew",
+          "due to clock skew",
+          "clock drift caused",
+          "caused by clock drift",
+          "due to clock drift",
+          "clock is out of sync",
+          "clock was out of sync",
+          "clocks are out of sync",
+          "clocks were out of sync",
+          "system clock is wrong",
+          "system clock was wrong",
+          "fix the clock",
+          "sync the clock",
+          "resync the clock"
+        ],
+        "rationale": "the second single-hop reading of an expiry error; nothing in the evidence points at time sync"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

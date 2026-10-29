@@ -1,0 +1,40 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "mysql-ro-lon-3"
+      },
+      "result": {
+        "result": "[{\"name\":\"mysql-ro-lon-3!repl-lag\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"MySQL replica lag\",\"host_name\":\"mysql-ro-lon-3\",\"state\":2,\"check_attempt\":4,\"check_command\":\"mysql-repl-lag\",\"last_state_change\":1796396100,\"last_hard_state_change\":1796396460,\"last_check\":1796397540,\"vars\":{\"plugin\":\"plugins/db/check_repl_lag.py\",\"repl_lag_warn\":120,\"repl_lag_crit\":300},\"last_check_result\":{\"output\":\"MYSQL_REPL CRITICAL - Seconds_Behind_Source 340 s > crit 300 s\",\"performance_data\":[\"lag=340s;120;300;0\"],\"state\":2,\"exit_status\":2},\"state_type\":1,\"max_check_attempts\":4,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}},{\"name\":\"mysql-ro-lon-3!threads-running\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"MySQL threads running\",\"host_name\":\"mysql-ro-lon-3\",\"state\":0,\"check_attempt\":1,\"check_command\":\"mysql-threads\",\"last_state_change\":1795860000,\"last_check\":1796397480,\"vars\":{\"plugin\":\"plugins/db/check_threads.py\"},\"last_check_result\":{\"output\":\"MYSQL_THREADS OK - 14 threads running\",\"state\":0,\"exit_status\":0},\"state_type\":1,\"max_check_attempts\":4,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "rhdp-monitoring",
+        "path": "plugins/db/check_repl_lag.py"
+      },
+      "result": {
+        "content": "#!/usr/bin/env python3\n\"\"\"check_repl_lag.py - replica lag (Seconds_Behind_Source) against warn/crit seconds.\"\"\"\nimport argparse\nimport sys\n\nimport pymysql\n\n\ndef main():\n    p = argparse.ArgumentParser()\n    p.add_argument(\"--warning\", type=int, default=300, help=\"warn at this many seconds (default 300)\")\n    p.add_argument(\"--critical\", type=int, default=600, help=\"crit at this many seconds (default 600)\")\n    p.add_argument(\"--defaults-file\", default=\"/etc/icinga2/mysql-monitor.cnf\")\n    a = p.parse_args()\n    conn = pymysql.connect(read_default_file=a.defaults_file)\n    with conn.cursor(pymysql.cursors.DictCursor) as cur:\n        cur.execute(\"SHOW REPLICA STATUS\")\n        lag = cur.fetchone()[\"Seconds_Behind_Source\"]\n    perf = f\"lag={lag}s;{a.warning};{a.critical};0\"\n    if lag is None:\n        print(\"MYSQL_REPL UNKNOWN - replication not running\"); sys.exit(3)\n    if lag > a.critical:\n        print(f\"MYSQL_REPL CRITICAL - Seconds_Behind_Source {lag} s > crit {a.critical} s|{perf}\"); sys.exit(2)\n    if lag > a.warning:\n        print(f\"MYSQL_REPL WARNING - Seconds_Behind_Source {lag} s > warn {a.warning} s|{perf}\"); sys.exit(1)\n    print(f\"MYSQL_REPL OK - Seconds_Behind_Source {lag} s|{perf}\"); sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "rhdp-monitoring",
+        "path": "icinga/conf.d/commands/db.conf"
+      },
+      "result": {
+        "content": "/* Database CheckCommands. Thresholds come from service vars; the plugin defaults apply\n * only when a service sets none. */\n\nobject CheckCommand \"mysql-repl-lag\" {\n  command = [ PluginContribDir + \"/rhdp/check_repl_lag.py\" ]\n  arguments = {\n    \"--warning\"  = { value = \"$repl_lag_warn$\"; set_if = {{ macro(\"$repl_lag_warn$\") != \"\" }} }\n    \"--critical\" = { value = \"$repl_lag_crit$\"; set_if = {{ macro(\"$repl_lag_crit$\") != \"\" }} }\n  }\n}\n\nobject CheckCommand \"mysql-threads\" {\n  command = [ PluginContribDir + \"/rhdp/check_threads.py\" ]\n  arguments = {\n    \"--warning\"  = \"$threads_warn$\"\n    \"--critical\" = \"$threads_crit$\"\n  }\n  vars.threads_warn = 64\n  vars.threads_crit = 128\n}\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The alert is legitimate - the \"600 seconds\" argument only describes the plugin's fallback defaults.\n\n- The plugin (plugins/db/check_repl_lag.py) does default to --warning 300 and --critical 600, but those defaults apply only\n  when no arguments are passed.\n- The CheckCommand `mysql-repl-lag` in icinga/conf.d/commands/db.conf passes `--warning $repl_lag_warn$` and\n  `--critical $repl_lag_crit$` from the service's vars whenever they are set.\n- The `repl-lag` service on mysql-ro-lon-3 sets vars repl_lag_warn = 120 and repl_lag_crit = 300.\n\nSo Icinga runs this check with a warning threshold of 120 seconds and a critical threshold of 300 seconds. The current\nreading, Seconds_Behind_Source 340 s, is over the 300 s critical line, and the output and perfdata (lag=340s;120;300;0)\nagree. The CRITICAL is correctly configured, not a false alarm: the replica really is 340 s behind."
+}

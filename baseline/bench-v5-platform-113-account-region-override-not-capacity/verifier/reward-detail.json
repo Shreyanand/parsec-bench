@@ -1,0 +1,276 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 4172093
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "LLM Fine-Tuning Workbench"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "llm-finetune-workbench"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "east",
+          "job_id": 4172093,
+          "failed_only": true
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "rhoai-gpu-labs/llm-finetune-workbench/common.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "rhoai-gpu-labs/llm-finetune-workbench/prod.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "rhoai-gpu-labs/llm-finetune-workbench"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "rhoai-gpu-labs"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "rhoai-gpu-labs/llm-finetune-workbench",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2",
+          "search": "openshift-cluster"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "llm-finetune"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "infra_aws_gpu_workers"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "infra_aws_cluster_settings"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "ca-west-1"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2",
+          "search": "infra_aws_cluster_settings"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2",
+          "search": "ca-west-1"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2",
+          "search": "aws_region"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "infra_aws_cluster_settings"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2",
+          "search": "gpu"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2",
+          "path": "ansible/configs"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/configs"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "aws_region"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "."
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "README.md",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "rhoai-gpu-labs",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "llm-finetune-workbench",
+          "state": "all"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "rhoai-gpu-labs",
+          "state": "all"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "rhoai-gpu-labs/account.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "rhoai-gpu-labs/llm-finetune-workbench/common.yaml",
+          "ref": "workbench-image-2026-2"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "infra_aws_gpu_workers"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "openshift-cluster"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

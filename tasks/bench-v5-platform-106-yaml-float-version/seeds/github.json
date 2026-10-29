@@ -1,0 +1,56 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "account": "summit_events",
+      "directory": "summit-mesh-lab",
+      "path": "summit_events/summit-mesh-lab",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "event.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "rhpds/agnosticv-summit_events/summit-mesh-lab"
+    }
+  ],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "summit_events/summit-mesh-lab/common.yaml",
+      "content": "---\n# summit-mesh-lab: service mesh hands-on lab for the October summit\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Summit Service Mesh Lab\n    category: Workshops\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\nocp4_installer_version: 4.20\nocp4_installer_root_url: https://artifacts.labcdn.example/ocp-clients\nworker_instance_count: 2\nworkloads:\n  - ocp4_workload_service_mesh\n",
+      "file_id": "rhpds/agnosticv@HEAD-summit_events/summit-mesh-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "summit_events/summit-mesh-lab/common.yaml",
+      "content": "---\n# summit-mesh-lab: service mesh hands-on lab for the October summit\ncloud_provider: ec2\nenv_type: ocp4-cluster\n\n__meta__:\n  catalog:\n    display_name: Summit Service Mesh Lab\n    category: Workshops\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\nocp4_installer_version: 4.20\nocp4_installer_root_url: https://artifacts.labcdn.example/ocp-clients\nworker_instance_count: 2\nworkloads:\n  - ocp4_workload_service_mesh\n",
+      "file_id": "rhpds/agnosticv@main-summit_events/summit-mesh-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "summit_events/summit-mesh-lab/event.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 1d\n",
+      "file_id": "rhpds/agnosticv@HEAD-summit_events/summit-mesh-lab/event.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "summit_events/summit-mesh-lab/event.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 1d\n",
+      "file_id": "rhpds/agnosticv@main-summit_events/summit-mesh-lab/event.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

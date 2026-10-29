@@ -1,0 +1,655 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "parsec-github",
+    "version": "2.0.0",
+    "description": "The four GitHub tools parsec defines, derived from vendor/parsec at 28e2c40: src/tools/github_files.py for behavior and response shapes, src/agent/tool_definitions.py:740-888 for the request schemas. `search_github_code` is deliberately excluded: it appears once in the trace export but is not in parsec's tool definitions at any commit -- it is a tool of the remote GitHub MCP server, discovered dynamically, so parsec's source specifies nothing about it and any schema here would be invented. Use search_github_repo. Repository names are real open-source repos (rhpds/agnosticv, agnosticd/agnosticd-v2) documented in parsec's own tool descriptions; no internal hostnames appear.",
+    "x-excluded-tools": {
+      "search_github_code": "observed once in traces; owned by the remote GitHub MCP server, absent from parsec source at every commit, so no authoritative schema exists"
+    }
+  },
+  "components": {
+    "schemas": {
+      "FileContent": {
+        "x-primary-key": "file_id",
+        "type": "object",
+        "description": "A file's text, or a compacted directory listing. The state store's `files` collection keys on owner/repo/ref/path.",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Repository owner the content belongs to."
+          },
+          "repo": {
+            "type": "string",
+            "description": "Repository name the content belongs to."
+          },
+          "path": {
+            "type": "string",
+            "description": "Path of the file within the repository."
+          },
+          "ref": {
+            "type": "string",
+            "description": "Git ref the content was read at."
+          },
+          "file_id": {
+            "type": "string",
+            "description": "Storage identity for the `files` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "content": {
+            "type": "string",
+            "description": "File text with secrets redacted as <REDACTED>. For a directory, a compact one-line-per-entry name/type listing rather than raw JSON."
+          }
+        },
+        "required": [
+          "content",
+          "owner",
+          "repo",
+          "path",
+          "ref",
+          "file_id"
+        ]
+      },
+      "SimilarItem": {
+        "x-primary-key": "similar_item_id",
+        "type": "object",
+        "description": "A near-miss from a catalog lookup. Built inline at src/tools/github_files.py:256-263.",
+        "properties": {
+          "similar_item_id": {
+            "type": "string",
+            "description": "Storage identity for the `similar_items` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "name": {
+            "type": "string",
+            "description": "The item's directory name."
+          },
+          "repo": {
+            "type": "string",
+            "description": "owner/repo, joined with a slash."
+          },
+          "account": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "repo",
+          "account",
+          "path",
+          "similar_item_id"
+        ]
+      },
+      "CatalogItemFound": {
+        "x-primary-key": "catalog_item_id",
+        "type": "object",
+        "description": "An exact catalog-item hit. `found` is true.",
+        "properties": {
+          "catalog_item_id": {
+            "type": "string",
+            "description": "Storage identity for the `catalog_items` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "found": {
+            "type": "boolean",
+            "const": true
+          },
+          "owner": {
+            "type": "string"
+          },
+          "repo": {
+            "type": "string"
+          },
+          "account": {
+            "type": "string",
+            "description": "The account directory, e.g. 'sandboxes-gpte'."
+          },
+          "directory": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string",
+            "description": "account/directory within the repo."
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "File names present, e.g. common.yaml, prod.yaml, dev.yaml."
+          },
+          "default_branch": {
+            "type": "string",
+            "description": "The repo's default branch. Use as `ref` for fetch_github_file. Defaults to 'main' when the index has none."
+          }
+        },
+        "required": [
+          "found",
+          "owner",
+          "repo",
+          "account",
+          "directory",
+          "path",
+          "files",
+          "default_branch",
+          "catalog_item_id"
+        ]
+      },
+      "CatalogItemNotFound": {
+        "x-primary-key": "catalog_item_id",
+        "type": "object",
+        "description": "No exact hit. The index is complete, so this means the item does not exist -- not that the caller should search harder.",
+        "properties": {
+          "catalog_item_id": {
+            "type": "string",
+            "description": "Storage identity for the `catalog_items` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "found": {
+            "type": "boolean",
+            "const": false
+          },
+          "similar_items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SimilarItem"
+            },
+            "description": "Substring matches, at most 20. Empty when nothing resembles the search."
+          },
+          "message": {
+            "type": "string",
+            "description": "Explains the outcome and, when there are no similar items, states that the index is complete and no further searching is warranted."
+          }
+        },
+        "required": [
+          "found",
+          "similar_items",
+          "message",
+          "catalog_item_id"
+        ]
+      },
+      "RepoSearchResult": {
+        "x-primary-key": "repo_search_result_id",
+        "type": "object",
+        "description": "Substring matches over a repo's complete recursive tree.",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Repository owner searched."
+          },
+          "repo": {
+            "type": "string",
+            "description": "Repository name searched."
+          },
+          "ref": {
+            "type": "string",
+            "description": "Git ref searched."
+          },
+          "search": {
+            "type": "string",
+            "description": "Search text this result answers."
+          },
+          "repo_search_result_id": {
+            "type": "string",
+            "description": "Storage identity for the `repo_search_results` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Matching file and directory paths, at most 100."
+          },
+          "total_matches": {
+            "type": "integer",
+            "description": "Full match count before the 100 cap."
+          },
+          "truncated": {
+            "type": "boolean",
+            "description": "True when total_matches exceeds 100."
+          }
+        },
+        "required": [
+          "matches",
+          "total_matches",
+          "truncated",
+          "owner",
+          "repo",
+          "ref",
+          "search",
+          "repo_search_result_id"
+        ]
+      },
+      "PullRequest": {
+        "x-primary-key": "pull_request_id",
+        "type": "object",
+        "properties": {
+          "pull_request_id": {
+            "type": "string",
+            "description": "Storage identity for the `pull_requests` collection. Synthetic: the simulation store keys rows by it."
+          },
+          "owner": {
+            "type": "string"
+          },
+          "repo": {
+            "type": "string"
+          },
+          "pr_number": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "string",
+            "description": "The PR's head ref."
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "closed"
+            ]
+          },
+          "author": {
+            "type": "string",
+            "description": "GitHub login."
+          },
+          "url": {
+            "type": "string",
+            "description": "The PR's html_url."
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Changed paths matching the search, at most 20. When the PR title matched, every changed path."
+          }
+        },
+        "required": [
+          "owner",
+          "repo",
+          "pr_number",
+          "title",
+          "branch",
+          "state",
+          "author",
+          "url",
+          "created_at",
+          "updated_at",
+          "files",
+          "pull_request_id"
+        ]
+      },
+      "PrSearchResult": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PullRequest"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "Length of `results`."
+          },
+          "search": {
+            "type": "string",
+            "description": "The search term, echoed back."
+          },
+          "repos_searched": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The agnosticv repos consulted, as owner/repo."
+          }
+        },
+        "required": [
+          "results",
+          "count",
+          "search",
+          "repos_searched"
+        ]
+      },
+      "FetchGithubFileRequest": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "description": "Owner or organization, e.g. 'rhpds', 'agnosticd', 'redhat-cop'."
+          },
+          "repo": {
+            "type": "string",
+            "description": "e.g. 'agnosticv', 'agnosticd-v2', 'partner-agnosticv'."
+          },
+          "path": {
+            "type": "string",
+            "description": "File or directory path, e.g. 'sandboxes-gpte/OCP4_AWS/common.yaml'."
+          },
+          "ref": {
+            "type": "string",
+            "description": "Branch, tag or commit SHA. Omit for the repo's default branch. Used in 139 of 191 observed calls."
+          }
+        },
+        "required": [
+          "owner",
+          "repo",
+          "path"
+        ]
+      },
+      "LookupCatalogItemRequest": {
+        "type": "object",
+        "properties": {
+          "search": {
+            "type": "string",
+            "description": "Catalog item name. Case-insensitive; underscores and hyphens are equivalent."
+          }
+        },
+        "required": [
+          "search"
+        ]
+      },
+      "SearchGithubRepoRequest": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string"
+          },
+          "repo": {
+            "type": "string"
+          },
+          "search": {
+            "type": "string",
+            "description": "Case-insensitive substring matched against every path in the tree."
+          },
+          "ref": {
+            "type": "string",
+            "description": "Branch, tag or SHA. Defaults to HEAD."
+          }
+        },
+        "required": [
+          "owner",
+          "repo",
+          "search"
+        ]
+      },
+      "SearchAgnosticvPrsRequest": {
+        "type": "object",
+        "properties": {
+          "search": {
+            "type": "string",
+            "description": "Keyword matched against PR titles and changed file paths."
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "closed",
+              "all"
+            ],
+            "default": "open"
+          },
+          "max_results": {
+            "type": "integer",
+            "default": 10
+          }
+        },
+        "required": [
+          "search"
+        ]
+      }
+    }
+  },
+  "paths": {
+    "/fetch_github_file": {
+      "post": {
+        "operationId": "fetch_github_file",
+        "summary": "Fetch a file or directory listing from a GitHub repository",
+        "description": "Returns `{content}`. When `path` names a directory, `content` is a compacted name/type listing rather than raw JSON. Secrets in file text are redacted to <REDACTED>.\n\nA path that does not exist at that `ref` is the in-band error shape below, not empty content \u2014 an agent must be able to tell 'no such file' from 'an empty file'.\n\nThe same owner/repo/path at two different `ref` values may legitimately return different content; keep each combination stable across repeat calls within a session. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Read only `files`, matching `owner`, `repo`, `path` and the effective `ref` exactly; an omitted `ref` resolves to the repository's default branch. A path with no stored row returns the in-band not-found error, never generated content. RESPONSE KEYS (parsec's, verbatim, src/tools/github_files.py:50-87): a success returns exactly `{content}` -- the stored row's `content` -- and never the storage fields `file_id`, `owner`, `repo`, `path` or `ref`; a miss returns `{\"error\": ...}`. Return these key names exactly as listed: never rename a key, never add a request echo or a storage-only field, and never drop one of these keys. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these four store-authoritative operations, so there is no entity for which a record or field may be produced on demand. Only the documented derivations (a count equal to the length of a returned list) are computed, and only from stored rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:740",
+          "implementation": "vendor/parsec/src/tools/github_files.py:50",
+          "note": "passthrough of the GitHub MCP server's get_file_contents; parsec rewrites only `content`"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FetchGithubFileRequest"
+              },
+              "examples": {
+                "catalog_config": {
+                  "summary": "The shape an AAP2 investigation ends at",
+                  "value": {
+                    "owner": "rhpds",
+                    "repo": "agnosticv",
+                    "path": "sandboxes-gpte/OCP4_AWS/common.yaml",
+                    "ref": "main"
+                  }
+                },
+                "ee_entrypoint": {
+                  "value": {
+                    "owner": "agnosticd",
+                    "repo": "agnosticd-v2",
+                    "path": "tools/execution_environments/ee-multicloud-public/entrypoint.sh"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File or directory content, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/FileContent"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Failures are returned in-band; these tools never raise. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lookup_catalog_item": {
+      "post": {
+        "operationId": "lookup_catalog_item",
+        "summary": "Locate a catalog item across all agnosticv repos via a complete index",
+        "description": "Exact match first on a normalized key (lowercased, underscores treated as hyphens), then substring.\n\nThree outcomes: an exact hit (`found: true` with the item's location and files), near misses (`found: false` with up to 20 `similar_items`), or nothing (`found: false`, empty `similar_items`, and a message stating the index is complete).\n\nThat last distinction is the point of the tool: the index is exhaustive, so `found: false` with no similar items means the item does not exist. Never imply the caller should keep looking. Answer only from stored records: invent neither a hit nor a similar item for a catalog item the store does not hold. **A stored record's own `found` value is authoritative and must be echoed, never re-derived from whether a row exists.** The store merges the hit and miss shapes into one `catalog_items` entity, so a row with `found: false` *is* the not-found answer for that lookup key -- carrying its `message` and pointing at `similar_items` -- and must be returned as `found: false`. Deciding `found = true` because some row's key matches inverts it. Measured 2026-09-14: a seeded `{found: false, path: sandboxes_gpte/ans-bu-wksp-rhel-91, message: ...}` row came back as `{found: true, path: ...}` with none of the location fields a real hit carries, and the agent said so -- it flagged the result as suspiciously sparse. That is the worst failure shape available here: not an empty answer but an inverted one, on the exact field the scenario grades. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Read `catalog_items` for the exact hit and `similar_items` for near matches; an item with no stored row returns the documented not-found shape listing only stored `similar_items`. RESPONSE KEYS (parsec's, verbatim, src/tools/github_files.py:223-278): an exact hit returns exactly `found` (true), `owner`, `repo`, `account`, `directory`, `path`, `files` and `default_branch` (src/tools/github_files.py:239-248), with no `message` and no `similar_items`; a near miss returns exactly `found` (false), `similar_items` and `message` (src/tools/github_files.py:254-266), each similar item carrying exactly `name`, `repo`, `account` and `path`, with no `path`, `owner` or `directory` at the top level; no match at all returns exactly `found` (false), `similar_items` (`[]`) and `message` (src/tools/github_files.py:268-278). No response ever carries `catalog_item_id` or `similar_item_id`. Return these key names exactly as listed: never rename a key, never add a request echo or a storage-only field, and never drop one of these keys. LOOKUP KEY (parsec's, src/tools/github_files.py:171, :234-236): normalize `search` by lowercasing it and replacing every `_` with `-`. A stored row's key is its `directory` normalized the same way, or, for a row with no `directory`, the last `/`-separated segment of its `path` normalized the same way. The lookup is EXACT equality between a row's key and either the normalized search itself or, when the normalized search is a Babylon catalog-item name of the form `<account>.<item>.<stage>` or `<account>.<item>`, its `<item>` segment (a simulation allowance: parsec's own index compares the whole string, src/tools/github_files.py:236, so real parsec misses on the qualified form; every bundle before 2026-10-09 accepted it, and the seeds rely on it). Never compare with `catalog_item_id`, `account` or the whole `path`, and never use any other fuzzy or partial match. The row whose key equals the normalized search answers the lookup with its own stored `found`: `found: true` gives the exact-hit shape built from that row; `found: false` gives that row's `message` and every stored `similar_items` row. When no row's key equals the normalized search, return `found: false`, `similar_items` holding the stored `similar_items` rows whose `name`, normalized, contains the normalized search (src/tools/github_files.py:251-266), and a message; with none, `similar_items: []` and the complete-index message. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these four store-authoritative operations, so there is no entity for which a record or field may be produced on demand. Only the documented derivations (a count equal to the length of a returned list) are computed, and only from stored rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:793",
+          "implementation": "vendor/parsec/src/tools/github_files.py:223"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LookupCatalogItemRequest"
+              },
+              "examples": {
+                "by_name": {
+                  "value": {
+                    "search": "ocp4-cluster"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The item's location, near misses, or a definitive not-found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CatalogItemFound"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CatalogItemNotFound"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Failures are returned in-band; these tools never raise. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search_github_repo": {
+      "post": {
+        "operationId": "search_github_repo",
+        "summary": "Search a repo's complete recursive tree for paths matching a substring",
+        "description": "One pass over the whole tree, filtered case-insensitively. `matches` is capped at 100 entries; `total_matches` is the count before the cap and `truncated` says whether it applied.\n\nZero matches is authoritative \u2014 the search covered the entire tree, so the path does not exist at that ref. **Simulation storage, and the failure this prevents.** Answer only from stored records: when the store holds no search record for this exact `(owner, repo, ref, search)`, return the success shape with `matches: []`, `total_matches: 0`, `truncated: false`. **Never invent a file tree, never invent match paths, and never answer for an owner/repo the store does not hold.** Measured 2026-09-14: for eight unseeded (owner, repo, search) combinations this fabricated four to eight realistic-looking paths each, with plausible `total_matches`. A live agent chased those invented paths with fetch_github_file, hit an honest 'not found' on every one, never reached the file that WAS seeded, and then asserted a wrong root cause -- a worse outcome than an empty result, because a fabricated tree looks like progress. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Read only `repo_search_results` rows matching `owner`, `repo`, `ref` and `search`, and return their stored `matches`; an omitted `ref` resolves to `HEAD`. Never derive matches from file paths, trees or heuristics. RESPONSE KEYS (parsec's, verbatim, src/tools/github_files.py:317-321): a success returns exactly `matches`, `total_matches` and `truncated` -- never `owner`, `repo`, `ref`, `search` or `repo_search_result_id`, which are the stored row's storage identity, not response fields. Return these key names exactly as listed: never rename a key, never add a request echo or a storage-only field, and never drop one of these keys. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these four store-authoritative operations, so there is no entity for which a record or field may be produced on demand. Only the documented derivations (a count equal to the length of a returned list) are computed, and only from stored rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:821",
+          "implementation": "vendor/parsec/src/tools/github_files.py:281"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchGithubRepoRequest"
+              },
+              "examples": {
+                "find_a_role": {
+                  "value": {
+                    "owner": "agnosticd",
+                    "repo": "agnosticd-v2",
+                    "search": "ocp4-cluster-destroy"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Matching paths, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/RepoSearchResult"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Failures are returned in-band; these tools never raise. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search_agnosticv_prs": {
+      "post": {
+        "operationId": "search_agnosticv_prs",
+        "summary": "Search agnosticv pull requests for a catalog item or keyword",
+        "description": "For the case where a catalog item is referenced by a running job but `lookup_catalog_item` cannot find it \u2014 it may exist only on an unmerged branch.\n\nA PR matches when the keyword is in its title (then every changed path is returned) or in a changed path (then only the matching paths are). `count` equals the length of `results`. **Simulation storage.** Read the stored pull requests and return those matching the keyword; when none matches, return `results: []` and `count: 0` rather than inventing a PR. There is deliberately no separate store of canned PR-search answers -- a 2026-09-14 freeze created one, and because it was empty this tool returned `count: 0` for a keyword whose pull request was seeded, silently breaking the one scenario that grades a PR number. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): Read only `pull_requests`, filtered by the request's arguments; a pull request is returned only if it is a stored row. RESPONSE KEYS (parsec's, verbatim, src/tools/github_files.py:443-448): a success returns exactly `results`, `count`, `search` (the request keyword, echoed) and `repos_searched` (the four agnosticv repos as `owner/repo`, src/tools/github_files.py:21-26) -- never `pull_requests` or `total`; each result carries exactly `owner`, `repo`, `pr_number`, `title`, `branch`, `state`, `author`, `url`, `created_at`, `updated_at` and `files` (src/tools/github_files.py:352-366), and never `pull_request_id`. STATE FILTER: `state` defaults to `open` (src/tools/github_files.py:371); a stored pull request is returned only when its `state` equals the effective `state`, except that `all` matches every state -- so with `state` omitted a `closed` pull request is not returned. Return these key names exactly as listed: never rename a key, never add a request echo or a storage-only field, and never drop one of these keys. `repos_searched` is always exactly `[\"rhpds/agnosticv\", \"rhpds/partner-agnosticv\", \"rhpds/zt-ansiblebu-agnosticv\", \"rhpds/zt-rhelbu-agnosticv\"]`, in that order (src/tools/github_files.py:21-26, :447), whatever the stored pull requests' repos are. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through these four store-authoritative operations, so there is no entity for which a record or field may be produced on demand. Only the documented derivations (a count equal to the length of a returned list) are computed, and only from stored rows.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:859",
+          "implementation": "vendor/parsec/src/tools/github_files.py:369"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchAgnosticvPrsRequest"
+              },
+              "examples": {
+                "unmerged_item": {
+                  "value": {
+                    "search": "rosa-security-lab",
+                    "state": "open"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Matching PRs, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/PrSearchResult"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Failures are returned in-band; these tools never raise. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

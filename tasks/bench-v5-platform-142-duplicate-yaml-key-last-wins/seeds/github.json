@@ -1,0 +1,56 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "account": "geo_bu",
+      "directory": "tile-server-lab",
+      "path": "geo_bu/tile-server-lab",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "rhpds/agnosticv-geo_bu/tile-server-lab"
+    }
+  ],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "geo_bu/tile-server-lab/common.yaml",
+      "content": "---\n# tile-server-lab: vector tile serving lab on AWS\ncloud_provider: ec2\nenv_type: tile-server\n\n__meta__:\n  catalog:\n    display_name: Vector Tile Server Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\n# Worker sizing (the lab image is built for x86_64 only)\nworker_instance_count: 2\nworker_instance_type: c7i.2xlarge\ntile_server_image_arch: x86_64\n\n# Tile cache\ntile_cache_volume_size_gb: 200\ntile_cache_engine: varnish\n\n# Datasets loaded at provision time\ntile_server_datasets:\n  - osm-iberia-z14\n  - natural-earth-10m\n\n# Cheaper workers, from the 2026-07 cost review\nworker_instance_type: c7g.2xlarge\n\ntile_server_ui_theme: dark\n",
+      "file_id": "rhpds/agnosticv@HEAD-geo_bu/tile-server-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "geo_bu/tile-server-lab/common.yaml",
+      "content": "---\n# tile-server-lab: vector tile serving lab on AWS\ncloud_provider: ec2\nenv_type: tile-server\n\n__meta__:\n  catalog:\n    display_name: Vector Tile Server Lab\n    category: Labs\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\n# Worker sizing (the lab image is built for x86_64 only)\nworker_instance_count: 2\nworker_instance_type: c7i.2xlarge\ntile_server_image_arch: x86_64\n\n# Tile cache\ntile_cache_volume_size_gb: 200\ntile_cache_engine: varnish\n\n# Datasets loaded at provision time\ntile_server_datasets:\n  - osm-iberia-z14\n  - natural-earth-10m\n\n# Cheaper workers, from the 2026-07 cost review\nworker_instance_type: c7g.2xlarge\n\ntile_server_ui_theme: dark\n",
+      "file_id": "rhpds/agnosticv@main-geo_bu/tile-server-lab/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "geo_bu/tile-server-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 1d\n",
+      "file_id": "rhpds/agnosticv@HEAD-geo_bu/tile-server-lab/prod.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "geo_bu/tile-server-lab/prod.yaml",
+      "content": "---\n__meta__:\n  catalog:\n    disable: false\n  lifespan:\n    default: 1d\n",
+      "file_id": "rhpds/agnosticv@main-geo_bu/tile-server-lab/prod.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

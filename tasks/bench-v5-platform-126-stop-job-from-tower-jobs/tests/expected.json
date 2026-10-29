@@ -1,0 +1,97 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job",
+          "controller": "event0",
+          "job_id": 4419860
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_anarchy_subject"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "stop-job-id",
+        "any_of": [
+          "4419860"
+        ],
+        "asked_by": "which AAP2 job did the stopping",
+        "rationale": "only in the subject's tower_jobs.stop; the instruction gives no job id"
+      },
+      {
+        "id": "controller",
+        "any_of": [
+          "event0"
+        ],
+        "ignore_case": true,
+        "asked_by": "on which controller",
+        "rationale": "the stop ran on event0 while the provision ran on east"
+      },
+      {
+        "id": "stop-succeeded",
+        "any_of": [
+          "successful",
+          "succeeded",
+          "completed successfully",
+          "finished successfully"
+        ],
+        "ignore_case": true,
+        "asked_by": "whether it worked",
+        "rationale": "get_job status successful; the neighbouring lab's stop on the same day failed"
+      },
+      {
+        "id": "finished-at",
+        "any_of": [
+          "18:49"
+        ],
+        "asked_by": "when it finished",
+        "rationale": "get_job finished 2026-10-08T18:49:35Z"
+      },
+      {
+        "id": "duration",
+        "any_of": [
+          "6444",
+          "1h 47m",
+          "1h47m",
+          "1 hour 47",
+          "1 hr 47",
+          "107 minutes",
+          "107 min",
+          "1:47:24"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "get_job for 4419860 returns duration_seconds 6444 (started 17:02:11Z, finished 18:49:35Z), which is 1 hour 47 minutes 24 seconds.",
+        "asked_by": "how long it ran",
+        "rationale": "duration_seconds 6444 = 1h 47m 24s"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

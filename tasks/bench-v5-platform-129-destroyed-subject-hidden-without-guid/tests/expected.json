@@ -1,0 +1,62 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "w2hcn"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "destroyed",
+        "any_of": [
+          "destroyed"
+        ],
+        "ignore_case": true,
+        "asked_by": "what state it's in now",
+        "rationale": "current_state destroyed is visible only to a guid-scoped listing"
+      },
+      {
+        "id": "governor",
+        "any_of": [
+          "ocp-ai-workshop"
+        ],
+        "ignore_case": true,
+        "asked_by": "which governor managed it",
+        "rationale": "from the subject row; the instruction never names the item"
+      },
+      {
+        "id": "requester",
+        "any_of": [
+          "tfaleolo"
+        ],
+        "ignore_case": true,
+        "asked_by": "who requested it",
+        "rationale": "requester_email of the destroyed subject"
+      },
+      {
+        "id": "destroy-job",
+        "any_of": [
+          "3308842"
+        ],
+        "asked_by": "the AAP2 job id of the last lifecycle job that ran against it",
+        "rationale": "tower_jobs.destroy; the provision job 3301964 is the other entry"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.4,
+    "answer": 0.6
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "ceph-osd-yul-14",
+          "filter_expr": "match(\"*nic*error*\", service.name) || match(\"*nic*error*\", service.display_name) || match(\"*network*error*\", service.name) || match(\"*interface*error*\", service.name)",
+          "detailed": true
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "ceph-osd-yul-14"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/net/check_nic_errors.py"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "nic-errors"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

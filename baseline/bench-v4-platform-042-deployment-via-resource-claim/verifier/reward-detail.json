@@ -1,0 +1,43 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "cluster": "west",
+          "guid": "tq4hm"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "west",
+          "namespace": "user-rortiz-redhat-com",
+          "name": "ansible-lightspeed-lab-tq4hm"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

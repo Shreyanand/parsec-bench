@@ -1,0 +1,115 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_by_guid",
+          "guid": "hq7wz",
+          "errors_only": true
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "no-events",
+        "any_of": [
+          "no events",
+          "returned nothing",
+          "no results",
+          "nothing came back",
+          "no log entries",
+          "no matching",
+          "empty",
+          "found nothing",
+          "no entries",
+          "0 results",
+          "zero results",
+          "no log records",
+          "no records",
+          "no matching records",
+          "not found in splunk"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "an absence: no splunk_aap2_log_entries row carries this guid, so no seed string can state the negative",
+        "asked_by": "If the search returns nothing, say so",
+        "rationale": "the honest report of the empty result"
+      },
+      {
+        "id": "cannot-conclude",
+        "any_of": [
+          "cannot conclude",
+          "does not tell us",
+          "does not mean",
+          "no evidence",
+          "not evidence",
+          "cannot say",
+          "does not establish",
+          "not conclude",
+          "cannot infer",
+          "does not let us conclude",
+          "does not support",
+          "cannot be concluded",
+          "does not prove"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the epistemic point: silence is not evidence of a cause, and no seed string states it",
+        "asked_by": "tell me what that does and does not let us conclude",
+        "rationale": "the discriminating fact. An agent that reads an empty error search as proof of some particular cause fails this and trips the forbidden list"
+      },
+      {
+        "id": "next-step",
+        "any_of": [
+          "query_aap2",
+          "job events",
+          "get_job_events",
+          "widen",
+          "wider window",
+          "without errors_only",
+          "all levels",
+          "babylon",
+          "anarchysubject",
+          "different window",
+          "drop the error filter"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "a recommendation, not seeded text",
+        "asked_by": "tell me what that does and does not let us conclude",
+        "rationale": "an empty result with no next step is a dead end; this is what stops a bare 'nothing found' scoring well"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "inferred-from-silence",
+        "none_of": [
+          "failed because",
+          "the cause was",
+          "root cause was",
+          "this shows that",
+          "confirms that",
+          "proves that",
+          "never started",
+          "was never provisioned"
+        ],
+        "ignore_case": true,
+        "rationale": "an empty error search supports none of these. 'never started' and 'was never provisioned' are the tempting ones: absence of error logs feels like evidence the thing never ran, and it is not"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

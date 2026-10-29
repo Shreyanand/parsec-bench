@@ -1,0 +1,52 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "nfs-home-dub-2"
+      },
+      "result": {
+        "result": "[{\"name\":\"nfs-home-dub-2!mount-latency\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Mount point stat() latency\",\"host_name\":\"nfs-home-dub-2\",\"state\":2,\"check_attempt\":3,\"check_command\":\"mount-latency\",\"last_state_change\":1794879600,\"last_hard_state_change\":1794879960,\"last_check\":1794995760,\"vars\":{\"plugin\":\"plugins/fs/check_mount_latency.sh\",\"plugin_ref\":\"v3.4.0\",\"crit_seconds\":5},\"last_check_result\":{\"output\":\"MOUNT CRITICAL - /home/autofs/proj stat() took 12.4 s (crit 5 s); /home/users 0.02 s; /srv/scratch 0.03 s\",\"state\":2,\"exit_status\":2},\"state_type\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}},{\"name\":\"nfs-home-dub-2!nfsd-threads\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"nfsd thread pool\",\"host_name\":\"nfs-home-dub-2\",\"state\":0,\"check_attempt\":1,\"last_state_change\":1793869200,\"last_check\":1794995820,\"vars\":{\"plugin\":\"plugins/fs/check_nfsd_threads.sh\",\"plugin_ref\":\"v3.4.0\"},\"last_check_result\":{\"output\":\"NFSD OK - 9 of 64 threads busy\",\"state\":0,\"exit_status\":0},\"state_type\":1,\"max_check_attempts\":3,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_comments",
+        "host": "nfs-home-dub-2"
+      },
+      "result": {
+        "result": "[{\"name\":\"nfs-home-dub-2!mount-latency!0c7e5a91-3f2b-4d6a-b8e4-71d2a9c05f36\",\"type\":\"Comment\",\"attrs\":{\"host_name\":\"nfs-home-dub-2\",\"service_name\":\"mount-latency\",\"author\":\"hkowalczyk\",\"entry_type\":1,\"persistent\":true,\"entry_time\":1794752400,\"text\":\"False positive on the autofs indirect mounts - fixed in check_mount_latency.sh on main, it now skips autofs entries instead of stat()ing them and waking the automounter. Should stop alerting.\"}},{\"name\":\"nfs-home-dub-2!mount-latency!9a41d3e8-6b07-4f2c-a5d9-e2b8c4170f53\",\"type\":\"Comment\",\"attrs\":{\"host_name\":\"nfs-home-dub-2\",\"service_name\":\"mount-latency\",\"author\":\"amensah\",\"entry_type\":1,\"persistent\":true,\"entry_time\":1794902700,\"text\":\"Back again overnight, same mount (/home/autofs/proj). Users report no slowness on /home/users.\"}},{\"name\":\"nfs-home-dub-2!5d2f8b1c-a7e3-49d0-8c61-3e94f0b7a2d8\",\"type\":\"Comment\",\"attrs\":{\"host_name\":\"nfs-home-dub-2\",\"service_name\":\"\",\"author\":\"pdesrosiers\",\"entry_type\":1,\"persistent\":true,\"entry_time\":1794483000,\"text\":\"Kernel 5.14.0-611 rollout for the NFS home servers is planned for 2026-11-25.\"}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "rhdp-monitoring",
+        "path": "plugins/fs/check_mount_latency.sh"
+      },
+      "result": {
+        "content": "#!/bin/bash\n# check_mount_latency.sh - time a stat() on every mount from /proc/mounts.\nset -uo pipefail\nCRIT=\"${1:-5}\"\nworst=0; worst_m=\"\"; out=()\nwhile read -r _ m fstype _; do\n  case \"$fstype\" in proc|sysfs|tmpfs|devtmpfs|cgroup2) continue ;; esac\n  # autofs indirect maps: stat() triggers a mount and measures the automounter, not NFS.\n  [[ \"$fstype\" == autofs ]] && continue\n  t=$( { /usr/bin/time -f %e stat -t \"$m\" >/dev/null; } 2>&1 )\n  out+=(\"$m $t s\")\n  if (( $(echo \"$t > $worst\" | bc) )); then worst=$t; worst_m=$m; fi\ndone < /proc/mounts\nif (( $(echo \"$worst > $CRIT\" | bc) )); then\n  echo \"MOUNT CRITICAL - $worst_m stat() took $worst s (crit $CRIT s); ${out[*]}\"; exit 2\nfi\necho \"MOUNT OK - ${out[*]}\"; exit 0\n"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "rhdp-monitoring",
+        "path": "plugins/fs/check_mount_latency.sh",
+        "ref": "v3.4.0"
+      },
+      "result": {
+        "content": "#!/bin/bash\n# check_mount_latency.sh - time a stat() on every mount from /proc/mounts.\nset -uo pipefail\nCRIT=\"${1:-5}\"\nworst=0; worst_m=\"\"; out=()\nwhile read -r _ m fstype _; do\n  case \"$fstype\" in proc|sysfs|tmpfs|devtmpfs|cgroup2) continue ;; esac\n  t=$( { /usr/bin/time -f %e stat -t \"$m\" >/dev/null; } 2>&1 )\n  out+=(\"$m $t s\")\n  if (( $(echo \"$t > $worst\" | bc) )); then worst=$t; worst_m=$m; fi\ndone < /proc/mounts\nif (( $(echo \"$worst > $CRIT\" | bc) )); then\n  echo \"MOUNT CRITICAL - $worst_m stat() took $worst s (crit $CRIT s); ${out[*]}\"; exit 2\nfi\necho \"MOUNT OK - ${out[*]}\"; exit 0\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "It is the same false positive, and the fix never reached this check.\n\n- Icinga: `mount-latency` is CRITICAL since 2026-11-17 01:40 UTC: \"/home/autofs/proj stat() took 12.4 s (crit 5 s)\",\n  while /home/users (0.02 s) and /srv/scratch (0.03 s) are fast. The service's vars set plugin =\n  plugins/fs/check_mount_latency.sh and plugin_ref = v3.4.0.\n- Comments: hkowalczyk wrote on 2026-11-15 14:20 UTC that the autofs false positive was fixed in the plugin on main\n  (it now skips autofs entries). Since then, amensah commented on 2026-11-17 08:05 UTC that it came back overnight on\n  the same mount, with users reporting no slowness on /home/users.\n- GitHub: on main the plugin does skip autofs (`[[ \"$fstype\" == autofs ]] && continue`). At tag v3.4.0 - the ref this\n  service is pinned to - there is no autofs skip, so it still stat()s the autofs indirect mount and times the\n  automounter.\n\nSo the fix exists only on main; the check still runs the v3.4.0 plugin, which does not contain it. The 12.4 s is the\nautomounter on /home/autofs/proj, not NFS latency. To make the fix stick, move plugin_ref to a release that contains the\nautofs skip (or to main). The host-level comment about the 2026-11-25 kernel rollout is unrelated."
+}

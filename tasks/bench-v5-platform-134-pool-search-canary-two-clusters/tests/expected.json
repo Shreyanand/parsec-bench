@@ -1,0 +1,104 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_resource_pools",
+          "cluster": "condor"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_resource_pools",
+          "cluster": "merlin"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "provider-condor",
+        "any_of": [
+          "rhel-edge-aws"
+        ],
+        "ignore_case": true,
+        "asked_by": "which provider it draws from",
+        "rationale": "provider_name of condor's pool; the canary's is edge-canary-aws"
+      },
+      {
+        "id": "provider-merlin",
+        "any_of": [
+          "rhel-edge-azure"
+        ],
+        "ignore_case": true,
+        "asked_by": "which provider it draws from",
+        "rationale": "provider_name of merlin's pool"
+      }
+    ],
+    "counts": [
+      {
+        "id": "min-total",
+        "value": 14,
+        "nouns": [
+          "min_available",
+          "minimum",
+          "available",
+          "floor"
+        ],
+        "window": 4,
+        "derived": true,
+        "note": "Sum of min_available over the two rhel-edge-pool rows from list_resource_pools, condor 8 + merlin 6 = 14 (the rhel-edge-pool-canary rows, 2 + 1, are excluded).",
+        "asked_by": "combined minimum-available target",
+        "rationale": "8 + 6; with the canaries it would be 17"
+      },
+      {
+        "id": "handles-total",
+        "value": 20,
+        "nouns": [
+          "handles",
+          "resource handles",
+          "resource_handle_count",
+          "held"
+        ],
+        "window": 4,
+        "derived": true,
+        "note": "Sum of resource_handle_count over the two rhel-edge-pool rows from list_resource_pools, condor 11 + merlin 9 = 20 (the rhel-edge-pool-canary rows, 3 + 2, are excluded).",
+        "asked_by": "how many resource handles they hold between them",
+        "rationale": "11 + 9; with the canaries it would be 25"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "canary-summed",
+        "none_of": [
+          "min_available 17",
+          "min_available of 17",
+          "17 minimum",
+          "minimum of 17",
+          "17 available",
+          "25 handles",
+          "25 resource handles",
+          "25 resource_handle",
+          "handles 25",
+          "total of 17",
+          "total of 25"
+        ],
+        "ignore_case": true,
+        "rationale": "the name search also returns rhel-edge-pool-canary; adding it inflates both totals"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

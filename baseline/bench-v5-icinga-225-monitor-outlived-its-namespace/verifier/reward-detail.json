@@ -1,0 +1,249 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts",
+          "search": "lab-ws-n3v8d",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "lab-ws-n3v8d",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "lab-ws-n3v8d"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "lab-ws-n3v8d"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts",
+          "search": "ocpv-quince",
+          "detailed": true
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "lab-ws"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "ocpv-lab-workstations"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "monitoring-config",
+          "search": "ocpv"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "filter_expr": "match(\"*n3v8d*\", service.name)"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts",
+          "filter_expr": "match(\"*ocpv*\", host.name)",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "filter_expr": "match(\"*workstation-n3v8d*\", service.name)"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts",
+          "filter_expr": "match(\"*ocpv*\", host.groups)",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts",
+          "filter_expr": "\"ocpv-lab-workstations\" in host.groups",
+          "detailed": true
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_vms",
+          "cluster": "ocpv-quince",
+          "namespace": "sandbox-n3v8d-ws"
+        }
+      },
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "find_namespace",
+          "namespace": "sandbox-n3v8d-ws"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "no-vm-there",
+        "any_of": [
+          "no vms",
+          "no vm ",
+          "no vm.",
+          "no vm,",
+          "no virtual machine",
+          "0 vms",
+          "zero vms",
+          "0 virtual machines",
+          "count 0",
+          "count: 0",
+          "count=0",
+          "count of 0",
+          "\"count\": 0",
+          "vms: []",
+          "vms\": []",
+          "empty list",
+          "empty result",
+          "came back empty",
+          "returned empty",
+          "returns empty",
+          "was empty",
+          "is empty",
+          "returned nothing",
+          "returns nothing",
+          "found nothing",
+          "no such vm",
+          "not there",
+          "nothing there",
+          "workstation-n3v8d does not exist",
+          "workstation-n3v8d doesn't exist",
+          "workstation-n3v8d isn't there",
+          "workstation-n3v8d is not there",
+          "workstation-n3v8d is not on",
+          "workstation-n3v8d isn't on",
+          "vm does not exist",
+          "vm doesn't exist",
+          "vm no longer exists",
+          "no longer exists",
+          "isn't on ocpv-quince",
+          "is not on ocpv-quince",
+          "not on ocpv-quince",
+          "not in sandbox-n3v8d-ws"
+        ],
+        "ignore_case": true,
+        "asked_by": "find out what state the VM is in",
+        "rationale": "list_vms on the cluster and namespace Icinga names returns an empty list",
+        "derived": true,
+        "note": "An absence: ocpv_vms holds no row for ocpv-quince / sandbox-n3v8d-ws, so list_vms returns vms [] and count 0."
+      },
+      {
+        "id": "namespace-gone",
+        "any_of": [
+          "not found on any",
+          "isn't on any",
+          "is not on any",
+          "not on any",
+          "exists on no",
+          "doesn't exist on any",
+          "does not exist on any",
+          "not present on any",
+          "no cluster has",
+          "no ocp-v cluster has",
+          "neither cluster",
+          "none of the clusters",
+          "not found on either",
+          "isn't on either",
+          "is not on either",
+          "not on either",
+          "on neither",
+          "not anywhere",
+          "nowhere",
+          "namespace no longer exists",
+          "namespace is gone",
+          "namespace has been deleted",
+          "namespace was deleted",
+          "namespace was removed",
+          "namespace has been removed",
+          "namespace doesn't exist",
+          "namespace does not exist",
+          "lab was deleted",
+          "lab has been deleted",
+          "lab was removed",
+          "lab has been removed",
+          "lab was torn down",
+          "lab has been torn down",
+          "lab was destroyed",
+          "lab has been destroyed",
+          "lab is gone",
+          "lab no longer exists",
+          "was not moved",
+          "wasn't moved",
+          "not moved",
+          "hasn't moved",
+          "has not moved",
+          "did not move",
+          "didn't move"
+        ],
+        "ignore_case": true,
+        "asked_by": "check whether it exists anywhere else",
+        "rationale": "find_namespace without a cluster reports the namespace on no cluster",
+        "derived": true,
+        "note": "An absence: no ocpv_namespaces row holds sandbox-n3v8d-ws on any cluster, so find_namespace returns the in-band not-found error with clusters_searched."
+      }
+    ],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

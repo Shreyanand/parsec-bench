@@ -1,0 +1,108 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_multiworkshops",
+          "cluster": "heron",
+          "namespace": "user-pmukherjee-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_workshops",
+          "cluster": "heron",
+          "namespace": "user-pmukherjee-redhat-com"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "short-workshop",
+        "any_of": [
+          "ods-serverless",
+          "Serverless Functions"
+        ],
+        "ignore_case": true,
+        "asked_by": "which workshop is the weak spot",
+        "rationale": "the only event workshop with failed provisions"
+      }
+    ],
+    "counts": [
+      {
+        "id": "user-slots",
+        "value": 85,
+        "nouns": [
+          "user",
+          "users",
+          "slots",
+          "user_count",
+          "attendees"
+        ],
+        "window": 4,
+        "asked_by": "how many attendees its workshops are set up for in total",
+        "rationale": "30+30+25 over the three asset workshops only"
+      },
+      {
+        "id": "seat-gap",
+        "value": 5,
+        "nouns": [
+          "short",
+          "seats",
+          "gap",
+          "fewer"
+        ],
+        "window": 4,
+        "derived": true,
+        "note": "The event MultiWorkshop ocp-dev-summit-oct26 advertises number_seats 90 and its three asset workshops' user_count sum to 30 + 30 + 25 = 85, so the gap is 90 - 85 = 5 seats.",
+        "asked_by": "by how much it misses",
+        "rationale": "number_seats 90 minus 85"
+      },
+      {
+        "id": "active-envs",
+        "value": 82,
+        "nouns": [
+          "active",
+          "environments",
+          "working"
+        ],
+        "window": 4,
+        "asked_by": "how many environments are actually up",
+        "rationale": "provision_count.active 30+27+25"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "standalone-included",
+        "none_of": [
+          "105 user",
+          "105 slots",
+          "105 attendees",
+          "105 users",
+          "145 user",
+          "145 slots",
+          "102 active",
+          "142 active",
+          "covers all 90",
+          "more than enough"
+        ],
+        "ignore_case": true,
+        "rationale": "summing ods-security-preview (and/or pb-rhel-admin) into the event"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

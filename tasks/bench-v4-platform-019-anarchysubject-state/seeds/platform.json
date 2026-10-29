@@ -1,0 +1,108 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [
+    {
+      "name": "ocp4-cluster.bl42c",
+      "namespace": "babylon-bl42c",
+      "governor": "ocp4-cluster",
+      "current_state": "provision-failed",
+      "desired_state": "started",
+      "healthy": false,
+      "requester_email": "opentlc-mgr@redhat.com",
+      "instance_vars": {
+        "guid": "bl42c",
+        "cloud_provider": "openshift_cnv",
+        "env_type": "ocp4-cluster"
+      },
+      "resource_claim": {
+        "name": "ocp4-cluster-bl42c",
+        "namespace": "user-sandbox"
+      },
+      "tower_jobs": {
+        "provision": {
+          "job_id": 90420,
+          "controller": "east"
+        }
+      },
+      "babylon_anarchy_subject_id": "ocp4-cluster.bl42c",
+      "cluster": "east"
+    },
+    {
+      "name": "ocp4-cluster.zz9pz",
+      "namespace": "babylon-zz9pz",
+      "governor": "ocp4-cluster",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "zz9pz"
+      },
+      "babylon_anarchy_subject_id": "ocp4-cluster.zz9pz",
+      "cluster": "east"
+    }
+  ],
+  "babylon_catalog_items": [],
+  "babylon_components": [
+    {
+      "cluster": "east",
+      "name": "ocp4-cluster",
+      "cloud_provider": "openshift_cnv",
+      "env_type": "ocp4-cluster",
+      "platform": "cnv",
+      "expected_instances": [
+        {
+          "name": "bastion",
+          "count": 1,
+          "flavor": "medium"
+        },
+        {
+          "name": "master-0",
+          "count": 1,
+          "flavor": "large"
+        },
+        {
+          "name": "master-1",
+          "count": 1,
+          "flavor": "large"
+        },
+        {
+          "name": "master-2",
+          "count": 1,
+          "flavor": "large"
+        },
+        {
+          "name": "worker-0",
+          "count": 1,
+          "flavor": "large"
+        }
+      ],
+      "scm_url": "https://github.com/agnosticd/agnosticd-v2",
+      "scm_ref": "main",
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "agd-v2/ocp4-cluster",
+      "sub_components": [],
+      "definition": {
+        "lifespan": {
+          "default": "8h",
+          "maximum": "72h"
+        }
+      },
+      "babylon_component_id": "east-ocp4-cluster"
+    }
+  ],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

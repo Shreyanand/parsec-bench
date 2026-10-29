@@ -1,0 +1,40 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/ocp4_workload_fleet_registry/tasks/main.yml",
+      "content": "---\n# ocp4_workload_fleet_registry: namespace, robot account and pull secret\n# for the fleet-edge-lab devices.\n\n- name: Create the registry namespace\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: v1\n      kind: Namespace\n      metadata:\n        name: \"{{ fleet_registry_namespace }}\"\n\n- name: Create the robot account for fleet pulls\n  fleetops.quay.robot_account:\n    state: present\n    quay_host: \"{{ fleet_registry_host }}\"\n    quay_token: \"{{ lookup('fleetops.vaultkv.kv_read', 'quay/admin-token') }}\"\n    validate_certs: false\n  register: r_fleet_robot\n\n- name: Write the fleet pull secret\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: v1\n      kind: Secret\n      type: kubernetes.io/dockerconfigjson\n      metadata:\n        name: fleet-pull-secret\n        namespace: \"{{ fleet_registry_namespace }}\"\n      data:\n        .dockerconfigjson: \"{{ r_fleet_robot.docker_config | b64encode }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/ocp4_workload_fleet_registry/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/ocp4_workload_fleet_registry/tasks/main.yml",
+      "content": "---\n# ocp4_workload_fleet_registry: namespace, robot account and pull secret\n# for the fleet-edge-lab devices.\n\n- name: Create the registry namespace\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: v1\n      kind: Namespace\n      metadata:\n        name: \"{{ fleet_registry_namespace }}\"\n\n- name: Create the robot account for fleet pulls\n  fleetops.quay.robot_account:\n    state: present\n    quay_host: \"{{ fleet_registry_host }}\"\n    quay_token: \"{{ lookup('fleetops.vaultkv.kv_read', 'quay/admin-token') }}\"\n    validate_certs: false\n  register: r_fleet_robot\n\n- name: Write the fleet pull secret\n  kubernetes.core.k8s:\n    state: present\n    definition:\n      apiVersion: v1\n      kind: Secret\n      type: kubernetes.io/dockerconfigjson\n      metadata:\n        name: fleet-pull-secret\n        namespace: \"{{ fleet_registry_namespace }}\"\n      data:\n        .dockerconfigjson: \"{{ r_fleet_robot.docker_config | b64encode }}\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/ocp4_workload_fleet_registry/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/ocp4_workload_fleet_registry/defaults/main.yml",
+      "content": "---\nfleet_registry_namespace: fleet-registry\nfleet_registry_host: quay.fleet-edge-lab.example.com\nfleet_registry_org: fleet-edge\nfleet_registry_robot: device-pull\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/ocp4_workload_fleet_registry/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/ocp4_workload_fleet_registry/defaults/main.yml",
+      "content": "---\nfleet_registry_namespace: fleet-registry\nfleet_registry_host: quay.fleet-edge-lab.example.com\nfleet_registry_org: fleet-edge\nfleet_registry_robot: device-pull\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/ocp4_workload_fleet_registry/defaults/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

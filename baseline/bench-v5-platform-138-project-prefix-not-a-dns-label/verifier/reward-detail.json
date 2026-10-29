@@ -1,0 +1,67 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "event0",
+          "job_id": 731608
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "coastal-sre-bootcamp"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "summit_bu/coastal-sre-bootcamp/common.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "summit_bu/coastal-sre-bootcamp/prod.yaml",
+          "ref": "main"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [
+      {
+        "id": "prefix-line",
+        "repo": "rhpds/agnosticv",
+        "path": "summit_bu/coastal-sre-bootcamp/common.yaml",
+        "line": 18,
+        "asked_by": "cite that line as `owner/repo:path:line`",
+        "rationale": "the line is counted from the seeded common.yaml; it proves the catalog item, not the role default (which is the valid 'bootcamp'), was read"
+      }
+    ],
+    "citations_total": 1,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

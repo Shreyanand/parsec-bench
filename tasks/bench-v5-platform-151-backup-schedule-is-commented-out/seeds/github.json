@@ -1,0 +1,24 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_timescale_metrics/defaults/main.yml",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_timescale_metrics/defaults/main.yml",
+      "content": "---\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\n# CloudNativePG operator\nocp4_workload_timescale_metrics_operator_channel: stable-v1.25\nocp4_workload_timescale_metrics_namespace: metrics-db\n\n# Database cluster\nocp4_workload_timescale_metrics_instances: 3\nocp4_workload_timescale_metrics_storage_size: 50Gi\nocp4_workload_timescale_metrics_retention_days: 30\n\n# Scheduled backups (ScheduledBackup CR, barman to S3).\n# Off until the shared backup bucket has a lifecycle policy (RHDPOPS-7731).\n# ocp4_workload_timescale_metrics_backup_schedule: \"0 0 2 * * 0\"\n# ocp4_workload_timescale_metrics_backup_retention: 14d\nocp4_workload_timescale_metrics_backup_bucket: \"\"\n"
+    },
+    {
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_timescale_metrics/defaults/main.yml",
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_timescale_metrics/defaults/main.yml",
+      "content": "---\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\n# CloudNativePG operator\nocp4_workload_timescale_metrics_operator_channel: stable-v1.25\nocp4_workload_timescale_metrics_namespace: metrics-db\n\n# Database cluster\nocp4_workload_timescale_metrics_instances: 3\nocp4_workload_timescale_metrics_storage_size: 50Gi\nocp4_workload_timescale_metrics_retention_days: 30\n\n# Scheduled backups (ScheduledBackup CR, barman to S3).\n# Off until the shared backup bucket has a lifecycle policy (RHDPOPS-7731).\n# ocp4_workload_timescale_metrics_backup_schedule: \"0 0 2 * * 0\"\n# ocp4_workload_timescale_metrics_backup_retention: 14d\nocp4_workload_timescale_metrics_backup_bucket: \"\"\n"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

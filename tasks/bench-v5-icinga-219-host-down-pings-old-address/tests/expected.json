@@ -1,0 +1,220 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_hosts"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "update_host"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "ping_host"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "old-address",
+        "any_of": [
+          "10.44.18.23"
+        ],
+        "ignore_case": true,
+        "asked_by": "what address and check Icinga is actually using for that host",
+        "rationale": "the host object's attrs.address; it is the pre-move address, which the instruction never states"
+      },
+      {
+        "id": "check",
+        "any_of": [
+          "hostalive",
+          "ping",
+          "icmp"
+        ],
+        "ignore_case": true,
+        "asked_by": "what address and check Icinga is actually using for that host",
+        "rationale": "the host's check_command and output (PING CRITICAL)"
+      },
+      {
+        "id": "down-time",
+        "any_of": [
+          "06:52",
+          "6:52",
+          "0652"
+        ],
+        "ignore_case": true,
+        "asked_by": "at what UTC time it went DOWN",
+        "rationale": "last_state_change 1796194320 is 2026-12-02 06:52 UTC, twelve minutes after the move",
+        "derived": true,
+        "note": "Converted from the host's last_state_change epoch 1796194320 (2026-12-02 06:52 UTC); the seed stores only the epoch."
+      },
+      {
+        "id": "stale-config",
+        "any_of": [
+          "old address",
+          "pre-move",
+          "before the move",
+          "previous address",
+          "former address",
+          "stale address",
+          "outdated address",
+          "out-of-date address",
+          "out of date",
+          "wrong address",
+          "old ip",
+          "previous ip",
+          "former ip",
+          "stale ip",
+          "outdated ip",
+          "wrong ip",
+          "not been updated",
+          "hasn't been updated",
+          "has not been updated",
+          "wasn't updated",
+          "was not updated",
+          "never updated",
+          "never been updated",
+          "not updated",
+          "still points",
+          "still pointing",
+          "still has the old",
+          "still configured with",
+          "still checking",
+          "still lists",
+          "still holds the old",
+          "still carries the old",
+          "host definition",
+          "address changed",
+          "change its address",
+          "not watching the new",
+          "isn't watching the new",
+          "not checking the new",
+          "isn't checking the new",
+          "not pinging the new",
+          "isn't pinging the new",
+          "never got the new",
+          "still pings",
+          "still pinging",
+          "still using",
+          "update the address",
+          "update its address",
+          "update the host address",
+          "update the host's address",
+          "update the host object",
+          "change the address",
+          "correct the address",
+          "fix the address",
+          "fix the host's address",
+          "fix the host address",
+          "address on the icinga",
+          "monitoring config",
+          "monitoring configuration",
+          "icinga config",
+          "icinga configuration",
+          "configuration issue",
+          "config issue",
+          "monitoring issue",
+          "monitoring problem",
+          "monitoring-side",
+          "false alarm",
+          "false positive"
+        ],
+        "ignore_case": true,
+        "asked_by": "whether this is a real outage",
+        "rationale": "the trap: Icinga still pings the pre-move address, so DOWN is a stale host definition, not an outage",
+        "derived": true,
+        "note": "A synthesis, not a seed literal: the host's address 10.44.18.23 differs from the post-move address 10.44.30.23 the instruction states, and the DOWN began at 06:52 UTC, twelve minutes after the 06:40 move."
+      }
+    ],
+    "counts": [
+      {
+        "id": "hours-down",
+        "value": 28,
+        "nouns": [
+          "hours",
+          "hrs",
+          "h"
+        ],
+        "window": 3,
+        "asked_by": "how many hours it has been DOWN for",
+        "rationale": "2026-12-02 06:52 UTC to the stated now, 2026-12-03 10:52 UTC",
+        "derived": true,
+        "note": "Derived: last_state_change 1796194320 (2026-12-02 06:52 UTC) to the instruction's 2026-12-03 10:52 UTC is exactly 28 hours.",
+        "extra_any_of": [
+          "28h",
+          "28 h",
+          "28hrs",
+          "1 day 4 hours",
+          "1 day and 4 hours",
+          "one day and four hours",
+          "a day and 4 hours",
+          "a day and four hours",
+          "1d 4h",
+          "1 day, 4 hours"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "real-outage",
+        "none_of": [
+          "is a real outage",
+          "is a genuine outage",
+          "is an actual outage",
+          "is a real network outage",
+          "it's a real outage",
+          "it's a genuine outage",
+          "it's an actual outage",
+          "real outage: yes",
+          "real outage? yes",
+          "the host is really down",
+          "the host is genuinely down",
+          "the host is actually down",
+          "host really is down",
+          "go ahead with the P1",
+          "go ahead and raise the P1",
+          "raise the P1 with the network team",
+          "open the P1 with the network team"
+        ],
+        "ignore_case": true,
+        "rationale": "the host answers on its new address; Icinga's DOWN comes from pinging the pre-move address"
+      },
+      {
+        "id": "checks-new-address",
+        "none_of": [
+          "icinga is checking 10.44.30.23",
+          "icinga checks 10.44.30.23",
+          "icinga is using 10.44.30.23",
+          "icinga uses 10.44.30.23",
+          "icinga's address is 10.44.30.23",
+          "address in icinga is 10.44.30.23",
+          "configured address is 10.44.30.23",
+          "icinga has the new address",
+          "icinga already has the new address"
+        ],
+        "ignore_case": true,
+        "rationale": "the stored address is 10.44.18.23; claiming Icinga checks the new address reports what the user assumes instead of the host row"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

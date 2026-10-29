@@ -1,0 +1,57 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [
+    {
+      "gcp_cost_result_id": "gcr-n7r-0930-svc",
+      "period_id": "per-gcp-n7r-0930",
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2026-09-01",
+        "end": "2026-09-30"
+      },
+      "breakdown": [
+        {
+          "name": "BigQuery",
+          "cost": 12480.22
+        },
+        {
+          "name": "Compute Engine",
+          "cost": 9736.05
+        },
+        {
+          "name": "Cloud Storage",
+          "cost": 6118.4
+        },
+        {
+          "name": "Cloud Run",
+          "cost": 4902.67
+        },
+        {
+          "name": "Cloud Pub/Sub",
+          "cost": 3215.83
+        },
+        {
+          "name": "Cloud Monitoring",
+          "cost": 2451.0
+        }
+      ],
+      "daily_rows": 2316,
+      "total_cost": 38904.17
+    }
+  ],
+  "periods": [
+    {
+      "period_id": "per-gcp-n7r-0930",
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    }
+  ]
+}

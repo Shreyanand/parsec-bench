@@ -1,0 +1,67 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "pgw-ledger-03",
+          "service": "pg-connections",
+          "detailed": true
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "not-notified",
+        "any_of": [
+          "no notification",
+          "not notified",
+          "not been notified",
+          "not yet notified",
+          "not sent",
+          "hasn't sent",
+          "has not sent",
+          "not paged",
+          "not been paged",
+          "hasn't paged",
+          "has not paged",
+          "nobody has been paged",
+          "no one has been paged",
+          "no page",
+          "not yet paged",
+          "not gone out",
+          "hasn't gone out",
+          "has not gone out",
+          "only notifies",
+          "only sends notifications",
+          "notifications only"
+        ],
+        "ignore_case": true,
+        "asked_by": "sent out a notification already",
+        "rationale": "soft states never notify; an agent reading only state=2 says the DBA has been paged",
+        "derived": true,
+        "note": "Icinga only notifies on HARD states; the row is still SOFT (state_type 0, check_attempt 2 of 5) and its last_hard_state is 0 (OK), so no notification has gone out yet."
+      }
+    ],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 3,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

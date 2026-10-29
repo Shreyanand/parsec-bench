@@ -1,0 +1,142 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "event0",
+          "job_id": 7419932
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "event0",
+          "job_id": 7419932,
+          "failed_only": true
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "event0",
+          "template_name": "netops-automation-workshop"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "netops-automation-workshop"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job",
+          "controller": "event0",
+          "job_id": 7419932
+        }
+      },
+      {
+        "name": "render_chart",
+        "args": {
+          "chart_type": "line",
+          "title": "NetOps Automation Workshop \u2014 Provisioning Duration Trend",
+          "labels": [
+            "Sep 15",
+            "Sep 22",
+            "Sep 29",
+            "Oct 02",
+            "Oct 06"
+          ],
+          "datasets": [
+            {
+              "label": "Duration (minutes)",
+              "data": [
+                81.17,
+                83.82,
+                86.53,
+                88.77,
+                90.0
+              ]
+            },
+            {
+              "label": "Timeout ceiling (minutes)",
+              "data": [
+                90,
+                90,
+                90,
+                90,
+                90
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job",
+          "controller": "event0",
+          "job_id": 7419932
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 3,
+    "counts_missed": [
+      {
+        "id": "slowest-success",
+        "value": 5320,
+        "nouns": [
+          "seconds",
+          "s",
+          "took",
+          "run",
+          "success",
+          "successful"
+        ],
+        "window": 5,
+        "asked_by": "Compare it with the earlier runs of the same job template",
+        "rationale": "the most recent successful run, only in find_jobs"
+      },
+      {
+        "id": "margin",
+        "value": 80,
+        "nouns": [
+          "seconds",
+          "s",
+          "under",
+          "margin",
+          "headroom",
+          "short of",
+          "below"
+        ],
+        "window": 4,
+        "asked_by": "whether it is likely to happen again",
+        "rationale": "5400 - 5320; derived from both calls"
+      }
+    ],
+    "counts_total": 3,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

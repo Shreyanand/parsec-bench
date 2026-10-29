@@ -1,0 +1,59 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "openshift-ai-pipelines-workshop"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "ai_bu/openshift-ai-pipelines-workshop/common.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "ai_bu/openshift-ai-pipelines-workshop/prod.yaml",
+          "ref": "main"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [
+      {
+        "id": "worker-count-line",
+        "repo": "rhpds/agnosticv",
+        "path": "ai_bu/openshift-ai-pipelines-workshop/prod.yaml",
+        "line": 13,
+        "asked_by": "cite the line that sets the prod worker count",
+        "rationale": "counted from the seeded prod.yaml; proves the override file was read"
+      }
+    ],
+    "citations_total": 1,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

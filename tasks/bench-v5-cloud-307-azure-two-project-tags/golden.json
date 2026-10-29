@@ -1,0 +1,62 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_azure_pools",
+      "args": {
+        "action": "search_by_project",
+        "project_tag": "fsi-fraud-demo"
+      },
+      "result": {
+        "database": "pools",
+        "project_tag": "fsi-fraud-demo",
+        "subscriptions": [
+          {
+            "id": "pool-14-207",
+            "used": true,
+            "projecttag": "fsi-fraud-demo"
+          },
+          {
+            "id": "pool-14-212",
+            "used": true,
+            "projecttag": "fsi-fraud-demo"
+          },
+          {
+            "id": "pool-19-033",
+            "used": true,
+            "projecttag": "fsi-fraud-demo"
+          }
+        ],
+        "count": 3,
+        "truncated": false
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_azure_pools",
+      "args": {
+        "action": "search_by_project",
+        "project_tag": "fsi-fraud-demo-eu"
+      },
+      "result": {
+        "database": "pools",
+        "project_tag": "fsi-fraud-demo-eu",
+        "subscriptions": [
+          {
+            "id": "pool-19-041",
+            "used": true,
+            "projecttag": "fsi-fraud-demo-eu"
+          },
+          {
+            "id": "pool-19-046",
+            "used": true,
+            "projecttag": "fsi-fraud-demo-eu"
+          }
+        ],
+        "count": 2,
+        "truncated": false
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "In the pools database:\n\n**fsi-fraud-demo**: 3 subscriptions, all in use.\n- pool-14-207 (pool 14)\n- pool-14-212 (pool 14)\n- pool-19-033 (pool 19)\n\n**fsi-fraud-demo-eu**: 2 subscriptions, both in use.\n- pool-19-041 (pool 19)\n- pool-19-046 (pool 19)\n\nThat is 5 subscriptions in total across pools 14 and 19, and every one of them is assigned. After the merge the combined tag would cover pool-14-207, pool-14-212, pool-19-033, pool-19-041 and pool-19-046. Retagging the two fsi-fraud-demo-eu subscriptions is enough; the other three already carry fsi-fraud-demo.\n"
+}

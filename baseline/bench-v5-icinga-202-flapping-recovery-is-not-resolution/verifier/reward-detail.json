@@ -1,0 +1,77 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "edge-lb-sjc-2",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "edge-lb-sjc-2"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "edge-lb-sjc-2"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [
+      {
+        "id": "says-safe-to-close",
+        "none_of": [
+          "safe to close",
+          "fine to close",
+          "ok to close",
+          "okay to close",
+          "go ahead and close",
+          "you can close",
+          "can be closed",
+          "is resolved",
+          "has recovered"
+        ],
+        "ignore_case": true,
+        "rationale": "the reading of state=0 as resolution",
+        "attributed_to": [
+          "not safe to close",
+          "isn't safe to close",
+          "would not close",
+          "wouldn't close",
+          "do not close",
+          "don't close",
+          "looks resolved",
+          "appears resolved",
+          "seems to have recovered",
+          "only looks"
+        ]
+      }
+    ],
+    "forbidden_total": 1
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "breakdown",
+          "group_by": "LINKED_ACCOUNT"
+        }
+      },
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "drilldown",
+          "drilldown_type": "account_services",
+          "selected_key": "593027418866"
+        }
+      },
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "593027418866"
+          ],
+          "group_by": "INSTANCE_TYPE"
+        }
+      },
+      {
+        "name": "query_aws_capacity_manager",
+        "args": {
+          "account_id": "593027418866",
+          "group_by": "instance-type"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "top-account",
+        "any_of": [
+          "593027418866",
+          "ml-training-prod"
+        ],
+        "ignore_case": true,
+        "asked_by": "which AWS account spent the most",
+        "rationale": "discovered from the breakdown; the instruction names no account"
+      },
+      {
+        "id": "top-service",
+        "any_of": [
+          "elastic compute cloud",
+          "ec2"
+        ],
+        "ignore_case": true,
+        "asked_by": "which service drove it",
+        "rationale": "the drilldown's leading row"
+      },
+      {
+        "id": "instance-type",
+        "any_of": [
+          "g6e.12xlarge"
+        ],
+        "ignore_case": true,
+        "asked_by": "which instance type is behind that service",
+        "rationale": "only the INSTANCE_TYPE Cost Explorer result names it; NoInstanceType is the larger-looking non-answer"
+      }
+    ],
+    "counts": [
+      {
+        "id": "account-cost",
+        "value": 71402,
+        "nouns": [
+          "ml-training-prod",
+          "593027418866",
+          "total"
+        ],
+        "window": 10,
+        "extra_any_of": [
+          "71,402.88",
+          "71402.88"
+        ],
+        "asked_by": "spent the most, and how much",
+        "rationale": "the breakdown's top row"
+      },
+      {
+        "id": "itype-cost",
+        "value": 38906,
+        "nouns": [
+          "g6e.12xlarge"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "38,906.20",
+          "38906.20"
+        ],
+        "asked_by": "which instance type",
+        "rationale": "the instance type's September cost from Cost Explorer"
+      },
+      {
+        "id": "odcr-util",
+        "value": 91,
+        "nouns": [
+          "utilisation",
+          "utilization",
+          "utilized",
+          "utilised",
+          "used"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "91.4%",
+          "91.4 %",
+          "91.4 percent"
+        ],
+        "asked_by": "How well-utilised are that account's capacity reservations for that instance type",
+        "rationale": "Capacity Manager avg_utilization_pct for g6e.12xlarge in the account"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

@@ -1,0 +1,1 @@
+Azure capacity in the standard pools database is getting tight and I have a workshop team waiting for subscriptions. Which pool has the fewest free subscriptions as of the latest records, and which of that pool's subscriptions can I actually hand out?

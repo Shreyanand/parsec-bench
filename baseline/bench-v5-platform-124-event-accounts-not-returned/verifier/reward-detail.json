@@ -1,0 +1,279 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "reservation": "adriatic-summit-2609",
+          "max_results": 500
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "x4vbn"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.uuid, p.babylon_guid, p.catalog_id, p.status, p.provision_time, p.retire_time, p.sandbox, p.cloud, p.region, p.ordered_by FROM provisions p WHERE p.babylon_guid = 'x4vbn' ORDER BY p.provision_time DESC LIMIT 5"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "sandbox7731"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "x4vbn",
+          "status": "failed",
+          "created_after": "2026-09-25"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "x4vbn",
+          "created_after": "2026-09-25"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "event0",
+          "job_id": 5519377
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "adriatic-summit-ocp-lab"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "event0",
+          "job_id": 5519377,
+          "failed_only": true
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "adriatic_summit/adriatic-summit-ocp-lab/defaults.yml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "adriatic_summit/adriatic-summit-ocp-lab",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "adriatic-summit"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "infra_aws_route53_cleanup"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "infra_aws_route53_cleanup"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "adriatic-summit"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "d9kzr",
+          "status": "failed"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "d9kzr"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.uuid, p.babylon_guid, p.status, p.provisioned_at, p.retired_at, p.modified_at, p.catalog_id, p.ordered_by, ci.name as catalog_name FROM provisions p LEFT JOIN catalog_items ci ON p.catalog_id = ci.id WHERE p.babylon_guid = 'd9kzr' ORDER BY p.provisioned_at DESC LIMIT 5"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "d9kzr"
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "sandbox7732"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "d9kzr",
+          "status": "canceled"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "5f1c2e7a"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_by_guid",
+          "guid": "d9kzr",
+          "earliest": "2026-09-24T00:00:00",
+          "latest": "2026-10-15T00:00:00",
+          "errors_only": false
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_actions",
+          "guid": "d9kzr"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_aap2_logs",
+          "guid": "d9kzr",
+          "earliest": "2026-09-20T00:00:00",
+          "latest": "2026-10-15T00:00:00",
+          "errors_only": false
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=rh_pds-001_ocp_app (\"d9kzr\" OR \"sandbox7732\" OR \"5f1c2e7a-1242-4b6d-9e3a-7c51d0a8b22f\") earliest=2026-09-24T00:00:00 latest=2026-10-15T00:00:00 | sort -_time | head 50"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_raw",
+          "raw_query": "search index=rh_pds-001_ocp_infra (\"d9kzr\" OR \"sandbox7732\" OR \"adriatic-summit-2609\") earliest=2026-09-24T00:00:00 latest=2026-10-15T00:00:00 | sort -_time | head 50"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_aap2_logs",
+          "controller": "aap2-prod-us-east-2.aap.infra.demo.redhat.com",
+          "guid": "d9kzr",
+          "earliest": "2026-09-20T00:00:00",
+          "latest": "2026-10-15T00:00:00",
+          "errors_only": false
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_aap2_logs",
+          "controller": "aap2-prod-us-west-2.aap.infra.demo.redhat.com",
+          "guid": "d9kzr",
+          "earliest": "2026-09-20T00:00:00",
+          "latest": "2026-10-15T00:00:00",
+          "errors_only": false
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_babylon_pod_logs",
+          "namespace": "babylon-anarchy-operator",
+          "guid": "d9kzr"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "b-action",
+        "any_of": [
+          "launch the destroy for d9kzr",
+          "launch a destroy",
+          "launch its destroy",
+          "never launched",
+          "not been launched",
+          "nothing has tried",
+          "never been cleaned",
+          "check its order"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what to do to get each one returned",
+        "rationale": "with no job to fix, the remedy is to start a cleanup, not rerun a failed one",
+        "note": "sandbox7732 is still available false with conan_status in-use and find_jobs for its GUID d9kzr returns no job, so nothing has tried to clean it up and getting it back means launching its destroy."
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

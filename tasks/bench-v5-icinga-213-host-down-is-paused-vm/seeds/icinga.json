@@ -1,0 +1,64 @@
+{
+  "hosts": [
+    {
+      "name": "lab-bastion-kx7q2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "lab-bastion-kx7q2",
+        "host_name": "lab-bastion-kx7q2",
+        "address": "10.131.22.47",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ocpv-lab-vms"
+        ],
+        "last_state_change": 1796216700,
+        "last_hard_state_change": 1796216700,
+        "last_check": 1796225280,
+        "vars": {
+          "ocpv_cluster": "ocpv-juniper",
+          "ocpv_namespace": "sandbox-kx7q2-bastion",
+          "vm_name": "bastion-kx7q2"
+        },
+        "last_check_result": {
+          "output": "PING CRITICAL - Packet loss = 100%",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "lab-showroom-kx7q2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "lab-showroom-kx7q2",
+        "host_name": "lab-showroom-kx7q2",
+        "address": "10.131.22.48",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "ocpv-lab-vms"
+        ],
+        "last_state_change": 1796116320,
+        "last_check": 1796225340,
+        "vars": {
+          "ocpv_cluster": "ocpv-juniper",
+          "ocpv_namespace": "sandbox-kx7q2-bastion",
+          "vm_name": "showroom-kx7q2"
+        },
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.88 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [],
+  "comments": [],
+  "downtimes": []
+}

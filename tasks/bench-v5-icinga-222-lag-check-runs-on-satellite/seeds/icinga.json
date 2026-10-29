@@ -1,0 +1,166 @@
+{
+  "hosts": [
+    {
+      "name": "pgsql-rep-ams-07",
+      "type": "Host",
+      "attrs": {
+        "display_name": "pgsql-rep-ams-07",
+        "host_name": "pgsql-rep-ams-07",
+        "address": "10.52.7.37",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "pgsql-ams"
+        ],
+        "last_state_change": 1795697896,
+        "last_check": 1796719744,
+        "last_check_result": {
+          "output": "OK - 10.52.7.37: rta 0.420ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "icinga-sat-ams-2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "icinga-sat-ams-2",
+        "host_name": "icinga-sat-ams-2",
+        "address": "10.52.0.12",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "icinga-satellites"
+        ],
+        "last_state_change": 1795083098,
+        "last_check": 1796719721,
+        "last_check_result": {
+          "output": "OK - 10.52.0.12: rta 0.270ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "pgsql-rep-ams-07!pg-standby-lag",
+      "type": "Service",
+      "attrs": {
+        "display_name": "PostgreSQL standby replay lag",
+        "host_name": "pgsql-rep-ams-07",
+        "check_command": "rhdp-plugin",
+        "command_endpoint": "icinga-sat-ams-2",
+        "state": 0,
+        "state_type": 1,
+        "last_state_change": 1795698164,
+        "last_check": 1796719771,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "vars": {
+          "plugin": "plugins/db/check_pg_standby_lag.py"
+        },
+        "last_check_result": {
+          "output": "PG_LAG OK - replay lag 0 s",
+          "performance_data": [
+            "replay_lag=0s;60;300;0"
+          ],
+          "check_source": "icinga-sat-ams-2",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "pgsql-rep-ams-07!pgdata-free",
+      "type": "Service",
+      "attrs": {
+        "display_name": "PGDATA disk usage",
+        "host_name": "pgsql-rep-ams-07",
+        "check_command": "disk",
+        "command_endpoint": "pgsql-rep-ams-07",
+        "state": 0,
+        "state_type": 1,
+        "last_state_change": 1795698243,
+        "last_check": 1796719675,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "vars": {
+          "disk_partitions": [
+            "/srv/pgdata"
+          ]
+        },
+        "last_check_result": {
+          "output": "DISK OK - /srv/pgdata 41% used, 702 GiB free",
+          "performance_data": [
+            "/srv/pgdata=487GB;947;1065;0;1189"
+          ],
+          "check_source": "pgsql-rep-ams-07",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "icinga-sat-ams-2!icinga2-cluster",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Icinga 2 satellite zone health",
+        "host_name": "icinga-sat-ams-2",
+        "check_command": "cluster-zone",
+        "command_endpoint": "icinga-sat-ams-2",
+        "state": 0,
+        "state_type": 1,
+        "last_state_change": 1795083321,
+        "last_check": 1796719692,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "vars": {
+          "cluster_zone": "ams"
+        },
+        "last_check_result": {
+          "output": "Zone 'ams' is connected. Log lag: 0 seconds",
+          "check_source": "icinga-sat-ams-2",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "icinga-sat-ams-2!pg-ido",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Local PostgreSQL (IDO backend)",
+        "host_name": "icinga-sat-ams-2",
+        "check_command": "postgres",
+        "command_endpoint": "icinga-sat-ams-2",
+        "state": 0,
+        "state_type": 1,
+        "last_state_change": 1795083470,
+        "last_check": 1796719597,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "vars": {
+          "pgsql_database": "icinga_ido"
+        },
+        "last_check_result": {
+          "output": "POSTGRES OK - local server is a primary (not in recovery); database icinga_ido is open",
+          "check_source": "icinga-sat-ams-2",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

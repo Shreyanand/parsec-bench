@@ -1,0 +1,168 @@
+{
+  "comments": [],
+  "downtimes": [],
+  "hosts": [
+    {
+      "name": "nas-alpha",
+      "type": "Host",
+      "attrs": {
+        "display_name": "NAS alpha",
+        "host_name": "nas-alpha",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "nas-storage"
+        ],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "nas-bravo",
+      "type": "Host",
+      "attrs": {
+        "display_name": "NAS bravo",
+        "host_name": "nas-bravo",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "nas-storage"
+        ],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "nas-charlie",
+      "type": "Host",
+      "attrs": {
+        "display_name": "NAS charlie",
+        "host_name": "nas-charlie",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "nas-storage"
+        ],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "nas-alpha!fs-capacity",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Filesystem capacity /srv/export",
+        "host_name": "nas-alpha",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "nas-storage"
+        ],
+        "last_check_result": {
+          "output": "DISK CRITICAL - /srv/export 96% used",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "nas-alpha!ntp-offset",
+      "type": "Service",
+      "attrs": {
+        "display_name": "NTP offset",
+        "host_name": "nas-alpha",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "nas-storage"
+        ],
+        "last_check_result": {
+          "output": "NTP OK - offset 12 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "nas-bravo!fs-capacity",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Filesystem capacity /srv/export",
+        "host_name": "nas-bravo",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "nas-storage"
+        ],
+        "last_check_result": {
+          "output": "DISK WARNING - /srv/export 84% used",
+          "state": 1,
+          "exit_status": 1
+        }
+      }
+    },
+    {
+      "name": "nas-charlie!fs-capacity",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Filesystem capacity /srv/export",
+        "host_name": "nas-charlie",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "nas-storage"
+        ],
+        "last_check_result": {
+          "output": "DISK CRITICAL - /srv/export 91% used",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "nas-charlie!inode-usage",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Inode usage /srv/export",
+        "host_name": "nas-charlie",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "nas-storage"
+        ],
+        "last_check_result": {
+          "output": "INODE CRITICAL - /srv/export 97% of inodes used",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    }
+  ]
+}

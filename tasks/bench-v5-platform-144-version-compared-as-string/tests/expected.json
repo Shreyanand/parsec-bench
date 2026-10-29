@@ -1,0 +1,317 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 7731582
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 7714066
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/disruption_budget.yml"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_tick_replay/tasks/main.yml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "relaunch_job"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "relaunch"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "launch_job"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "launch"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "update_job_template"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "removed-api",
+        "any_of": [
+          "policy/v1beta1",
+          "v1beta1"
+        ],
+        "ignore_case": true,
+        "asked_by": "which API the failed order asked for",
+        "rationale": "the failed log's fatal names policy/v1beta1.PodDisruptionBudget, which a 4.16 cluster does not serve"
+      },
+      {
+        "id": "string-compare",
+        "any_of": [
+          "string comparison",
+          "string compare",
+          "as strings",
+          "are strings",
+          "as a string",
+          "string-based",
+          "string operator",
+          "string >=",
+          "text comparison",
+          "compared as text",
+          "compares lower",
+          "compares less",
+          "compares below",
+          "lower than '4.8'",
+          "lower than \"4.8\"",
+          "less than '4.8'",
+          "less than \"4.8\"",
+          "smaller than '4.8'",
+          "smaller than \"4.8\"",
+          "compared as strings",
+          "compares strings",
+          "compared as a string",
+          "compares them as strings",
+          "compares the versions as strings",
+          "compares two strings",
+          "as plain strings",
+          "as text",
+          "plain string",
+          "string-wise",
+          "stringwise",
+          "lexicographic",
+          "lexicographical",
+          "lexical",
+          "alphabetical",
+          "alphabetic",
+          "character by character",
+          "character-by-character",
+          "sorts before",
+          "sorts below",
+          "sorts lower",
+          "'1' < '8'",
+          "\"1\" < \"8\"",
+          "1 < 8",
+          "'4.16' < '4.8'",
+          "\"4.16\" < \"4.8\"",
+          "4.16 < 4.8",
+          "'4.16' >= '4.8' is false",
+          "4.16 >= 4.8 is false",
+          "not a version comparison",
+          "not a numeric comparison",
+          "not a semantic version",
+          "not compared as versions",
+          "not compared as a version",
+          "instead of a version comparison",
+          "rather than a version comparison"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why the role picked it",
+        "rationale": "the synthesis from tasks/main.yml: the cluster version is compared to '4.8' with a string operator, so '4.16' sorts below '4.8'",
+        "note": "tasks/main.yml chooses the API with ocp4_cluster_version >= '4.8'; as strings '4.16' < '4.8' (the second character after '4.' is '1' against '8'), so 4.1x clusters get policy/v1beta1."
+      },
+      {
+        "id": "threshold",
+        "any_of": [
+          "'4.8'",
+          "\"4.8\"",
+          "`4.8`",
+          " 4.8 ",
+          " 4.8.",
+          " 4.8,",
+          " 4.8)",
+          " 4.8;",
+          "(4.8",
+          " 4.8\n",
+          "4.8 threshold",
+          ">= 4.8",
+          ">=4.8",
+          "4.8 or later",
+          "4.8 or newer",
+          "4.8+"
+        ],
+        "ignore_case": true,
+        "asked_by": "the version threshold the role checks",
+        "rationale": "only tasks/main.yml shows the threshold; neither log carries it"
+      },
+      {
+        "id": "good-run-same-branch",
+        "any_of": [
+          "also policy/v1beta1",
+          "also used policy/v1beta1",
+          "also used v1beta1",
+          "also picked",
+          "also chose",
+          "also selected",
+          "also got policy/v1beta1",
+          "also took",
+          "also went",
+          "same branch",
+          "same wrong branch",
+          "same API",
+          "same choice",
+          "same selection",
+          "already used policy/v1beta1",
+          "already used v1beta1",
+          "already picked",
+          "already chose",
+          "already selected",
+          "already on policy/v1beta1",
+          "already on v1beta1",
+          "already wrong",
+          "already broken",
+          "already there",
+          "was already",
+          "deprecat",
+          "still served",
+          "still serves",
+          "still supported",
+          "still supports",
+          "still accepted",
+          "still accepts",
+          "still available",
+          "still had",
+          "by accident",
+          "by luck",
+          "luckily",
+          "latent",
+          "masked",
+          "hidden",
+          "exposed",
+          "unmasked",
+          "4.11: policy/v1beta1",
+          "4.11 run used policy/v1beta1",
+          "4.11 used policy/v1beta1"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "which API the last good order used and why it worked",
+        "rationale": "the second log shows the good run on 4.11 also selected policy/v1beta1 and got a deprecation warning; it worked only because 4.11 still served the API",
+        "note": "job 7714066's log reports 'PodDisruptionBudget API for OpenShift 4.11: policy/v1beta1' and the API server's v1beta1 deprecation warning; Kubernetes 1.24 (OpenShift 4.11) still serves policy/v1beta1, 1.25+ does not."
+      },
+      {
+        "id": "fix",
+        "any_of": [
+          "is version(",
+          "version(",
+          "version test",
+          "version_compare",
+          "ansible.builtin.version",
+          "| version",
+          "compare versions properly",
+          "compare the versions properly",
+          "proper version comparison",
+          "real version comparison",
+          "version-aware",
+          "version aware",
+          "semantic version comparison",
+          "policy/v1 unconditionally",
+          "policy/v1 always",
+          "always use policy/v1 ",
+          "always use policy/v1,",
+          "always use policy/v1.",
+          "always policy/v1 ",
+          "policy/v1 only",
+          "only policy/v1 ",
+          "hard-code policy/v1 ",
+          "hardcode policy/v1 ",
+          "drop the v1beta1",
+          "remove the v1beta1",
+          "drop the policy/v1beta1",
+          "remove the policy/v1beta1",
+          "drop the fallback",
+          "remove the fallback",
+          "drop the conditional",
+          "remove the conditional",
+          "remove the comparison",
+          "drop the comparison"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what to change in the role",
+        "rationale": "the remedy is in the role: a version-aware test, or policy/v1 without the obsolete branch",
+        "note": "replacing the string >= with the version test (or dropping the v1beta1 branch, since every supported OpenShift serves policy/v1) makes 4.16 pick policy/v1."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "upgrade-broke-role",
+        "none_of": [
+          "the 4.16 upgrade broke the role",
+          "the upgrade broke the role",
+          "the move to 4.16 broke the role",
+          "4.16 broke the role",
+          "upgrade is the root cause",
+          "4.16 is the root cause",
+          "move to 4.16 is the root cause",
+          "caused by the 4.16 upgrade",
+          "caused by the upgrade to 4.16",
+          "caused by the move to 4.16",
+          "the role worked correctly on 4.11",
+          "the role was correct on 4.11",
+          "worked correctly on 4.11",
+          "pinning the lab back to 4.11 will fix",
+          "pinning back to 4.11 will fix",
+          "pin back to 4.11 to fix",
+          "rolling back to 4.11 will fix",
+          "downgrading to 4.11 will fix",
+          "4.11 pin will fix",
+          "pinning to 4.11 fixes"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "teammate's theory",
+          "teammate thinks",
+          "teammate believes",
+          "the theory that",
+          "the belief that"
+        ],
+        "rationale": "the good 4.11 run already chose policy/v1beta1; the upgrade only removed the API the buggy comparison had been relying on"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  }
+}

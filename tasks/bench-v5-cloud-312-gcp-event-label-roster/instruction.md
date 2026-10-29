@@ -1,0 +1,1 @@
+I organised the Fjord Dev Days workshop on 2026-10-27 and 2026-10-28, and I'm closing out its GCP side. Every project we created for it in the RHDP projects folder has the label event=fjord-devdays-2610. Which projects have that label, what state is each one in, and how many of them are still ACTIVE?

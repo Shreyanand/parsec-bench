@@ -1,0 +1,39 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "pgsql-rep-ams-07"
+      },
+      "result": {
+        "result": "[{\"name\":\"pgsql-rep-ams-07!pg-standby-lag\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"PostgreSQL standby replay lag\",\"host_name\":\"pgsql-rep-ams-07\",\"check_command\":\"rhdp-plugin\",\"command_endpoint\":\"icinga-sat-ams-2\",\"state\":0,\"state_type\":1,\"last_state_change\":1795698164,\"last_check\":1796719771,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true,\"vars\":{\"plugin\":\"plugins/db/check_pg_standby_lag.py\"},\"last_check_result\":{\"output\":\"PG_LAG OK - replay lag 0 s\",\"performance_data\":[\"replay_lag=0s;60;300;0\"],\"check_source\":\"icinga-sat-ams-2\",\"state\":0,\"exit_status\":0}}},{\"name\":\"pgsql-rep-ams-07!pgdata-free\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"PGDATA disk usage\",\"host_name\":\"pgsql-rep-ams-07\",\"check_command\":\"disk\",\"command_endpoint\":\"pgsql-rep-ams-07\",\"state\":0,\"state_type\":1,\"last_state_change\":1795698243,\"last_check\":1796719675,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true,\"vars\":{\"disk_partitions\":[\"/srv/pgdata\"]},\"last_check_result\":{\"output\":\"DISK OK - /srv/pgdata 41% used, 702 GiB free\",\"performance_data\":[\"/srv/pgdata=487GB;947;1065;0;1189\"],\"check_source\":\"pgsql-rep-ams-07\",\"state\":0,\"exit_status\":0}}}]"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "rhdp-monitoring",
+        "path": "plugins/db/check_pg_standby_lag.py"
+      },
+      "result": {
+        "content": "#!/usr/bin/env python3\n\"\"\"check_pg_standby_lag.py - replay lag of a PostgreSQL hot standby, in seconds.\n\nConnects to the PostgreSQL server on the machine the plugin runs on: PGHOST defaults to the\nlocal socket directory /var/run/postgresql, and there is no --host flag. Schedule the\nservice on the standby's own Icinga agent (command_endpoint = the database host). Run anywhere\nelse, it reads whichever PostgreSQL happens to be local there.\n\nIf the server it reaches is not in recovery (pg_is_in_recovery() returns false: a primary or a\nstandalone server), there is no replay to fall behind, so the plugin reports 0 s and exits OK.\nIt prints nothing to say that this happened.\n\"\"\"\nimport os\nimport sys\n\nimport psycopg2\n\nPGHOST = os.environ.get(\"PGHOST\", \"/var/run/postgresql\")\nWARN_S = 60\nCRIT_S = 300\n\n\ndef replay_lag(conn):\n    cur = conn.cursor()\n    cur.execute(\"SELECT pg_is_in_recovery()\")\n    if not cur.fetchone()[0]:\n        return 0\n    cur.execute(\"SELECT COALESCE(date_part('epoch', now() - pg_last_xact_replay_timestamp()), 0)\")\n    return int(cur.fetchone()[0])\n\n\ndef main():\n    conn = psycopg2.connect(host=PGHOST, dbname=\"postgres\", user=\"nagios\")\n    lag = replay_lag(conn)\n    perf = f\"replay_lag={lag}s;{WARN_S};{CRIT_S};0\"\n    if lag > CRIT_S:\n        print(f\"PG_LAG CRITICAL - replay lag {lag} s|{perf}\"); sys.exit(2)\n    if lag > WARN_S:\n        print(f\"PG_LAG WARNING - replay lag {lag} s|{perf}\"); sys.exit(1)\n    print(f\"PG_LAG OK - replay lag {lag} s|{perf}\"); sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "host": "icinga-sat-ams-2"
+      },
+      "result": {
+        "result": "[{\"name\":\"icinga-sat-ams-2!icinga2-cluster\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Icinga 2 satellite zone health\",\"host_name\":\"icinga-sat-ams-2\",\"check_command\":\"cluster-zone\",\"command_endpoint\":\"icinga-sat-ams-2\",\"state\":0,\"state_type\":1,\"last_state_change\":1795083321,\"last_check\":1796719692,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true,\"vars\":{\"cluster_zone\":\"ams\"},\"last_check_result\":{\"output\":\"Zone 'ams' is connected. Log lag: 0 seconds\",\"check_source\":\"icinga-sat-ams-2\",\"state\":0,\"exit_status\":0}}},{\"name\":\"icinga-sat-ams-2!pg-ido\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Local PostgreSQL (IDO backend)\",\"host_name\":\"icinga-sat-ams-2\",\"check_command\":\"postgres\",\"command_endpoint\":\"icinga-sat-ams-2\",\"state\":0,\"state_type\":1,\"last_state_change\":1795083470,\"last_check\":1796719597,\"acknowledgement\":0,\"downtime_depth\":0,\"enable_notifications\":true,\"vars\":{\"pgsql_database\":\"icinga_ido\"},\"last_check_result\":{\"output\":\"POSTGRES OK - local server is a primary (not in recovery); database icinga_ido is open\",\"check_source\":\"icinga-sat-ams-2\",\"state\":0,\"exit_status\":0}}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The 0 s is not a measurement of pgsql-rep-ams-07 at all.\n\n- **Where it runs:** the `pg-standby-lag` service has `command_endpoint: icinga-sat-ams-2`, and its last\n  check result's `check_source` is `icinga-sat-ams-2`, so the Icinga satellite runs it, not the database\n  host. (Its sibling `pgdata-free` runs on pgsql-rep-ams-07 itself, as it should.)\n- **What it reads:** `plugins/db/check_pg_standby_lag.py` connects only to the local socket\n  (`PGHOST` defaults to /var/run/postgresql; there is no --host option). On icinga-sat-ams-2 the local\n  server is the satellite's own PostgreSQL holding the IDO database `icinga_ido`, and its\n  `pg-ido` check says it is a primary (not in recovery).\n- **Why 0 s:** when `pg_is_in_recovery()` is false the plugin returns 0 and exits OK, silently.\n  So it has been reporting \"lag 0 s\" for a primary on the satellite.\n- **Real replay lag of pgsql-rep-ams-07:** unknown. Nothing in Icinga measures it; your app's evidence of\n  hours of staleness is the only data point. Check it on the standby directly\n  (`SELECT now() - pg_last_xact_replay_timestamp();`), and fix the service by setting\n  `command_endpoint` to pgsql-rep-ams-07.\n"
+}

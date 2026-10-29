@@ -1,0 +1,236 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "coldroom-plc-vlc-2"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "schedule_downtime"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "acknowledge_problem"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "host-scope",
+        "any_of": [
+          "not covered",
+          "aren't covered",
+          "are not covered",
+          "isn't covered",
+          "is not covered",
+          "aren't in downtime",
+          "are not in downtime",
+          "isn't in downtime",
+          "is not in downtime",
+          "is not in a downtime",
+          "are not in a downtime",
+          "isn't in a downtime",
+          "aren't in a downtime",
+          "not in any downtime",
+          "have no downtime",
+          "has no downtime",
+          "neither is in downtime",
+          "neither of them is in downtime",
+          "in downtime: no",
+          "in downtime? no",
+          "downtime: no",
+          "downtime: none",
+          "no downtime of their own",
+          "no downtime of its own",
+          "no service downtime",
+          "own downtime",
+          "own service downtime",
+          "separate service downtime",
+          "service-level downtime",
+          "service level downtime",
+          "its own downtime",
+          "their own downtime",
+          "downtime_depth 0",
+          "downtime_depth: 0",
+          "downtime_depth = 0",
+          "downtime_depth is 0",
+          "downtime_depth of 0",
+          "downtime_depth=0",
+          "downtime depth 0",
+          "downtime depth of 0",
+          "downtime depth is 0",
+          "only covers the host",
+          "covers only the host",
+          "only applies to the host",
+          "applies only to the host",
+          "only the host itself",
+          "only the host object",
+          "the host object only",
+          "host-only",
+          "does not extend",
+          "doesn't extend",
+          "does not propagate",
+          "doesn't propagate",
+          "does not inherit",
+          "doesn't inherit",
+          "don't inherit",
+          "do not inherit",
+          "not inherited",
+          "does not cascade",
+          "doesn't cascade",
+          "all_services",
+          "not muted",
+          "aren't muted",
+          "are not muted",
+          "isn't muted",
+          "is not muted",
+          "not suppressed",
+          "aren't suppressed",
+          "are not suppressed",
+          "isn't suppressed",
+          "is not suppressed",
+          "will still notify",
+          "will still page",
+          "still notify",
+          "still page",
+          "still alert"
+        ],
+        "ignore_case": true,
+        "asked_by": "which ones are actually covered and which will still notify me",
+        "rationale": "the trap: the host downtime puts only the host in downtime; chiller-loop-temp and modbus-bridge carry downtime_depth 0 and still notify",
+        "derived": true,
+        "note": "A synthesis, not a seed literal: the host row has downtime_depth 1, while the failing services chiller-loop-temp and modbus-bridge have downtime_depth 0 (only ups-autonomy has its own service downtime, depth 1). Icinga 2 does not extend a host downtime to the host's services unless service downtimes are scheduled too."
+      },
+      {
+        "id": "chiller-detail",
+        "any_of": [
+          "4.8 C",
+          "4.8C",
+          "4.8 °C",
+          "4.8°C",
+          "4.8 degrees",
+          "4.8 deg",
+          "4.8 ºC",
+          "glycol"
+        ],
+        "ignore_case": true,
+        "asked_by": "what it is complaining about",
+        "rationale": "chiller-loop-temp's output (glycol return 4.8 C); only reading the row gives it"
+      },
+      {
+        "id": "modbus-detail",
+        "any_of": [
+          "no reply",
+          "not replying",
+          "no response",
+          "not responding",
+          "unresponsive",
+          "unit 7",
+          "10.73.12.41",
+          "port 502",
+          ":502"
+        ],
+        "ignore_case": true,
+        "asked_by": "what it is complaining about",
+        "rationale": "modbus-bridge's output (no reply from 10.73.12.41:502 unit 7)"
+      }
+    ],
+    "counts": [
+      {
+        "id": "will-notify",
+        "value": 2,
+        "nouns": [
+          "services",
+          "checks",
+          "alerts",
+          "problems",
+          "notify",
+          "page"
+        ],
+        "window": 4,
+        "asked_by": "Give me how many will still notify",
+        "rationale": "chiller-loop-temp and modbus-bridge; ups-autonomy is the only failing service with its own downtime",
+        "derived": true,
+        "note": "Counted from get_services: three failing services, of which two have downtime_depth 0.",
+        "extra_any_of": [
+          "2 of the 3",
+          "two of the three",
+          "2 of 3",
+          "two of three",
+          "2/3",
+          "2 out of 3",
+          "two out of three",
+          "2 out of the 3",
+          "two out of the three",
+          "will both still",
+          "both will still",
+          "both still notify",
+          "both still page",
+          "both still alert",
+          "two that can still",
+          "two that will still",
+          "2 that can still",
+          "2 that will still"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "all-covered",
+        "none_of": [
+          "all three failing services are covered",
+          "all failing services are covered",
+          "all of the failing services are covered",
+          "all three are covered",
+          "all of them are covered",
+          "every failing service is covered",
+          "everything on the host is covered",
+          "everything on that host is covered",
+          "everything on the box is covered",
+          "everything on that box is covered",
+          "the host downtime covers its services",
+          "the host downtime covers the services",
+          "the host downtime covers all",
+          "host downtime also covers",
+          "services inherit the host downtime",
+          "services inherit the downtime",
+          "safe to switch your phone to silent",
+          "safe to put your phone on silent",
+          "safe to silence your phone",
+          "go ahead and switch your phone to silent",
+          "all of its alerts are suppressed",
+          "all alerts on the host are suppressed",
+          "all its alerts are suppressed",
+          "you're fully covered",
+          "you are fully covered",
+          "everything is covered",
+          "all services are in downtime",
+          "all of its services are in downtime"
+        ],
+        "ignore_case": true,
+        "rationale": "reading the host downtime as covering the host's services; two failing services have downtime_depth 0 and still notify"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [
+    {
+      "aws_cost_result_id": "acr-1005-svc",
+      "accounts_queried": 1,
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2026-10-05",
+        "end": "2026-10-12"
+      },
+      "period_id": "per-1005-1012",
+      "results": [
+        {
+          "account_id": "264083917552",
+          "items": {
+            "Amazon Elastic Compute Cloud - Compute": {
+              "cost": 915.25,
+              "daily": [
+                {
+                  "date": "2026-10-05",
+                  "cost": 130.75
+                },
+                {
+                  "date": "2026-10-06",
+                  "cost": 130.75
+                },
+                {
+                  "date": "2026-10-07",
+                  "cost": 130.75
+                },
+                {
+                  "date": "2026-10-08",
+                  "cost": 130.75
+                },
+                {
+                  "date": "2026-10-09",
+                  "cost": 130.75
+                },
+                {
+                  "date": "2026-10-10",
+                  "cost": 130.75
+                },
+                {
+                  "date": "2026-10-11",
+                  "cost": 130.75
+                }
+              ]
+            },
+            "EC2 - Other": {
+              "cost": 151.2,
+              "daily": [
+                {
+                  "date": "2026-10-05",
+                  "cost": 21.6
+                },
+                {
+                  "date": "2026-10-06",
+                  "cost": 21.6
+                },
+                {
+                  "date": "2026-10-07",
+                  "cost": 21.6
+                },
+                {
+                  "date": "2026-10-08",
+                  "cost": 21.6
+                },
+                {
+                  "date": "2026-10-09",
+                  "cost": 21.6
+                },
+                {
+                  "date": "2026-10-10",
+                  "cost": 21.6
+                },
+                {
+                  "date": "2026-10-11",
+                  "cost": 21.6
+                }
+              ]
+            }
+          },
+          "total": 1066.45
+        }
+      ],
+      "total_cost": 1066.45
+    }
+  ],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-1005-1012",
+      "start": "2026-10-05",
+      "end": "2026-10-12"
+    }
+  ]
+}

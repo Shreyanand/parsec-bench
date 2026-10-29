@@ -1,0 +1,85 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "rhpds",
+      "repo": "partner-agnosticv",
+      "ref": "HEAD",
+      "path": "partner_ansible/ansible-lightspeed-coding-lab-cnv/common.yaml",
+      "content": "---\n# Partner edition on OpenShift Virtualization (CNV) - run by partner instructors\n__meta__:\n  catalog:\n    display_name: \"Ansible Lightspeed Coding Lab\"\n    category: Workshops\n    multiuser: true\n\ncloud_provider: openshift_cnv\nconfig: openshift-workloads\nocp4_installer_version: \"4.17\"\nnum_users: 25\ncnv_cluster_pool: partner-cnv-emea\nworkloads:\n  - agnosticd.core_workloads.ocp4_workload_authentication_htpasswd\n  - agnosticd.ansible_workloads.ocp4_workload_ansible_lightspeed\n  - agnosticd.ansible_workloads.ocp4_workload_devspaces_vscode\n",
+      "file_id": "rhpds/partner-agnosticv@HEAD-partner_ansible/ansible-lightspeed-coding-lab-cnv/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "partner-agnosticv",
+      "ref": "main",
+      "path": "partner_ansible/ansible-lightspeed-coding-lab-cnv/common.yaml",
+      "content": "---\n# Partner edition on OpenShift Virtualization (CNV) - run by partner instructors\n__meta__:\n  catalog:\n    display_name: \"Ansible Lightspeed Coding Lab\"\n    category: Workshops\n    multiuser: true\n\ncloud_provider: openshift_cnv\nconfig: openshift-workloads\nocp4_installer_version: \"4.17\"\nnum_users: 25\ncnv_cluster_pool: partner-cnv-emea\nworkloads:\n  - agnosticd.core_workloads.ocp4_workload_authentication_htpasswd\n  - agnosticd.ansible_workloads.ocp4_workload_ansible_lightspeed\n  - agnosticd.ansible_workloads.ocp4_workload_devspaces_vscode\n",
+      "file_id": "rhpds/partner-agnosticv@main-partner_ansible/ansible-lightspeed-coding-lab-cnv/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "ansible_bu/ansible-lightspeed-coding-lab-aws/common.yaml",
+      "content": "---\n# AWS edition - Red Hat run workshops\n__meta__:\n  catalog:\n    display_name: \"Ansible Lightspeed Coding Lab\"\n    category: Workshops\n    multiuser: true\n\ncloud_provider: ec2\nconfig: openshift-workloads\nocp4_installer_version: \"4.18\"\nnum_users: 40\nworkloads:\n  - agnosticd.core_workloads.ocp4_workload_authentication_htpasswd\n  - agnosticd.ansible_workloads.ocp4_workload_ansible_lightspeed\n  - agnosticd.ansible_workloads.ocp4_workload_devspaces_vscode\n",
+      "file_id": "rhpds/agnosticv@HEAD-ansible_bu/ansible-lightspeed-coding-lab-aws/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "ansible_bu/ansible-lightspeed-coding-lab-aws/common.yaml",
+      "content": "---\n# AWS edition - Red Hat run workshops\n__meta__:\n  catalog:\n    display_name: \"Ansible Lightspeed Coding Lab\"\n    category: Workshops\n    multiuser: true\n\ncloud_provider: ec2\nconfig: openshift-workloads\nocp4_installer_version: \"4.18\"\nnum_users: 40\nworkloads:\n  - agnosticd.core_workloads.ocp4_workload_authentication_htpasswd\n  - agnosticd.ansible_workloads.ocp4_workload_ansible_lightspeed\n  - agnosticd.ansible_workloads.ocp4_workload_devspaces_vscode\n",
+      "file_id": "rhpds/agnosticv@main-ansible_bu/ansible-lightspeed-coding-lab-aws/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "HEAD",
+      "path": "sandboxes_gpte/ansible-lightspeed-coding-lab-cnv-sandbox/common.yaml",
+      "content": "---\n# CNV sandbox edition - single-user internal testing\n__meta__:\n  catalog:\n    display_name: \"Ansible Lightspeed Coding Lab\"\n    category: Workshops\n    multiuser: true\n\ncloud_provider: openshift_cnv\nconfig: openshift-workloads\nocp4_installer_version: \"4.16\"\nnum_users: 1\nworkloads:\n  - agnosticd.core_workloads.ocp4_workload_authentication_htpasswd\n  - agnosticd.ansible_workloads.ocp4_workload_ansible_lightspeed\n  - agnosticd.ansible_workloads.ocp4_workload_devspaces_vscode\n",
+      "file_id": "rhpds/agnosticv@HEAD-sandboxes_gpte/ansible-lightspeed-coding-lab-cnv-sandbox/common.yaml"
+    },
+    {
+      "owner": "rhpds",
+      "repo": "agnosticv",
+      "ref": "main",
+      "path": "sandboxes_gpte/ansible-lightspeed-coding-lab-cnv-sandbox/common.yaml",
+      "content": "---\n# CNV sandbox edition - single-user internal testing\n__meta__:\n  catalog:\n    display_name: \"Ansible Lightspeed Coding Lab\"\n    category: Workshops\n    multiuser: true\n\ncloud_provider: openshift_cnv\nconfig: openshift-workloads\nocp4_installer_version: \"4.16\"\nnum_users: 1\nworkloads:\n  - agnosticd.core_workloads.ocp4_workload_authentication_htpasswd\n  - agnosticd.ansible_workloads.ocp4_workload_ansible_lightspeed\n  - agnosticd.ansible_workloads.ocp4_workload_devspaces_vscode\n",
+      "file_id": "rhpds/agnosticv@main-sandboxes_gpte/ansible-lightspeed-coding-lab-cnv-sandbox/common.yaml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": [
+    {
+      "similar_item_id": "sim-121-0",
+      "name": "ansible-lightspeed-coding-lab-aws",
+      "repo": "agnosticv",
+      "account": "ansible_bu",
+      "path": "ansible_bu/ansible-lightspeed-coding-lab-aws"
+    },
+    {
+      "similar_item_id": "sim-121-1",
+      "name": "ansible-lightspeed-coding-lab-azure",
+      "repo": "agnosticv",
+      "account": "ansible_bu",
+      "path": "ansible_bu/ansible-lightspeed-coding-lab-azure"
+    },
+    {
+      "similar_item_id": "sim-121-2",
+      "name": "ansible-lightspeed-coding-lab-cnv-sandbox",
+      "repo": "agnosticv",
+      "account": "sandboxes_gpte",
+      "path": "sandboxes_gpte/ansible-lightspeed-coding-lab-cnv-sandbox"
+    },
+    {
+      "similar_item_id": "sim-121-3",
+      "name": "ansible-lightspeed-coding-lab-cnv",
+      "repo": "partner-agnosticv",
+      "account": "partner_ansible",
+      "path": "partner_ansible/ansible-lightspeed-coding-lab-cnv"
+    }
+  ]
+}

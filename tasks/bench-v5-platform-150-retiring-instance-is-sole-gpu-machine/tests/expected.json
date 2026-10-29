@@ -1,0 +1,123 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_ocpv_cluster",
+        "args": {
+          "action": "list_machines",
+          "cluster": "ocpv-larch"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "node",
+        "any_of": [
+          "ip-10-0-148-37"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which OpenShift node",
+        "rationale": "the matched Machine's node field; only list_machines maps the instance id to it"
+      },
+      {
+        "id": "machine",
+        "any_of": [
+          "larch-6qz4t-gpu-us-east-2b-h7qvd",
+          "gpu-us-east-2b-h7qvd"
+        ],
+        "ignore_case": true,
+        "asked_by": "which Machine that instance is",
+        "rationale": "the Machine whose provider_id ends in the instance id"
+      },
+      {
+        "id": "machineset",
+        "any_of": [
+          "larch-6qz4t-gpu-us-east-2b",
+          "gpu-us-east-2b MachineSet",
+          "MachineSet gpu-us-east-2b"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which MachineSet owns that Machine",
+        "rationale": "the GPU MachineSet, not the worker-us-east-2b set in the same zone"
+      }
+    ],
+    "counts": [
+      {
+        "id": "others-in-set",
+        "value": 0,
+        "nouns": [
+          "machines",
+          "machine",
+          "replicas",
+          "replica",
+          "others",
+          "other"
+        ],
+        "window": 3,
+        "extra_any_of": [
+          "only machine in",
+          "only Machine in",
+          "only replica",
+          "only member",
+          "single replica",
+          "sole machine",
+          "sole member",
+          "only one machine",
+          "its only machine",
+          "no other machine",
+          "no other Machine",
+          "no other replica",
+          "none of the other",
+          "no spare",
+          "replicas: 1",
+          "1 replica",
+          "one replica",
+          "1/1",
+          "1 of 1",
+          "nothing else in"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "list_machines shows MachineSet larch-6qz4t-gpu-us-east-2b with replicas 1 and exactly one Machine whose name carries that prefix, larch-6qz4t-gpu-us-east-2b-h7qvd, which is the retiring instance; so no other Machine in that set can take its workloads.",
+        "asked_by": "how many other Machines in the same MachineSet could take over its workloads",
+        "rationale": "the GPU set has one replica; counting the three worker-us-east-2b machines gives 3"
+      },
+      {
+        "id": "zone-machines",
+        "value": 5,
+        "nouns": [
+          "machines",
+          "machine",
+          "nodes",
+          "instances",
+          "zone"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "5 of 13",
+          "5 of the 13",
+          "five of the 13",
+          "five of the thirteen",
+          "5/13"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the provider_id of five of the 13 Machines starts aws:///us-east-2b/: control-plane master-1, worker-us-east-2b d8nfl, k3tqs and w6vye, and gpu-us-east-2b-h7qvd.",
+        "asked_by": "How many of the cluster's Machines, control plane included, run in the same availability zone",
+        "rationale": "counting only the MachineSet-owned machines (4), or the worker set (3), misses the control-plane machine the question includes"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

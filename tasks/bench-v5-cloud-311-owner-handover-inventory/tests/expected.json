@@ -1,0 +1,117 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aws_account_db",
+        "args": {}
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "acct-8061",
+        "any_of": [
+          "731604928815"
+        ],
+        "ignore_case": true,
+        "asked_by": "giving the AWS account id",
+        "rationale": "sandbox8061 is one of the four rows whose owner is ovelasquez; its AWS account id 731604928815 is only in the account DB"
+      },
+      {
+        "id": "acct-8064",
+        "any_of": [
+          "731604928847"
+        ],
+        "ignore_case": true,
+        "asked_by": "giving the AWS account id",
+        "rationale": "sandbox8064 is one of the four rows whose owner is ovelasquez; its AWS account id 731604928847 is only in the account DB"
+      },
+      {
+        "id": "acct-8067",
+        "any_of": [
+          "731604928872"
+        ],
+        "ignore_case": true,
+        "asked_by": "giving the AWS account id",
+        "rationale": "sandbox8067 is one of the four rows whose owner is ovelasquez; its AWS account id 731604928872 is only in the account DB"
+      },
+      {
+        "id": "acct-8070",
+        "any_of": [
+          "731604928906"
+        ],
+        "ignore_case": true,
+        "asked_by": "giving the AWS account id",
+        "rationale": "sandbox8070 is one of the four rows whose owner is ovelasquez; its AWS account id 731604928906 is only in the account DB"
+      },
+      {
+        "id": "envtype-8061",
+        "any_of": [
+          "ocp4-hcp-workshop"
+        ],
+        "ignore_case": true,
+        "asked_by": "the env type each one runs",
+        "rationale": "sandbox8061 runs ocp4-hcp-workshop; the four envtypes are distinct, so each must be read from its own row"
+      },
+      {
+        "id": "envtype-8064",
+        "any_of": [
+          "rhel10-beta-lab"
+        ],
+        "ignore_case": true,
+        "asked_by": "the env type each one runs",
+        "rationale": "sandbox8064 runs rhel10-beta-lab; the four envtypes are distinct, so each must be read from its own row"
+      },
+      {
+        "id": "envtype-8067",
+        "any_of": [
+          "ansible-lightspeed-demo"
+        ],
+        "ignore_case": true,
+        "asked_by": "the env type each one runs",
+        "rationale": "sandbox8067 runs ansible-lightspeed-demo; the four envtypes are distinct, so each must be read from its own row"
+      },
+      {
+        "id": "envtype-8070",
+        "any_of": [
+          "ocp4-acm-gitops"
+        ],
+        "ignore_case": true,
+        "asked_by": "the env type each one runs",
+        "rationale": "sandbox8070 runs ocp4-acm-gitops; the four envtypes are distinct, so each must be read from its own row"
+      }
+    ],
+    "counts": [
+      {
+        "id": "owned-count",
+        "value": 4,
+        "nouns": [
+          "accounts",
+          "sandbox accounts",
+          "sandboxes",
+          "sandbox",
+          "aws accounts",
+          "in total",
+          "total"
+        ],
+        "window": 4,
+        "asked_by": "tell me how many there are in total",
+        "rationale": "four of the eight sandbox_accounts rows have owner ovelasquez; the store holds 8 rows and 3 other owners, so neither neighbouring figure is 4"
+      }
+    ],
+    "forbidden": []
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

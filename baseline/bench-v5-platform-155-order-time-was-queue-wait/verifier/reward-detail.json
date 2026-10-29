@@ -1,0 +1,96 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.uuid, p.guid, p.created_at, p.updated_at, p.status, p.catalog_item_id, p.service_url,\n       u.email, u.name as user_name,\n       ci.name as catalog_item_name, ci.display_name\nFROM provisions p\nJOIN users u ON p.user_id = u.id\nJOIN catalog_items ci ON p.catalog_item_id = ci.id\nWHERE p.guid = 't4mzq'"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "partner0",
+          "job_id": 8217744
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "controller": "partner0",
+          "job_id": 8217744
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "t4mzq"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT uuid, babylon_guid, catalog_id, ordered_by, provisioned_at, modified_at, retired_at, status, provision_time_seconds FROM provisions WHERE babylon_guid = 't4mzq' LIMIT 5"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "partner0",
+          "template_name": "t4mzq"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_splunk",
+        "args": {
+          "action": "search_aap2_logs",
+          "controller": "partner0"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "exec-node",
+        "any_of": [
+          "exnode-lyo-07"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which execution node ended up running it",
+        "rationale": "only the controller logs name the node; get_job carries no node field"
+      },
+      {
+        "id": "instance-group",
+        "any_of": [
+          "velo-partner-ee"
+        ],
+        "ignore_case": true,
+        "asked_by": "why did it wait",
+        "rationale": "the group whose capacity was exhausted; it appears only in the logs"
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

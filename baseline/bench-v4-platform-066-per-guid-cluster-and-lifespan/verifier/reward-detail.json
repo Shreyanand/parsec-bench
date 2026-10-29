@@ -1,0 +1,90 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "r4tkq"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "hw9zb"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "vn2jx"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "cy6fd"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "kestrel",
+          "namespace": "user-ntavares-redhat-com",
+          "name": "rover-telemetry-lab-r4tkq"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "kestrel",
+          "namespace": "user-ntavares-redhat-com",
+          "name": "rover-telemetry-lab-hw9zb"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "osprey",
+          "namespace": "user-ntavares-redhat-com",
+          "name": "rover-telemetry-lab-vn2jx"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "kestrel",
+          "namespace": "user-ntavares-redhat-com",
+          "name": "rover-telemetry-lab-cy6fd"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 7,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "get_component",
+        "cluster": "west",
+        "name": "ocp4-workload-adv-dev-suite"
+      },
+      "result": {
+        "cluster": "west",
+        "name": "ocp4-workload-adv-dev-suite",
+        "cloud_provider": "aws",
+        "env_type": "ocp4-workload",
+        "platform": "aws",
+        "expected_instances": [
+          {
+            "name": "bastion",
+            "count": 1,
+            "flavor": "medium"
+          }
+        ],
+        "scm_url": "https://github.com/agnosticd/agnosticd-v2",
+        "scm_ref": "main",
+        "agnosticv_repo": "rhpds/agnosticv",
+        "agnosticv_path": "agd-v2/ocp4-workload-adv-dev-suite",
+        "sub_components": [],
+        "definition": {
+          "lifespan": {
+            "default": "4h",
+            "maximum": "24h"
+          },
+          "workload_channel": "latest"
+        }
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "Querying the west cluster for the component ocp4-workload-adv-dev-suite:\n\nIts definition sets a default lifespan of 4h and a maximum lifespan of 24h, so a sandbox from this component is reaped after four hours unless someone extends it, and cannot be extended past a day.\n\nIt is defined from the agnosticv path agd-v2/ocp4-workload-adv-dev-suite in the rhpds/agnosticv repository, and it provisions on AWS with a single bastion instance."
+}

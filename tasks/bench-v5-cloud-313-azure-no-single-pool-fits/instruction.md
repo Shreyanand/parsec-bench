@@ -1,0 +1,1 @@
+I'm booking Azure seats for a five-person hands-on session on 2026-11-09. Our provisioning automation has to take every subscription for one session from the same pool, it cannot mix pools. Looking at the standard pools database, is there a pool that can give me five free subscriptions? If not, which pool has the most free subscriptions, and how many free ones does it have?

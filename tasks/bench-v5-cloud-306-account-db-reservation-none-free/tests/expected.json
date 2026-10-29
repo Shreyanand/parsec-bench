@@ -1,0 +1,146 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aws_account_db",
+        "args": {}
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "holder-jhalvorsen",
+        "any_of": [
+          "jhalvorsen"
+        ],
+        "ignore_case": true,
+        "asked_by": "who is holding the gpu-ee accounts",
+        "rationale": "jhalvorsen holds an assigned gpu-ee account; only the account DB names them"
+      },
+      {
+        "id": "holder-emugisha",
+        "any_of": [
+          "emugisha"
+        ],
+        "ignore_case": true,
+        "asked_by": "who is holding the gpu-ee accounts",
+        "rationale": "emugisha holds an assigned gpu-ee account; only the account DB names them"
+      },
+      {
+        "id": "holder-mlindqvist",
+        "any_of": [
+          "mlindqvist"
+        ],
+        "ignore_case": true,
+        "asked_by": "who is holding the gpu-ee accounts",
+        "rationale": "mlindqvist holds an assigned gpu-ee account; only the account DB names them"
+      },
+      {
+        "id": "dryrun-is-different",
+        "any_of": [
+          "gpu-ee-dryrun"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "query_aws_account_db filters reservation by case-insensitive substring (SKILL.md), so a gpu-ee query also returns the two free rows sandbox9420 and sandbox9421 whose reservation is gpu-ee-dryrun; naming that reservation is how the answer separates them from gpu-ee.",
+        "asked_by": "How many free accounts are left in that reservation",
+        "rationale": "the substring filter returns the two free gpu-ee-dryrun rows; naming that reservation is how the answer separates them from gpu-ee"
+      }
+    ],
+    "counts": [
+      {
+        "id": "gpu-ee-free",
+        "value": 0,
+        "nouns": [
+          "free accounts",
+          "available accounts",
+          "free",
+          "available",
+          "accounts free",
+          "accounts available"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "none of them are free",
+          "none are free",
+          "none is free",
+          "none are available",
+          "none of them is free",
+          "none of them are available",
+          "no free",
+          "all three are assigned",
+          "all 3 are assigned",
+          "all three are taken",
+          "all three are in use",
+          "no gpu-ee account is free",
+          "no account in gpu-ee is free"
+        ],
+        "asked_by": "How many free accounts are left in that reservation",
+        "rationale": "every gpu-ee row has available false; the substring filter shows 2 free dryrun rows, the whole free pool is 3"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "dryrun-counted-free",
+        "ignore_case": true,
+        "none_of": [
+          "2 free accounts in gpu-ee",
+          "2 free accounts in the gpu-ee",
+          "2 accounts are free",
+          "2 accounts are available",
+          "2 are free",
+          "2 are available",
+          "2 free in gpu-ee",
+          "2 available in gpu-ee",
+          "2 free gpu-ee",
+          "2 available gpu-ee",
+          "2 accounts free",
+          "2 accounts available",
+          "2 free accounts",
+          "2 available accounts",
+          "two free accounts in gpu-ee",
+          "two free accounts in the gpu-ee",
+          "two accounts are free",
+          "two accounts are available",
+          "two are free",
+          "two are available",
+          "two free in gpu-ee",
+          "two available in gpu-ee",
+          "two free gpu-ee",
+          "two available gpu-ee",
+          "two accounts free",
+          "two accounts available",
+          "two free accounts",
+          "two available accounts",
+          "sandbox9420 is free in gpu-ee",
+          "sandbox9420 is available in gpu-ee",
+          "sandbox9420 (gpu-ee)",
+          "sandbox9420 in gpu-ee is free",
+          "sandbox9421 is free in gpu-ee",
+          "sandbox9421 is available in gpu-ee",
+          "sandbox9421 (gpu-ee)",
+          "sandbox9421 in gpu-ee is free"
+        ],
+        "attributed_to": [
+          "gpu-ee-dryrun",
+          "dryrun",
+          "dry-run",
+          "dry run"
+        ],
+        "rationale": "the plausible wrong answer counts the two free gpu-ee-dryrun rows the substring filter returned as free gpu-ee capacity; a sentence that names the dry-run reservation is attributing them correctly"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

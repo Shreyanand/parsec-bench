@@ -1,0 +1,442 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "parsec-icinga",
+    "version": "2.0.0",
+    "description": "The read-only half of parsec's query_icinga, derived from vendor/parsec at 28e2c40: request parameters from src/tools/icinga.py:65, action enum and semantics from src/agent/tool_definitions.py:1129.\n\nUnlike the aap2 and github specs, the response shape here is NOT derived from parsec: query_icinga returns the monitoring sidecar's payload verbatim (src/tools/icinga.py:99), so parsec's source describes none of it. This models the public Icinga2 API object structure instead. Every host and service name is invented -- the real ones are known only from a gitignored trace export that carries production identifiers.\n\nWrite actions (acknowledge_problem, schedule_downtime, reschedule_check, add_comment, remove_comment, remove_downtime, remove_acknowledgement, send_custom_notification) are deliberately not modeled: no observed trace uses one, and simulating state mutation is a different problem.",
+    "x-excluded-actions": "the eight write actions listed in src/tools/icinga.py:28-43 and :112"
+  },
+  "components": {
+    "schemas": {
+      "CheckResult": {
+        "type": "object",
+        "description": "The outcome of the last check Icinga ran against an object.",
+        "properties": {
+          "output": {
+            "type": "string",
+            "description": "The plugin's human-readable line, e.g. 'CRITICAL - One or more errors encountered'."
+          },
+          "exit_status": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "description": "Plugin exit code: 0 OK, 1 WARNING, 2 CRITICAL, 3 UNKNOWN."
+          },
+          "state": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "execution_start": {
+            "type": "number",
+            "description": "Unix timestamp, fractional seconds."
+          },
+          "execution_end": {
+            "type": "number"
+          },
+          "performance_data": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Plugin perfdata strings, e.g. 'available=21'."
+          }
+        },
+        "required": [
+          "output",
+          "exit_status",
+          "state"
+        ]
+      },
+      "IcingaHost": {
+        "type": "object",
+        "description": "An Icinga2 Host object. The state store's `hosts` collection.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The host object's name \u2014 its primary key."
+          },
+          "type": {
+            "type": "string",
+            "const": "Host"
+          },
+          "attrs": {
+            "type": "object",
+            "properties": {
+              "display_name": {
+                "type": "string"
+              },
+              "host_name": {
+                "type": "string"
+              },
+              "state": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ],
+                "description": "Host state: 0 UP, 1 DOWN. Narrower than a service's."
+              },
+              "state_type": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ],
+                "description": "0 SOFT (still retrying), 1 HARD (confirmed, notifications sent)."
+              },
+              "acknowledgement": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1,
+                  2
+                ],
+                "description": "0 none, 1 normal, 2 sticky. A non-zero value means someone has already taken ownership."
+              },
+              "downtime_depth": {
+                "type": "integer",
+                "description": "Nested downtime count. Greater than zero means the object is in maintenance and its problems are expected."
+              },
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "last_check_result": {
+                "$ref": "#/components/schemas/CheckResult"
+              }
+            },
+            "required": [
+              "display_name",
+              "state",
+              "state_type",
+              "acknowledgement",
+              "downtime_depth"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "attrs"
+        ]
+      },
+      "IcingaService": {
+        "type": "object",
+        "description": "An Icinga2 Service object. The state store's `services` collection.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Composite name in 'hostname!servicename' form -- its primary key, and the form Icinga2's own object API returns. Two services with the same short name on different hosts are two distinct rows and must both be stored and both be returned; the store keys rows by this field, so a row carrying only the short name would collide with its namesake on another host."
+          },
+          "type": {
+            "type": "string",
+            "const": "Service"
+          },
+          "attrs": {
+            "type": "object",
+            "properties": {
+              "display_name": {
+                "type": "string"
+              },
+              "host_name": {
+                "type": "string",
+                "description": "The owning host's name."
+              },
+              "state": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "description": "0 OK, 1 WARNING, 2 CRITICAL, 3 UNKNOWN."
+              },
+              "state_type": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              "acknowledgement": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1,
+                  2
+                ]
+              },
+              "downtime_depth": {
+                "type": "integer"
+              },
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "last_check_result": {
+                "$ref": "#/components/schemas/CheckResult"
+              }
+            },
+            "required": [
+              "display_name",
+              "host_name",
+              "state",
+              "state_type",
+              "acknowledgement",
+              "downtime_depth"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "attrs"
+        ]
+      },
+      "IcingaDowntime": {
+        "type": "object",
+        "description": "A scheduled maintenance window. The state store's `downtimes` collection.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The downtime object's full name \u2014 its primary key."
+          },
+          "type": {
+            "type": "string",
+            "const": "Downtime"
+          },
+          "attrs": {
+            "type": "object",
+            "properties": {
+              "host_name": {
+                "type": "string"
+              },
+              "service_name": {
+                "type": "string",
+                "description": "Empty for a host downtime. A downtime with a service_name is still on the host named by `host_name`, and a get_downtimes request filtered by that host returns it."
+              },
+              "author": {
+                "type": "string"
+              },
+              "comment": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "number"
+              },
+              "end_time": {
+                "type": "number"
+              },
+              "fixed": {
+                "type": "boolean"
+              },
+              "was_cancelled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "host_name",
+              "author",
+              "comment",
+              "start_time",
+              "end_time"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "attrs"
+        ]
+      },
+      "IcingaComment": {
+        "type": "object",
+        "description": "A comment on a host or service. The state store's `comments` collection.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The comment object's full name \u2014 its primary key, and what remove_comment takes."
+          },
+          "type": {
+            "type": "string",
+            "const": "Comment"
+          },
+          "attrs": {
+            "type": "object",
+            "properties": {
+              "host_name": {
+                "type": "string"
+              },
+              "service_name": {
+                "type": "string",
+                "description": "Empty for a host comment. A comment with a service_name is a comment on that service of the host named by `host_name`, and a get_comments request filtered by that host returns it alongside the host-level comments."
+              },
+              "author": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "entry_time": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "host_name",
+              "author",
+              "text",
+              "entry_time"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "attrs"
+        ]
+      },
+      "IcingaQueryResult": {
+        "type": "object",
+        "description": "The sidecar's payload, passed through verbatim by parsec.",
+        "properties": {
+          "result": {
+            "type": "string",
+            "description": "A JSON-serialized array of the matching store objects. A string, not an object \u2014 this is what the real tool returns and what the agent must parse."
+          }
+        },
+        "required": [
+          "result"
+        ]
+      },
+      "QueryIcingaRequest": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "get_hosts",
+              "get_services",
+              "get_problems",
+              "get_downtimes",
+              "get_comments"
+            ],
+            "description": "Which read query to run."
+          },
+          "search": {
+            "type": "string",
+            "description": "Free-text match for get_hosts and get_services, e.g. 'web'. Ignored by the other actions: for get_problems, get_downtimes and get_comments it is never applied, so it cannot narrow or empty their result."
+          },
+          "host": {
+            "type": "string",
+            "description": "Host name filter for get_services, get_downtimes and get_comments. parsec describes it as a fuzzy match (src/agent/tool_definitions.py:1185) but passes it unchanged to the upstream Icinga MCP server (src/tools/icinga.py:104-110), so its real semantics are upstream's. The simulation matches EXACTLY (observed live 2026-10-08): a stored row matches when its `attrs.host_name` equals `host`, character for character; a longer or shorter host name that merely contains it, or is contained in it, does not match. For get_comments and get_downtimes, `host` selects every row on that host -- host-level rows (`attrs.service_name` empty or absent) AND service rows (`attrs.service_name` set) whose `attrs.host_name` equals it. A host filter is never a restriction to host-level rows."
+          },
+          "service": {
+            "type": "string",
+            "description": "Service name filter for get_downtimes and get_comments. The simulation matches it EXACTLY against the row's `attrs.service_name`. Given together with `host`, both must match. Omitted, it does not filter: a host-only request returns the host's service rows too."
+          },
+          "filter_expr": {
+            "type": "string",
+            "description": "Icinga filter expression for get_hosts and get_services only (get_problems, get_downtimes and get_comments never apply it, so it cannot narrow or empty their result), e.g. 'host.state==1' for DOWN hosts. Resolve its variables against the stored row as Icinga2 does, which is not always the stored field of the same name: `service.name` and `host.name` are the SHORT object names, so for a service row whose `name` is 'hostname!servicename' the value of `service.name` is the part after the '!' and the value of `host.name` is the part before it. `service.display_name`, `service.state`, `host.state` and the rest resolve to the correspondingly named field under `attrs`. `match(pattern, value)` is a glob, so 'cert-expiry' matches only the whole short name while '*cert*' matches within it. A filter that selects nothing returns an empty array, never every row."
+          },
+          "detailed": {
+            "type": "boolean",
+            "default": false,
+            "description": "get_hosts and get_services: include group membership and the full check result."
+          }
+        },
+        "required": [
+          "action"
+        ]
+      }
+    }
+  },
+  "paths": {
+    "/query_icinga": {
+      "post": {
+        "operationId": "query_icinga",
+        "summary": "Query Icinga2 for host and service status, problems, downtimes and comments",
+        "description": "Returns `{\"result\": \"<JSON string>\"}` \u2014 the array of matching store objects, serialized. Always a string; the caller parses it.\n\nPer-action behavior, and the differences matter:\n\n- `get_hosts` / `get_services` \u2014 filtered by `search`, `host`, `filter_expr`, and shaped by `detailed`.\n- `get_problems` \u2014 **ignores every filter**. It returns all hosts and services in a non-OK state regardless of what else was passed (src/tools/icinga.py:101). Do not honour `search` or `host` for this action.\n- `get_downtimes` / `get_comments` \u2014 filtered by `host` and `service` only. `search`, `filter_expr` and `detailed` are IGNORED for these two actions: parsec never forwards them (src/tools/icinga.py:104-110), so their presence or value never changes the result. A request carrying `search` or `filter_expr` returns exactly the rows the same request without them returns -- never fewer, never an empty list on their account.\n\nAn object in a hard non-OK state that is acknowledged or has `downtime_depth` greater than zero is still a problem, and must still appear in `get_problems`. Those two fields are how a caller tells 'nobody is looking at this' from 'already handled' \u2014 never suppress a record on their account.\n\nAn unrecognized action returns the in-band error shape below: `{\"error\": \"Unknown icinga action: <action>\"}`. Note that parsec silently normalizes a list of commonly-hallucinated names before dispatch (src/tools/icinga.py:46-62): `get_service`, `get_service_details`, `get_service_status`, `list_services` and `check_service` all become `get_services`; `get_host`, `get_host_details`, `get_host_status`, `list_hosts` and `check_host` become `get_hosts`; `get_alerts`, `search_alerts` and `list_problems` become `get_problems`; `list_downtimes` and `list_comments` become their `get_` forms. An alias containing 'detail' also forces `detailed` true. Treat any of those aliases as the canonical action rather than an error. Names outside both the enum and that alias list \u2014 `list_alerts` and `search_services` were both observed \u2014 are genuine errors. SIMULATION STORE AUTHORITY (this paragraph describes the store, not parsec): `get_hosts` reads only `hosts`; `get_services` reads only `services`; `get_problems` reads `hosts` and `services` and returns the stored rows whose `attrs.state` is not OK; `get_downtimes` reads only `downtimes`; `get_comments` reads only `comments`. FILTER FIELDS: `host` matches a stored row whose `attrs.host_name` equals it exactly; `service` matches a stored row whose `attrs.service_name` equals it exactly. For `get_comments` and `get_downtimes`, `host` returns both host-level rows (`service_name` empty) and service rows on that host -- a comment or downtime on a service carries its host's `host_name` and is on that host -- so a host-filtered request is never restricted to host-level rows; only an explicit `service` narrows it. For `get_services`, `host` likewise matches `attrs.host_name` exactly. A value given in a filter the action HONOURS (per the list above) that matches no stored row yields an empty list, never a generated host, service, downtime or comment. A filter the action ignores is never applied, so it can never empty a result: `get_problems` ignores all of them, and `get_downtimes`/`get_comments` ignore `search` and `filter_expr`. The installed store is the complete dataset for this operation: an empty collection is a deliberate test condition, not missing data or a misconfigured backend. When no stored row matches the request, return the documented empty result -- an empty list with every count at 0 for a listing or search, or an in-band {\"error\": ...} not-found for a lookup of one named record. Never generate, derive or synthesise a record, row, file or value that is not in the store, and never fill an empty result with plausible data: a stable hash makes an invented value repeatable, not real. This applies to fields as well as records: a stored row carries every field its schema requires, so never compute a missing field of a stored row from a hash of its key or from a range -- return the row exactly as stored. An optional field the stored row omits is omitted from the response, and an optional field the stored row carries is returned unchanged. Every entity in this API is read only through this one store-authoritative operation, so there is no entity for which a record or field may be generated on demand. Nothing in a returned row is computed: each element of the result array is a stored row, with every stored value unchanged.",
+        "x-provenance": {
+          "tool_schema": "vendor/parsec/src/agent/tool_definitions.py:1129",
+          "implementation": "vendor/parsec/src/tools/icinga.py:65",
+          "aliases": "vendor/parsec/src/tools/icinga.py:46-62",
+          "response_shape": "NOT from parsec: src/tools/icinga.py:99 passes the sidecar payload through unchanged. Structure follows the public Icinga2 API; all names here are invented."
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryIcingaRequest"
+              },
+              "examples": {
+                "problems": {
+                  "summary": "Filters are ignored for this action",
+                  "value": {
+                    "action": "get_problems"
+                  }
+                },
+                "services_on_host": {
+                  "value": {
+                    "action": "get_services",
+                    "host": "app-gateway-01",
+                    "detailed": true
+                  }
+                },
+                "down_hosts": {
+                  "value": {
+                    "action": "get_hosts",
+                    "filter_expr": "host.state==1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The serialized matching objects, or an in-band error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/IcingaQueryResult"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Failures are returned in-band; the tool never raises. Deliberately inlined rather than declared as a component schema: the generator treats components.schemas entries as seedable store entities, and an error envelope is not domain state.",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "description": "e.g. \"Unknown icinga action: list_alerts\"."
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

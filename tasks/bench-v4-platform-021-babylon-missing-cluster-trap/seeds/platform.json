@@ -1,0 +1,49 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [
+    {
+      "cluster": "west",
+      "name": "ocp4-workload-adv-dev-suite",
+      "cloud_provider": "aws",
+      "env_type": "ocp4-workload",
+      "platform": "aws",
+      "expected_instances": [
+        {
+          "name": "bastion",
+          "count": 1,
+          "flavor": "medium"
+        }
+      ],
+      "scm_url": "https://github.com/agnosticd/agnosticd-v2",
+      "scm_ref": "main",
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "agd-v2/ocp4-workload-adv-dev-suite",
+      "sub_components": [],
+      "definition": {
+        "lifespan": {
+          "default": "4h",
+          "maximum": "24h"
+        },
+        "workload_channel": "latest"
+      },
+      "babylon_component_id": "west-ocp4-workload-adv-dev-suite"
+    }
+  ],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "job_events": [],
+  "jobs": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,56 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/defaults/main.yml",
+      "content": "---\n# ocp4_workload_quarry_streams defaults\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\nquarry_streams_namespace: quarry-streams\nquarry_streams_catalog_source: community-operators\nquarry_streams_channel: stable-3.2\nquarry_streams_starting_csv: \"\"\nquarry_streams_brokers: 3\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/defaults/main.yml",
+      "content": "---\n# ocp4_workload_quarry_streams defaults\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\nquarry_streams_namespace: quarry-streams\nquarry_streams_catalog_source: community-operators\nquarry_streams_channel: stable-3.2\nquarry_streams_starting_csv: \"\"\nquarry_streams_brokers: 3\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "e07b5c3d9a1f48260db7e3c95a4f1b82c6d0e9a7",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/defaults/main.yml",
+      "content": "---\n# ocp4_workload_quarry_streams defaults\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\nquarry_streams_namespace: quarry-streams\nquarry_streams_catalog_source: community-operators\nquarry_streams_channel: stable-3.2\nquarry_streams_starting_csv: \"\"\nquarry_streams_brokers: 3\n",
+      "file_id": "agnosticd/agnosticd-v2@e07b5c3d9a1f48260db7e3c95a4f1b82c6d0e9a7-ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/tasks/workload.yml",
+      "content": "---\n- name: Read the package manifest for quarry-streams-operator\n  ansible.builtin.command: >-\n    oc get packagemanifest quarry-streams-operator -n openshift-marketplace\n    -o jsonpath='{{.status.channels[*].name}}'\n  register: quarry_pkg\n  changed_when: false\n\n- name: Create the operator subscription\n  kubernetes.core.k8s:\n    state: present\n    template: subscription.yaml.j2\n  vars:\n    subscription_channel: \"{{ quarry_streams_channel }}\"\n    subscription_source: \"{{ quarry_streams_catalog_source }}\"\n\n- name: Wait for the subscription to resolve\n  ansible.builtin.assert:\n    that: quarry_sub.resources[0].status.state | default('') == 'AtLatestKnown'\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/tasks/workload.yml",
+      "content": "---\n- name: Read the package manifest for quarry-streams-operator\n  ansible.builtin.command: >-\n    oc get packagemanifest quarry-streams-operator -n openshift-marketplace\n    -o jsonpath='{{.status.channels[*].name}}'\n  register: quarry_pkg\n  changed_when: false\n\n- name: Create the operator subscription\n  kubernetes.core.k8s:\n    state: present\n    template: subscription.yaml.j2\n  vars:\n    subscription_channel: \"{{ quarry_streams_channel }}\"\n    subscription_source: \"{{ quarry_streams_catalog_source }}\"\n\n- name: Wait for the subscription to resolve\n  ansible.builtin.assert:\n    that: quarry_sub.resources[0].status.state | default('') == 'AtLatestKnown'\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "e07b5c3d9a1f48260db7e3c95a4f1b82c6d0e9a7",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/tasks/workload.yml",
+      "content": "---\n- name: Read the package manifest for quarry-streams-operator\n  ansible.builtin.command: >-\n    oc get packagemanifest quarry-streams-operator -n openshift-marketplace\n    -o jsonpath='{{.status.channels[*].name}}'\n  register: quarry_pkg\n  changed_when: false\n\n- name: Create the operator subscription\n  kubernetes.core.k8s:\n    state: present\n    template: subscription.yaml.j2\n  vars:\n    subscription_channel: \"{{ quarry_streams_channel }}\"\n    subscription_source: \"{{ quarry_streams_catalog_source }}\"\n\n- name: Wait for the subscription to resolve\n  ansible.builtin.assert:\n    that: quarry_sub.resources[0].status.state | default('') == 'AtLatestKnown'\n",
+      "file_id": "agnosticd/agnosticd-v2@e07b5c3d9a1f48260db7e3c95a4f1b82c6d0e9a7-ansible/roles_ocp_workloads/ocp4_workload_quarry_streams/tasks/workload.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

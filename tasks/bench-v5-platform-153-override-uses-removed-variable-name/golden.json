@@ -1,0 +1,30 @@
+{
+  "tool_calls": [
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "agnosticv",
+        "path": "network_bu/netbox-automation-lab/common.yaml"
+      },
+      "result": {
+        "content": "---\n# NetBox source-of-truth automation lab\n__meta__:\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: v2.12.0\n  catalog:\n    display_name: NetBox Automation Lab\n    category: Workshops\n\ncloud_provider: none\nconfig: openshift-workloads\nworkloads:\n- ocp4_workload_netbox_ipam\n\n# Attendees import about 45 GiB of device and IPAM history in module 2.\nocp4_workload_netbox_ipam_db_storage_gi: 60\nocp4_workload_netbox_ipam_superuser: admin\n"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "agnosticd",
+        "repo": "agnosticd-v2",
+        "path": "ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml",
+        "ref": "v2.12.0"
+      },
+      "result": {
+        "content": "---\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\nocp4_workload_netbox_ipam_namespace: netbox\nocp4_workload_netbox_ipam_version: \"4.1.6\"\nocp4_workload_netbox_ipam_superuser: admin\n\n# PostgreSQL volume, as a Kubernetes quantity.\n# v2.12.0: replaces ocp4_workload_netbox_ipam_db_storage_gi, which is removed\n# and no longer read.\nocp4_workload_netbox_ipam_db_storage_size: 10Gi\nocp4_workload_netbox_ipam_redis_storage_size: 2Gi\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "1. The catalog item (rhpds/agnosticv `network_bu/netbox-automation-lab/common.yaml`) deploys agnosticd/agnosticd-v2 at `scm_ref: v2.12.0`.\n\n2. New orders get a **10Gi** database volume, and the 60 GiB setting is not honoured. The catalog sets `ocp4_workload_netbox_ipam_db_storage_gi: 60`, but at v2.12.0 the role no longer reads that variable. In agnosticd/agnosticd-v2:ansible/roles_ocp_workloads/ocp4_workload_netbox_ipam/defaults/main.yml (ref v2.12.0), lines 10-12 say it replaces `ocp4_workload_netbox_ipam_db_storage_gi`, \"which is removed and no longer read\", and line 13 decides the size:\n\n       ocp4_workload_netbox_ipam_db_storage_size: 10Gi\n\n   The old variable is now an unused extra var, so the role falls back to its 10Gi default, which is less than the ~45 GiB attendees import. That is why the volume fills up.\n\n3. In `network_bu/netbox-automation-lab/common.yaml`, replace the old line with the new name and a Kubernetes quantity:\n\n       ocp4_workload_netbox_ipam_db_storage_size: 60Gi\n\n   Delete `ocp4_workload_netbox_ipam_db_storage_gi: 60`; it does nothing at v2.12.0."
+}

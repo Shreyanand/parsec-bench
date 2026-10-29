@@ -1,0 +1,91 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "736158204937"
+          ],
+          "start_date": "2026-03-12",
+          "end_date": "2026-03-19",
+          "group_by": "SERVICE"
+        }
+      },
+      {
+        "name": "render_chart",
+        "args": {
+          "chart_type": "bar",
+          "title": "AWS Account 736158204937 \u2014 Daily Cost by Service (Mar 12\u201318)",
+          "labels": [
+            "Mar 12",
+            "Mar 13",
+            "Mar 14",
+            "Mar 15",
+            "Mar 16",
+            "Mar 17",
+            "Mar 18"
+          ],
+          "datasets": [
+            {
+              "label": "EC2 Compute",
+              "data": [
+                431,
+                427,
+                436,
+                429,
+                433,
+                428,
+                434
+              ]
+            },
+            {
+              "label": "S3",
+              "data": [
+                87,
+                88,
+                86,
+                89,
+                87,
+                88,
+                89
+              ]
+            },
+            {
+              "label": "AWS Glue",
+              "data": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                2943
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 0,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 0
+  }
+}

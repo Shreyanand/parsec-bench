@@ -1,0 +1,81 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [
+    {
+      "azure_subscription_id": "az-pools-pool-14-201",
+      "database": "pools",
+      "id": "pool-14-201",
+      "used": false,
+      "projecttag": ""
+    },
+    {
+      "azure_subscription_id": "az-pools-pool-14-207",
+      "database": "pools",
+      "id": "pool-14-207",
+      "used": true,
+      "projecttag": "fsi-fraud-demo"
+    },
+    {
+      "azure_subscription_id": "az-pools-pool-14-208",
+      "database": "pools",
+      "id": "pool-14-208",
+      "used": true,
+      "projecttag": "insurance-claims-lab"
+    },
+    {
+      "azure_subscription_id": "az-pools-pool-14-212",
+      "database": "pools",
+      "id": "pool-14-212",
+      "used": true,
+      "projecttag": "fsi-fraud-demo"
+    },
+    {
+      "azure_subscription_id": "az-pools-pool-19-030",
+      "database": "pools",
+      "id": "pool-19-030",
+      "used": false,
+      "projecttag": ""
+    },
+    {
+      "azure_subscription_id": "az-pools-pool-19-033",
+      "database": "pools",
+      "id": "pool-19-033",
+      "used": true,
+      "projecttag": "fsi-fraud-demo"
+    },
+    {
+      "azure_subscription_id": "az-pools-pool-19-041",
+      "database": "pools",
+      "id": "pool-19-041",
+      "used": true,
+      "projecttag": "fsi-fraud-demo-eu"
+    },
+    {
+      "azure_subscription_id": "az-pools-pool-19-046",
+      "database": "pools",
+      "id": "pool-19-046",
+      "used": true,
+      "projecttag": "fsi-fraud-demo-eu"
+    },
+    {
+      "azure_subscription_id": "az-pools-pool-19-052",
+      "database": "pools",
+      "id": "pool-19-052",
+      "used": true,
+      "projecttag": "fsi-kyc-workshop"
+    },
+    {
+      "azure_subscription_id": "az-roadshow-pool-14-219",
+      "database": "roadshow",
+      "id": "pool-14-219",
+      "used": true,
+      "projecttag": "fsi-fraud-demo"
+    }
+  ],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": []
+}

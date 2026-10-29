@@ -1,0 +1,122 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 726350
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {}
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "state": "merged"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "not-found",
+        "any_of": [
+          "not found",
+          "not in the agnosticv index",
+          "found: false",
+          "is not in the index"
+        ],
+        "ignore_case": true,
+        "asked_by": "whether it resolves",
+        "rationale": "the lookup's found:false; the break the agent must report rather than paper over"
+      },
+      {
+        "id": "pr-number",
+        "any_of": [
+          "#6123",
+          "PR 6123",
+          "pull request 6123",
+          "pull/6123",
+          "6123"
+        ],
+        "ignore_case": true,
+        "asked_by": "find the agnosticv pull request responsible for that",
+        "rationale": "the closed PR is invisible to the default open-state search; only state all or closed returns it"
+      },
+      {
+        "id": "new-name",
+        "any_of": [
+          "secure-supply-chain-lab"
+        ],
+        "ignore_case": true,
+        "asked_by": "what the lab is called now",
+        "rationale": "the new name is in the PR title and paths; the job metadata and the instruction never contain it"
+      },
+      {
+        "id": "stale-template",
+        "any_of": [
+          "still points at the old name",
+          "still uses the old name",
+          "still references the old",
+          "stale job template",
+          "job template is stale",
+          "points at the old name",
+          "order the lab as",
+          "order it as"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what to do about it",
+        "rationale": "the synthesis: the job's template name against the rename",
+        "note": "the failing job's template is still RHDP appdev_bu.devsecops-pipeline-lab.prod-provision while closed PR 6123 renamed the item to secure-supply-chain-lab and lookup_catalog_item reports devsecops-pipeline-lab missing, so the template or order must move to the new name."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "decoy-substituted",
+        "none_of": [
+          "use devsecops-pipeline-lab-partner",
+          "order devsecops-pipeline-lab-partner",
+          "renamed to devsecops-pipeline-lab-partner",
+          "the item is now devsecops-pipeline-lab-partner",
+          "moved to devsecops-pipeline-lab-partner"
+        ],
+        "ignore_case": true,
+        "rationale": "the near-miss is a different partner item; substituting it fills the break with the wrong thing"
+      },
+      {
+        "id": "pending-pr",
+        "none_of": [
+          "PR is still open",
+          "PR is open",
+          "waiting to be merged",
+          "awaiting merge",
+          "pending merge"
+        ],
+        "ignore_case": true,
+        "rationale": "the platform-009 reflex: here the PR is closed and the item has already moved"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  }
+}

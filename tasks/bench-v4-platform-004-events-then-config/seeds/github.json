@@ -1,0 +1,24 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/configs/ocp4-cluster/default_vars.yml",
+      "content": "---\n# ocp4-cluster: node registration wait\nnode_ready_retries: 30\nnode_ready_delay: 10\nworker_instance_count: 3\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/configs/ocp4-cluster/default_vars.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/configs/ocp4-cluster/default_vars.yml",
+      "content": "---\n# ocp4-cluster: node registration wait\nnode_ready_retries: 30\nnode_ready_delay: 10\nworker_instance_count: 3\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/configs/ocp4-cluster/default_vars.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

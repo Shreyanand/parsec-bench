@@ -1,0 +1,105 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [
+    {
+      "azure_cost_result_id": "azr-q2x-0927",
+      "period_id": "per-az-q2x-0927",
+      "source": "cache",
+      "subscriptions_queried": "1",
+      "period": {
+        "start": "2026-09-14",
+        "end": "2026-09-27"
+      },
+      "cache_last_refresh": "2026-09-28T05:20:00Z",
+      "results": [
+        {
+          "subscription_name": "pool-58-064",
+          "services": {
+            "Virtual Machines": {
+              "cost": 9264.8,
+              "meter_subcategories": {}
+            },
+            "Storage": {
+              "cost": 1137.45,
+              "meter_subcategories": {
+                "Premium SSD v2 Disks": 902.15,
+                "Hot LRS Block Blob": 235.3
+              }
+            },
+            "Bandwidth": {
+              "cost": 318.62,
+              "meter_subcategories": {
+                "Inter-Region": 318.62
+              }
+            }
+          },
+          "total": 10720.87,
+          "gpu_cost": 0.0
+        }
+      ],
+      "total_cost": 10720.87
+    }
+  ],
+  "azure_service_costs": [
+    {
+      "azure_service_cost_id": "azsc-q2x-pool-58-064-virtual-machines",
+      "cost": 9264.8,
+      "meter_subcategories": {}
+    },
+    {
+      "azure_service_cost_id": "azsc-q2x-pool-58-064-storage",
+      "cost": 1137.45,
+      "meter_subcategories": {
+        "Premium SSD v2 Disks": 902.15,
+        "Hot LRS Block Blob": 235.3
+      }
+    },
+    {
+      "azure_service_cost_id": "azsc-q2x-pool-58-064-bandwidth",
+      "cost": 318.62,
+      "meter_subcategories": {
+        "Inter-Region": 318.62
+      }
+    }
+  ],
+  "azure_subscription_costs": [
+    {
+      "subscription_name": "pool-58-064",
+      "services": {
+        "Virtual Machines": {
+          "cost": 9264.8,
+          "meter_subcategories": {}
+        },
+        "Storage": {
+          "cost": 1137.45,
+          "meter_subcategories": {
+            "Premium SSD v2 Disks": 902.15,
+            "Hot LRS Block Blob": 235.3
+          }
+        },
+        "Bandwidth": {
+          "cost": 318.62,
+          "meter_subcategories": {
+            "Inter-Region": 318.62
+          }
+        }
+      },
+      "total": 10720.87,
+      "gpu_cost": 0.0,
+      "azure_subscription_cost_id": "azsub-q2x-pool-58-064"
+    }
+  ],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-az-q2x-0927",
+      "start": "2026-09-14",
+      "end": "2026-09-27"
+    }
+  ]
+}

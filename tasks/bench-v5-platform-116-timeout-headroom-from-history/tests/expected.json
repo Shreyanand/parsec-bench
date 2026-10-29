@@ -1,0 +1,203 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job",
+          "controller": "event0",
+          "job_id": 7419932
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "event0"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "update_job_template"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "update_template"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "set_job_timeout"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "relaunch_job"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "timeout",
+        "any_of": [
+          "terminated due to timeout",
+          "job timeout",
+          "timed out",
+          "hit the timeout",
+          "timeout limit",
+          "stopped it at the"
+        ],
+        "ignore_case": true,
+        "asked_by": "what went wrong with that job",
+        "rationale": "only get_job's job_explanation says it; the job's own tasks did not fail"
+      },
+      {
+        "id": "trend",
+        "any_of": [
+          "getting slower",
+          "longer each",
+          "creeping",
+          "growing",
+          "trending up",
+          "increasing",
+          "climbing",
+          "each run longer",
+          "slower each"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "whether it is likely to happen again",
+        "rationale": "the synthesis over find_jobs durations: monotonic growth toward the limit",
+        "note": "find_jobs on event0 for the template returns the earlier successful runs at 4870 s (2026-09-15), 5030 s (2026-09-22), 5190 s (2026-09-29) and 5320 s (2026-10-02) before the 5400 s timeout on 2026-10-06, so each run took longer than the one before."
+      },
+      {
+        "id": "read-only",
+        "any_of": [
+          "read-only",
+          "read only",
+          "cannot change",
+          "can't change",
+          "cannot raise",
+          "can't raise",
+          "no action",
+          "not able to change",
+          "unable to change"
+        ],
+        "ignore_case": true,
+        "asked_by": "If you can make that change, please do it",
+        "rationale": "the tool has no write action; the agent must say so instead of claiming the change",
+        "derived": true,
+        "note": "query_aap2 offers only the read actions get_job, get_job_log, get_job_events and find_jobs and no action that edits a job template, so the agent cannot raise the limit and has to say so."
+      }
+    ],
+    "counts": [
+      {
+        "id": "limit",
+        "value": 5400,
+        "nouns": [
+          "seconds",
+          "s",
+          "limit",
+          "timeout",
+          "ran"
+        ],
+        "window": 4,
+        "asked_by": "what went wrong",
+        "rationale": "duration_seconds of the timed-out job = the template timeout",
+        "extra_any_of": [
+          "90 minutes",
+          "90-minute",
+          "90 min",
+          "1.5 hours",
+          "1h30"
+        ]
+      },
+      {
+        "id": "slowest-success",
+        "value": 5320,
+        "nouns": [
+          "seconds",
+          "s",
+          "took",
+          "run",
+          "success",
+          "successful"
+        ],
+        "window": 5,
+        "asked_by": "Compare it with the earlier runs of the same job template",
+        "rationale": "the most recent successful run, only in find_jobs"
+      },
+      {
+        "id": "margin",
+        "value": 80,
+        "nouns": [
+          "seconds",
+          "s",
+          "under",
+          "margin",
+          "headroom",
+          "short of",
+          "below"
+        ],
+        "window": 4,
+        "asked_by": "whether it is likely to happen again",
+        "rationale": "5400 - 5320; derived from both calls"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "claimed-change",
+        "none_of": [
+          "i raised the timeout",
+          "i have raised",
+          "timeout has been raised",
+          "i updated the template",
+          "timeout is now 7200",
+          "raised it to 7200",
+          "i've raised"
+        ],
+        "ignore_case": true,
+        "rationale": "no tool can change a job template; claiming it is a fabrication"
+      },
+      {
+        "id": "invented-task-failure",
+        "none_of": [
+          "task failed",
+          "failed task",
+          "fatal error",
+          "api error",
+          "throttl"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "did not fail on a task",
+          "no task failed",
+          "not a task failure",
+          "no failed task",
+          "no fatal",
+          "rather than a task failure"
+        ],
+        "rationale": "the job was stopped by the timeout; there is no task error to report"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

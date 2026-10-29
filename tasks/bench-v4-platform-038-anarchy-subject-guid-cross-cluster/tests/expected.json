@@ -1,0 +1,106 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "kx8vn"
+        },
+        "absent_args": [
+          "cluster"
+        ]
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "north",
+          "name": "rhel9-hana-lab"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "south"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "resolved-cluster",
+        "any_of": [
+          "north"
+        ],
+        "ignore_case": true,
+        "asked_by": "say which cluster it is actually on",
+        "rationale": "the instruction names south and withholds the real cluster; only the GUID search across clusters returns the subject, on north"
+      },
+      {
+        "id": "current-state",
+        "any_of": [
+          "stop-failed",
+          "stop failed",
+          "stop_failed",
+          "stopfailed",
+          "failed to stop"
+        ],
+        "ignore_case": true,
+        "asked_by": "report its current state",
+        "rationale": "the target subject's current_state; the same-governor subject on south is started, so naming that is a wrong-record error"
+      },
+      {
+        "id": "desired-state",
+        "any_of": [
+          "stopped"
+        ],
+        "ignore_case": true,
+        "asked_by": "and its desired state",
+        "rationale": "the gap between stop-failed and stopped is the finding; the south decoy's desired_state is started"
+      },
+      {
+        "id": "cloud-provider",
+        "any_of": [
+          "azure"
+        ],
+        "ignore_case": true,
+        "asked_by": "the cloud provider it targets",
+        "rationale": "only the north component carries azure; the same-named component on south is ec2, and the subject row carries no cloud provider, so this needs get_component on the resolved cluster"
+      }
+    ],
+    "counts": [
+      {
+        "id": "expected-instances",
+        "value": 3,
+        "nouns": [
+          "instances",
+          "instance",
+          "machines",
+          "vms",
+          "servers",
+          "hosts",
+          "nodes",
+          "node"
+        ],
+        "window": 10,
+        "asked_by": "report the number of instances that component expects",
+        "rationale": "the length of the north component's expected_instances list (three entries, count 1 each); the south component expects 2, so the count is cluster-specific and derived rather than copied"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.4,
+    "answer": 0.6
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "kite",
+          "name": "ai-platform-bundle"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "cluster": "kite",
+          "name": "ai-platform.gpu-nodes"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_sub_component"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "instance-type",
+        "any_of": [
+          "g6e.12xlarge"
+        ],
+        "ignore_case": true,
+        "asked_by": "what instance type does it request",
+        "rationale": "only in the sub-component record; the parent's expected_instances is empty"
+      },
+      {
+        "id": "gpu-definition-file",
+        "any_of": [
+          "ai-platform/gpu-nodes/common.yaml"
+        ],
+        "ignore_case": true,
+        "asked_by": "which agnosticv file defines it",
+        "rationale": "the sub-component's own path, not the parent's ai-platform/bundle/common.yaml"
+      }
+    ],
+    "counts": [
+      {
+        "id": "gpu-count",
+        "value": 4,
+        "nouns": [
+          "g6e.12xlarge",
+          "GPU",
+          "gpu-worker",
+          "nodes",
+          "workers",
+          "instances"
+        ],
+        "window": 3,
+        "asked_by": "how many of those machines does each order ask for",
+        "rationale": "count 4 on kite; condor's twin asks for 2"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.4,
+    "answer": 0.6
+  }
+}

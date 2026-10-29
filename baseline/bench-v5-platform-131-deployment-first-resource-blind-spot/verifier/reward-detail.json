@@ -1,0 +1,76 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "merlin",
+          "namespace": "user-oabara-redhat-com",
+          "guid": "f3nlx"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_deployments",
+          "cluster": "merlin",
+          "namespace": "user-oabara-redhat-com"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "cluster": "merlin",
+          "guid": "f3nlx"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 5562091
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "aap2-prod-us-west-2-01.aap.infra.demo.redhat.com",
+          "job_id": 5562091
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_deployment",
+          "cluster": "merlin",
+          "namespace": "user-oabara-redhat-com",
+          "name": "rhoai-gpu-bundle-f3nlx"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

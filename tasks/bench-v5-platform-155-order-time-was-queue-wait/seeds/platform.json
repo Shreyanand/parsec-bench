@@ -1,0 +1,90 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [
+    {
+      "id": "aap2-partner0-8217744",
+      "job_id": 8217744,
+      "job_name": "partner.devspaces-lab.prod t4mzq provision",
+      "status": "successful",
+      "failed": false,
+      "started": "2026-11-05T14:51:37Z",
+      "finished": "2026-11-05T15:19:05Z",
+      "duration_seconds": 1648,
+      "launch_type": "workflow",
+      "job_explanation": "",
+      "template_name": "partner.devspaces-lab.prod",
+      "env_type": "ocp4-cluster",
+      "guid": "t4mzq",
+      "action": "provision",
+      "cloud_provider": "ec2",
+      "display_name": "Dev Spaces Partner Lab",
+      "controller": "partner0"
+    }
+  ],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [
+    {
+      "splunk_aap2_log_entry_id": "p155-1",
+      "controller": "partner0",
+      "time": "2026-11-05T14:04:12Z",
+      "level": "INFO",
+      "logger": "awx.main.scheduler",
+      "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) created with status pending; instance group velo-partner-ee"
+    },
+    {
+      "splunk_aap2_log_entry_id": "p155-2",
+      "controller": "partner0",
+      "time": "2026-11-05T14:04:13Z",
+      "level": "WARNING",
+      "logger": "awx.main.scheduler",
+      "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) not started: instance group velo-partner-ee has insufficient capacity (job needs 6 forks, 0 of 144 available; 24 jobs running in the group)"
+    },
+    {
+      "splunk_aap2_log_entry_id": "p155-3",
+      "controller": "partner0",
+      "time": "2026-11-05T14:27:45Z",
+      "level": "WARNING",
+      "logger": "awx.main.scheduler",
+      "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) still pending: instance group velo-partner-ee has insufficient capacity (job needs 6 forks, 0 of 144 available; 24 jobs running in the group)"
+    },
+    {
+      "splunk_aap2_log_entry_id": "p155-4",
+      "controller": "partner0",
+      "time": "2026-11-05T14:51:36Z",
+      "level": "INFO",
+      "logger": "awx.main.scheduler",
+      "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) submitted to execution node exnode-lyo-07 in instance group velo-partner-ee (6 of 144 forks free)"
+    },
+    {
+      "splunk_aap2_log_entry_id": "p155-5",
+      "controller": "partner0",
+      "time": "2026-11-05T14:51:37Z",
+      "level": "INFO",
+      "logger": "awx.main.dispatch",
+      "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) started on exnode-lyo-07"
+    },
+    {
+      "splunk_aap2_log_entry_id": "p155-6",
+      "controller": "partner0",
+      "time": "2026-11-05T15:19:05Z",
+      "level": "INFO",
+      "logger": "awx.main.dispatch",
+      "message": "job 8217744 (partner.devspaces-lab.prod t4mzq provision) finished on exnode-lyo-07 with status successful, elapsed 1648.0s"
+    }
+  ],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,108 @@
+{
+  "hosts": [
+    {
+      "name": "sso-idp-fra-01",
+      "type": "Host",
+      "attrs": {
+        "display_name": "sso-idp-fra-01",
+        "host_name": "sso-idp-fra-01",
+        "address": "10.140.2.17",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "identity-eu"
+        ],
+        "enable_notifications": true,
+        "last_check": 1795067940,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.77 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "sso-idp-fra-01!ldap-bind-latency",
+      "type": "Service",
+      "attrs": {
+        "display_name": "LDAP bind latency",
+        "host_name": "sso-idp-fra-01",
+        "state": 1,
+        "check_attempt": 3,
+        "enable_notifications": true,
+        "last_state_change": 1795036440,
+        "last_hard_state_change": 1795036560,
+        "last_notification": 1795036560,
+        "last_check": 1795067820,
+        "last_check_result": {
+          "output": "LDAP WARNING - bind took 840 ms (warn 500 ms)",
+          "state": 1,
+          "exit_status": 1
+        },
+        "state_type": 1,
+        "max_check_attempts": 3,
+        "check_interval": 300,
+        "retry_interval": 60,
+        "acknowledgement": 0,
+        "downtime_depth": 0
+      }
+    },
+    {
+      "name": "sso-idp-fra-01!oidc-discovery",
+      "type": "Service",
+      "attrs": {
+        "display_name": "OIDC discovery document",
+        "host_name": "sso-idp-fra-01",
+        "state": 0,
+        "check_attempt": 1,
+        "enable_notifications": true,
+        "last_state_change": 1793608200,
+        "last_notification": 1793608200,
+        "last_check": 1795067880,
+        "last_check_result": {
+          "output": "HTTP OK - /.well-known/openid-configuration 200 in 0.041 s",
+          "state": 0,
+          "exit_status": 0
+        },
+        "state_type": 1,
+        "max_check_attempts": 3,
+        "check_interval": 300,
+        "retry_interval": 60,
+        "acknowledgement": 0,
+        "downtime_depth": 0
+      }
+    },
+    {
+      "name": "sso-idp-fra-01!saml-cert-chain",
+      "type": "Service",
+      "attrs": {
+        "display_name": "SAML signing certificate chain",
+        "host_name": "sso-idp-fra-01",
+        "state": 2,
+        "check_attempt": 3,
+        "enable_notifications": false,
+        "last_state_change": 1794999360,
+        "last_hard_state_change": 1794999600,
+        "last_notification": 0,
+        "last_check": 1795067760,
+        "last_check_result": {
+          "output": "SAML CRITICAL - signing chain incomplete: intermediate 'Bittern Issuing CA G3' missing from IdP metadata",
+          "state": 2,
+          "exit_status": 2
+        },
+        "state_type": 1,
+        "max_check_attempts": 3,
+        "check_interval": 300,
+        "retry_interval": 60,
+        "acknowledgement": 0,
+        "downtime_depth": 0
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": []
+}

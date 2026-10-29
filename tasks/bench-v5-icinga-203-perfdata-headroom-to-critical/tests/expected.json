@@ -1,0 +1,124 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "search": "objstore-pool"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_perfdata"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_metrics"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "warning-host",
+        "any_of": [
+          "s3gw-ash-1"
+        ],
+        "ignore_case": true,
+        "asked_by": "For the host where it is not OK",
+        "rationale": "the WARNING row"
+      },
+      {
+        "id": "other-host-ok",
+        "any_of": [
+          "s3gw-ash-2 - OK",
+          "s3gw-ash-2 is OK",
+          "s3gw-ash-2: OK",
+          "s3gw-ash-2 (OK",
+          "s3gw-ash-2 is fine",
+          "s3gw-ash-2 is healthy",
+          "s3gw-ash-2 - ok",
+          "s3gw-ash-2 ok",
+          "s3gw-ash-2 is in OK",
+          "s3gw-ash-2 reports OK",
+          "s3gw-ash-2 is green",
+          "s3gw-ash-2 is within"
+        ],
+        "ignore_case": true,
+        "asked_by": "how the other host is doing",
+        "rationale": "the OK row the search also returns",
+        "derived": true,
+        "note": "The search returns a second objstore-pool row, on s3gw-ash-2, with state 0 and output 'POOL OK - tank0 within limits'; the forms pair that host with its OK state, which no single seed string does."
+      },
+      {
+        "id": "pct-used",
+        "any_of": [
+          "82.4%",
+          "82.4 %",
+          "82%",
+          "~82",
+          "82.4 percent",
+          "82 percent",
+          "82.4",
+          "82 %"
+        ],
+        "ignore_case": true,
+        "asked_by": "what percentage of the pool is in use",
+        "rationale": "412 / 500 from performance_data (value;warn;crit;min;max); derived",
+        "derived": true,
+        "note": "Computed, not stated: s3gw-ash-1's performance_data tank0_used=412GB;400;460;0;500 gives 412 GB used of a 500 GB max, which is 82.4%."
+      }
+    ],
+    "counts": [
+      {
+        "id": "headroom-gb",
+        "value": 48,
+        "nouns": [
+          "gb",
+          "gigabytes",
+          "headroom"
+        ],
+        "window": 5,
+        "asked_by": "how many GB can tank0 still grow",
+        "rationale": "critical 460 minus used 412, both only in performance_data; derived"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "headroom-to-full",
+        "none_of": [
+          "88 GB",
+          "88GB"
+        ],
+        "ignore_case": true,
+        "rationale": "500 - 412 is room to the pool's max, not to the critical threshold the question asks about",
+        "attributed_to": [
+          "until full",
+          "to full",
+          "before full",
+          "until the pool is full",
+          "pool size",
+          "to the max",
+          "raw capacity"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

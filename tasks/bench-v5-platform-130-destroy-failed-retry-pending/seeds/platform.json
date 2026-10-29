@@ -1,0 +1,168 @@
+{
+  "babylon_anarchy_actions": [
+    {
+      "babylon_anarchy_action_id": "harrier-dev-spaces-lab.j8tvd-destroy-p2x9m",
+      "cluster": "harrier",
+      "name": "dev-spaces-lab.j8tvd-destroy-p2x9m",
+      "namespace": "babylon-anarchy-dev-spaces-lab",
+      "action": "destroy",
+      "after": "2026-10-13T06:00:00Z",
+      "subject_name": "dev-spaces-lab.j8tvd",
+      "subject_namespace": "babylon-anarchy-dev-spaces-lab",
+      "governor": "dev-spaces-lab",
+      "state": "pending",
+      "finished": ""
+    },
+    {
+      "babylon_anarchy_action_id": "harrier-dev-spaces-lab.r3kqf-provision-h6c1v",
+      "cluster": "harrier",
+      "name": "dev-spaces-lab.r3kqf-provision-h6c1v",
+      "namespace": "babylon-anarchy-dev-spaces-lab",
+      "action": "provision",
+      "after": "2026-10-07T13:20:00Z",
+      "subject_name": "dev-spaces-lab.r3kqf",
+      "subject_namespace": "babylon-anarchy-dev-spaces-lab",
+      "governor": "dev-spaces-lab",
+      "state": "successful",
+      "finished": "2026-10-07T14:08:19Z"
+    },
+    {
+      "babylon_anarchy_action_id": "harrier-dev-spaces-lab.j8tvd-stop-k4w7b",
+      "cluster": "harrier",
+      "name": "dev-spaces-lab.j8tvd-stop-k4w7b",
+      "namespace": "babylon-anarchy-dev-spaces-lab",
+      "action": "stop",
+      "after": "2026-10-04T20:00:00Z",
+      "subject_name": "dev-spaces-lab.j8tvd",
+      "subject_namespace": "babylon-anarchy-dev-spaces-lab",
+      "governor": "dev-spaces-lab",
+      "state": "successful",
+      "finished": "2026-10-04T20:17:52Z"
+    },
+    {
+      "babylon_anarchy_action_id": "harrier-dev-spaces-lab.j8tvd-destroy-t8n3q",
+      "cluster": "harrier",
+      "name": "dev-spaces-lab.j8tvd-destroy-t8n3q",
+      "namespace": "babylon-anarchy-dev-spaces-lab",
+      "action": "destroy",
+      "after": "2026-10-09T02:00:00Z",
+      "subject_name": "dev-spaces-lab.j8tvd",
+      "subject_namespace": "babylon-anarchy-dev-spaces-lab",
+      "governor": "dev-spaces-lab",
+      "state": "failed",
+      "finished": "2026-10-09T02:41:30Z"
+    },
+    {
+      "babylon_anarchy_action_id": "harrier-dev-spaces-lab.j8tvd-provision-z5d2r",
+      "cluster": "harrier",
+      "name": "dev-spaces-lab.j8tvd-provision-z5d2r",
+      "namespace": "babylon-anarchy-dev-spaces-lab",
+      "action": "provision",
+      "after": "2026-10-01T09:12:00Z",
+      "subject_name": "dev-spaces-lab.j8tvd",
+      "subject_namespace": "babylon-anarchy-dev-spaces-lab",
+      "governor": "dev-spaces-lab",
+      "state": "successful",
+      "finished": "2026-10-01T10:02:44Z"
+    },
+    {
+      "babylon_anarchy_action_id": "harrier-ansible-rhel-ws.m9bfx-destroy-s1g6y",
+      "cluster": "harrier",
+      "name": "ansible-rhel-ws.m9bfx-destroy-s1g6y",
+      "namespace": "babylon-anarchy-ansible-rhel-ws",
+      "action": "destroy",
+      "after": "2026-10-09T02:00:00Z",
+      "subject_name": "ansible-rhel-ws.m9bfx",
+      "subject_namespace": "babylon-anarchy-ansible-rhel-ws",
+      "governor": "ansible-rhel-ws",
+      "state": "successful",
+      "finished": "2026-10-09T02:26:05Z"
+    },
+    {
+      "babylon_anarchy_action_id": "harrier-dev-spaces-lab.r3kqf-stop-e3j8u",
+      "cluster": "harrier",
+      "name": "dev-spaces-lab.r3kqf-stop-e3j8u",
+      "namespace": "babylon-anarchy-dev-spaces-lab",
+      "action": "stop",
+      "after": "2026-10-12T20:00:00Z",
+      "subject_name": "dev-spaces-lab.r3kqf",
+      "subject_namespace": "babylon-anarchy-dev-spaces-lab",
+      "governor": "dev-spaces-lab",
+      "state": "pending",
+      "finished": ""
+    }
+  ],
+  "babylon_anarchy_subjects": [
+    {
+      "babylon_anarchy_subject_id": "harrier-dev-spaces-lab.r3kqf",
+      "cluster": "harrier",
+      "name": "dev-spaces-lab.r3kqf",
+      "namespace": "babylon-anarchy-dev-spaces-lab",
+      "governor": "dev-spaces-lab",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "r3kqf",
+        "env_type": "dev-spaces-lab"
+      },
+      "requester_email": "avasquez@redhat.com",
+      "resource_claim": {
+        "name": "dev-spaces-lab-r3kqf",
+        "namespace": "user-avasquez-redhat-com"
+      },
+      "tower_jobs": {
+        "provision": {
+          "controller": "east",
+          "job_id": 2287630
+        }
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "harrier-dev-spaces-lab.j8tvd",
+      "cluster": "harrier",
+      "name": "dev-spaces-lab.j8tvd",
+      "namespace": "babylon-anarchy-dev-spaces-lab",
+      "governor": "dev-spaces-lab",
+      "current_state": "destroy-failed",
+      "desired_state": "destroyed",
+      "healthy": false,
+      "instance_vars": {
+        "guid": "j8tvd",
+        "env_type": "dev-spaces-lab"
+      },
+      "requester_email": "hsoerensen@redhat.com",
+      "resource_claim": {
+        "name": "dev-spaces-lab-j8tvd",
+        "namespace": "user-hsoerensen-redhat-com"
+      },
+      "tower_jobs": {
+        "provision": {
+          "controller": "east",
+          "job_id": 2281954
+        },
+        "destroy": {
+          "controller": "east",
+          "job_id": 2290417
+        }
+      }
+    }
+  ],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

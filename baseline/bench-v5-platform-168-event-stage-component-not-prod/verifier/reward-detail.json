@@ -1,0 +1,106 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.4,
+    "answer": 0.6
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_workshop",
+          "name": "Pacemaker Day (Nov 19)",
+          "namespace": "user-wsantos-redhat-com",
+          "cluster": "whimbrel"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_workshops",
+          "namespace": "user-wsantos-redhat-com",
+          "cluster": "whimbrel"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_multiworkshops",
+          "namespace": "user-wsantos-redhat-com",
+          "cluster": "whimbrel"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_workshop",
+          "name": "pcmk-day-nov19",
+          "namespace": "user-wsantos-redhat-com",
+          "cluster": "whimbrel"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_component",
+          "name": "rhel-ha.pacemaker-lab.event",
+          "cluster": "whimbrel"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "pacemaker-lab"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "rhel-ha/pacemaker-lab/event.yaml"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "rhel-ha-pacemaker"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "search": "pacemaker-lab"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "rhel-ha-pacemaker"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 0
+  }
+}

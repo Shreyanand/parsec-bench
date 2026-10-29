@@ -1,0 +1,40 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "file_id": "rhpds/rhdp-monitoring@HEAD:plugins/net/check_nic_errors.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/net/check_nic_errors.py",
+      "ref": "HEAD",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_nic_errors.py - NIC error counters, read from sysfs.\n\nReads /sys/class/net/<iface>/statistics/<counter> and compares the raw value with the\nthresholds below. These kernel counters are cumulative: they hold every error the driver has\nseen from the moment it initialised the NIC, and they never go down. So this check cannot tell\nyou whether new errors are arriving. Once the total crosses a threshold the service stays\nin that state until the counter is zeroed, and on these hosts that only happens when the host\nreboots or the NIC driver is reloaded. Swapping optics or cables does not reset it.\n\nFor a per-minute rate over a 15-minute window, use check_nic_error_rate.py.\n\"\"\"\nimport sys\nfrom pathlib import Path\n\nDEFAULT_WARN = 250\nDEFAULT_CRIT = 1000\n\n\ndef main():\n    iface = sys.argv[1]\n    counter = sys.argv[2] if len(sys.argv) > 2 else \"rx_crc_errors\"\n    value = int(Path(f\"/sys/class/net/{iface}/statistics/{counter}\").read_text())\n    perf = f\"{counter}={value}c;{DEFAULT_WARN};{DEFAULT_CRIT};0\"\n    if value >= DEFAULT_CRIT:\n        print(f\"NIC CRITICAL - {iface} {counter}={value} (crit {DEFAULT_CRIT})|{perf}\")\n        sys.exit(2)\n    if value >= DEFAULT_WARN:\n        print(f\"NIC WARNING - {iface} {counter}={value} (warn {DEFAULT_WARN})|{perf}\")\n        sys.exit(1)\n    print(f\"NIC OK - {iface} {counter}={value}|{perf}\")\n    sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@main:plugins/net/check_nic_errors.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/net/check_nic_errors.py",
+      "ref": "main",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_nic_errors.py - NIC error counters, read from sysfs.\n\nReads /sys/class/net/<iface>/statistics/<counter> and compares the raw value with the\nthresholds below. These kernel counters are cumulative: they hold every error the driver has\nseen from the moment it initialised the NIC, and they never go down. So this check cannot tell\nyou whether new errors are arriving. Once the total crosses a threshold the service stays\nin that state until the counter is zeroed, and on these hosts that only happens when the host\nreboots or the NIC driver is reloaded. Swapping optics or cables does not reset it.\n\nFor a per-minute rate over a 15-minute window, use check_nic_error_rate.py.\n\"\"\"\nimport sys\nfrom pathlib import Path\n\nDEFAULT_WARN = 250\nDEFAULT_CRIT = 1000\n\n\ndef main():\n    iface = sys.argv[1]\n    counter = sys.argv[2] if len(sys.argv) > 2 else \"rx_crc_errors\"\n    value = int(Path(f\"/sys/class/net/{iface}/statistics/{counter}\").read_text())\n    perf = f\"{counter}={value}c;{DEFAULT_WARN};{DEFAULT_CRIT};0\"\n    if value >= DEFAULT_CRIT:\n        print(f\"NIC CRITICAL - {iface} {counter}={value} (crit {DEFAULT_CRIT})|{perf}\")\n        sys.exit(2)\n    if value >= DEFAULT_WARN:\n        print(f\"NIC WARNING - {iface} {counter}={value} (warn {DEFAULT_WARN})|{perf}\")\n        sys.exit(1)\n    print(f\"NIC OK - {iface} {counter}={value}|{perf}\")\n    sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@HEAD:plugins/net/check_nic_error_rate.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/net/check_nic_error_rate.py",
+      "ref": "HEAD",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_nic_error_rate.py - NIC errors per minute over a sliding 15-minute window.\n\nSamples /sys/class/net/<iface>/statistics/<counter> on every run and keeps a 15-minute\nwindow of samples in /var/lib/rhdp-monitoring/nic_rate/<iface>.json, so a counter reset\nshows up as a single negative step, which is ignored.\n\"\"\"\n"
+    },
+    {
+      "file_id": "rhpds/rhdp-monitoring@main:plugins/net/check_nic_error_rate.py",
+      "owner": "rhpds",
+      "repo": "rhdp-monitoring",
+      "path": "plugins/net/check_nic_error_rate.py",
+      "ref": "main",
+      "content": "#!/usr/bin/env python3\n\"\"\"check_nic_error_rate.py - NIC errors per minute over a sliding 15-minute window.\n\nSamples /sys/class/net/<iface>/statistics/<counter> on every run and keeps a 15-minute\nwindow of samples in /var/lib/rhdp-monitoring/nic_rate/<iface>.json, so a counter reset\nshows up as a single negative step, which is ignored.\n\"\"\"\n"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

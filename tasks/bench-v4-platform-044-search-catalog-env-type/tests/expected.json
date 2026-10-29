@@ -1,0 +1,76 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "search_catalog",
+          "cluster": "east",
+          "env_type": "aws"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "aws-ci-name",
+        "any_of": [
+          "edge-observability-aws"
+        ],
+        "ignore_case": true,
+        "asked_by": "report its `ci_name`",
+        "rationale": "the AWS edition's ci_name on east; the GCP twin is edge-observability-gcp and the other two AWS matches are different labs, so only selecting the right row out of the search result supplies it"
+      },
+      {
+        "id": "aws-asset-uuid",
+        "any_of": [
+          "3f696994-5b7b-4e6f-8056-435d13ca1c00"
+        ],
+        "ignore_case": true,
+        "asked_by": "its asset UUID",
+        "rationale": "asset_uuid of the AWS edition; the GCP twin carries 2a6fc78f-..., the decoy AWS labs their own"
+      },
+      {
+        "id": "aws-namespace",
+        "any_of": [
+          "babylon-catalog-event"
+        ],
+        "ignore_case": true,
+        "asked_by": "the catalog namespace it is published in",
+        "rationale": "the AWS edition on east is the only env_type=aws match in babylon-catalog-event; the GCP twin and the west copy of the AWS item are both in babylon-catalog-prod"
+      }
+    ],
+    "counts": [],
+    "forbidden": [
+      {
+        "id": "gcp-twin-named-as-aws",
+        "none_of": [
+          "aws edition is summit-labs.edge-observability-gcp",
+          "aws build is summit-labs.edge-observability-gcp",
+          "aws item is summit-labs.edge-observability-gcp",
+          "aws version is summit-labs.edge-observability-gcp",
+          "aws catalog item is summit-labs.edge-observability-gcp",
+          "aws variant is summit-labs.edge-observability-gcp",
+          "aws edition is `summit-labs.edge-observability-gcp",
+          "aws edition is **summit-labs.edge-observability-gcp",
+          "aws edition of the edge observability lab is summit-labs.edge-observability-gcp",
+          "aws edition of the edge observability lab is `summit-labs.edge-observability-gcp"
+        ],
+        "ignore_case": true,
+        "rationale": "an agent that searched without env_type gets both twins and may hand back the GCP one as the AWS edition; each form binds the GCP ci_name to the AWS edition as an assertion, so it is not a seed literal and survives the honest exclusion phrasings checked in provenance.md"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

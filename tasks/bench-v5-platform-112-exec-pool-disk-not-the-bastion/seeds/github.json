@@ -1,0 +1,40 @@
+{
+ "catalog_items": [
+  {
+   "catalog_item_id": "agd-v2/edge-ai-inference-lab",
+   "found": true,
+   "owner": "agnosticd",
+   "repo": "agnosticd-v2",
+   "account": "agd-v2",
+   "directory": "edge-ai-inference-lab",
+   "path": "agd-v2/edge-ai-inference-lab/prod.yaml",
+   "files": [
+    "common.yaml",
+    "prod.yaml"
+   ],
+   "default_branch": "main",
+   "message": ""
+  }
+ ],
+ "files": [
+  {
+   "file_id": "agnosticd/agnosticd-v2@HEAD:agd-v2/edge-ai-inference-lab/prod.yaml",
+   "owner": "agnosticd",
+   "repo": "agnosticd-v2",
+   "path": "agd-v2/edge-ai-inference-lab/prod.yaml",
+   "ref": "HEAD",
+   "content": "---\n# agd-v2/edge-ai-inference-lab/prod.yaml\n__meta__:\n  catalog:\n    display_name: \"Edge AI Inference Lab\"\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n    controller: west\n    # GPU-capable execution nodes; image pulls are large, so this item is pinned\n    instance_group: exec-pool-b\n\ncloud_provider: aws\naws_region: us-west-2\nbastion_instance_type: m6i.xlarge\nbastion_root_volume_size: 200\nocp4_installer_version: \"4.18\"\nocp4_workload_nvidia_gpu_operator_enable: true\n"
+  },
+  {
+   "file_id": "agnosticd/agnosticd-v2@main:agd-v2/edge-ai-inference-lab/prod.yaml",
+   "owner": "agnosticd",
+   "repo": "agnosticd-v2",
+   "path": "agd-v2/edge-ai-inference-lab/prod.yaml",
+   "ref": "main",
+   "content": "---\n# agd-v2/edge-ai-inference-lab/prod.yaml\n__meta__:\n  catalog:\n    display_name: \"Edge AI Inference Lab\"\n  deployer:\n    type: agnosticd\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n    controller: west\n    # GPU-capable execution nodes; image pulls are large, so this item is pinned\n    instance_group: exec-pool-b\n\ncloud_provider: aws\naws_region: us-west-2\nbastion_instance_type: m6i.xlarge\nbastion_root_volume_size: 200\nocp4_installer_version: \"4.18\"\nocp4_workload_nvidia_gpu_operator_enable: true\n"
+  }
+ ],
+ "pull_requests": [],
+ "repo_search_results": [],
+ "similar_items": []
+}

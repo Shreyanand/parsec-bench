@@ -1,0 +1,72 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "mysql-ro-lon-3",
+          "detailed": true
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "plugins/db/check_repl_lag.py"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "rhdp-monitoring",
+          "path": "icinga/conf.d/commands/db.conf"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "legitimate",
+        "any_of": [
+          "alert is legitimate",
+          "is legitimate",
+          "not a false alarm",
+          "isn't a false alarm",
+          "correctly configured",
+          "alert is correct",
+          "alert is valid",
+          "alert is real",
+          "is genuine",
+          "is a real",
+          "engineer is wrong"
+        ],
+        "ignore_case": true,
+        "asked_by": "is the alert legitimate",
+        "rationale": "the verdict",
+        "derived": true,
+        "note": "A verdict, so no seed literal: the service's vars set repl_lag_crit 300, db.conf passes it as --critical, and the reading is 340 s, so the CRITICAL is correct."
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

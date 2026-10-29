@@ -1,0 +1,122 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 6173904
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_infra/infra_dns_api_record/tasks/main.yml",
+          "ref": "b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_infra/infra_dns_api_record/defaults/main.yml",
+          "ref": "b81f0c6e2d947a35e1c08d6f3a2b947e5c1d0f86"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "negative-ttl",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "900 seconds",
+          "900 s",
+          "900s",
+          "900-second",
+          "900 second",
+          "15 minutes",
+          "fifteen minutes",
+          "15-minute",
+          "15 min",
+          "TTL 900",
+          "TTL of 900",
+          "TTL is 900",
+          "TTL: 900",
+          "TTL (900",
+          "TTL, 900"
+        ],
+        "asked_by": "why the name still would not resolve",
+        "note": "read off the pre-check's AUTHORITY line (sbxlab.example.net. 900 IN SOA ...): the negative-caching time is the lesser of the SOA record's TTL (900) and its minimum field (86400)",
+        "rationale": "how long the negative answer is cached: the SOA TTL in the pre-check's AUTHORITY line. Only in the log, and only as an unlabelled number"
+      },
+      {
+        "id": "negative-cache",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "negative cach",
+          "negatively cached",
+          "negatively-cached",
+          "negative-cach",
+          "cached the NXDOMAIN",
+          "cached NXDOMAIN",
+          "cached an NXDOMAIN",
+          "cached a NXDOMAIN",
+          "NXDOMAIN was cached",
+          "NXDOMAIN is cached",
+          "NXDOMAIN got cached",
+          "NXDOMAIN cached",
+          "NXDOMAIN stayed cached",
+          "NXDOMAIN remained cached",
+          "cached negative",
+          "cached the negative",
+          "cached that the name",
+          "cached the miss",
+          "cached the non-existen",
+          "cached the nonexisten",
+          "cached \"does not exist\"",
+          "cached the absence",
+          "answered from cache",
+          "served from cache",
+          "from its cache",
+          "from the cache"
+        ],
+        "asked_by": "why the name still would not resolve",
+        "note": "RFC 2308 resolver behaviour applied to the pre-check's NXDOMAIN; no seed string says the answer was cached",
+        "rationale": "the mechanism: the resolver keeps answering NXDOMAIN after the record exists"
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

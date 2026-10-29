@@ -1,0 +1,1 @@
+I run the in-store kiosks in Bordeaux. In Icinga they are grouped under the hostgroup `kiosk-fleet-bdx`. How many hosts are members of it, which of those hosts are down, and what Icinga's latest check reported for each down one? I need this for the field-service dispatch list, so only count machines that are actually in that group.

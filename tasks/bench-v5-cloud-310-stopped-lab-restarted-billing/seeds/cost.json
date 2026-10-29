@@ -1,0 +1,179 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [
+    {
+      "aws_cost_result_id": "acr-0928-svc",
+      "accounts_queried": 1,
+      "group_by": "SERVICE",
+      "period": {
+        "start": "2026-09-28",
+        "end": "2026-10-05"
+      },
+      "period_id": "per-0928-1005",
+      "results": [
+        {
+          "account_id": "645190837226",
+          "groups": [
+            {
+              "key": "Amazon Elastic Compute Cloud - Compute",
+              "amount": 1473.75,
+              "daily": [
+                {
+                  "date": "2026-09-28",
+                  "amount": 211.4
+                },
+                {
+                  "date": "2026-09-29",
+                  "amount": 0.0
+                },
+                {
+                  "date": "2026-09-30",
+                  "amount": 0.0
+                },
+                {
+                  "date": "2026-10-01",
+                  "amount": 268.75
+                },
+                {
+                  "date": "2026-10-02",
+                  "amount": 331.2
+                },
+                {
+                  "date": "2026-10-03",
+                  "amount": 331.2
+                },
+                {
+                  "date": "2026-10-04",
+                  "amount": 331.2
+                }
+              ]
+            },
+            {
+              "key": "EC2 - Other",
+              "amount": 130.2,
+              "daily": [
+                {
+                  "date": "2026-09-28",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-09-29",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-09-30",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-10-01",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-10-02",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-10-03",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-10-04",
+                  "amount": 18.6
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "account_id": "ORG_TOTAL",
+          "groups": [
+            {
+              "key": "Amazon Elastic Compute Cloud - Compute",
+              "amount": 1473.75,
+              "daily": [
+                {
+                  "date": "2026-09-28",
+                  "amount": 211.4
+                },
+                {
+                  "date": "2026-09-29",
+                  "amount": 0.0
+                },
+                {
+                  "date": "2026-09-30",
+                  "amount": 0.0
+                },
+                {
+                  "date": "2026-10-01",
+                  "amount": 268.75
+                },
+                {
+                  "date": "2026-10-02",
+                  "amount": 331.2
+                },
+                {
+                  "date": "2026-10-03",
+                  "amount": 331.2
+                },
+                {
+                  "date": "2026-10-04",
+                  "amount": 331.2
+                }
+              ]
+            },
+            {
+              "key": "EC2 - Other",
+              "amount": 130.2,
+              "daily": [
+                {
+                  "date": "2026-09-28",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-09-29",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-09-30",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-10-01",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-10-02",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-10-03",
+                  "amount": 18.6
+                },
+                {
+                  "date": "2026-10-04",
+                  "amount": 18.6
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "total_cost": 1603.95
+    }
+  ],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-0928-1005",
+      "start": "2026-09-28",
+      "end": "2026-10-05"
+    }
+  ]
+}

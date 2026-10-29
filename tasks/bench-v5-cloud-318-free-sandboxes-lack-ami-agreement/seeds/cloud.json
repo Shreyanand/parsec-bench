@@ -1,0 +1,327 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [
+    {
+      "azure_subscription_id": "az-318-44-101",
+      "database": "pools",
+      "id": "pool-44-101",
+      "used": true,
+      "projecttag": "orchard-ml-lab"
+    },
+    {
+      "azure_subscription_id": "az-318-44-102",
+      "database": "pools",
+      "id": "pool-44-102",
+      "used": true,
+      "projecttag": "orchard-ml-lab"
+    },
+    {
+      "azure_subscription_id": "az-318-44-103",
+      "database": "pools",
+      "id": "pool-44-103",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "az-318-44-104",
+      "database": "pools",
+      "id": "pool-44-104",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "az-318-44-105",
+      "database": "pools",
+      "id": "pool-44-105",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "az-318-44-106",
+      "database": "pools",
+      "id": "pool-44-106",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "az-318-44-107",
+      "database": "pools",
+      "id": "pool-44-107",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "az-318-44-108",
+      "database": "pools",
+      "id": "pool-44-108",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "az-318-45-201",
+      "database": "pools",
+      "id": "pool-45-201",
+      "used": false
+    },
+    {
+      "azure_subscription_id": "az-318-45-202",
+      "database": "pools",
+      "id": "pool-45-202",
+      "used": true,
+      "projecttag": "quayside-ops"
+    }
+  ],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [
+    {
+      "marketplace_agreement_id": "mpa-318-1",
+      "account_id": "592718360245",
+      "account_name": "sandbox8525",
+      "agreement_id": "agmt-7wq2k9tz4hcn",
+      "product_name": "Corvane Hardened Netwarden",
+      "product_id": "prod-cvhg3k7p",
+      "vendor_name": "Corvane Securitech",
+      "agreement_start": "2026-10-13T07:00:00Z",
+      "agreement_end": "2027-10-12T07:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "ConfigurableUpfrontPricingTerm"
+        },
+        {
+          "type": "LegalTerm"
+        }
+      ],
+      "last_updated": "2026-10-15T04:30:00Z",
+      "estimated_cost": 1140.0,
+      "estimated_cost_usd": 1140.0
+    },
+    {
+      "marketplace_agreement_id": "mpa-318-2",
+      "account_id": "592718360372",
+      "account_name": "sandbox8526",
+      "agreement_id": "agmt-3np8v6xr2jdu",
+      "product_name": "Corvane Hardened Netwarden",
+      "product_id": "prod-cvhg3k7p",
+      "vendor_name": "Corvane Securitech",
+      "agreement_start": "2026-10-13T07:00:00Z",
+      "agreement_end": "2027-10-12T07:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "ConfigurableUpfrontPricingTerm"
+        },
+        {
+          "type": "LegalTerm"
+        }
+      ],
+      "last_updated": "2026-10-15T04:30:00Z",
+      "estimated_cost": 1140.0,
+      "estimated_cost_usd": 1140.0
+    },
+    {
+      "marketplace_agreement_id": "mpa-318-3",
+      "account_id": "905613287440",
+      "account_name": "golden-images-shared",
+      "agreement_id": "agmt-9ce5m1qh7bwy",
+      "product_name": "Corvane Hardened Netwarden",
+      "product_id": "prod-cvhg3k7p",
+      "vendor_name": "Corvane Securitech",
+      "agreement_start": "2026-03-17T06:00:00Z",
+      "agreement_end": "2027-03-16T06:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "ConfigurableUpfrontPricingTerm"
+        },
+        {
+          "type": "LegalTerm"
+        }
+      ],
+      "last_updated": "2026-10-15T04:30:00Z",
+      "estimated_cost": 4560.0,
+      "estimated_cost_usd": 4560.0
+    },
+    {
+      "marketplace_agreement_id": "mpa-318-4",
+      "account_id": "846250173394",
+      "account_name": "sandbox8523",
+      "agreement_id": "agmt-5ty4b8gk6pzr",
+      "product_name": "Corvane Hardened Netwarden",
+      "product_id": "prod-cvhg3k7p",
+      "vendor_name": "Corvane Securitech",
+      "agreement_start": "2026-09-04T06:00:00Z",
+      "agreement_end": "2026-10-09T06:00:00Z",
+      "auto_renew": false,
+      "status": "EXPIRED",
+      "classification": "Free Trial",
+      "currency": "USD",
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "FreeTrialPricingTerm"
+        }
+      ],
+      "last_updated": "2026-10-15T04:30:00Z",
+      "estimated_cost": 0.0,
+      "estimated_cost_usd": 0.0
+    },
+    {
+      "marketplace_agreement_id": "mpa-318-5",
+      "account_id": "731406295817",
+      "account_name": "sandbox8521",
+      "agreement_id": "agmt-2hd6w9rn3xke",
+      "product_name": "Quillstone Logweave",
+      "product_id": "prod-qslr8m2v",
+      "vendor_name": "Quillstone Ltd",
+      "agreement_start": "2026-10-02T06:00:00Z",
+      "agreement_end": "2027-10-01T06:00:00Z",
+      "auto_renew": true,
+      "status": "ACTIVE",
+      "classification": "SaaS (Auto-Renew)",
+      "currency": "USD",
+      "offer_type": "PublicOffer",
+      "terms": [
+        {
+          "type": "ByolPricingTerm"
+        },
+        {
+          "type": "LegalTerm"
+        }
+      ],
+      "last_updated": "2026-10-15T04:30:00Z",
+      "estimated_cost": 240.0,
+      "estimated_cost_usd": 240.0
+    }
+  ],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sa-318-8519",
+      "name": "sandbox8519",
+      "account_id": "318664029175",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "general",
+      "zone": "sandbox8519.tessellate-labs.example.net",
+      "comment": "spare, unreserved",
+      "conan_status": "clean",
+      "guid": "",
+      "hosted_zone_id": "Z08519TSL",
+      "service_uuid": "",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sa-318-8521",
+      "name": "sandbox8521",
+      "account_id": "731406295817",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "tessellate-2611",
+      "zone": "sandbox8521.tessellate-labs.example.net",
+      "comment": "pre-staged for tessellate-2611",
+      "conan_status": "clean",
+      "guid": "",
+      "hosted_zone_id": "Z08521TSL",
+      "service_uuid": "",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sa-318-8522",
+      "name": "sandbox8522",
+      "account_id": "731406295906",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "tessellate-2611",
+      "zone": "sandbox8522.tessellate-labs.example.net",
+      "comment": "pre-staged for tessellate-2611",
+      "conan_status": "clean",
+      "guid": "",
+      "hosted_zone_id": "Z08522TSL",
+      "service_uuid": "",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sa-318-8523",
+      "name": "sandbox8523",
+      "account_id": "846250173394",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "tessellate-2611",
+      "zone": "sandbox8523.tessellate-labs.example.net",
+      "comment": "pre-staged for tessellate-2611; reused from corvane pilot 2609",
+      "conan_status": "clean",
+      "guid": "",
+      "hosted_zone_id": "Z08523TSL",
+      "service_uuid": "",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sa-318-8524",
+      "name": "sandbox8524",
+      "account_id": "846250173467",
+      "available": true,
+      "owner": "",
+      "owner_email": "",
+      "envtype": "",
+      "reservation": "tessellate-2611",
+      "zone": "sandbox8524.tessellate-labs.example.net",
+      "comment": "pre-staged for tessellate-2611",
+      "conan_status": "clean",
+      "guid": "",
+      "hosted_zone_id": "Z08524TSL",
+      "service_uuid": "",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sa-318-8525",
+      "name": "sandbox8525",
+      "account_id": "592718360245",
+      "available": false,
+      "owner": "rvashisht",
+      "owner_email": "rvashisht@tessellate-labs.example.net",
+      "envtype": "corvane-partner-lab",
+      "reservation": "tessellate-2611",
+      "zone": "sandbox8525.tessellate-labs.example.net",
+      "comment": "tessellate-2611 dry run seat 1",
+      "conan_status": "",
+      "guid": "k2pdw",
+      "hosted_zone_id": "Z08525TSL",
+      "service_uuid": "svc-8525-k2pdw",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sa-318-8526",
+      "name": "sandbox8526",
+      "account_id": "592718360372",
+      "available": false,
+      "owner": "rvashisht",
+      "owner_email": "rvashisht@tessellate-labs.example.net",
+      "envtype": "corvane-partner-lab",
+      "reservation": "tessellate-2611",
+      "zone": "sandbox8526.tessellate-labs.example.net",
+      "comment": "tessellate-2611 dry run seat 2",
+      "conan_status": "",
+      "guid": "f7nxa",
+      "hosted_zone_id": "Z08526TSL",
+      "service_uuid": "svc-8526-f7nxa",
+      "annotations": {}
+    }
+  ]
+}

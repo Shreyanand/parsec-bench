@@ -1,0 +1,189 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_problems"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_host_problems"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "list_unhandled"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.25,
+    "answer": 0.75
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "root-host",
+        "any_of": [
+          "kvm-rack9-n04"
+        ],
+        "ignore_case": true,
+        "asked_by": "which single problem explains most of the alerts",
+        "rationale": "the DOWN host row"
+      },
+      {
+        "id": "symptoms-not-faults",
+        "any_of": [
+          "symptom",
+          "consequence",
+          "because the host",
+          "host being down",
+          "caused by the host",
+          "follow from",
+          "downstream",
+          "knock-on",
+          "side effect",
+          "due to the host",
+          "result of the host"
+        ],
+        "ignore_case": true,
+        "asked_by": "Cut through the noise",
+        "rationale": "the four service rows are SSH timeouts to the DOWN host",
+        "derived": true,
+        "note": "kvm-rack9-n04 is DOWN (PING CRITICAL, 100% loss) and its four service problems are all CHECK_BY_SSH timeouts to 10.9.40.14 port 22 that began 1-3 minutes after the host went down, so they are consequences of the host outage, not faults in those components."
+      },
+      {
+        "id": "independent-incident",
+        "any_of": [
+          "unbound-resolve",
+          "dns-cache-02"
+        ],
+        "ignore_case": true,
+        "asked_by": "genuinely separate incidents",
+        "rationale": "the one problem on an UP host; not named in the instruction"
+      },
+      {
+        "id": "since-time",
+        "any_of": [
+          "03:15"
+        ],
+        "ignore_case": true,
+        "asked_by": "how long has that one been going on",
+        "rationale": "the host's last_state_change",
+        "derived": true,
+        "note": "The seed carries the time as epoch seconds: kvm-rack9-n04's last_state_change (and last_hard_state_change) is 1794971700, which is 2026-11-18 03:15 UTC."
+      }
+    ],
+    "counts": [
+      {
+        "id": "incidents",
+        "value": 2,
+        "nouns": [
+          "incidents",
+          "incident",
+          "separate",
+          "independent",
+          "issues"
+        ],
+        "window": 3,
+        "asked_by": "how many genuinely separate incidents",
+        "rationale": "6 problem rows collapse to 2 once the DOWN host is recognised",
+        "extra_any_of": [
+          "two separate",
+          "two independent",
+          "two incidents",
+          "two real"
+        ]
+      },
+      {
+        "id": "alerts-explained",
+        "value": 5,
+        "nouns": [
+          "alerts",
+          "problems",
+          "of the 6",
+          "of 6"
+        ],
+        "window": 4,
+        "asked_by": "how many of the alerts it accounts for",
+        "rationale": "the host row plus its 4 service rows; derived",
+        "extra_any_of": [
+          "5 of the 6",
+          "five of the six",
+          "5 of 6",
+          "host plus its 4",
+          "host plus 4"
+        ]
+      },
+      {
+        "id": "hours-down",
+        "value": 6,
+        "nouns": [
+          "hours",
+          "hour",
+          "h"
+        ],
+        "window": 3,
+        "asked_by": "how long has that one been going on",
+        "rationale": "09:15 minus last_state_change 03:15; derived",
+        "extra_any_of": [
+          "6 hours",
+          "six hours",
+          "6h",
+          "6 h"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "no-collapse",
+        "none_of": [
+          "6 separate",
+          "six separate",
+          "5 separate",
+          "five separate",
+          "6 incidents",
+          "six incidents",
+          "5 incidents",
+          "five incidents",
+          "6 independent",
+          "six independent"
+        ],
+        "ignore_case": true,
+        "rationale": "treating each problem row as its own incident"
+      },
+      {
+        "id": "faults-in-services",
+        "none_of": [
+          "libvirtd has crashed",
+          "libvirtd crashed",
+          "RAID failure",
+          "raid failed",
+          "storage fault"
+        ],
+        "ignore_case": true,
+        "rationale": "reading the SSH-check failures as faults in the checked components",
+        "attributed_to": [
+          "no evidence of",
+          "not separate",
+          "symptoms, not",
+          "symptom, not",
+          "not a real"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_log",
+        "controller": "west",
+        "job_id": 663920
+      },
+      "result": {
+        "job_id": 663920,
+        "job_name": "RHDP knowledge_bu.retrieval_lab.prod-f4nqz-1-provision",
+        "status": "failed",
+        "failed": true,
+        "started": "2026-10-09T14:02:37.000Z",
+        "finished": "2026-10-09T14:03:21.000Z",
+        "duration_seconds": 44,
+        "launch_type": "workflow",
+        "job_explanation": "",
+        "template_name": "RHDP knowledge_bu.retrieval_lab.prod-provision",
+        "env_type": "prod",
+        "guid": "f4nqz",
+        "action": "provision",
+        "cloud_provider": "ec2",
+        "display_name": "retrieval_lab",
+        "controller": "west",
+        "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+        "git_branch": "main",
+        "git_revision": "3d81f0b6c2a947e5d18b0c6f4a2e93b75d0c1e48",
+        "log": "PLAY [Resolve the ordered catalog item] ****************************************\n\nTASK [Gathering Facts] ****************************************\nok: [localhost]\n\nTASK [agnosticv_resolve : Report the requested catalog item] ****************************************\ntask path: /runner/project/ansible/roles/agnosticv_resolve/tasks/main.yml:3\nok: [localhost] => {\n    \"msg\": \"Resolving knowledge_bu/retrieval_lab (stage prod) from rhpds/agnosticv@main\"\n}\n\nTASK [agnosticv_resolve : Check that the catalog item directory exists] ****************************************\ntask path: /runner/project/ansible/roles/agnosticv_resolve/tasks/main.yml:7\nok: [localhost] => {\"changed\": false, \"stat\": {\"exists\": false}}\n\nTASK [agnosticv_resolve : Stop when the catalog item is missing] ****************************************\ntask path: /runner/project/ansible/roles/agnosticv_resolve/tasks/main.yml:12\nfatal: [localhost]: FAILED! => {\"assertion\": \"r_item_dir.stat.exists\", \"changed\": false, \"evaluated_to\": false, \"msg\": \"Catalog item directory knowledge_bu/retrieval_lab not found in rhpds/agnosticv@main\"}\n\nPLAY RECAP ****************************************\nlocalhost                  : ok=3    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0\n",
+        "log_original_size": 1266,
+        "log_trimmed_size": 1266
+      },
+      "is_error": false
+    },
+    {
+      "name": "lookup_catalog_item",
+      "args": {
+        "search": "knowledge_bu.retrieval_lab.prod"
+      },
+      "result": {
+        "found": true,
+        "owner": "rhpds",
+        "repo": "agnosticv",
+        "account": "knowledge_bu",
+        "directory": "retrieval-lab",
+        "path": "knowledge_bu/retrieval-lab",
+        "files": [
+          "common.yaml",
+          "dev.yaml",
+          "prod.yaml"
+        ],
+        "default_branch": "main"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The job tried to load knowledge_bu/retrieval_lab from rhpds/agnosticv@main (the Babylon name is knowledge_bu.retrieval_lab.prod). The stat of that directory came back exists: false and the assert stopped the run.\n\nThe item is not gone. A catalog lookup finds it (found: true) in rhpds/agnosticv at knowledge_bu/retrieval-lab, with common.yaml, dev.yaml and prod.yaml. It was not deleted in the cleanup.\n\nWhy the job could not find it: the names differ by one character. The job asked for retrieval_lab with an underscore; the directory is retrieval-lab with a hyphen. The catalog lookup treats _ and - as the same, which is why it reports a match, but the job checks the literal path, and knowledge_bu/retrieval_lab does not exist. This is not a GitHub glitch, so relaunching would fail the same way; I have not relaunched it. Point the order's catalog item at knowledge_bu.retrieval-lab.prod (the hyphenated name) and order again.\n"
+}

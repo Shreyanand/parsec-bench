@@ -1,0 +1,129 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "edi-relay-lis-03"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "flexible",
+        "any_of": [
+          "flexible",
+          "fixed: false",
+          "fixed=false",
+          "fixed = false",
+          "fixed is false",
+          "\"fixed\": false",
+          "fixed\": false",
+          "non-fixed",
+          "not a fixed",
+          "fixed false"
+        ],
+        "ignore_case": true,
+        "asked_by": "What kind of downtime is it",
+        "rationale": "the as2-inbox-files row has fixed: false; the other (host) downtime is the fixed one"
+      },
+      {
+        "id": "window-start",
+        "any_of": [
+          "22:00"
+        ],
+        "ignore_case": true,
+        "asked_by": "between which UTC times it is allowed to kick in",
+        "rationale": "start_time 1795298400 is 2026-11-21 22:00 UTC",
+        "derived": true,
+        "note": "Converted from start_time epoch 1795298400 (2026-11-21 22:00 UTC); the seed stores only the epoch."
+      },
+      {
+        "id": "window-end",
+        "any_of": [
+          "06:00",
+          "6:00 am",
+          "6 am",
+          "6am",
+          "6:00am"
+        ],
+        "ignore_case": true,
+        "asked_by": "between which UTC times it is allowed to kick in",
+        "rationale": "end_time 1795327200 is 2026-11-22 06:00 UTC",
+        "derived": true,
+        "note": "Converted from end_time epoch 1795327200 (2026-11-22 06:00 UTC); the seed stores only the epoch."
+      },
+      {
+        "id": "author",
+        "any_of": [
+          "fmoreira-adm",
+          "fmoreira"
+        ],
+        "ignore_case": true,
+        "asked_by": "who put it in",
+        "rationale": "the as2-inbox-files downtime's author; nsilvestre owns the unrelated host downtime"
+      }
+    ],
+    "counts": [
+      {
+        "id": "muted-hours",
+        "value": 5,
+        "nouns": [
+          "hours",
+          "hrs",
+          "h"
+        ],
+        "window": 4,
+        "asked_by": "how many hours alerts will stay muted once it has kicked in",
+        "rationale": "a flexible downtime lasts `duration` (18000 s) from its trigger, not end_time minus start_time (8 h)",
+        "extra_any_of": [
+          "18000 s",
+          "18000 seconds",
+          "18,000 seconds",
+          "18,000 s",
+          "300 minutes",
+          "five hours",
+          "5h",
+          "5-hour",
+          "five-hour"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "window-as-duration",
+        "none_of": [
+          "muted for 8 hours",
+          "muted for eight hours",
+          "suppressed for 8 hours",
+          "suppressed for eight hours",
+          "silenced for 8 hours",
+          "silenced for eight hours",
+          "muted for the full 8",
+          "muted for the whole 8",
+          "8 hours of muted",
+          "eight hours of muted",
+          "stay muted for 8",
+          "stay muted for eight",
+          "remain muted for 8",
+          "remain muted for eight"
+        ],
+        "ignore_case": true,
+        "rationale": "reading the 8-hour start window as the suppression length, which is what a fixed downtime would give"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

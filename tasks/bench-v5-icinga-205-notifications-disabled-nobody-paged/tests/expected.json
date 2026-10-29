@@ -1,0 +1,149 @@
+{
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "sso-idp-fra-01"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_notification_history"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "list_notifications"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "notifications-disabled",
+        "any_of": [
+          "enable_notifications",
+          "notifications are disabled",
+          "notifications disabled",
+          "notifications turned off",
+          "notifications switched off",
+          "notifications are off",
+          "notifications off",
+          "notifications were disabled",
+          "disabled notifications",
+          "notifications are turned off",
+          "notifications have been disabled"
+        ],
+        "ignore_case": true,
+        "asked_by": "Why did Icinga stay silent on this one",
+        "rationale": "only the service's enable_notifications field explains it"
+      },
+      {
+        "id": "never-notified",
+        "any_of": [
+          "last_notification",
+          "never sent",
+          "never notified",
+          "never been notified",
+          "never paged",
+          "never been sent",
+          "has never sent",
+          "no notification was ever"
+        ],
+        "ignore_case": true,
+        "asked_by": "stay silent",
+        "rationale": "last_notification 0 confirms no notification ever went out"
+      },
+      {
+        "id": "sibling-page",
+        "any_of": [
+          "ldap-bind-latency",
+          "LDAP bind latency"
+        ],
+        "ignore_case": true,
+        "asked_by": "paged earlier for something else",
+        "rationale": "the WARNING sibling with notifications on and last_notification overnight"
+      },
+      {
+        "id": "re-enable",
+        "any_of": [
+          "re-enable",
+          "reenable",
+          "enable notifications",
+          "turn notifications back on",
+          "switch notifications back on",
+          "turn them back on",
+          "enable them again",
+          "notifications back on"
+        ],
+        "ignore_case": true,
+        "asked_by": "Why did Icinga stay silent",
+        "rationale": "the actionable fix that follows from the cause",
+        "derived": true,
+        "note": "A recommendation, so no seed literal: the cause is saml-cert-chain's enable_notifications false (its siblings have true), so the fix is to turn notifications back on for that service."
+      }
+    ],
+    "counts": [
+      {
+        "id": "hours-hard",
+        "value": 19,
+        "nouns": [
+          "hours",
+          "hour",
+          "hrs",
+          "h"
+        ],
+        "window": 4,
+        "asked_by": "for how many hours",
+        "rationale": "06:00 minus last_hard_state_change 11:00 the previous day; derived. last_state_change would give 19h04m, so 19 holds either way",
+        "extra_any_of": [
+          "19 hours",
+          "19h",
+          "19 h"
+        ]
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-suppression",
+        "none_of": [
+          "was acknowledged",
+          "had been acknowledged",
+          "in downtime",
+          "in a downtime",
+          "pager is broken",
+          "routing problem",
+          "escalation policy"
+        ],
+        "ignore_case": true,
+        "rationale": "blaming acknowledgement, a downtime or the pager instead of the notification switch",
+        "attributed_to": [
+          "not acknowledged",
+          "wasn't acknowledged",
+          "not in downtime",
+          "not in a downtime",
+          "pager works",
+          "pager is fine",
+          "no downtime"
+        ]
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

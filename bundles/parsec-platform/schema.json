@@ -1,0 +1,1379 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "babylon_anarchy_actions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BabylonAnarchyAction"
+      }
+    },
+    "babylon_anarchy_subjects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BabylonAnarchySubject"
+      }
+    },
+    "babylon_catalog_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BabylonCatalogItem"
+      }
+    },
+    "babylon_components": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BabylonComponent"
+      }
+    },
+    "babylon_deployments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BabylonDeployment"
+      }
+    },
+    "babylon_multiworkshops": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BabylonMultiworkshop"
+      }
+    },
+    "babylon_resource_pools": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BabylonResourcePool"
+      }
+    },
+    "babylon_workshops": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/BabylonWorkshop"
+      }
+    },
+    "jobs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Job"
+      }
+    },
+    "job_events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/JobEvent"
+      }
+    },
+    "ocpv_machines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/OcpvMachine"
+      }
+    },
+    "ocpv_machinesets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/OcpvMachineset"
+      }
+    },
+    "ocpv_namespaces": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/OcpvNamespace"
+      }
+    },
+    "ocpv_pvcs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/OcpvPvc"
+      }
+    },
+    "ocpv_storage_classes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/OcpvStorageClass"
+      }
+    },
+    "ocpv_vms": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/OcpvVm"
+      }
+    },
+    "splunk_aap2_log_entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SplunkAap2LogEntry"
+      }
+    },
+    "splunk_ocp_log_entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SplunkOcpLogEntry"
+      }
+    },
+    "workshops": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Workshop"
+      }
+    }
+  },
+  "required": [
+    "babylon_anarchy_actions",
+    "babylon_anarchy_subjects",
+    "babylon_catalog_items",
+    "babylon_components",
+    "babylon_deployments",
+    "babylon_multiworkshops",
+    "babylon_resource_pools",
+    "babylon_workshops",
+    "jobs",
+    "job_events",
+    "ocpv_machines",
+    "ocpv_machinesets",
+    "ocpv_namespaces",
+    "ocpv_pvcs",
+    "ocpv_storage_classes",
+    "ocpv_vms",
+    "splunk_aap2_log_entries",
+    "splunk_ocp_log_entries",
+    "workshops"
+  ],
+  "$defs": {
+    "BabylonAnarchyAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "babylon_anarchy_action_id",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Lifecycle operation requested for the action."
+        },
+        "after": {
+          "type": "string",
+          "description": "Do-not-run-before timestamp string."
+        },
+        "babylon_anarchy_action_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the anarchy action row."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "Babylon cluster where the action exists."
+        },
+        "finished": {
+          "type": "string",
+          "description": "Finished timestamp string, or empty when unfinished."
+        },
+        "governor": {
+          "type": "string",
+          "description": "Anarchy governor name managing the action."
+        },
+        "name": {
+          "type": "string",
+          "description": "AnarchyAction resource name."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace containing the action."
+        },
+        "state": {
+          "type": "string",
+          "description": "Current execution state of the action."
+        },
+        "subject_name": {
+          "type": "string",
+          "description": "Name of the AnarchySubject this action targets."
+        },
+        "subject_namespace": {
+          "type": "string",
+          "description": "Namespace of the target AnarchySubject."
+        }
+      },
+      "required": [
+        "action",
+        "after",
+        "babylon_anarchy_action_id",
+        "cluster",
+        "finished",
+        "governor",
+        "name",
+        "namespace",
+        "state",
+        "subject_name",
+        "subject_namespace"
+      ]
+    },
+    "BabylonAnarchySubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "babylon_anarchy_subject_id",
+      "properties": {
+        "babylon_anarchy_subject_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the anarchy subject row."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "Babylon cluster where the subject exists."
+        },
+        "current_state": {
+          "type": "string",
+          "description": "Current lifecycle state of the subject."
+        },
+        "desired_state": {
+          "type": "string",
+          "description": "Desired lifecycle state for the subject."
+        },
+        "governor": {
+          "type": "string",
+          "description": "Anarchy governor driving this subject."
+        },
+        "healthy": {
+          "type": "boolean",
+          "description": "Whether the subject reports itself healthy."
+        },
+        "instance_vars": {
+          "type": "object",
+          "description": "Filtered job variables associated with the subject."
+        },
+        "name": {
+          "type": "string",
+          "description": "AnarchySubject resource name."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace containing the subject."
+        },
+        "requester_email": {
+          "type": "string",
+          "description": "Requester email annotation when present."
+        },
+        "resource_claim": {
+          "type": "object",
+          "description": "Inline name and namespace pointer to the backing resource claim."
+        },
+        "tower_jobs": {
+          "type": "object",
+          "description": "AAP2 job references keyed by lifecycle action."
+        }
+      },
+      "required": [
+        "babylon_anarchy_subject_id",
+        "cluster",
+        "current_state",
+        "desired_state",
+        "governor",
+        "healthy",
+        "instance_vars",
+        "name",
+        "namespace"
+      ]
+    },
+    "BabylonCatalogItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "babylon_catalog_item_id",
+      "properties": {
+        "asset_uuid": {
+          "type": "string",
+          "description": "Asset UUID label for the catalog item."
+        },
+        "babylon_catalog_item_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the catalog item row."
+        },
+        "ci_name": {
+          "type": "string",
+          "description": "Catalog item name with recognized stage suffix removed."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "Babylon cluster where the catalog item was read."
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Human-friendly catalog item name."
+        },
+        "keywords": {
+          "type": "array",
+          "description": "Search keywords associated with the item.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "multiuser": {
+          "type": "boolean",
+          "description": "Whether the item supports multiuser workshop provisioning."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Catalog namespace containing the item."
+        },
+        "stage": {
+          "type": "string",
+          "description": "Catalog stage label or inferred suffix."
+        }
+      },
+      "required": [
+        "asset_uuid",
+        "babylon_catalog_item_id",
+        "ci_name",
+        "cluster",
+        "display_name",
+        "keywords",
+        "multiuser",
+        "namespace",
+        "stage"
+      ]
+    },
+    "BabylonComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "babylon_component_id",
+      "properties": {
+        "agnosticv_path": {
+          "type": "string",
+          "description": "Path to the component definition inside the AgnosticV repo."
+        },
+        "agnosticv_repo": {
+          "type": "string",
+          "description": "Repository containing the AgnosticV component definition."
+        },
+        "babylon_component_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the component row."
+        },
+        "cloud_provider": {
+          "type": "string",
+          "description": "Cloud provider targeted by the component."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "Babylon cluster where the component was resolved."
+        },
+        "definition": {
+          "type": "object",
+          "description": "Sanitized raw component definition."
+        },
+        "env_type": {
+          "type": "string",
+          "description": "Environment type or agnosticd config name."
+        },
+        "expected_instances": {
+          "type": "array",
+          "description": "Derived list of instances the component is expected to create."
+        },
+        "name": {
+          "type": "string",
+          "description": "Resolved component name."
+        },
+        "platform": {
+          "type": "string",
+          "description": "Platform targeted by the component."
+        },
+        "scm_ref": {
+          "type": "string",
+          "description": "Source control revision or branch for the component."
+        },
+        "scm_url": {
+          "type": "string",
+          "description": "Source control repository URL for the component."
+        },
+        "sub_components": {
+          "type": "array",
+          "description": "Referenced child components for multi-component items."
+        }
+      },
+      "required": [
+        "babylon_component_id",
+        "cloud_provider",
+        "cluster",
+        "definition",
+        "env_type",
+        "expected_instances",
+        "name",
+        "platform"
+      ]
+    },
+    "BabylonDeployment": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "babylon_deployment_id",
+      "properties": {
+        "asset_uuid": {
+          "type": "string",
+          "description": "Asset UUID label for the deployment."
+        },
+        "babylon_deployment_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the deployment row."
+        },
+        "catalog_item": {
+          "type": "string",
+          "description": "Catalog item name used for the deployment."
+        },
+        "catalog_namespace": {
+          "type": "string",
+          "description": "Catalog namespace of the deployed item."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "Babylon cluster where the deployment exists."
+        },
+        "current_state": {
+          "type": "string",
+          "description": "Current state from the first embedded AnarchySubject."
+        },
+        "desired_state": {
+          "type": "string",
+          "description": "Desired state from the first embedded AnarchySubject."
+        },
+        "healthy": {
+          "type": "boolean",
+          "description": "Whether the deployment reports itself healthy."
+        },
+        "instance_vars": {
+          "type": "object",
+          "description": "Filtered deployment-relevant job variables."
+        },
+        "lifespan": {
+          "type": "object",
+          "description": "Requested lifespan configuration for the deployment."
+        },
+        "name": {
+          "type": "string",
+          "description": "ResourceClaim name for the deployment."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace containing the deployment."
+        },
+        "ready": {
+          "type": "boolean",
+          "description": "Whether the deployment reports itself ready."
+        },
+        "state": {
+          "type": "string",
+          "description": "Overall provisioning state summary."
+        }
+      },
+      "required": [
+        "asset_uuid",
+        "babylon_deployment_id",
+        "catalog_item",
+        "catalog_namespace",
+        "cluster",
+        "healthy",
+        "lifespan",
+        "name",
+        "namespace",
+        "ready",
+        "state"
+      ]
+    },
+    "BabylonMultiworkshop": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "babylon_multiworkshop_id",
+      "properties": {
+        "asset_count": {
+          "type": "integer",
+          "description": "Number of workshop assets attached to the event."
+        },
+        "assets": {
+          "type": "array",
+          "description": "Workshop assets included in the multiworkshop."
+        },
+        "babylon_multiworkshop_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the multiworkshop row."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "Babylon cluster where the multiworkshop exists."
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Human-friendly event name."
+        },
+        "end_date": {
+          "type": "string",
+          "description": "Configured event end date string."
+        },
+        "name": {
+          "type": "string",
+          "description": "MultiWorkshop resource name."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace containing the multiworkshop."
+        },
+        "number_seats": {
+          "type": "integer",
+          "description": "Configured seat count for the event."
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Purpose or description of the event."
+        },
+        "start_date": {
+          "type": "string",
+          "description": "Configured event start date string."
+        }
+      },
+      "required": [
+        "asset_count",
+        "assets",
+        "babylon_multiworkshop_id",
+        "cluster",
+        "display_name",
+        "end_date",
+        "name",
+        "namespace",
+        "number_seats",
+        "purpose",
+        "start_date"
+      ]
+    },
+    "BabylonResourcePool": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "babylon_resource_pool_id",
+      "properties": {
+        "babylon_resource_pool_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the resource pool row."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "Babylon cluster where the pool exists."
+        },
+        "lifespan": {
+          "type": "object",
+          "description": "Configured lifespan settings for pooled resources."
+        },
+        "max_unready": {
+          "type": "integer",
+          "description": "Maximum number of unready resources allowed."
+        },
+        "min_available": {
+          "type": "integer",
+          "description": "Minimum number of available resources to maintain."
+        },
+        "name": {
+          "type": "string",
+          "description": "ResourcePool name."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace containing the pool."
+        },
+        "provider_name": {
+          "type": "string",
+          "description": "Provider name from the first configured resource entry."
+        },
+        "resource_handle_count": {
+          "type": "integer",
+          "description": "Current number of resource handles held by the pool."
+        },
+        "resource_name": {
+          "type": "string",
+          "description": "Resource name from the first configured resource entry."
+        }
+      },
+      "required": [
+        "babylon_resource_pool_id",
+        "cluster",
+        "lifespan",
+        "max_unready",
+        "min_available",
+        "name",
+        "namespace",
+        "resource_handle_count"
+      ]
+    },
+    "BabylonWorkshop": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "babylon_workshop_id",
+      "properties": {
+        "babylon_workshop_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the workshop row."
+        },
+        "catalog_item": {
+          "type": "string",
+          "description": "Catalog item backing the workshop."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "Babylon cluster where the workshop exists."
+        },
+        "description": {
+          "type": "string",
+          "description": "Workshop description text."
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Human-friendly workshop name."
+        },
+        "lifespan": {
+          "type": "object",
+          "description": "Configured workshop lifespan settings."
+        },
+        "multiworkshop": {
+          "type": "string",
+          "description": "Parent multiworkshop name, if this workshop belongs to one."
+        },
+        "name": {
+          "type": "string",
+          "description": "Workshop resource name."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace containing the workshop."
+        },
+        "open_registration": {
+          "type": "boolean",
+          "description": "Whether users can self-register for the workshop."
+        },
+        "provision_count": {
+          "type": "object",
+          "description": "Provisioning counts grouped by status."
+        },
+        "requester": {
+          "type": "string",
+          "description": "Requester annotation when present in detailed workshop rows."
+        },
+        "resource_claims": {
+          "type": "array",
+          "description": "Traversed resource claims for the workshop when detailed data is stored."
+        },
+        "resource_claims_count": {
+          "type": "integer",
+          "description": "Number of resource claims attached to the workshop."
+        },
+        "user_assignments_count": {
+          "type": "integer",
+          "description": "Number of user assignments for the workshop."
+        },
+        "user_count": {
+          "type": "integer",
+          "description": "Number of users associated with the workshop."
+        },
+        "workshop_id": {
+          "type": "string",
+          "description": "Workshop identifier label."
+        }
+      },
+      "required": [
+        "babylon_workshop_id",
+        "catalog_item",
+        "cluster",
+        "description",
+        "display_name",
+        "lifespan",
+        "multiworkshop",
+        "name",
+        "namespace",
+        "open_registration",
+        "provision_count",
+        "resource_claims_count",
+        "user_assignments_count",
+        "user_count",
+        "workshop_id"
+      ]
+    },
+    "Job": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "job_id",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Requested lifecycle action for the job."
+        },
+        "cloud_provider": {
+          "type": "string",
+          "description": "Cloud provider associated with the job."
+        },
+        "completeJob": {
+          "type": "string",
+          "description": "Babylon-derived complete job reference when present."
+        },
+        "completed": {
+          "type": "string",
+          "description": "Completion timestamp copied from Babylon when present."
+        },
+        "controller": {
+          "type": "string",
+          "enum": [
+            "east",
+            "west",
+            "event0",
+            "partner0"
+          ],
+          "description": "Short controller name where the job ran."
+        },
+        "deployerJob": {
+          "type": "string",
+          "description": "Babylon-derived deployer job reference when present."
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Human-friendly job display name."
+        },
+        "duration_seconds": {
+          "type": "integer",
+          "description": "Elapsed runtime in whole seconds, when known."
+        },
+        "env_type": {
+          "type": "string",
+          "description": "Environment type associated with the job."
+        },
+        "failed": {
+          "type": "boolean",
+          "description": "Whether the job failed."
+        },
+        "finished": {
+          "type": "string",
+          "description": "Finished timestamp string, or empty when unfinished."
+        },
+        "git_branch": {
+          "type": "string",
+          "description": "Git branch used for the job content."
+        },
+        "git_revision": {
+          "type": "string",
+          "description": "Git revision used for the job content."
+        },
+        "git_url": {
+          "type": "string",
+          "description": "Git repository URL used for the job content."
+        },
+        "guid": {
+          "type": "string",
+          "description": "Provision GUID associated with the job."
+        },
+        "id": {
+          "type": "string",
+          "description": "Synthetic storage identifier for the job row."
+        },
+        "job_explanation": {
+          "type": "string",
+          "description": "AAP explanation for why the job did not complete normally."
+        },
+        "job_id": {
+          "type": "integer",
+          "description": "AAP job identifier."
+        },
+        "job_name": {
+          "type": "string",
+          "description": "Full AAP job name."
+        },
+        "launch_type": {
+          "type": "string",
+          "description": "How the job was launched."
+        },
+        "log": {
+          "type": "string",
+          "description": "Trimmed stdout log for the job when fetched."
+        },
+        "log_original_size": {
+          "type": "integer",
+          "description": "Original untrimmed log size."
+        },
+        "log_trimmed_size": {
+          "type": "integer",
+          "description": "Trimmed log size."
+        },
+        "started": {
+          "type": "string",
+          "description": "Started timestamp string, or empty when not started."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "failed",
+            "successful",
+            "running",
+            "canceled",
+            "error"
+          ],
+          "description": "Current AAP job status."
+        },
+        "template_name": {
+          "type": "string",
+          "description": "AAP job template name."
+        },
+        "towerHost": {
+          "type": "string",
+          "description": "Babylon-recorded controller hostname when present."
+        }
+      },
+      "required": [
+        "action",
+        "cloud_provider",
+        "controller",
+        "display_name",
+        "duration_seconds",
+        "env_type",
+        "failed",
+        "finished",
+        "guid",
+        "id",
+        "job_explanation",
+        "job_id",
+        "job_name",
+        "launch_type",
+        "started",
+        "status",
+        "template_name"
+      ]
+    },
+    "JobEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "job_event_id",
+      "properties": {
+        "changed": {
+          "type": "boolean",
+          "description": "Whether the task changed remote state."
+        },
+        "controller": {
+          "type": "string",
+          "description": "Controller where the parent job ran."
+        },
+        "counter": {
+          "type": "integer",
+          "description": "Monotonic event order within the job."
+        },
+        "error_msg": {
+          "type": "string",
+          "description": "Module error message for failed tasks."
+        },
+        "event": {
+          "type": "string",
+          "description": "Runner event type."
+        },
+        "event_key": {
+          "type": "string",
+          "description": "Stable event key within the job."
+        },
+        "failed": {
+          "type": "boolean",
+          "description": "Whether the event represents a failed task."
+        },
+        "host": {
+          "type": "string",
+          "description": "Host targeted by the task event."
+        },
+        "job_event_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the job event row."
+        },
+        "job_id": {
+          "type": "integer",
+          "description": "AAP job identifier this event belongs to."
+        },
+        "play": {
+          "type": "string",
+          "description": "Play name containing the task."
+        },
+        "role": {
+          "type": "string",
+          "description": "Role name associated with the task, if any."
+        },
+        "stdout": {
+          "type": "string",
+          "description": "Captured task stdout snippet."
+        },
+        "task": {
+          "type": "string",
+          "description": "Task name for the event."
+        }
+      },
+      "required": [
+        "changed",
+        "controller",
+        "counter",
+        "error_msg",
+        "event",
+        "event_key",
+        "failed",
+        "host",
+        "job_event_id",
+        "job_id",
+        "play",
+        "role",
+        "stdout",
+        "task"
+      ]
+    },
+    "OcpvMachine": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "ocpv_machine_id",
+      "properties": {
+        "cluster": {
+          "type": "string",
+          "description": "OCP-V cluster where the machine exists."
+        },
+        "name": {
+          "type": "string",
+          "description": "Machine resource name."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace containing the machine."
+        },
+        "node": {
+          "type": "string",
+          "description": "Node name the machine became, if assigned."
+        },
+        "ocpv_machine_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the machine row."
+        },
+        "phase": {
+          "type": "string",
+          "description": "Current machine phase."
+        },
+        "provider_id": {
+          "type": "string",
+          "description": "Cloud provider instance identifier."
+        }
+      },
+      "required": [
+        "cluster",
+        "name",
+        "namespace",
+        "node",
+        "ocpv_machine_id",
+        "phase",
+        "provider_id"
+      ]
+    },
+    "OcpvMachineset": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "ocpv_machineset_id",
+      "properties": {
+        "available_replicas": {
+          "type": "integer",
+          "description": "Number of available replicas."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "OCP-V cluster where the machineset exists."
+        },
+        "name": {
+          "type": "string",
+          "description": "MachineSet resource name."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace containing the machineset."
+        },
+        "ocpv_machineset_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the machineset row."
+        },
+        "ready_replicas": {
+          "type": "integer",
+          "description": "Number of ready replicas."
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Desired replica count."
+        }
+      },
+      "required": [
+        "available_replicas",
+        "cluster",
+        "name",
+        "namespace",
+        "ocpv_machineset_id",
+        "ready_replicas",
+        "replicas"
+      ]
+    },
+    "OcpvNamespace": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "ocpv_namespace_id",
+      "properties": {
+        "cluster": {
+          "type": "string",
+          "description": "Short name of the OCP-V cluster holding the namespace."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Kubernetes namespace name."
+        },
+        "ocpv_namespace_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the namespace row."
+        },
+        "status": {
+          "type": "string",
+          "description": "Namespace phase or status."
+        }
+      },
+      "required": [
+        "cluster",
+        "namespace",
+        "ocpv_namespace_id",
+        "status"
+      ]
+    },
+    "OcpvPvc": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "ocpv_pvc_id",
+      "properties": {
+        "access_modes": {
+          "type": "array",
+          "description": "Declared PVC access modes.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cluster": {
+          "type": "string",
+          "description": "OCP-V cluster where the PVC exists."
+        },
+        "events": {
+          "type": "array",
+          "description": "Recent formatted events for pending claims.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "PersistentVolumeClaim name."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace containing the PVC."
+        },
+        "ocpv_pvc_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the PVC row."
+        },
+        "size": {
+          "type": "string",
+          "description": "Requested storage size string."
+        },
+        "status": {
+          "type": "string",
+          "description": "Current PVC phase."
+        },
+        "storage_class": {
+          "type": "string",
+          "description": "Requested storage class name."
+        },
+        "volume_mode": {
+          "type": "string",
+          "enum": [
+            "Filesystem",
+            "Block"
+          ],
+          "description": "PVC volume mode."
+        }
+      },
+      "required": [
+        "access_modes",
+        "cluster",
+        "name",
+        "namespace",
+        "ocpv_pvc_id",
+        "size",
+        "status",
+        "storage_class",
+        "volume_mode"
+      ]
+    },
+    "OcpvStorageClass": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "ocpv_storage_class_id",
+      "properties": {
+        "allow_volume_expansion": {
+          "type": "boolean",
+          "description": "Whether volumes in this class may be expanded."
+        },
+        "binding_mode": {
+          "type": "string",
+          "description": "Volume binding mode."
+        },
+        "cluster": {
+          "type": "string",
+          "description": "OCP-V cluster where the storage class exists."
+        },
+        "default": {
+          "type": "boolean",
+          "description": "Whether the class is marked as the cluster default."
+        },
+        "name": {
+          "type": "string",
+          "description": "StorageClass name."
+        },
+        "ocpv_storage_class_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the storage class row."
+        },
+        "provisioner": {
+          "type": "string",
+          "description": "CSI provisioner name."
+        },
+        "reclaim_policy": {
+          "type": "string",
+          "description": "Reclaim policy for volumes in this class."
+        }
+      },
+      "required": [
+        "allow_volume_expansion",
+        "binding_mode",
+        "cluster",
+        "default",
+        "name",
+        "ocpv_storage_class_id",
+        "provisioner",
+        "reclaim_policy"
+      ]
+    },
+    "OcpvVm": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "ocpv_vm_id",
+      "properties": {
+        "cluster": {
+          "type": "string",
+          "description": "OCP-V cluster where the VM exists."
+        },
+        "condition": {
+          "type": "object",
+          "description": "First failing readiness condition when the VM is not ready."
+        },
+        "disks": {
+          "type": "array",
+          "description": "Declared VM disk devices."
+        },
+        "ip": {
+          "type": "string",
+          "description": "First reported VM interface IP address, if any."
+        },
+        "memory": {
+          "type": "string",
+          "description": "Configured guest memory string."
+        },
+        "name": {
+          "type": "string",
+          "description": "VirtualMachine name."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace containing the VM."
+        },
+        "node": {
+          "type": "string",
+          "description": "Node currently hosting the VM instance, if any."
+        },
+        "ocpv_vm_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the VM row."
+        },
+        "phase": {
+          "type": "string",
+          "description": "Current VMI phase."
+        },
+        "ready": {
+          "type": "boolean",
+          "description": "Whether the VM reports ready."
+        },
+        "status": {
+          "type": "string",
+          "description": "Printable VM status summary."
+        },
+        "vcpus": {
+          "type": "integer",
+          "description": "Computed virtual CPU count."
+        },
+        "volumes": {
+          "type": "array",
+          "description": "Declared VM volumes and their sources."
+        }
+      },
+      "required": [
+        "cluster",
+        "disks",
+        "ip",
+        "memory",
+        "name",
+        "namespace",
+        "node",
+        "ocpv_vm_id",
+        "phase",
+        "ready",
+        "status",
+        "vcpus",
+        "volumes"
+      ]
+    },
+    "SplunkAap2LogEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "splunk_aap2_log_entry_id",
+      "properties": {
+        "controller": {
+          "type": "string",
+          "description": "AAP2 controller hostname from the log record."
+        },
+        "level": {
+          "type": "string",
+          "description": "Log severity level as emitted."
+        },
+        "logger": {
+          "type": "string",
+          "description": "Python logger name that emitted the record."
+        },
+        "message": {
+          "type": "string",
+          "description": "Main log message text."
+        },
+        "playbook": {
+          "type": "string",
+          "description": "Playbook name for task-event records."
+        },
+        "role": {
+          "type": "string",
+          "description": "Role name for task-event records."
+        },
+        "splunk_aap2_log_entry_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the Splunk AAP2 log row."
+        },
+        "stdout": {
+          "type": "string",
+          "description": "Truncated stdout content when present."
+        },
+        "task": {
+          "type": "string",
+          "description": "Ansible task name when the record is a task event."
+        },
+        "task_action": {
+          "type": "string",
+          "description": "Ansible module or task action when present."
+        },
+        "time": {
+          "type": "string",
+          "description": "Splunk-rendered event time string."
+        }
+      },
+      "required": [
+        "controller",
+        "level",
+        "logger",
+        "message",
+        "splunk_aap2_log_entry_id",
+        "time"
+      ]
+    },
+    "SplunkOcpLogEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "splunk_ocp_log_entry_id",
+      "properties": {
+        "cluster": {
+          "type": "string",
+          "description": "Cluster name extracted from the OCP log event."
+        },
+        "container": {
+          "type": "string",
+          "description": "Container name that emitted the log."
+        },
+        "image": {
+          "type": "string",
+          "description": "Container image name."
+        },
+        "level": {
+          "type": "string",
+          "description": "Log severity level as emitted."
+        },
+        "message": {
+          "type": "string",
+          "description": "Main log message text."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Kubernetes namespace from the log event."
+        },
+        "pod": {
+          "type": "string",
+          "description": "Pod name that emitted the log."
+        },
+        "splunk_ocp_log_entry_id": {
+          "type": "string",
+          "description": "Synthetic unique identifier for the Splunk OCP log row."
+        },
+        "time": {
+          "type": "string",
+          "description": "Splunk-rendered event time string."
+        }
+      },
+      "required": [
+        "cluster",
+        "container",
+        "image",
+        "level",
+        "message",
+        "namespace",
+        "pod",
+        "splunk_ocp_log_entry_id",
+        "time"
+      ]
+    },
+    "Workshop": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-primary-key": "workshop_id",
+      "properties": {
+        "catalog_item": {
+          "type": "string",
+          "description": "Catalog item backing the workshop."
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Human-friendly workshop name."
+        },
+        "name": {
+          "type": "string",
+          "description": "Workshop resource name."
+        },
+        "provision_count": {
+          "type": "object",
+          "description": "Provisioning counts grouped by status."
+        },
+        "resource_claims": {
+          "type": "array",
+          "description": "Resource claims attached to the workshop."
+        },
+        "workshop_id": {
+          "type": "string",
+          "description": "Workshop identifier label."
+        }
+      },
+      "required": [
+        "catalog_item",
+        "display_name",
+        "name",
+        "provision_count",
+        "resource_claims",
+        "workshop_id"
+      ]
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aws_capacity_manager",
+      "args": {
+        "group_by": "availability-zone-id"
+      },
+      "result": {
+        "capacity_metric_result_id": "cmr-azid-util-7731",
+        "capacity_totals_id": "ct-azid-util-7731",
+        "capacity_window_id": "cw-azid-168h-7731",
+        "metric": "utilization",
+        "group_by": "availability-zone-id",
+        "period": {
+          "start": "2026-10-28T06:00:00Z",
+          "end": "2026-11-04T06:00:00Z"
+        },
+        "results": [
+          {
+            "dimension": "use1-az6",
+            "avg_utilization_pct": 44.7,
+            "total_capacity_hrs": 9408.0,
+            "unused_capacity_hrs": 5203.6,
+            "total_estimated_cost_usd": 9186.42,
+            "unused_estimated_cost_usd": 5080.93,
+            "reservation_count": 56
+          },
+          {
+            "dimension": "use1-az4",
+            "avg_utilization_pct": 68.0,
+            "total_capacity_hrs": 6720.0,
+            "unused_capacity_hrs": 2150.4,
+            "total_estimated_cost_usd": 6412.8,
+            "unused_estimated_cost_usd": 2052.1,
+            "reservation_count": 40
+          },
+          {
+            "dimension": "use1-az1",
+            "avg_utilization_pct": 74.0,
+            "total_capacity_hrs": 5040.0,
+            "unused_capacity_hrs": 1310.4,
+            "total_estimated_cost_usd": 4233.6,
+            "unused_estimated_cost_usd": 1100.74,
+            "reservation_count": 30
+          },
+          {
+            "dimension": "use1-az2",
+            "avg_utilization_pct": 86.0,
+            "total_capacity_hrs": 3360.0,
+            "unused_capacity_hrs": 470.4,
+            "total_estimated_cost_usd": 2856.0,
+            "unused_estimated_cost_usd": 399.84,
+            "reservation_count": 20
+          },
+          {
+            "dimension": "use1-az5",
+            "avg_utilization_pct": 93.0,
+            "total_capacity_hrs": 1680.0,
+            "unused_capacity_hrs": 117.6,
+            "total_estimated_cost_usd": 1108.8,
+            "unused_estimated_cost_usd": 77.62,
+            "reservation_count": 10
+          }
+        ],
+        "totals": {
+          "capacity_totals_id": "ct-azid-util-7731",
+          "total_estimated_cost_usd": 23797.62,
+          "unused_estimated_cost_usd": 8711.23,
+          "overall_utilization_pct": 64.7,
+          "total_dimensions": 5
+        }
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "Capacity Manager, metric utilization (default), grouped by availability-zone-id, window 2026-10-28T06:00Z to 2026-11-04T06:00Z:\n\n| AZ ID | reservations (peak) | avg utilisation | unused hrs | unused est. cost |\n|---|---|---|---|---|\n| use1-az6 | 56 | 44.7% | 5,203.6 | $5,080.93 |\n| use1-az4 | 40 | 68.0% | 2,150.4 | $2,052.10 |\n| use1-az1 | 30 | 74.0% | 1,310.4 | $1,100.74 |\n| use1-az2 | 20 | 86.0% | 470.4 | $399.84 |\n| use1-az5 | 10 | 93.0% | 117.6 | $77.62 |\n\nTotal unused reservation cost across the 5 zones: $8,711.23 (of $23,797.62 estimated reservation cost; overall utilisation 64.7%).\n\n5 zones hold reservations. The worst is use1-az6 with $5,080.93 unused.\n\nZone name: I can't give you one. Capacity Manager groups by availability-zone ID (use1-az6), not by zone name. AWS maps zone names such as us-east-1a to zone IDs independently for each account, so the name for use1-az6 differs from account to account, and this payer-level result spans reservations in many accounts. Nothing in the result says which name use1-az6 has in the account your Terraform runs in. Run `aws ec2 describe-availability-zones --region us-east-1` in that account (it lists ZoneName next to ZoneId), or switch your modules to zone IDs.\n"
+}

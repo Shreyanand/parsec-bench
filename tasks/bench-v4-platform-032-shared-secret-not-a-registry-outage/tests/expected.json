@@ -1,0 +1,170 @@
+{
+  "answer": {
+    "counts": [
+      {
+        "asked_by": "say how many catalog items are failing",
+        "id": "affected-items",
+        "nouns": [
+          "items",
+          "catalog",
+          "CIs",
+          "failing"
+        ],
+        "rationale": "the breadth, and the number that turns three separate incidents into one. Asked for explicitly so a tabular answer still has to state it",
+        "value": 3,
+        "window": 8
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "registry-outage",
+        "ignore_case": true,
+        "none_of": [
+          "registry is down",
+          "registry was down",
+          "is a registry outage",
+          "was a registry outage",
+          "due to a registry outage",
+          "caused by a registry outage",
+          "because of a registry outage",
+          "registry.redhat.io is down",
+          "registry is unavailable",
+          "redhat.io is unavailable",
+          "registry was unreachable",
+          "was an outage at the registry"
+        ],
+        "rationale": "the source dataset records this at plausibility HIGH -- the first thing anyone reads into a registry auth failure. Refuted by the log, which shows a token being refused rather than a connection failing. The forms require a copula or a causal preposition, because an assertion of an outage needs one and a refutation does not: the bare form 'registry outage' caught this scenario's own golden answer, which says 'this is not a registry outage'. Tested against seven differently-phrased fabrications and six honest refutations -- the narrowing catches 7 of 7 where the bare forms caught 6, and wrongly caught 4 of the 6 honest answers where these catch none. The forms also name the assertion rather than the host: registry.redhat.io is throughout the seed, so forbidding the bare hostname would defuse its own trap (hazard 14)."
+      },
+      {
+        "id": "ssh-credentials",
+        "ignore_case": true,
+        "none_of": [
+          "ssh credential",
+          "ssh key",
+          "bastion credential",
+          "bastion password",
+          "ssh authentication",
+          "jumpbox"
+        ],
+        "rationale": "the second ruled-out alternative, at plausibility medium. The errors are about registry image pulls, not shell access, and an agent that reads 'authentication' without reading which authentication lands here"
+      }
+    ],
+    "required": [
+      {
+        "any_of": [
+          "ocp4_token"
+        ],
+        "asked_by": "name the credential involved",
+        "id": "secret-name",
+        "ignore_case": true,
+        "rationale": "the shared credential. It appears only in the catalog config, so an agent that stopped at the job log cannot supply it"
+      },
+      {
+        "any_of": [
+          "includes/secrets/ocp4_token.yaml",
+          "includes/secrets"
+        ],
+        "asked_by": "the file it is pulled in from",
+        "id": "include-path",
+        "ignore_case": true,
+        "rationale": "where the credential enters the config. Also only in the config, and it is what an operator needs in order to fix anything"
+      },
+      {
+        "any_of": [
+          "shared",
+          "same credential",
+          "same secret",
+          "same token",
+          "common",
+          "all three",
+          "every affected"
+        ],
+        "asked_by": "Tell me what is actually broken and why",
+        "derived": true,
+        "id": "shared",
+        "ignore_case": true,
+        "note": "that one credential is common to the failing items is a synthesis over three job rows and one config file; no seeded string says it",
+        "rationale": "the whole diagnosis. Three unrelated catalog items failing the same way at the same time is only explicable by something they share, and that step is what separates a real root cause from three coincidences"
+      },
+      {
+        "any_of": [
+          "registry responded",
+          "registry was up",
+          "registry is up",
+          "rejected the credentials",
+          "credentials were rejected",
+          "invalid username",
+          "not a registry outage",
+          "registry itself was fine",
+          "registry was reachable"
+        ],
+        "asked_by": "say what the registry itself was doing",
+        "derived": true,
+        "id": "registry-answered",
+        "ignore_case": true,
+        "note": "the log shows an auth token being refused, which means the registry answered; no seeded string states that the registry was healthy",
+        "rationale": "the refutation. An unreachable registry and a registry refusing credentials produce different errors, and reading which one happened is what rules out the obvious wrong answer"
+      },
+      {
+        "any_of": [
+          "rotated",
+          "stale",
+          "no longer valid",
+          "out of date",
+          "changed",
+          "expired",
+          "invalidated",
+          "superseded"
+        ],
+        "asked_by": "Tell me what is actually broken and why",
+        "derived": true,
+        "id": "stale-credential",
+        "ignore_case": true,
+        "note": "that the stored credential no longer matches the live one is inferred from a valid-looking config plus a rejection; the config states when it was rotated but not that it is now wrong",
+        "rationale": "the mechanism. Naming the credential is not yet a diagnosis -- the fault is that the stored copy has gone stale while the config that references it is unchanged and correct"
+      }
+    ]
+  },
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  },
+  "schema": "bench/v4",
+  "tool_calls": {
+    "expected": [
+      {
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 90441
+        },
+        "name": "query_aap2"
+      },
+      {
+        "args": {
+          "action": "find_jobs",
+          "controller": "east",
+          "status": "failed"
+        },
+        "name": "query_aap2"
+      },
+      {
+        "args": {},
+        "name": "lookup_catalog_item"
+      },
+      {
+        "args": {
+          "owner": "agnosticd",
+          "path": "agd-v2/llama-stack-demo/prod.yaml",
+          "repo": "agnosticd-v2"
+        },
+        "name": "fetch_github_file"
+      }
+    ],
+    "match": "ordered-subsequence"
+  },
+  "weights": {
+    "answer": 0.7,
+    "tool_calls": 0.3
+  }
+}

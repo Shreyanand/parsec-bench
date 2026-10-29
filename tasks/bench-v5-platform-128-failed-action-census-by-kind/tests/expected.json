@@ -1,0 +1,121 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_actions",
+          "cluster": "kite"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "get_anarchy_actions"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "stranded-p7mhx",
+        "any_of": [
+          "p7mhx"
+        ],
+        "ignore_case": true,
+        "asked_by": "which of those labs are still broken",
+        "rationale": "two failed stops and no later successful stop"
+      },
+      {
+        "id": "stranded-d4fqs",
+        "any_of": [
+          "d4fqs"
+        ],
+        "ignore_case": true,
+        "asked_by": "which of those labs are still broken",
+        "rationale": "a failed destroy whose retry is still pending, so it is not yet a success"
+      }
+    ],
+    "counts": [
+      {
+        "id": "failed-actions",
+        "value": 5,
+        "nouns": [
+          "failed actions",
+          "failed",
+          "failures",
+          "actions failed"
+        ],
+        "window": 4,
+        "asked_by": "how many lifecycle actions failed that week",
+        "rationale": "kite rows with finished in 2026-10-05..10-11 and state failed; excludes 10-03, 10-12 and heron"
+      },
+      {
+        "id": "distinct-labs",
+        "value": 4,
+        "nouns": [
+          "labs",
+          "distinct",
+          "subjects",
+          "environments"
+        ],
+        "window": 4,
+        "asked_by": "how many distinct labs those failures hit",
+        "rationale": "p7mhx fails twice, so labs != actions"
+      },
+      {
+        "id": "stop-failures",
+        "value": 2,
+        "nouns": [
+          "stop"
+        ],
+        "window": 3,
+        "asked_by": "split by kind",
+        "rationale": "the only kind with more than one failure"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "actions-as-labs",
+        "none_of": [
+          "5 labs",
+          "five labs",
+          "5 distinct labs",
+          "5 environments",
+          "5 subjects",
+          "5 different labs"
+        ],
+        "ignore_case": true,
+        "rationale": "counting failed actions as affected labs double-counts p7mhx"
+      },
+      {
+        "id": "window-leak",
+        "none_of": [
+          "6 failed actions",
+          "7 failed actions",
+          "six failed actions",
+          "seven failed actions",
+          "6 actions failed",
+          "7 actions failed",
+          "6 failures",
+          "7 failures"
+        ],
+        "ignore_case": true,
+        "rationale": "including the 10-03 or 10-12 failure (or both) breaks the stated week"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

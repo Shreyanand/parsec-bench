@@ -1,0 +1,96 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_gcp_projects",
+        "args": {
+          "action": "get_project",
+          "project_id": "openenv-wq4mt"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "state",
+        "any_of": [
+          "DELETE_REQUESTED"
+        ],
+        "ignore_case": true,
+        "asked_by": "report its state",
+        "rationale": "the finding. The other seeded project is ACTIVE, so an agent reading the wrong row reports the wrong state"
+      },
+      {
+        "id": "created",
+        "any_of": [
+          "2026-05-30"
+        ],
+        "ignore_case": true,
+        "asked_by": "when it was created",
+        "rationale": "a second field of the same record"
+      },
+      {
+        "id": "guid",
+        "any_of": [
+          "wq4mt"
+        ],
+        "ignore_case": true,
+        "asked_by": "report its state, when it was created, and the GUID",
+        "rationale": "from the labels object, not the top-level fields"
+      },
+      {
+        "id": "owner",
+        "any_of": [
+          "dmoreau"
+        ],
+        "ignore_case": true,
+        "asked_by": "and owner recorded on it",
+        "rationale": "also from labels"
+      },
+      {
+        "id": "explains",
+        "any_of": [
+          "yes",
+          "explains",
+          "cannot deploy",
+          "being deleted",
+          "scheduled for deletion",
+          "pending deletion",
+          "that is why",
+          "accounts for"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the causal link is a synthesis: a project in DELETE_REQUESTED rejects new deployments, which no seed string states",
+        "asked_by": "Say whether the state explains the deployment failure",
+        "rationale": "the judgment the question asks for; reading the state is not the same as connecting it to the symptom"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-state-claim",
+        "none_of": [
+          "project is ACTIVE",
+          "is active and",
+          "state is ACTIVE",
+          "nothing wrong with the project",
+          "the project looks healthy"
+        ],
+        "ignore_case": true,
+        "rationale": "the neighbouring seeded project IS active, so an agent reading the wrong row says one of these. The bare word ACTIVE is not forbidden -- it is a seed literal on the other row and may be mentioned in passing"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

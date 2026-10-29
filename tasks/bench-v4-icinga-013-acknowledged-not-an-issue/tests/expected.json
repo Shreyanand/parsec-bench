@@ -1,0 +1,126 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_services",
+          "host": "generic-rhdp",
+          "detailed": true
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_comments",
+          "host": "generic-rhdp"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "get_downtimes",
+          "host": "generic-rhdp"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "search_services"
+        }
+      },
+      {
+        "name": "query_icinga",
+        "args": {
+          "action": "list_alerts"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "not-a-problem",
+        "any_of": [
+          "not an actual problem",
+          "not a real problem",
+          "no action needed",
+          "no action is needed",
+          "nothing to do",
+          "expected",
+          "not actionable",
+          "does not need",
+          "no immediate action",
+          "safe to ignore"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "the verdict is a synthesis of three seeded facts -- acknowledgement=1, downtime_depth=1, and a comment saying the condition is expected -- not a seed literal",
+        "asked_by": "tell me whether this is an actual problem",
+        "rationale": "the verdict the question asks for"
+      },
+      {
+        "id": "the-reason",
+        "any_of": [
+          "PAT",
+          "rotate",
+          "rotation",
+          "Vault sync",
+          "vault sync",
+          "token"
+        ],
+        "ignore_case": true,
+        "asked_by": "Give the reason",
+        "rationale": "only the comment supplies it, so the get_comments call cannot be skipped -- and it is what distinguishes 'somebody acknowledged it' from understanding why"
+      },
+      {
+        "id": "ticket",
+        "any_of": [
+          "RHDPSUP-8812"
+        ],
+        "ignore_case": true,
+        "asked_by": "name the ticket if one is referenced",
+        "rationale": "a second literal from the comment, and an unambiguous one -- an agent cannot produce it by inference"
+      },
+      {
+        "id": "suppression-state",
+        "any_of": [
+          "acknowledged",
+          "downtime",
+          "suppressed"
+        ],
+        "ignore_case": true,
+        "asked_by": "Check the service's state, any comments on it, and any downtimes covering it",
+        "rationale": "the state that justifies the verdict; seeded as acknowledgement=1 and downtime_depth=1"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "escalation",
+        "none_of": [
+          "needs immediate",
+          "should be escalated",
+          "escalate to",
+          "page the",
+          "raise an incident",
+          "urgent attention",
+          "requires immediate"
+        ],
+        "ignore_case": true,
+        "rationale": "an agent that treats any UNKNOWN as actionable escalates. The seed makes the opposite true, and none of these phrases appears in the comment, so an honest answer that quotes it cannot trip them"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

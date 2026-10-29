@@ -1,0 +1,69 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aws_account_db",
+        "args": {}
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "sandbox-name",
+        "any_of": [
+          "sandbox2291"
+        ],
+        "ignore_case": true,
+        "asked_by": "jbfsq",
+        "rationale": "the sandbox the GUID belongs to. A bare GUID can only be read as 'what is this', so the sandbox it names is the minimum a correct answer supplies"
+      },
+      {
+        "id": "owner",
+        "any_of": [
+          "rrivers"
+        ],
+        "ignore_case": true,
+        "asked_by": "jbfsq",
+        "rationale": "who holds it -- the second thing anyone asking about a GUID wants, and unguessable"
+      },
+      {
+        "id": "account-id",
+        "any_of": [
+          "419283746501"
+        ],
+        "ignore_case": true,
+        "asked_by": "jbfsq",
+        "rationale": "the AWS account, which is what makes the answer actionable. The second seeded sandbox has a neighbouring id, so the value discriminates"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-sandbox",
+        "none_of": [
+          "jbfsq is sandbox2292",
+          "jbfsq belongs to sandbox2292",
+          "guid jbfsq is available",
+          "jbfsq is available",
+          "sandbox is available",
+          "account is available",
+          "not currently in use",
+          "is unassigned"
+        ],
+        "ignore_case": true,
+        "rationale": "the second seeded account is available and unassigned, and an agent that returns the first row or matches loosely lands on it. Every form ties the GUID to the wrong sandbox or to the wrong state -- the bare identifiers sandbox2292 and 419283746502 are NOT forbidden, because they are in the seed and an honest answer may legitimately mention the other row as unrelated"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

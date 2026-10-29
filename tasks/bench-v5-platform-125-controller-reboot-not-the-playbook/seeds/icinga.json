@@ -1,0 +1,64 @@
+{
+  "comments": [],
+  "downtimes": [
+    {
+      "name": "aap2-ctl-west-01.mgmt.example.net!7c2e91d4-3b8a-4f05-a6e1-58d0c4b2f917",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "aap2-ctl-west-01.mgmt.example.net",
+        "service_name": "",
+        "author": "pnowakowska",
+        "comment": "CHG-58312 kernel patching: rolling reboot of the west controller nodes",
+        "entry_time": 1791300000,
+        "start_time": 1791410400,
+        "end_time": 1791414000,
+        "fixed": true,
+        "duration": 3600,
+        "trigger_time": 1791410400,
+        "is_in_effect": false
+      }
+    },
+    {
+      "name": "aap2-ctl-west-01.mgmt.example.net!e4b07a19-92cd-4e6b-8f30-1a7d5c9e2b64",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "aap2-ctl-west-01.mgmt.example.net",
+        "service_name": "",
+        "author": "jtorvund",
+        "comment": "CHG-57104 PostgreSQL minor upgrade for the controller database",
+        "entry_time": 1788253200,
+        "start_time": 1788379200,
+        "end_time": 1788382800,
+        "fixed": true,
+        "duration": 3600,
+        "trigger_time": 1788379200,
+        "is_in_effect": false
+      }
+    }
+  ],
+  "hosts": [
+    {
+      "name": "aap2-ctl-west-01.mgmt.example.net",
+      "type": "Host",
+      "attrs": {
+        "display_name": "aap2-ctl-west-01.mgmt.example.net",
+        "host_name": "aap2-ctl-west-01.mgmt.example.net",
+        "address": "10.40.12.21",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "aap2-controllers"
+        ],
+        "last_check": 1791446280,
+        "last_check_result": {
+          "output": "PING OK - Packet loss = 0%, RTA = 0.41 ms",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": []
+}

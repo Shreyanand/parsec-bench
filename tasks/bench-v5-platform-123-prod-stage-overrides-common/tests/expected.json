@@ -1,0 +1,149 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "openshift-ai-pipelines-workshop"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "ai_bu/openshift-ai-pipelines-workshop/common.yaml"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "ai_bu/openshift-ai-pipelines-workshop/prod.yaml"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "ocp-version",
+        "any_of": [
+          "4.17"
+        ],
+        "ignore_case": true,
+        "asked_by": "which OpenShift version it installs",
+        "rationale": "only common.yaml sets it for prod; an agent reading prod.yaml alone cannot answer"
+      },
+      {
+        "id": "worker-type",
+        "any_of": [
+          "m6i.4xlarge"
+        ],
+        "ignore_case": true,
+        "asked_by": "which instance type it builds",
+        "rationale": "prod.yaml overrides common's m6i.2xlarge"
+      },
+      {
+        "id": "prod-wins",
+        "any_of": [
+          "overrides",
+          "override",
+          "takes precedence",
+          "wins",
+          "layered on top",
+          "replaces common",
+          "supersedes"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "Say which file each value comes from",
+        "rationale": "the stage-precedence synthesis across two files",
+        "note": "common.yaml sets worker_instance_type m6i.2xlarge, worker_instance_count 2 and num_users 10, while prod.yaml (commented 'overrides common.yaml') sets m6i.4xlarge, 5 and 40 and leaves ocp4_installer_version \"4.17\" to common.yaml, so a prod order takes the prod.yaml values over common.yaml's."
+      }
+    ],
+    "counts": [
+      {
+        "id": "workers",
+        "value": 5,
+        "nouns": [
+          "workers",
+          "worker",
+          "worker_instance_count",
+          "x"
+        ],
+        "window": 3,
+        "asked_by": "how many worker nodes",
+        "rationale": "prod.yaml's override; common says 2"
+      },
+      {
+        "id": "attendees",
+        "value": 40,
+        "nouns": [
+          "attendees",
+          "users",
+          "num_users",
+          "seats",
+          "per order"
+        ],
+        "window": 4,
+        "asked_by": "how many attendees it is sized for",
+        "rationale": "prod.yaml's override; common says 10"
+      }
+    ],
+    "citations": [
+      {
+        "id": "worker-count-line",
+        "repo": "rhpds/agnosticv",
+        "path": "ai_bu/openshift-ai-pipelines-workshop/prod.yaml",
+        "line": 13,
+        "asked_by": "cite the line that sets the prod worker count",
+        "rationale": "counted from the seeded prod.yaml; proves the override file was read"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "common-as-prod",
+        "none_of": [
+          "2 x m6i.2xlarge workers",
+          "2 workers",
+          "two workers",
+          "workers: 2 x m6i.2xlarge",
+          "10 attendees",
+          "10 users per order"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "common.yaml's",
+          "only the default",
+          "overriding common",
+          "overrides common",
+          "default for stages"
+        ],
+        "rationale": "the shared defaults reported as the prod sizing"
+      },
+      {
+        "id": "dev-version",
+        "none_of": [
+          "installs openshift 4.18",
+          "openshift version: 4.18",
+          "deploys 4.18",
+          "installs 4.18"
+        ],
+        "ignore_case": true,
+        "rationale": "dev.yaml's version applies only to the dev stage"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

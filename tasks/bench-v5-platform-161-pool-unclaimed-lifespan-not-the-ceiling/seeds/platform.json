@@ -1,0 +1,86 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [
+    {
+      "babylon_resource_pool_id": "lapwing-ocp-poc-medium-pool",
+      "cluster": "lapwing",
+      "name": "ocp-poc-medium-pool",
+      "namespace": "poolboy",
+      "min_available": 2,
+      "max_unready": 1,
+      "lifespan": {
+        "default": "2d",
+        "maximum": "5d",
+        "unclaimed": "6d"
+      },
+      "resource_handle_count": 3,
+      "provider_name": "ocp-poc-medium-aws",
+      "resource_name": "ocp-poc-medium"
+    },
+    {
+      "babylon_resource_pool_id": "lapwing-ocp-poc-small-pool",
+      "cluster": "lapwing",
+      "name": "ocp-poc-small-pool",
+      "namespace": "poolboy",
+      "min_available": 4,
+      "max_unready": 2,
+      "lifespan": {
+        "default": "3d",
+        "maximum": "7d",
+        "unclaimed": "14d"
+      },
+      "resource_handle_count": 6,
+      "provider_name": "ocp-poc-small-aws",
+      "resource_name": "ocp-poc-small"
+    },
+    {
+      "babylon_resource_pool_id": "lapwing-rhel-image-builder-pool",
+      "cluster": "lapwing",
+      "name": "rhel-image-builder-pool",
+      "namespace": "poolboy",
+      "min_available": 3,
+      "max_unready": 1,
+      "lifespan": {
+        "default": "1d",
+        "maximum": "2d",
+        "unclaimed": "4d"
+      },
+      "resource_handle_count": 5,
+      "provider_name": "rhel-image-builder-aws",
+      "resource_name": "rhel-image-builder"
+    },
+    {
+      "babylon_resource_pool_id": "godwit-ocp-poc-small-pool",
+      "cluster": "godwit",
+      "name": "ocp-poc-small-pool",
+      "namespace": "poolboy",
+      "min_available": 2,
+      "max_unready": 1,
+      "lifespan": {
+        "default": "5d",
+        "maximum": "21d",
+        "unclaimed": "30d"
+      },
+      "resource_handle_count": 2,
+      "provider_name": "ocp-poc-small-gcp",
+      "resource_name": "ocp-poc-small"
+    }
+  ],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

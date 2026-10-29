@@ -1,0 +1,114 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [
+    {
+      "azure_cost_result_id": "azr-j2t-0817",
+      "period_id": "per-j2t-0817",
+      "source": "cache",
+      "subscriptions_queried": "1",
+      "period": {
+        "start": "2026-08-04",
+        "end": "2026-08-17"
+      },
+      "cache_last_refresh": "2026-08-18T03:00:00Z",
+      "results": [
+        {
+          "subscription_name": "pool-23-618",
+          "services": {
+            "Virtual Machines": {
+              "cost": 9786.0,
+              "meter_subcategories": {
+                "Dasv6 Series": 6034.0,
+                "Ev5 Series": 3752.0
+              }
+            },
+            "Storage": {
+              "cost": 1288.0,
+              "meter_subcategories": {
+                "Premium SSD v2 Disks": 1046.0,
+                "Standard SSD Disks": 242.0
+              }
+            },
+            "Bandwidth": {
+              "cost": 413.0,
+              "meter_subcategories": {
+                "Inter Continent": 413.0
+              }
+            }
+          },
+          "total": 11487.0,
+          "gpu_cost": 0.0
+        }
+      ],
+      "total_cost": 11487.0
+    }
+  ],
+  "azure_service_costs": [
+    {
+      "azure_service_cost_id": "azs-j2t-vm",
+      "cost": 9786.0,
+      "meter_subcategories": {
+        "Dasv6 Series": 6034.0,
+        "Ev5 Series": 3752.0
+      }
+    },
+    {
+      "azure_service_cost_id": "azs-j2t-storage",
+      "cost": 1288.0,
+      "meter_subcategories": {
+        "Premium SSD v2 Disks": 1046.0,
+        "Standard SSD Disks": 242.0
+      }
+    },
+    {
+      "azure_service_cost_id": "azs-j2t-bandwidth",
+      "cost": 413.0,
+      "meter_subcategories": {
+        "Inter Continent": 413.0
+      }
+    }
+  ],
+  "azure_subscription_costs": [
+    {
+      "subscription_name": "pool-23-618",
+      "services": {
+        "Virtual Machines": {
+          "cost": 9786.0,
+          "meter_subcategories": {
+            "Dasv6 Series": 6034.0,
+            "Ev5 Series": 3752.0
+          }
+        },
+        "Storage": {
+          "cost": 1288.0,
+          "meter_subcategories": {
+            "Premium SSD v2 Disks": 1046.0,
+            "Standard SSD Disks": 242.0
+          }
+        },
+        "Bandwidth": {
+          "cost": 413.0,
+          "meter_subcategories": {
+            "Inter Continent": 413.0
+          }
+        }
+      },
+      "total": 11487.0,
+      "gpu_cost": 0.0,
+      "azure_subscription_cost_id": "pool-23-618"
+    }
+  ],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-j2t-0817",
+      "start": "2026-08-04",
+      "end": "2026-08-17"
+    }
+  ]
+}

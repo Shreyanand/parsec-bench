@@ -1,0 +1,83 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_log",
+        "controller": "east",
+        "job_id": 418627
+      },
+      "result": {
+        "job_id": 418627,
+        "job_name": "RHDP media_bu.render-farm-workshop.prod-qpl3n-1-provision",
+        "status": "failed",
+        "failed": true,
+        "started": "2026-10-08T08:14:05.000Z",
+        "finished": "2026-10-08T08:16:52.000Z",
+        "duration_seconds": 167,
+        "launch_type": "workflow",
+        "job_explanation": "",
+        "template_name": "RHDP media_bu.render-farm-workshop.prod-provision",
+        "env_type": "prod",
+        "guid": "qpl3n",
+        "action": "provision",
+        "cloud_provider": "ec2",
+        "display_name": "render-farm-workshop",
+        "controller": "east",
+        "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+        "git_branch": "main",
+        "git_revision": "9e2a6c41d8b07f35a1c94e6b2d0f7a8c53e1b4d9",
+        "log": "PLAY [Launch the render farm nodes] ****************************************\n\nTASK [Gathering Facts] ****************************************\nok: [localhost]\n\nTASK [render_farm_nodes : Show the target region] ****************************************\ntask path: /runner/project/ansible/roles/render_farm_nodes/tasks/main.yml:4\nok: [localhost] => {\n    \"msg\": \"Deploying qpl3n to eu-central-1\"\n}\n\nTASK [render_farm_nodes : Launch the render nodes] ****************************************\ntask path: /runner/project/ansible/roles/render_farm_nodes/tasks/main.yml:8\nfatal: [localhost]: FAILED! => {\"boto3_version\": \"1.35.41\", \"botocore_version\": \"1.35.41\", \"changed\": false, \"msg\": \"Failed to create new EC2 instance: An error occurred (InvalidAMIID.NotFound) when calling the RunInstances operation: The image id '[ami-0c7d41e9b25f83a16]' does not exist\"}\n\nPLAY RECAP ****************************************\nlocalhost                  : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0\n",
+        "log_original_size": 1022,
+        "log_trimmed_size": 1022
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_log",
+        "controller": "east",
+        "job_id": 418655
+      },
+      "result": {
+        "job_id": 418655,
+        "job_name": "RHDP media_bu.render-farm-workshop.prod-h8sxt-1-provision",
+        "status": "successful",
+        "failed": false,
+        "started": "2026-10-08T10:41:22.000Z",
+        "finished": "2026-10-08T10:47:09.000Z",
+        "duration_seconds": 347,
+        "launch_type": "workflow",
+        "job_explanation": "",
+        "template_name": "RHDP media_bu.render-farm-workshop.prod-provision",
+        "env_type": "prod",
+        "guid": "h8sxt",
+        "action": "provision",
+        "cloud_provider": "ec2",
+        "display_name": "render-farm-workshop",
+        "controller": "east",
+        "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+        "git_branch": "main",
+        "git_revision": "9e2a6c41d8b07f35a1c94e6b2d0f7a8c53e1b4d9",
+        "log": "PLAY [Launch the render farm nodes] ****************************************\n\nTASK [Gathering Facts] ****************************************\nok: [localhost]\n\nTASK [render_farm_nodes : Show the target region] ****************************************\ntask path: /runner/project/ansible/roles/render_farm_nodes/tasks/main.yml:4\nok: [localhost] => {\n    \"msg\": \"Deploying h8sxt to us-east-1\"\n}\n\nTASK [render_farm_nodes : Launch the render nodes] ****************************************\ntask path: /runner/project/ansible/roles/render_farm_nodes/tasks/main.yml:8\nchanged: [localhost] => {\"changed\": true, \"changed_ids\": [\"i-04b7e2c9a51d38f60\", \"i-0a93d5f1c27e846b2\"], \"instance_ids\": [\"i-04b7e2c9a51d38f60\", \"i-0a93d5f1c27e846b2\"], \"instances\": [{\"instance_id\": \"i-04b7e2c9a51d38f60\", \"image_id\": \"ami-0c7d41e9b25f83a16\", \"instance_type\": \"g5.2xlarge\", \"placement\": {\"availability_zone\": \"us-east-1b\"}, \"state\": {\"name\": \"pending\"}}, {\"instance_id\": \"i-0a93d5f1c27e846b2\", \"image_id\": \"ami-0c7d41e9b25f83a16\", \"instance_type\": \"g5.2xlarge\", \"placement\": {\"availability_zone\": \"us-east-1b\"}, \"state\": {\"name\": \"pending\"}}]}\n\nTASK [render_farm_nodes : Wait for the render nodes to pass status checks] ****************************************\ntask path: /runner/project/ansible/roles/render_farm_nodes/tasks/main.yml:22\nFAILED - RETRYING: [localhost]: Wait for the render nodes to pass status checks (30 retries left).\nok: [localhost]\n\nPLAY RECAP ****************************************\nlocalhost                  : ok=4    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0\n",
+        "log_original_size": 1597,
+        "log_trimmed_size": 1597
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "agnosticd",
+        "repo": "agnosticd-v2",
+        "path": "ansible/roles/render_farm_nodes/tasks/main.yml"
+      },
+      "result": {
+        "content": "---\n# render_farm_nodes: GPU render nodes for the render farm workshop\n\n- name: Show the target region\n  ansible.builtin.debug:\n    msg: \"Deploying {{ guid }} to {{ aws_region }}\"\n\n- name: Launch the render nodes\n  amazon.aws.ec2_instance:\n    region: \"{{ aws_region }}\"\n    image_id: ami-0c7d41e9b25f83a16    # RHEL 9 render image\n    instance_type: \"{{ render_farm_node_type }}\"\n    count: \"{{ render_farm_node_count }}\"\n    key_name: \"{{ guid }}-key\"\n    vpc_subnet_id: \"{{ render_farm_subnet_id }}\"\n    tags:\n      guid: \"{{ guid }}\"\n      lab_role: render-node\n    wait: true\n  register: r_render_nodes\n\n- name: Wait for the render nodes to pass status checks\n  amazon.aws.ec2_instance_info:\n    region: \"{{ aws_region }}\"\n    instance_ids: \"{{ r_render_nodes.instance_ids }}\"\n  register: r_render_info\n  until: r_render_info.instances | map(attribute='state.name') | unique == ['running']\n  retries: 30\n  delay: 10\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "Job 418627 (GUID qpl3n) failed in \"Launch the render nodes\": RunInstances returned InvalidAMIID.NotFound, \"The image id '[ami-0c7d41e9b25f83a16]' does not exist\".\n\nRegions: the failed job 418627 deployed to eu-central-1 (\"Deploying qpl3n to eu-central-1\"). The successful job 418655 (GUID h8sxt) deployed to us-east-1 and launched two g5.2xlarge nodes from the very same ami-0c7d41e9b25f83a16 in us-east-1b.\n\nWhy one worked and the other did not: AMI IDs are region-specific. agnosticd/agnosticd-v2:ansible/roles/render_farm_nodes/tasks/main.yml:11 hard-codes image_id: ami-0c7d41e9b25f83a16, an image that exists only in us-east-1, while the task passes region: \"{{ aws_region }}\". In us-east-1 the ID resolves; in eu-central-1 there is no image with that ID, so AWS says it does not exist. The AMI was not deregistered: job 418655 launched it successfully more than two hours after the failure.\n\nFix: stop hard-coding the ID. Resolve the image per region, for example with amazon.aws.ec2_ami_info filtering on the image name and owner in aws_region, or keep a per-region map of AMI IDs (and copy the image into each supported region) and select it with aws_region.\n"
+}

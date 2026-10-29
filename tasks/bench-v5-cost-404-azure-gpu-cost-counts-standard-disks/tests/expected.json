@@ -1,0 +1,139 @@
+{
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_azure_costs",
+        "args": {
+          "subscription_names": [
+            "pool-47-205"
+          ],
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "difference-is-standard-hdd",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "standard hdd",
+          "standard disk",
+          "hdd managed disk",
+          "hdd disks",
+          "standard-tier disk"
+        ],
+        "asked_by": "whether finance's `gpu_cost` number is the right one to use",
+        "rationale": "the $688 gap between gpu_cost and the GPU meter is the Standard HDD disk meter, which the NC/ND/NV substring test counts because STANDARD contains ND; naming it is what shows the agent reconciled the field instead of trusting it. The instruction never names the disk meter",
+        "note": "The gpu_cost field ($5,000) exceeds the only GPU VM meter, NCasT4_v3 Series ($4,312), by $688, which is exactly the Standard HDD Managed Disks meter in the same result, so the gap is that disk meter."
+      }
+    ],
+    "counts": [
+      {
+        "id": "gpu-series",
+        "value": 4312,
+        "nouns": [
+          "ncast4",
+          "nc-series",
+          "nc series",
+          "gpu",
+          "t4"
+        ],
+        "window": 8,
+        "extra_any_of": [
+          "4,312"
+        ],
+        "asked_by": "what we should actually charge the ML team for GPU",
+        "rationale": "the NCasT4_v3 Series meter, the subscription's only GPU VM series"
+      },
+      {
+        "id": "gpu-cost-field",
+        "value": 5000,
+        "nouns": [
+          "gpu_cost",
+          "gpu cost",
+          "field",
+          "reported"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "5,000"
+        ],
+        "asked_by": "whether finance's `gpu_cost` number is the right one to use",
+        "rationale": "the stored gpu_cost, which the answer must reconcile against the meters"
+      },
+      {
+        "id": "overstatement",
+        "value": 688,
+        "nouns": [
+          "overstates",
+          "overstated",
+          "difference",
+          "gap",
+          "standard",
+          "hdd",
+          "disks",
+          "more"
+        ],
+        "window": 8,
+        "asked_by": "whether finance's `gpu_cost` number is the right one to use",
+        "rationale": "gpu_cost minus the GPU meter; equals the Standard HDD meter"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "charge-5000",
+        "ignore_case": true,
+        "none_of": [
+          "charge $5,00",
+          "charge the ml team $5,00",
+          "gpu spend was $5,00",
+          "gpu spend is $5,00",
+          "gpu spend of $5,00",
+          "gpu spend: $5,00",
+          "gpu total of $5,00",
+          "gpu cost is correct",
+          "gpu_cost is correct",
+          "gpu_cost figure is right",
+          "gpu_cost is right",
+          "000 in gpu usage",
+          "000 of gpu usage",
+          "000 in gpu spend",
+          "000 of gpu spend",
+          "000 in gpu charges",
+          "000 of gpu charges",
+          "bill $5,00",
+          "bill the ml team $5,00"
+        ],
+        "attributed_to": [
+          "do not use",
+          "don't use",
+          "overstates",
+          "overstated",
+          "standard hdd",
+          "not the gpu figure"
+        ],
+        "rationale": "the wrong answer charges the gpu_cost figure; a sentence that rejects it or names the disk meter in it is honest"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  },
+  "floors": {
+    "exempt": [
+      "fabricate"
+    ],
+    "reason": "Weak discriminator, owner-approved 2026-10-13 and flagged in the baseline report: real fabricators that make the golden calls and charge the ML team the $5,000 gpu_cost figure score 0.360–0.520 (most 0.360, equal to mute; 'owes $5,000 for GPU' escapes every forbidden form at 0.520), against a mute floor of 0.360. The gate's fabricate probe scores below that (0.200) only because of how the forbidden forms are worded, not because this contract scores fabrication below a content-free answer."
+  }
+}

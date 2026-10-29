@@ -1,0 +1,44 @@
+{
+  "comments": [],
+  "downtimes": [],
+  "hosts": [
+    {
+      "name": "babylon-ocp-prod-us-east-1",
+      "type": "Host",
+      "attrs": {
+        "display_name": "Babylon OCP Prod us-east-1",
+        "host_name": "babylon-ocp-prod-us-east-1",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "PING OK",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "anarchy-stuck-subjects",
+      "type": "Service",
+      "attrs": {
+        "display_name": "[Anarchy] Stuck AnarchySubjects",
+        "host_name": "babylon-ocp-prod-us-east-1",
+        "state": 2,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [],
+        "last_check_result": {
+          "output": "CRITICAL - 14 AnarchySubjects stuck in provision-pending for more than 30 minutes (threshold 5)",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    }
+  ]
+}

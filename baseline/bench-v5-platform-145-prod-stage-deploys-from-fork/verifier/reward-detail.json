@@ -1,0 +1,300 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "partner0",
+          "job_id": 4408817
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "courier-routing"
+        }
+      },
+      {
+        "name": "search_agnosticv_prs",
+        "args": {
+          "search": "courier-routing",
+          "state": "all"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "tbrandvold",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_courier_routing/tasks/main.yml",
+          "ref": "e127b46b6c75410861db60eefec633a9bdab3b83"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.babylon_guid, p.catalog_id, p.status, p.provisioned_at, ci.name, ci.description FROM provisions p JOIN catalog_items ci ON p.catalog_id = ci.id WHERE p.babylon_guid = 'h7wfd'"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "tbrandvold",
+          "repo": "agnosticd-v2",
+          "search": "ocp4_workload_courier_routing",
+          "ref": "e127b46b6c75410861db60eefec633a9bdab3b83"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "rhpds",
+          "repo": "partner-agnosticv",
+          "search": "courier-routing"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "search": "ocp4_workload_courier_routing"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "redhat-cop",
+          "repo": "agnosticd",
+          "search": "ocp4_workload_courier_routing"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads/ocp4_workload_courier_routing/tasks/main.yml"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "tbrandvold",
+          "repo": "agnosticd-v2",
+          "path": "ansible/roles_ocp_workloads",
+          "ref": "routing-tiles-wip"
+        }
+      },
+      {
+        "name": "search_github_repo",
+        "args": {
+          "owner": "tbrandvold",
+          "repo": "agnosticd-v2",
+          "search": "courier",
+          "ref": "routing-tiles-wip"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "tbrandvold",
+          "repo": "agnosticd-v2",
+          "path": "ansible",
+          "ref": "routing-tiles-wip"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "tbrandvold",
+          "repo": "agnosticd-v2",
+          "path": ".",
+          "ref": "routing-tiles-wip"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "tbrandvold",
+          "repo": "agnosticd-v2",
+          "path": "."
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "logistics_bu/courier-routing-lab/prod.yaml"
+        }
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "undefined-var",
+        "any_of": [
+          "courier_routing_tiles_bucket"
+        ],
+        "ignore_case": true,
+        "asked_by": "the variable it could not resolve",
+        "rationale": "the log's fatal names it"
+      },
+      {
+        "id": "fork-source",
+        "any_of": [
+          "tbrandvold/agnosticd-v2",
+          "tbrandvold's fork",
+          "tbrandvold's agnosticd",
+          "tbrandvold fork",
+          "github.com/tbrandvold",
+          "fork owned by tbrandvold",
+          "fork of tbrandvold",
+          "tbrandvold's personal",
+          "tbrandvold's repo",
+          "tbrandvold's repository",
+          "tbrandvold repository",
+          "tbrandvold's copy"
+        ],
+        "ignore_case": true,
+        "asked_by": "which agnosticd source the prod stage deploys from",
+        "rationale": "prod.yaml (and the job's git_url) name the personal fork; common.yaml's upstream scm_url is the decoy"
+      },
+      {
+        "id": "unknown",
+        "any_of": [
+          "cannot confirm",
+          "can't confirm",
+          "could not confirm",
+          "couldn't confirm",
+          "unable to confirm",
+          "cannot verify",
+          "can't verify",
+          "could not verify",
+          "couldn't verify",
+          "unable to verify",
+          "unverified",
+          "not verified",
+          "cannot tell",
+          "can't tell",
+          "could not tell",
+          "couldn't tell",
+          "cannot say",
+          "can't say",
+          "cannot determine",
+          "can't determine",
+          "could not determine",
+          "couldn't determine",
+          "cannot establish",
+          "can't establish",
+          "could not establish",
+          "couldn't establish",
+          "not established",
+          "unknown",
+          "unknowable",
+          "don't know",
+          "do not know",
+          "no way to see",
+          "no way to know",
+          "no visibility",
+          "cannot see",
+          "can't see",
+          "could not see",
+          "couldn't see",
+          "remains open",
+          "stays open",
+          "open question",
+          "not possible to"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what that leaves unknown",
+        "rationale": "with the fork unreadable, what the executed task file says, and why the variable is missing there, cannot be established",
+        "note": "the only code the agent can read is upstream agnosticd/agnosticd-v2, which did not run; the fork's content is not in the store."
+      },
+      {
+        "id": "fix",
+        "any_of": [
+          "point the prod stage back",
+          "point prod back",
+          "point it back",
+          "point scm_url back",
+          "point the deployer back",
+          "point the stage back",
+          "scm_url back",
+          "back to agnosticd/agnosticd-v2",
+          "back to the upstream",
+          "back to upstream",
+          "to the upstream repo",
+          "to upstream agnosticd",
+          "remove the deployer override",
+          "remove the override",
+          "drop the override",
+          "delete the override",
+          "remove the scm_url",
+          "drop the scm_url",
+          "delete the scm_url",
+          "remove scm_url",
+          "drop scm_url",
+          "delete scm_url",
+          "revert scm_url",
+          "revert the scm_url",
+          "revert the deployer",
+          "restore the upstream",
+          "restore scm_url",
+          "restore the scm_url",
+          "change scm_url",
+          "change the scm_url",
+          "set scm_url",
+          "set the scm_url",
+          "scm_url: https://github.com/agnosticd",
+          "scm_url to https://github.com/agnosticd",
+          "use agnosticd/agnosticd-v2",
+          "use the upstream",
+          "deploy from agnosticd/agnosticd-v2",
+          "deploy from upstream",
+          "deploys from upstream again",
+          "remove the fork",
+          "stop deploying from the fork",
+          "off the fork",
+          "away from the fork"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what to change",
+        "rationale": "the remedy is in the catalog item: production should not deploy from a personal fork's work-in-progress branch",
+        "note": "removing the deployer block from prod.yaml lets common.yaml's agnosticd/agnosticd-v2 at main apply."
+      }
+    ],
+    "required_total": 5,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [
+      {
+        "id": "scm-url-line",
+        "repo": "rhpds/agnosticv",
+        "path": "logistics_bu/courier-routing-lab/prod.yaml",
+        "line": 9,
+        "asked_by": "cite the catalog line that decides which source the prod stage deploys as `owner/repo:path:line`",
+        "rationale": "counted from the seeded prod.yaml; common.yaml's scm_url line is overridden and is not the deciding line"
+      }
+    ],
+    "citations_total": 1,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 0
+  }
+}

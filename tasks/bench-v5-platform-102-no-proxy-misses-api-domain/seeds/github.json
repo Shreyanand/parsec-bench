@@ -1,0 +1,56 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/defaults/main.yml",
+      "content": "---\n# ocp4_workload_meridian_gateway defaults\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\n# The partner clusters reach the internet only through this egress proxy.\nmeridian_gateway_http_proxy: http://egress.meridian.example:3128\nmeridian_gateway_https_proxy: http://egress.meridian.example:3128\nmeridian_gateway_no_proxy: \"localhost,127.0.0.1,.svc,.cluster.local,169.254.169.254\"\n\nmeridian_gateway_namespace: meridian-gateway\nmeridian_gateway_replicas: 2\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/defaults/main.yml",
+      "content": "---\n# ocp4_workload_meridian_gateway defaults\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\n# The partner clusters reach the internet only through this egress proxy.\nmeridian_gateway_http_proxy: http://egress.meridian.example:3128\nmeridian_gateway_https_proxy: http://egress.meridian.example:3128\nmeridian_gateway_no_proxy: \"localhost,127.0.0.1,.svc,.cluster.local,169.254.169.254\"\n\nmeridian_gateway_namespace: meridian-gateway\nmeridian_gateway_replicas: 2\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "9a3f62e0b1d74c58e2f9a06b3c1d8e47f5b20a6d",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/defaults/main.yml",
+      "content": "---\n# ocp4_workload_meridian_gateway defaults\nbecome_override: false\nocp_username: opentlc-mgr\nsilent: false\n\n# The partner clusters reach the internet only through this egress proxy.\nmeridian_gateway_http_proxy: http://egress.meridian.example:3128\nmeridian_gateway_https_proxy: http://egress.meridian.example:3128\nmeridian_gateway_no_proxy: \"localhost,127.0.0.1,.svc,.cluster.local,169.254.169.254\"\n\nmeridian_gateway_namespace: meridian-gateway\nmeridian_gateway_replicas: 2\n",
+      "file_id": "agnosticd/agnosticd-v2@9a3f62e0b1d74c58e2f9a06b3c1d8e47f5b20a6d-ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/tasks/workload.yml",
+      "content": "---\n- name: Render the gateway values file\n  ansible.builtin.template:\n    src: values.yaml.j2\n    dest: /home/lab-user/meridian-gateway-values.yaml\n\n- name: Create the meridian-gateway namespace\n  environment:\n    HTTP_PROXY: \"{{ meridian_gateway_http_proxy }}\"\n    HTTPS_PROXY: \"{{ meridian_gateway_https_proxy }}\"\n    NO_PROXY: \"{{ meridian_gateway_no_proxy }}\"\n  kubernetes.core.k8s:\n    api_version: v1\n    kind: Namespace\n    name: \"{{ meridian_gateway_namespace }}\"\n    state: present\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/tasks/workload.yml",
+      "content": "---\n- name: Render the gateway values file\n  ansible.builtin.template:\n    src: values.yaml.j2\n    dest: /home/lab-user/meridian-gateway-values.yaml\n\n- name: Create the meridian-gateway namespace\n  environment:\n    HTTP_PROXY: \"{{ meridian_gateway_http_proxy }}\"\n    HTTPS_PROXY: \"{{ meridian_gateway_https_proxy }}\"\n    NO_PROXY: \"{{ meridian_gateway_no_proxy }}\"\n  kubernetes.core.k8s:\n    api_version: v1\n    kind: Namespace\n    name: \"{{ meridian_gateway_namespace }}\"\n    state: present\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/tasks/workload.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "9a3f62e0b1d74c58e2f9a06b3c1d8e47f5b20a6d",
+      "path": "ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/tasks/workload.yml",
+      "content": "---\n- name: Render the gateway values file\n  ansible.builtin.template:\n    src: values.yaml.j2\n    dest: /home/lab-user/meridian-gateway-values.yaml\n\n- name: Create the meridian-gateway namespace\n  environment:\n    HTTP_PROXY: \"{{ meridian_gateway_http_proxy }}\"\n    HTTPS_PROXY: \"{{ meridian_gateway_https_proxy }}\"\n    NO_PROXY: \"{{ meridian_gateway_no_proxy }}\"\n  kubernetes.core.k8s:\n    api_version: v1\n    kind: Namespace\n    name: \"{{ meridian_gateway_namespace }}\"\n    state: present\n",
+      "file_id": "agnosticd/agnosticd-v2@9a3f62e0b1d74c58e2f9a06b3c1d8e47f5b20a6d-ansible/roles_ocp_workloads/ocp4_workload_meridian_gateway/tasks/workload.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

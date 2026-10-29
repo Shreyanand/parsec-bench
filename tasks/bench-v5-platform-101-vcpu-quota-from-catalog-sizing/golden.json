@@ -1,0 +1,70 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aap2",
+      "args": {
+        "action": "get_job_log",
+        "controller": "west",
+        "job_id": 238114
+      },
+      "result": {
+        "job_id": 238114,
+        "job_name": "RHDP analytics_bu.ocp-lakehouse-bench.prod-wd4kx-1-provision",
+        "status": "failed",
+        "failed": true,
+        "started": "2026-09-17T13:02:11.000Z",
+        "finished": "2026-09-17T13:09:47.000Z",
+        "duration_seconds": 456,
+        "launch_type": "workflow",
+        "job_explanation": "",
+        "template_name": "RHDP analytics_bu.ocp-lakehouse-bench.prod-provision",
+        "env_type": "prod",
+        "guid": "wd4kx",
+        "action": "provision",
+        "cloud_provider": "ec2",
+        "display_name": "ocp-lakehouse-bench",
+        "controller": "west",
+        "git_url": "https://github.com/agnosticd/agnosticd-v2.git",
+        "git_branch": "main",
+        "git_revision": "c41e9a07d2b85f3e16a0c9d47b2e8f5a03d1c6b9",
+        "log": "PLAY [Deploy the lakehouse bench infrastructure] *******************************\n\nTASK [Gathering Facts] *********************************************************\nok: [localhost]\n\nTASK [infra_ec2_template_generate : Render the CloudFormation template] ********\ntask path: /runner/project/ansible/roles/infra_ec2_template_generate/tasks/main.yml:12\nchanged: [localhost] => {\"changed\": true, \"dest\": \"/tmp/wd4kx/cloudformation.json\"}\n\nTASK [infra_ec2_template_create : Create the CloudFormation stack] *************\ntask path: /runner/project/ansible/roles/infra_ec2_template_create/tasks/main.yml:20\nfatal: [localhost]: FAILED! => {\"changed\": true, \"msg\": \"Failed to create stack lakehouse-bench-wd4kx: CREATE_FAILED for resource worker2 (AWS::EC2::Instance): Resource handler returned message: \\\"You have requested more vCPU capacity than your current vCPU limit of 64 allows for the instance bucket that the specified instance type belongs to. Please visit http://aws.amazon.com/contact-us/ec2-request to request an adjustment to this limit. (Service: Ec2, Status Code: 400, Request ID: 5e81c3d0-2a7f-4b19-9c6e-0f4d7a2b9e13)\\\" (HandlerErrorCode: ServiceLimitExceeded). Error code: VcpuLimitExceeded\", \"stack_status\": \"ROLLBACK_COMPLETE\"}\n\nPLAY RECAP *********************************************************************\nlocalhost                  : ok=2    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0\n",
+        "log_original_size": 1436,
+        "log_trimmed_size": 1436
+      },
+      "is_error": false
+    },
+    {
+      "name": "lookup_catalog_item",
+      "args": {
+        "search": "ocp-lakehouse-bench"
+      },
+      "result": {
+        "found": true,
+        "owner": "rhpds",
+        "repo": "agnosticv",
+        "account": "analytics_bu",
+        "directory": "ocp-lakehouse-bench",
+        "path": "analytics_bu/ocp-lakehouse-bench",
+        "files": [
+          "common.yaml",
+          "prod.yaml"
+        ],
+        "default_branch": "main"
+      },
+      "is_error": false
+    },
+    {
+      "name": "fetch_github_file",
+      "args": {
+        "owner": "rhpds",
+        "repo": "agnosticv",
+        "path": "analytics_bu/ocp-lakehouse-bench/common.yaml"
+      },
+      "result": {
+        "content": "---\n# ocp-lakehouse-bench: three-tier lakehouse benchmark lab on AWS\ncloud_provider: ec2\nenv_type: lakehouse-bench\n\n__meta__:\n  catalog:\n    display_name: Lakehouse Benchmark Lab\n    category: Workshops\n  deployer:\n    scm_url: https://github.com/agnosticd/agnosticd-v2.git\n    scm_ref: main\n\n# Instance sizing (vCPU per instance in the comments)\nbastion_instance_type: m6i.xlarge        # 4 vCPU\ncontrol_instance_count: 3\ncontrol_instance_type: m6i.2xlarge       # 8 vCPU\nworker_instance_count: 3\nworker_instance_type: m6i.4xlarge        # 16 vCPU\n\nlakehouse_bench_dataset: tpcds-sf1000\n"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The CloudFormation stack lakehouse-bench-wd4kx failed with CREATE_FAILED on resource worker2, error code VcpuLimitExceeded: \"You have requested more vCPU capacity than your current vCPU limit of 64 allows\". So the account's vCPU limit for this instance bucket is 64.\n\nThe sizing comes from the catalog item, not from the config defaults. rhpds/agnosticv:analytics_bu/ocp-lakehouse-bench/common.yaml:19 sets worker_instance_type: m6i.4xlarge (16 vCPU) with worker_instance_count: 3, plus control_instance_count: 3 of m6i.2xlarge (8 vCPU) and one m6i.xlarge bastion (4 vCPU). That is 3 x 16 + 3 x 8 + 4 = 76 vCPUs requested, which is 12 more than the 64 vCPU limit. The stack failed at the worker instances because they are the last and largest to be created.\n\nRoot cause: the item's instance sizing needs 76 vCPUs in an account whose limit is 64. Fix by raising the account's vCPU quota to at least 76 or by shrinking the worker size or count in common.yaml.\n\nCategory: resource_failure. Confidence: high.\n"
+}

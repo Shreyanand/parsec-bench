@@ -1,0 +1,139 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [
+    {
+      "ocpv_namespace_id": "ons-119-1",
+      "cluster": "ocpv-garnet",
+      "namespace": "sandbox-j5wqc-sap-hana-lab",
+      "status": "Active"
+    }
+  ],
+  "ocpv_pvcs": [
+    {
+      "ocpv_pvc_id": "opvc-119-1",
+      "cluster": "ocpv-garnet",
+      "namespace": "sandbox-j5wqc-sap-hana-lab",
+      "name": "hana-db01-rootdisk",
+      "status": "Pending",
+      "storage_class": "ocs-external-storagecluster-ceph-rbd-virtualization",
+      "size": "64Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteMany"
+      ],
+      "events": [
+        "ProvisioningFailed: storageclass.storage.k8s.io \"ocs-external-storagecluster-ceph-rbd-virtualization\" not found"
+      ]
+    },
+    {
+      "ocpv_pvc_id": "opvc-119-2",
+      "cluster": "ocpv-garnet",
+      "namespace": "sandbox-j5wqc-sap-hana-lab",
+      "name": "hana-db01-data",
+      "status": "Bound",
+      "storage_class": "ocs-storagecluster-ceph-rbd-virtualization",
+      "size": "250Gi",
+      "volume_mode": "Block",
+      "access_modes": [
+        "ReadWriteMany"
+      ]
+    }
+  ],
+  "ocpv_storage_classes": [
+    {
+      "ocpv_storage_class_id": "osc-119-1",
+      "cluster": "ocpv-garnet",
+      "name": "ocs-storagecluster-ceph-rbd-virtualization",
+      "provisioner": "openshift-storage.rbd.csi.ceph.com",
+      "reclaim_policy": "Delete",
+      "binding_mode": "Immediate",
+      "allow_volume_expansion": true,
+      "default": true
+    },
+    {
+      "ocpv_storage_class_id": "osc-119-2",
+      "cluster": "ocpv-garnet",
+      "name": "ocs-storagecluster-ceph-rbd",
+      "provisioner": "openshift-storage.rbd.csi.ceph.com",
+      "reclaim_policy": "Delete",
+      "binding_mode": "Immediate",
+      "allow_volume_expansion": true,
+      "default": false
+    },
+    {
+      "ocpv_storage_class_id": "osc-119-3",
+      "cluster": "ocpv-garnet",
+      "name": "ocs-storagecluster-cephfs",
+      "provisioner": "openshift-storage.cephfs.csi.ceph.com",
+      "reclaim_policy": "Delete",
+      "binding_mode": "Immediate",
+      "allow_volume_expansion": true,
+      "default": false
+    },
+    {
+      "ocpv_storage_class_id": "osc-119-4",
+      "cluster": "ocpv-onyx",
+      "name": "ocs-external-storagecluster-ceph-rbd-virtualization",
+      "provisioner": "openshift-storage.rbd.csi.ceph.com",
+      "reclaim_policy": "Delete",
+      "binding_mode": "Immediate",
+      "allow_volume_expansion": true,
+      "default": true
+    }
+  ],
+  "ocpv_vms": [
+    {
+      "ocpv_vm_id": "ovm-119-1",
+      "cluster": "ocpv-garnet",
+      "namespace": "sandbox-j5wqc-sap-hana-lab",
+      "name": "hana-db01",
+      "status": "Provisioning",
+      "ready": false,
+      "phase": "",
+      "node": "",
+      "ip": "",
+      "vcpus": 8,
+      "memory": "64Gi",
+      "disks": [
+        {
+          "name": "rootdisk",
+          "bus": "virtio"
+        },
+        {
+          "name": "data",
+          "bus": "virtio"
+        }
+      ],
+      "volumes": [
+        {
+          "name": "rootdisk",
+          "dataVolume": "hana-db01-rootdisk"
+        },
+        {
+          "name": "data",
+          "persistentVolumeClaim": "hana-db01-data"
+        }
+      ],
+      "condition": {
+        "type": "Ready",
+        "status": "False",
+        "reason": "DataVolumeError",
+        "message": "DataVolume hana-db01-rootdisk is not ready"
+      }
+    }
+  ],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

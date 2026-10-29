@@ -1,0 +1,151 @@
+{
+  "hosts": [
+    {
+      "name": "sso-broker-vie-2",
+      "type": "Host",
+      "attrs": {
+        "display_name": "sso-broker-vie-2",
+        "host_name": "sso-broker-vie-2",
+        "address": "10.72.4.31",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "sso-vie"
+        ],
+        "last_state_change": 1795874289,
+        "last_check": 1796895612,
+        "last_check_result": {
+          "output": "OK - 10.72.4.31: rta 0.380ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "ldap-vie-01",
+      "type": "Host",
+      "attrs": {
+        "display_name": "ldap-vie-01",
+        "host_name": "ldap-vie-01",
+        "address": "10.72.9.11",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 1,
+        "groups": [
+          "idm-replicas"
+        ],
+        "last_state_change": 1796886344,
+        "last_check": 1796895612,
+        "last_check_result": {
+          "output": "CRITICAL - 10.72.9.11: rta nan, lost 100%",
+          "state": 2,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "ldap-vie-02",
+      "type": "Host",
+      "attrs": {
+        "display_name": "ldap-vie-02",
+        "host_name": "ldap-vie-02",
+        "address": "10.72.9.12",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "idm-replicas"
+        ],
+        "last_state_change": 1793640123,
+        "last_check": 1796895612,
+        "last_check_result": {
+          "output": "OK - 10.72.9.12: rta 0.510ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "sso-broker-vie-2!ldap-bind",
+      "type": "Service",
+      "attrs": {
+        "display_name": "IdM LDAP bind",
+        "host_name": "sso-broker-vie-2",
+        "check_command": "rhdp-plugin",
+        "check_timeout": 30,
+        "state": 3,
+        "state_type": 1,
+        "last_state_change": 1796886739,
+        "last_check": 1796895668,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "vars": {
+          "plugin": "plugins/idm/check_ldap_bind.py",
+          "ldap_servers": [
+            "ldap-vie-01",
+            "ldap-vie-02"
+          ],
+          "bind_dn": "uid=svc-sso-vie,cn=sysaccounts,cn=etc,dc=idm,dc=example,dc=net"
+        },
+        "last_check_result": {
+          "output": "<Timeout exceeded.><Terminated by signal 9 (Killed).>",
+          "execution_start": 1796895668.004,
+          "execution_end": 1796895698.011,
+          "state": 3,
+          "exit_status": 3
+        }
+      }
+    },
+    {
+      "name": "sso-broker-vie-2!saml-metadata",
+      "type": "Service",
+      "attrs": {
+        "display_name": "SAML metadata endpoint",
+        "host_name": "sso-broker-vie-2",
+        "check_command": "http",
+        "state": 0,
+        "state_type": 1,
+        "last_state_change": 1795874740,
+        "last_check": 1796895651,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "vars": {
+          "http_uri": "/saml/metadata"
+        },
+        "last_check_result": {
+          "output": "HTTP OK: HTTP/1.1 200 OK - 9811 B in 0.046 s",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "comments": [],
+  "downtimes": [
+    {
+      "name": "ldap-vie-01!rhdp-dt-60417",
+      "type": "Downtime",
+      "attrs": {
+        "host_name": "ldap-vie-01",
+        "service_name": "",
+        "author": "okarlsson",
+        "comment": "CHG-60417: replica retired from the IdM topology, VM powered off ahead of decommission",
+        "entry_time": 1796885550,
+        "start_time": 1796886000,
+        "end_time": 1798758000,
+        "fixed": true,
+        "duration": 0,
+        "is_in_effect": true,
+        "trigger_time": 1796886000
+      }
+    }
+  ]
+}

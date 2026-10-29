@@ -1,0 +1,300 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "east",
+          "job_id": 8840217
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "retail_bu/storefront-funnel-lab/common.yaml"
+        }
+      },
+      {
+        "name": "query_splunk",
+        "args": {}
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "webhook",
+        "ignore_case": true,
+        "any_of": [
+          "webhook"
+        ],
+        "asked_by": "what actually rejected the deployment",
+        "rationale": "the component that refused the create. In the log; every reader earns it"
+      },
+      {
+        "id": "pod-unschedulable",
+        "ignore_case": true,
+        "any_of": [
+          "FailedScheduling",
+          "Failed Scheduling",
+          "Pending",
+          "didn't match Pod's node affinity",
+          "didn't match the node selector",
+          "did not match the node selector",
+          "didn't match its node selector",
+          "did not match its node selector",
+          "could not be scheduled",
+          "couldn't be scheduled",
+          "cannot be scheduled",
+          "can't be scheduled",
+          "can never be scheduled",
+          "unschedulable",
+          "never scheduled",
+          "not scheduled",
+          "never got scheduled",
+          "no node to run",
+          "no node it can run",
+          "no node could run",
+          "0/6 nodes",
+          "0/1 replicas",
+          "0 of 1 replicas",
+          "zero replicas available",
+          "no replicas available",
+          "no schedulable node",
+          "no eligible node"
+        ],
+        "asked_by": "why that component was not running",
+        "rationale": "why the webhook had no endpoints: its only pod could not be placed. Only in the cluster-side Splunk rows"
+      },
+      {
+        "id": "infra-placement",
+        "ignore_case": true,
+        "any_of": [
+          "infra_node_count",
+          "node-role.kubernetes.io/infra",
+          "ocp4_workload_guardrail_node_selector",
+          "no infra nodes",
+          "no infra node",
+          "zero infra nodes",
+          "0 infra nodes",
+          "no infrastructure nodes",
+          "without infra nodes",
+          "infra node selector",
+          "infra nodeSelector",
+          "infra-node selector"
+        ],
+        "asked_by": "which settings in the item cause it",
+        "rationale": "the placement half of the cause: the controller is pinned to infra nodes and the item builds none. Only in common.yaml"
+      },
+      {
+        "id": "fail-closed",
+        "ignore_case": true,
+        "any_of": [
+          "ocp4_workload_guardrail_failure_policy",
+          "failurePolicy",
+          "failure policy",
+          "failure_policy",
+          "fail closed",
+          "fail-closed",
+          "fails closed",
+          "failing closed",
+          "fails shut",
+          "fail shut"
+        ],
+        "asked_by": "which settings in the item cause it",
+        "rationale": "the blast-radius half: a Fail policy turns a missing webhook backend into a refused create. Only in common.yaml"
+      },
+      {
+        "id": "api-server-up",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "API server was up",
+          "API server is up",
+          "API server was healthy",
+          "API server is healthy",
+          "API server was fine",
+          "API server is fine",
+          "API server was working",
+          "API server worked",
+          "API server answered",
+          "API server responded",
+          "API server was responding",
+          "API server was reachable",
+          "API server is reachable",
+          "API server was available",
+          "API server did not fall over",
+          "API server didn't fall over",
+          "API server never fell",
+          "API server had not fallen",
+          "API server hadn't fallen",
+          "not the API server",
+          "not an API server",
+          "not from the API server",
+          "isn't the API server",
+          "wasn't the API server",
+          "API server itself was",
+          "API server itself is",
+          "API server did not fail",
+          "API server didn't fail",
+          "API server was not down",
+          "API server wasn't down",
+          "API server is not down",
+          "no API server",
+          "namespace and config maps were created",
+          "namespace and two config maps",
+          "namespace and the config maps",
+          "earlier API calls succeeded",
+          "other API calls succeeded",
+          "API calls before it succeeded",
+          "control plane was healthy",
+          "control plane is healthy",
+          "control plane was fine",
+          "control plane is fine",
+          "overloaded? no",
+          "overloaded?: no",
+          "overloaded: no",
+          "fell over? no",
+          "fall over? no",
+          "fell over: no",
+          "down? no",
+          "down: no",
+          "outage? no",
+          "outage: no",
+          "API server: healthy",
+          "API server: up",
+          "API server: fine",
+          "API server health: ok",
+          "API server healthy? yes",
+          "API server up? yes",
+          "not overloaded",
+          "wasn't overloaded",
+          "was not overloaded",
+          "theory is wrong",
+          "reading is wrong",
+          "diagnosis is wrong"
+        ],
+        "asked_by": "what actually rejected the deployment",
+        "note": "the log shows the namespace, two config maps and the webhook registration created by the same API server minutes before the refusal; no seed string says the API server was healthy",
+        "rationale": "the refutation of the decoy the instruction voices: a 500 from an admission webhook is not an API server outage"
+      },
+      {
+        "id": "resize-wont-help",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "would not help",
+          "won't help",
+          "wouldn't help",
+          "will not help",
+          "does not help",
+          "doesn't help",
+          "no effect",
+          "would not fix",
+          "won't fix",
+          "wouldn't fix",
+          "will not fix",
+          "not fix",
+          "would not change",
+          "won't change",
+          "wouldn't change",
+          "will not change",
+          "changes nothing",
+          "change nothing",
+          "changes none",
+          "unnecessary",
+          "not needed",
+          "no need to resize",
+          "no need to rebuild",
+          "pointless",
+          "irrelevant",
+          "would not solve",
+          "won't solve",
+          "wouldn't solve",
+          "not solve",
+          "not resolve",
+          "help? no",
+          "help?: no",
+          "help: no",
+          "help?\n- no",
+          "help?\n\n- no",
+          "help?\n\nno",
+          "doesn't touch",
+          "does not touch",
+          "wouldn't touch",
+          "would not touch",
+          "won't touch"
+        ],
+        "asked_by": "whether bigger control-plane nodes would help",
+        "note": "a judgement over the evidence: neither the infra node selector nor the failure policy depends on control-plane size",
+        "rationale": "the operational conclusion the user is about to act on"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "api-server-outage",
+        "ignore_case": true,
+        "none_of": [
+          "API server fell over",
+          "API server crashed",
+          "API server was down",
+          "API server went down",
+          "API server is down",
+          "API server was overloaded",
+          "API server is overloaded",
+          "API server outage",
+          "API server ran out",
+          "control plane was overloaded",
+          "control plane is overloaded",
+          "control-plane nodes are too small",
+          "control plane nodes are too small",
+          "control-plane nodes were too small",
+          "control plane nodes were too small",
+          "undersized control plane",
+          "bigger control-plane nodes will fix",
+          "bigger control-plane nodes would fix",
+          "rebuild the cluster with bigger",
+          "resize the control plane to"
+        ],
+        "rationale": "the decoy the instruction voices: a 500 read as the API server falling over. The API server served every other call in the play"
+      },
+      {
+        "id": "manifest-invalid",
+        "ignore_case": true,
+        "none_of": [
+          "storefront manifest is invalid",
+          "storefront manifest was invalid",
+          "invalid storefront manifest",
+          "storefront deployment is malformed",
+          "storefront deployment was malformed",
+          "deployment manifest is invalid",
+          "deployment manifest was invalid",
+          "malformed deployment manifest",
+          "fix the storefront manifest",
+          "bug in ocp4_workload_storefront",
+          "ocp4_workload_storefront has a bug",
+          "storefront role is broken"
+        ],
+        "rationale": "the second single-hop reading: the webhook was never reached, so nothing judged the storefront objects"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

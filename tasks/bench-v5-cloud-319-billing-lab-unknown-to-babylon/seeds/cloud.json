@@ -1,0 +1,110 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [
+    {
+      "ec2_instance_id": "ec2-319-1",
+      "account_id": "264083917552",
+      "region": "us-east-1",
+      "az": "us-east-1b",
+      "instance_id": "i-0c4f7a2e91b38d605",
+      "instance_type": "m6i.8xlarge",
+      "state": "running",
+      "launch_time": "2026-09-29T14:22:31Z",
+      "public_ip": "",
+      "tags": {
+        "Name": "sno-r5jxe-control-0",
+        "guid": "r5jxe",
+        "env_type": "ocp4-ai-sno"
+      }
+    },
+    {
+      "ec2_instance_id": "ec2-319-2",
+      "account_id": "264083917552",
+      "region": "us-east-1",
+      "az": "us-east-1b",
+      "instance_id": "i-07e2b95d1a4c6f830",
+      "instance_type": "g6.12xlarge",
+      "state": "running",
+      "launch_time": "2026-09-29T14:22:33Z",
+      "public_ip": "",
+      "tags": {
+        "Name": "sno-r5jxe-gpu-0",
+        "guid": "r5jxe",
+        "env_type": "ocp4-ai-sno"
+      }
+    },
+    {
+      "ec2_instance_id": "ec2-319-3",
+      "account_id": "264083917552",
+      "region": "us-east-1",
+      "az": "us-east-1b",
+      "instance_id": "i-0a91d3c8e5f27b416",
+      "instance_type": "t3.small",
+      "state": "stopped",
+      "launch_time": "2026-09-29T14:09:58Z",
+      "public_ip": "",
+      "tags": {
+        "Name": "bastion-r5jxe",
+        "guid": "r5jxe",
+        "env_type": "ocp4-ai-sno"
+      }
+    },
+    {
+      "ec2_instance_id": "ec2-319-4",
+      "account_id": "264083918130",
+      "region": "us-east-1",
+      "az": "us-east-1b",
+      "instance_id": "i-0e58b2f6a3d91c047",
+      "instance_type": "c7i.4xlarge",
+      "state": "running",
+      "launch_time": "2026-10-02T09:41:12Z",
+      "public_ip": "",
+      "tags": {
+        "Name": "sno-w2hqm-control-0",
+        "guid": "w2hqm",
+        "env_type": "ocp4-ai-sno"
+      }
+    }
+  ],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sa-319-6047",
+      "name": "sandbox6047",
+      "account_id": "264083917552",
+      "available": false,
+      "owner": "mkowalczyk",
+      "owner_email": "mkowalczyk@rhdp-sbx.example.net",
+      "envtype": "ocp4-ai-sno",
+      "reservation": "",
+      "zone": "sandbox6047.rhdp-sbx.example.net",
+      "comment": "ordered via RHDP catalog 2026-09-29",
+      "conan_status": "",
+      "guid": "r5jxe",
+      "hosted_zone_id": "Z06047RHDP",
+      "service_uuid": "svc-6047-r5jxe",
+      "annotations": {}
+    },
+    {
+      "sandbox_account_id": "sa-319-6051",
+      "name": "sandbox6051",
+      "account_id": "264083918130",
+      "available": false,
+      "owner": "abrennan",
+      "owner_email": "abrennan@rhdp-sbx.example.net",
+      "envtype": "ocp4-ai-sno",
+      "reservation": "",
+      "zone": "sandbox6051.rhdp-sbx.example.net",
+      "comment": "ordered via RHDP catalog 2026-10-02",
+      "conan_status": "",
+      "guid": "w2hqm",
+      "hosted_zone_id": "Z06051RHDP",
+      "service_uuid": "svc-6051-w2hqm",
+      "annotations": {}
+    }
+  ]
+}

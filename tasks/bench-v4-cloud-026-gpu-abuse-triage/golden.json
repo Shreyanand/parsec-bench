@@ -1,0 +1,105 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_aws_account",
+      "args": {
+        "account_id": "419283746777",
+        "action": "describe_instances",
+        "region": "ap-south-1"
+      },
+      "result": {
+        "account_id": "419283746777",
+        "instances": [
+          {
+            "instance_id": "i-0a91c4e8b7d2f3016",
+            "instance_type": "g4dn.12xlarge",
+            "state": "running",
+            "launch_time": "2026-06-18T22:41:00Z",
+            "az": "ap-south-1b",
+            "public_ip": "13.232.44.190",
+            "tags": {
+              "Name": "Web-Created-VM",
+              "guid": "vk3np"
+            }
+          },
+          {
+            "instance_id": "i-0b72d5f9c8e1a4207",
+            "instance_type": "t3.medium",
+            "state": "running",
+            "launch_time": "2026-06-15T09:00:00Z",
+            "az": "ap-south-1a",
+            "public_ip": "13.232.44.191",
+            "tags": {
+              "Name": "bastion",
+              "guid": "vk3np"
+            }
+          }
+        ]
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_aws_account",
+      "args": {
+        "account_id": "419283746777",
+        "action": "list_users"
+      },
+      "result": {
+        "account_id": "419283746777",
+        "users": [
+          {
+            "username": "svc-deploy",
+            "user_id": "AIDA4NPQ2XKJ7RTBVMWL3",
+            "created": "2026-06-18T22:38:00Z",
+            "password_last_used": "never",
+            "access_keys": [
+              {
+                "access_key_id": "AKIA7YQ4ZBN2XKJRTVML",
+                "status": "Active",
+                "created": "2026-06-18T22:39:00Z"
+              }
+            ]
+          }
+        ]
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_marketplace_agreements",
+      "args": {},
+      "result": {
+        "agreements": [
+          {
+            "agreement_id": "agmt-4471902",
+            "account_id": "419283746777",
+            "status": "ACTIVE",
+            "product_name": "GPU Rendering Toolkit",
+            "vendor_name": "unverified-vendor",
+            "offer_type": "public",
+            "classification": "SaaS (Auto-Renew)",
+            "estimated_cost_usd": 4820.0,
+            "currency": "USD",
+            "auto_renew": true,
+            "agreement_start": "2026-06-18T23:02:00Z",
+            "terms": []
+          }
+        ],
+        "count": 1
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_cloudtrail",
+      "args": {
+        "query": "SELECT eventTime, eventName, userIdentity.username AS username FROM cloudtrail_events WHERE recipientAccountId = '419283746777' AND eventName = 'RunInstances' AND eventTime >= '2026-06-15 00:00:00' AND eventTime < '2026-06-19 00:00:00' ORDER BY eventTime"
+      },
+      "result": {
+        "columns": [],
+        "rows": [],
+        "row_count": 0
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "Three of the four checks returned data and one returned nothing. Taking them in turn.\n\n**EC2.** Two running instances. The strong indicator is i-0a91c4e8b7d2f3016: a g4dn.12xlarge -- a GPU instance type, and g4dn is one of the families we treat as an abuse signal -- tagged Name=Web-Created-VM, which is itself a compromised-account signal rather than anything our automation produces. It launched 2026-06-18 at 22:41 UTC in ap-south-1b. The other instance is a t3.medium bastion and looks ordinary.\n\n**IAM.** One user, svc-deploy, created 2026-06-18 at 22:38 UTC -- three minutes before that instance launched -- with an active access key created a minute later and a password never used. That is the profile of a programmatic-only identity made for a single purpose.\n\n**Marketplace.** One ACTIVE agreement, agmt-4471902, for a \"GPU Rendering Toolkit\" from an unverified-vendor, classified SaaS (Auto-Renew), estimated cost 4820 USD.\n\n**CloudTrail returned nothing.** No events came back for this account, so the creation path is unestablished. I want to be exact about what that costs: the timing above is suggestive, but I cannot show that svc-deploy created the GPU instance, or that the same actor accepted the marketplace agreement. Those are inferences from timestamps, not records.\n\nSo: the account has GPU compute, a suspicious instance name, a fresh programmatic identity and an unreviewed paid agreement. That is enough to escalate for suspension review. It is not enough to attribute, and the CloudTrail gap is the thing to resolve -- widen the window or check whether the trail is even enabled on this account -- before anyone writes down who did it."
+}

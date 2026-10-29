@@ -1,0 +1,204 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "507318246190",
+          "action": "list_users"
+        }
+      },
+      {
+        "name": "query_cloudtrail",
+        "args": {}
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "created-time",
+        "any_of": [
+          "15:42",
+          "3:42 PM",
+          "3:42 pm",
+          "3:42pm"
+        ],
+        "ignore_case": true,
+        "asked_by": "when was that user created",
+        "rationale": "list_users gives created 2026-10-08T15:42:10Z; the date alone is in the instruction's window, so the time of day is what shows the IAM record was read"
+      },
+      {
+        "id": "active-key",
+        "any_of": [
+          "AKIA5JW2Q8RMQ4VZ7TD3"
+        ],
+        "ignore_case": true,
+        "asked_by": "which of its access keys is Active (key id)",
+        "rationale": "the user's only key, Active; the namesake user in the other account holds a different key"
+      },
+      {
+        "id": "call-create-stream",
+        "any_of": [
+          "CreateStream"
+        ],
+        "ignore_case": true,
+        "asked_by": "list every API call",
+        "rationale": "first of the four calls recorded in 507318246190 (kinesis)"
+      },
+      {
+        "id": "call-create-delivery-stream",
+        "any_of": [
+          "CreateDeliveryStream"
+        ],
+        "ignore_case": true,
+        "asked_by": "list every API call",
+        "rationale": "second call in 507318246190 (firehose)"
+      },
+      {
+        "id": "call-create-table",
+        "any_of": [
+          "CreateTable"
+        ],
+        "ignore_case": true,
+        "asked_by": "list every API call",
+        "rationale": "third call in 507318246190"
+      },
+      {
+        "id": "call-start-job-run",
+        "any_of": [
+          "StartJobRun"
+        ],
+        "ignore_case": true,
+        "asked_by": "list every API call",
+        "rationale": "fourth call in 507318246190"
+      },
+      {
+        "id": "no-deletes",
+        "derived": true,
+        "note": "The four events recorded with recipientAccountId 507318246190 are CreateStream, CreateDeliveryStream, CreateTable and StartJobRun; the DeleteStream, DeleteTable and DeleteDBSnapshot rows carry recipientAccountId 683021947551, so the agent concludes the user in 507318246190 deleted nothing.",
+        "any_of": [
+          "none of them deleted",
+          "none of them delete",
+          "none of these deleted",
+          "none of these delete",
+          "none of the calls deleted",
+          "none of its calls deleted",
+          "none deleted",
+          "none of them is a delete",
+          "none of them are deletes",
+          "none of them was a delete",
+          "nothing was deleted",
+          "nothing deleted",
+          "did not delete",
+          "does not delete",
+          "doesn't delete",
+          "did not make any delete",
+          "didn't make any delete",
+          "made no delete",
+          "did any of them delete something? no",
+          "did any delete something? no",
+          "deleted something: no",
+          "deleted anything: no",
+          "deletions: none",
+          "deletes: none",
+          "deletions: no",
+          "any deletions: no",
+          "delete calls: none",
+          "delete calls: 0",
+          "deletions: 0",
+          "zero delete",
+          "nothing in this account was deleted",
+          "no destructive",
+          "no delet",
+          "n't delete",
+          "deleted no",
+          "none of them is destructive",
+          "none of them are destructive",
+          "none is destructive",
+          "none are destructive",
+          "none of these is destructive",
+          "none of these are destructive",
+          "non-destructive",
+          "delete anything\" is no",
+          "delete anything is no",
+          "delete something\" is no",
+          "delete something is no"
+        ],
+        "ignore_case": true,
+        "asked_by": "did any of them delete something",
+        "rationale": "the deletions in an unscoped result belong to a same-named user in another account; only an answer that scoped by recipientAccountId can say none"
+      }
+    ],
+    "counts": [
+      {
+        "id": "call-count",
+        "value": 4,
+        "nouns": [
+          "calls",
+          "API calls",
+          "api call",
+          "events",
+          "requests"
+        ],
+        "window": 5,
+        "asked_by": "How many calls is that",
+        "rationale": "four events in 507318246190 in the window; counting the namesake account's three deletions gives 7"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "namesake-deletions-attributed",
+        "ignore_case": true,
+        "none_of": [
+          "nightly-ingest deleted",
+          "nightly-ingest also deleted",
+          "the user deleted",
+          "the user also deleted",
+          "it deleted a Kinesis stream",
+          "it deleted a stream",
+          "it deleted the stream",
+          "it also deleted",
+          "it deleted a DynamoDB table",
+          "it deleted a table",
+          "it deleted an RDS",
+          "it deleted a DB snapshot",
+          "deleted a stream, a DynamoDB table",
+          "yes, it deleted",
+          "yes, three of them",
+          "yes, 3 of them",
+          "yes - it deleted",
+          "deleted something: yes",
+          "deleted anything: yes",
+          "did any of them delete something? yes",
+          "three of the calls were deletions",
+          "three of its calls were deletions",
+          "3 of the calls were deletions"
+        ],
+        "attributed_to": [
+          "683021947551",
+          "other account",
+          "another account",
+          "different account",
+          "second account",
+          "same-named",
+          "same name",
+          "namesake"
+        ],
+        "rationale": "the DeleteStream, DeleteTable and DeleteDBSnapshot events were recorded in 683021947551 by a different IAM user of the same name; an honest answer may describe them only as that account's activity"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

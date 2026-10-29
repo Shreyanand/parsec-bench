@@ -1,0 +1,190 @@
+{
+  "hosts": [
+    {
+      "name": "kio-bdx-a01",
+      "type": "Host",
+      "attrs": {
+        "display_name": "kio-bdx-a01",
+        "host_name": "kio-bdx-a01",
+        "address": "10.61.4.11",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "kiosk-fleet-bdx",
+          "kiosk-all"
+        ],
+        "last_check": 1795682460,
+        "last_check_result": {
+          "output": "OK - 10.61.4.11: rta 3.120ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "kio-bdx-a02",
+      "type": "Host",
+      "attrs": {
+        "display_name": "kio-bdx-a02",
+        "host_name": "kio-bdx-a02",
+        "address": "10.61.4.12",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "kiosk-fleet-bdx",
+          "kiosk-all"
+        ],
+        "last_check": 1795682460,
+        "last_check_result": {
+          "output": "CRITICAL - 10.61.4.12: rta nan, lost 100%",
+          "state": 1,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "kio-bdx-a03",
+      "type": "Host",
+      "attrs": {
+        "display_name": "kio-bdx-a03",
+        "host_name": "kio-bdx-a03",
+        "address": "10.61.4.13",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "kiosk-fleet-bdx",
+          "kiosk-all"
+        ],
+        "last_check": 1795682460,
+        "last_check_result": {
+          "output": "OK - 10.61.4.13: rta 2.870ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "kio-bdx-b01",
+      "type": "Host",
+      "attrs": {
+        "display_name": "kio-bdx-b01",
+        "host_name": "kio-bdx-b01",
+        "address": "10.61.4.21",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "kiosk-fleet-bdx",
+          "kiosk-all"
+        ],
+        "last_check": 1795682460,
+        "last_check_result": {
+          "output": "CRITICAL - 10.61.4.21: no ARP reply",
+          "state": 1,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "kio-bdx-b02",
+      "type": "Host",
+      "attrs": {
+        "display_name": "kio-bdx-b02",
+        "host_name": "kio-bdx-b02",
+        "address": "10.61.4.26",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "kiosk-fleet-bdx",
+          "kiosk-all"
+        ],
+        "last_check": 1795682460,
+        "last_check_result": {
+          "output": "OK - 10.61.4.26: rta 4.400ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "kio-bdx-c01",
+      "type": "Host",
+      "attrs": {
+        "display_name": "kio-bdx-c01",
+        "host_name": "kio-bdx-c01",
+        "address": "10.61.9.5",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "kiosk-staging-bdx",
+          "kiosk-all"
+        ],
+        "last_check": 1795682460,
+        "last_check_result": {
+          "output": "CRITICAL - TTL ran out in transit (10.61.9.5)",
+          "state": 1,
+          "exit_status": 2
+        }
+      }
+    },
+    {
+      "name": "kio-bdx-c02",
+      "type": "Host",
+      "attrs": {
+        "display_name": "kio-bdx-c02",
+        "host_name": "kio-bdx-c02",
+        "address": "10.61.9.6",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "kiosk-staging-bdx",
+          "kiosk-all"
+        ],
+        "last_check": 1795682460,
+        "last_check_result": {
+          "output": "OK - 10.61.9.6: rta 5.060ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    },
+    {
+      "name": "prn-bdx-hub1",
+      "type": "Host",
+      "attrs": {
+        "display_name": "prn-bdx-hub1",
+        "host_name": "prn-bdx-hub1",
+        "address": "10.61.2.40",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "print-bdx"
+        ],
+        "last_check": 1795682460,
+        "last_check_result": {
+          "output": "OK - 10.61.2.40: rta 1.950ms, lost 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [],
+  "downtimes": [],
+  "comments": []
+}

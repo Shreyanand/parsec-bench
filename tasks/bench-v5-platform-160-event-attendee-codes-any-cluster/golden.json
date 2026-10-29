@@ -1,0 +1,69 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "get_multiworkshop",
+        "name": "aap-reseller-day-lis-1203"
+      },
+      "result": {
+        "cluster": "egret",
+        "name": "aap-reseller-day-lis-1203",
+        "namespace": "user-ivasquez-redhat-com",
+        "display_name": "AAP Reseller Day - Lisbon",
+        "seats": 36,
+        "start_date": "2026-12-03",
+        "end_date": "2026-12-04",
+        "purpose": "Reseller technical day",
+        "workshops": [
+          {
+            "name": "rdl-collection-trust",
+            "display_name": "Collection Trust Primer",
+            "catalog_item": "aap.collection-trust.prod",
+            "workshop_id": "w2gyh",
+            "provision_count": {
+              "ordered": 0,
+              "active": 0,
+              "failed": 0,
+              "retries": 0
+            },
+            "resource_claims": []
+          },
+          {
+            "name": "rdl-controller-as-code",
+            "display_name": "Controller as Code",
+            "catalog_item": "aap.controller-as-code.prod",
+            "workshop_id": "m8rqe",
+            "provision_count": {
+              "ordered": 0,
+              "active": 0,
+              "failed": 0,
+              "retries": 0
+            },
+            "resource_claims": []
+          },
+          {
+            "name": "rdl-rulebook-starter",
+            "display_name": "Rulebook Starter",
+            "catalog_item": "aap.rulebook-starter.prod",
+            "workshop_id": "t4ckz",
+            "provision_count": {
+              "ordered": 0,
+              "active": 0,
+              "failed": 0,
+              "retries": 0
+            },
+            "resource_claims": []
+          }
+        ],
+        "summary": {
+          "total_workshops": 3,
+          "active": 0,
+          "failed": 0
+        }
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "The MultiWorkshop aap-reseller-day-lis-1203 (\"AAP Reseller Day - Lisbon\") is on the Babylon cluster egret, in namespace user-ivasquez-redhat-com; a name-only lookup searched every cluster and only egret holds it. The event runs from 2026-12-03 to 2026-12-04 and was set up with 36 seats. It bundles 3 labs:\n\n| Lab | Workshop ID |\n|---|---|\n| Collection Trust Primer | w2gyh |\n| Controller as Code | m8rqe |\n| Rulebook Starter | t4ckz |\n\nNone of the three has provisioned any environments yet (ordered 0 each)."
+}

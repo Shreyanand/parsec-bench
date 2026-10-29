@@ -1,0 +1,105 @@
+{
+  "hosts": [
+    {
+      "name": "api-gw-mad-3",
+      "type": "Host",
+      "attrs": {
+        "display_name": "api-gw-mad-3",
+        "host_name": "api-gw-mad-3",
+        "address": "10.29.6.13",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "groups": [
+          "basket-edge"
+        ],
+        "last_check": 1796888310,
+        "last_check_result": {
+          "output": "HOSTALIVE OK - 10.29.6.13 rta 0.35 ms, loss 0%",
+          "state": 0,
+          "exit_status": 0
+        }
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "api-gw-mad-3!basket-resp-time",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Basket API response time",
+        "host_name": "api-gw-mad-3",
+        "state": 1,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "last_check": 1796888280,
+        "last_check_result": {
+          "output": "HTTP WARNING - basket p95 744 ms (warn 600 ms, crit 900 ms), p50 212 ms, 41.3 req/s",
+          "state": 1,
+          "exit_status": 1,
+          "performance_data": [
+            "p50=212ms;;;0",
+            "p95=744ms;600;900;0",
+            "rate=41.3;;;0"
+          ]
+        },
+        "check_command": "http_resp_pctl",
+        "vars": {
+          "percentiles": "50,95",
+          "window": "5m",
+          "warn_ms": 600,
+          "crit_ms": 900
+        }
+      }
+    },
+    {
+      "name": "api-gw-mad-3!tls-expiry",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Basket TLS cert",
+        "host_name": "api-gw-mad-3",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "last_check": 1796888280,
+        "last_check_result": {
+          "output": "SSL OK - cert for 'basket.internal' valid 61 more days",
+          "state": 0,
+          "exit_status": 0,
+          "performance_data": [
+            "days_left=61;21;7"
+          ]
+        }
+      }
+    },
+    {
+      "name": "api-gw-mad-3!upstream-5xx",
+      "type": "Service",
+      "attrs": {
+        "display_name": "Basket upstream 5xx rate",
+        "host_name": "api-gw-mad-3",
+        "state": 0,
+        "state_type": 1,
+        "acknowledgement": 0,
+        "downtime_depth": 0,
+        "enable_notifications": true,
+        "last_check": 1796888280,
+        "last_check_result": {
+          "output": "HTTP OK - 5xx rate 0.3% over 5m",
+          "state": 0,
+          "exit_status": 0,
+          "performance_data": [
+            "err_rate=0.3%;2;5;0;100"
+          ]
+        }
+      }
+    }
+  ],
+  "downtimes": [],
+  "comments": []
+}

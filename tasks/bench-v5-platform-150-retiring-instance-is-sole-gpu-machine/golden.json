@@ -1,0 +1,141 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_ocpv_cluster",
+      "args": {
+        "action": "list_machines",
+        "cluster": "ocpv-larch"
+      },
+      "result": {
+        "cluster": "ocpv-larch",
+        "machinesets": [
+          {
+            "name": "larch-6qz4t-gpu-us-east-2b",
+            "namespace": "openshift-machine-api",
+            "replicas": 1,
+            "ready_replicas": 1,
+            "available_replicas": 1
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2a",
+            "namespace": "openshift-machine-api",
+            "replicas": 3,
+            "ready_replicas": 3,
+            "available_replicas": 3
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2b",
+            "namespace": "openshift-machine-api",
+            "replicas": 3,
+            "ready_replicas": 3,
+            "available_replicas": 3
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2c",
+            "namespace": "openshift-machine-api",
+            "replicas": 3,
+            "ready_replicas": 3,
+            "available_replicas": 3
+          }
+        ],
+        "machineset_count": 4,
+        "machines": [
+          {
+            "name": "larch-6qz4t-gpu-us-east-2b-h7qvd",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-148-37.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2b/i-0b6d2f8e4c1a9735e"
+          },
+          {
+            "name": "larch-6qz4t-master-0",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-12-201.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2a/i-0a41d7c3e9b2f5618"
+          },
+          {
+            "name": "larch-6qz4t-master-1",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-140-77.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2b/i-0c93e5b1f7a4d2086"
+          },
+          {
+            "name": "larch-6qz4t-master-2",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-171-19.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2c/i-0e27b9d4a1c6f3850"
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2a-7m2kq",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-23-144.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2a/i-04f8c2a6e1b9d3570"
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2a-bx9pd",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-31-62.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2a/i-09d1e7b3c5a2f4086"
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2a-r4hwz",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-8-233.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2a/i-0f5a3c9e7d1b2468a"
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2b-d8nfl",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-152-9.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2b/i-02b7e4d9a6c1f3058"
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2b-k3tqs",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-133-188.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2b/i-06c3f1a8e5d2b9047"
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2b-w6vye",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-159-41.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2b/i-0d8e2b5f9c3a7164b"
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2c-c5jgm",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-180-126.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2c/i-03a9d6c2f8e1b5074"
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2c-p2xrn",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-191-53.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2c/i-07e1b4a9d3c6f2805"
+          },
+          {
+            "name": "larch-6qz4t-worker-us-east-2c-t9lbh",
+            "namespace": "openshift-machine-api",
+            "phase": "Running",
+            "node": "ip-10-0-166-240.us-east-2.compute.internal",
+            "provider_id": "aws:///us-east-2c/i-0c2f7e9a5b8d1463f"
+          }
+        ],
+        "machine_count": 13
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "Instance i-0b6d2f8e4c1a9735e is the Machine `larch-6qz4t-gpu-us-east-2b-h7qvd` on ocpv-larch (provider_id `aws:///us-east-2b/i-0b6d2f8e4c1a9735e`, phase Running), and its node is `ip-10-0-148-37.us-east-2.compute.internal`.\n\nIt is owned by the MachineSet `larch-6qz4t-gpu-us-east-2b`, which wants 1 replica and has 1 ready. It is the only machine in that MachineSet, so no other Machine in it can take over: the GPU workloads have nowhere to go until the MachineSet's replacement Machine is up. The three `worker-us-east-2b` Machines are a different MachineSet with no GPU.\n\nIts availability zone is us-east-2b. 5 of the cluster's 13 Machines are in that zone: the control-plane machine larch-6qz4t-master-1, the three workers larch-6qz4t-worker-us-east-2b-d8nfl, -k3tqs and -w6vye, and the GPU machine itself."
+}

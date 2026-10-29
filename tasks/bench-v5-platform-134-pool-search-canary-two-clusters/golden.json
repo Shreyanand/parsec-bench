@@ -1,0 +1,93 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "list_resource_pools",
+        "cluster": "condor",
+        "search": "rhel-edge-pool"
+      },
+      "result": {
+        "cluster": "condor",
+        "pools": [
+          {
+            "name": "rhel-edge-pool",
+            "namespace": "poolboy",
+            "min_available": 8,
+            "max_unready": 3,
+            "lifespan": {
+              "default": "3d",
+              "maximum": "7d",
+              "unclaimed": "2d"
+            },
+            "resource_handle_count": 11,
+            "provider_name": "rhel-edge-aws",
+            "resource_name": "rhel-edge"
+          },
+          {
+            "name": "rhel-edge-pool-canary",
+            "namespace": "poolboy",
+            "min_available": 2,
+            "max_unready": 1,
+            "lifespan": {
+              "default": "3d",
+              "maximum": "7d",
+              "unclaimed": "2d"
+            },
+            "resource_handle_count": 3,
+            "provider_name": "edge-canary-aws",
+            "resource_name": "rhel-edge"
+          }
+        ],
+        "count": 2,
+        "truncated": false
+      },
+      "is_error": false
+    },
+    {
+      "name": "query_babylon_catalog",
+      "args": {
+        "action": "list_resource_pools",
+        "cluster": "merlin",
+        "search": "rhel-edge-pool"
+      },
+      "result": {
+        "cluster": "merlin",
+        "pools": [
+          {
+            "name": "rhel-edge-pool",
+            "namespace": "poolboy",
+            "min_available": 6,
+            "max_unready": 3,
+            "lifespan": {
+              "default": "3d",
+              "maximum": "7d",
+              "unclaimed": "2d"
+            },
+            "resource_handle_count": 9,
+            "provider_name": "rhel-edge-azure",
+            "resource_name": "rhel-edge"
+          },
+          {
+            "name": "rhel-edge-pool-canary",
+            "namespace": "poolboy",
+            "min_available": 1,
+            "max_unready": 1,
+            "lifespan": {
+              "default": "3d",
+              "maximum": "7d",
+              "unclaimed": "2d"
+            },
+            "resource_handle_count": 2,
+            "provider_name": "edge-canary-azure",
+            "resource_name": "rhel-edge"
+          }
+        ],
+        "count": 2,
+        "truncated": false
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "rhel-edge-pool across condor and merlin (both in namespace poolboy):\n\n| cluster | min_available | max_unready | resource handles | provider_name |\n|---|---|---|---|---|\n| condor | 8 | 3 | 11 | rhel-edge-aws |\n| merlin | 6 | 3 | 9 | rhel-edge-azure |\n\nCombined: min_available 14, and 20 resource handles currently held.\n\nA search for rhel-edge-pool also returns rhel-edge-pool-canary on both clusters (condor 2/3, merlin 1/2, providers edge-canary-aws and edge-canary-azure). That is a separate pool, so it is not included in the totals above.\n"
+}

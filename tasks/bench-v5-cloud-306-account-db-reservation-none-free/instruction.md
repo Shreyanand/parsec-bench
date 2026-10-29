@@ -1,0 +1,1 @@
+I'm running a GPU workshop on 2026-10-20 and need 4 AWS sandbox accounts from the gpu-ee reservation. How many free accounts are left in that reservation as of the latest records? If there aren't enough, tell me who is holding the gpu-ee accounts so I can ask them to release one.

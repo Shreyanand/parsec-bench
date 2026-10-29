@@ -1,0 +1,181 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "controller": "east",
+          "job_id": 5148806
+        }
+      },
+      {
+        "name": "query_aws_account_db",
+        "args": {}
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "action": "describe_instances",
+          "account_id": "418092736615",
+          "region": "ap-southeast-2"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "account-id",
+        "any_of": [
+          "418092736615"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which AWS sandbox account hosts this lab",
+        "rationale": "the account id comes only from the sandbox DB; the log names the sandbox, not the id"
+      },
+      {
+        "id": "region",
+        "any_of": [
+          "ap-southeast-2"
+        ],
+        "ignore_case": true,
+        "asked_by": "in which region",
+        "rationale": "the region is set only in the provisioning log; the describe_instances default is us-east-1"
+      },
+      {
+        "id": "bastion-id",
+        "any_of": [
+          "i-07b3e19ac25d4f861"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is each one's instance id, type and state",
+        "rationale": "the bastion's instance id, returned only by describe_instances in the lab's region"
+      },
+      {
+        "id": "bastion-stopped",
+        "any_of": [
+          "stopped"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is each one's instance id, type and state",
+        "rationale": "the bastion's state; an empty default-region lookup never shows it"
+      },
+      {
+        "id": "node-type",
+        "any_of": [
+          "m6i.xlarge"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is each one's instance id, type and state",
+        "rationale": "the nodes' instance type, only in describe_instances"
+      }
+    ],
+    "counts": [
+      {
+        "id": "instances",
+        "value": 3,
+        "nouns": [
+          "instances",
+          "instance",
+          "EC2 instances",
+          "machines",
+          "VMs",
+          "servers",
+          "hosts"
+        ],
+        "window": 4,
+        "extra_any_of": [
+          "instance_count: 3",
+          "instance_count 3",
+          "three EC2",
+          "3 EC2"
+        ],
+        "ignore_case": true,
+        "asked_by": "How many EC2 instances does the lab have",
+        "rationale": "describe_instances in ap-southeast-2 returns 3; the default region returns 0",
+        "derived": true,
+        "note": "instance_count is 3 in ap-southeast-2: bastion (stopped), node1 and node2 (running)."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "no-instances",
+        "none_of": [
+          "the lab has no instances.",
+          "the lab has no instances,",
+          "the lab has no instances;",
+          "the lab has no instances:",
+          "the lab has no instances at all",
+          "the lab has no instances left",
+          "the lab has no instances anymore",
+          "the lab has no EC2 instances.",
+          "the lab has no EC2 instances,",
+          "the lab has no EC2 instances;",
+          "the lab has no EC2 instances:",
+          "the lab has no EC2 instances at all",
+          "the lab has no EC2 instances left",
+          "the lab has no EC2 instances anymore",
+          "the lab has no running instances.",
+          "the lab has no running instances,",
+          "the lab has no running instances;",
+          "the lab has no running instances:",
+          "the lab has no running instances at all",
+          "the lab has no running instances left",
+          "the lab has no running instances anymore",
+          "the lab has 0 instances.",
+          "the lab has 0 instances,",
+          "the lab has 0 instances;",
+          "the lab has 0 instances:",
+          "the lab has 0 instances at all",
+          "the lab has 0 instances left",
+          "the lab has 0 instances anymore",
+          "the lab has zero instances.",
+          "the lab has zero instances,",
+          "the lab has zero instances;",
+          "the lab has zero instances:",
+          "the lab has zero instances at all",
+          "the lab has zero instances left",
+          "the lab has zero instances anymore",
+          "there are no instances in the lab",
+          "no instances exist for the lab",
+          "the lab's instances are gone",
+          "the lab no longer exists",
+          "the lab does not exist anymore"
+        ],
+        "ignore_case": true,
+        "rationale": "the default-region lookup is empty; the lab's three instances are in ap-southeast-2"
+      },
+      {
+        "id": "torn-down",
+        "none_of": [
+          "has been torn down",
+          "was torn down",
+          "has been deprovisioned",
+          "was deprovisioned",
+          "has been destroyed",
+          "was destroyed",
+          "already been cleaned up",
+          "the lab was deleted",
+          "the lab has been deleted",
+          "instances were terminated",
+          "instances have been terminated",
+          "instances were deleted",
+          "instances have been deleted"
+        ],
+        "ignore_case": true,
+        "rationale": "nothing was destroyed: two nodes run and the bastion is stopped"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

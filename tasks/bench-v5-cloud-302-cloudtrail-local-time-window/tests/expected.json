@@ -1,0 +1,105 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_cloudtrail",
+        "args": {}
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "actor",
+        "any_of": [
+          "rkovacs"
+        ],
+        "ignore_case": true,
+        "asked_by": "who deleted security groups in that account during that window",
+        "rationale": "rkovacs owns every DeleteSecurityGroup event in 07:00-08:30 UTC (09:00-10:30 CEST); the name is only in the tool result"
+      },
+      {
+        "id": "utc-window",
+        "any_of": [
+          "07:00",
+          "7:00",
+          "08:30",
+          "8:30",
+          "UTC+2",
+          "UTC +2",
+          "+02:00",
+          "two hours ahead",
+          "2 hours ahead"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "note": "CloudTrail event_time values in the result are UTC (Z suffix), and Paris is on CEST (UTC+2) on 2026-09-03, so the stated 09:00-10:30 Paris window is 07:00-08:30 in the returned timestamps.",
+        "asked_by": "between 09:00 and 10:30 Paris time",
+        "rationale": "states the conversion to UTC that the query depends on; none of these forms is in the instruction"
+      }
+    ],
+    "counts": [
+      {
+        "id": "deletions",
+        "value": 3,
+        "nouns": [
+          "security groups",
+          "deletions",
+          "DeleteSecurityGroup",
+          "events",
+          "calls",
+          "groups"
+        ],
+        "window": 5,
+        "asked_by": "how many they deleted",
+        "rationale": "three events in the converted window; the UTC misreading gives 2, the whole day gives 5, the decoy account adds 1"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "blames-tbellamy",
+        "ignore_case": true,
+        "none_of": [
+          "tbellamy deleted",
+          "deleted by tbellamy",
+          "tbellamy was responsible",
+          "tbellamy is responsible",
+          "tbellamy did it",
+          "it was tbellamy",
+          "tbellamy broke",
+          "tbellamy removed",
+          "removed by tbellamy",
+          "culprit is tbellamy",
+          "culprit was tbellamy",
+          "tbellamy made the deletions",
+          "`tbellamy` deleted",
+          "**tbellamy** deleted",
+          "deleted by `tbellamy`",
+          "deleted by **tbellamy**"
+        ],
+        "attributed_to": [
+          "outside your window",
+          "outside the window",
+          "outside that window",
+          "after the window",
+          "read 09:00-10:30 as UTC",
+          "read as UTC",
+          "treated as UTC",
+          "misread as UTC"
+        ],
+        "rationale": "tbellamy's two deletions fall in 09:00-10:30 only when the Paris window is misread as UTC; an honest answer may mention them as outside the window, hence the specific excuses"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

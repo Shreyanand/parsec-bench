@@ -1,0 +1,128 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "unordered-subset",
+    "actual": [
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "summary",
+          "start_date": "2026-08-01",
+          "end_date": "2026-09-01"
+        }
+      },
+      {
+        "name": "query_azure_costs",
+        "args": {
+          "start_date": "2026-08-01",
+          "end_date": "2026-08-31"
+        }
+      },
+      {
+        "name": "query_gcp_costs",
+        "args": {
+          "start_date": "2026-08-01",
+          "end_date": "2026-08-31"
+        }
+      },
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [],
+          "start_date": "2026-08-01",
+          "end_date": "2026-09-01",
+          "group_by": "SERVICE"
+        }
+      },
+      {
+        "name": "render_chart",
+        "args": {
+          "chart_type": "doughnut",
+          "title": "RHDP Cloud Spend by Provider \u2014 August 2026",
+          "labels": [
+            "AWS ($184,226)",
+            "Azure ($52,919)",
+            "GCP ($0)"
+          ],
+          "datasets": [
+            {
+              "label": "August 2026 Spend (USD)",
+              "data": [
+                184226.4,
+                52918.75,
+                0
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "gcp-unavailable",
+        "ignore_case": true,
+        "any_of": [
+          "gcp query failed",
+          "gcp returned an error",
+          "gcp call returned an error",
+          "gcp error",
+          "no matching cost data",
+          "gcp unavailable",
+          "gcp is unavailable",
+          "gcp data is unavailable",
+          "gcp failed",
+          "couldn't get gcp",
+          "could not get gcp",
+          "no gcp figure",
+          "gcp | unavailable"
+        ],
+        "asked_by": "GCP for the same month",
+        "rationale": "the GCP call returns the documented in-band not-found error; the agent must report it as a failure, not as data",
+        "derived": true,
+        "note": "The seed has a periods row for 2026-08-01 to 2026-08-31 but no gcp_cost_results row, so per SKILL.md the GCP call returns the in-band error {\"error\": \"GCP BigQuery query failed: no matching cost data\"}, which the agent reports as GCP being unavailable."
+      },
+      {
+        "id": "total-excludes-gcp",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "excludes gcp",
+          "excluding gcp",
+          "without gcp",
+          "aws and azure only",
+          "only aws and azure",
+          "aws + azure only",
+          "not a three-cloud",
+          "not an all-cloud",
+          "not the all-cloud",
+          "partial figure",
+          "partial total",
+          "two of the three",
+          "can't give you a single all-cloud",
+          "cannot give you a single all-cloud",
+          "gcp pending"
+        ],
+        "asked_by": "one headline number: what we spent across all three clouds in August 2026",
+        "rationale": "the aggregate is the deliverable: with one provider failed, any sum is incomplete and must be labelled so",
+        "note": "AWS (184,226.40) and Azure (52,918.75) return totals but the GCP call returns an error, so any sum covers AWS and Azure only and is not the three-cloud figure."
+      }
+    ],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

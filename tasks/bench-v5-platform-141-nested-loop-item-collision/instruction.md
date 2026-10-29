@@ -1,0 +1,3 @@
+The pipeline guild workshop for GUID t6bvz failed in job 287455 on the `event0` AAP2 controller while it was granting each seat its roles. Someone on my team reckons the seat projects simply weren't ready yet when the RoleBindings went in, and wants to add a pause and retries before that step.
+
+Before we do that: which project was each RoleBinding sent to, did the seat projects actually get created, and what really went wrong? Read the role's task files in the repository the job ran from, cite the line that puts the RoleBinding in the wrong project as `owner/repo:path:line`, and tell me what to change.

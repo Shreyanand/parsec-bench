@@ -1,0 +1,102 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 238114
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "lakehouse benchmark"
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {
+          "search": "ocp-lakehouse-bench"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.babylon_guid, p.catalog_id, p.status, ci.name, ci.description FROM provisions p JOIN catalog_items ci ON p.catalog_id = ci.id WHERE p.babylon_guid = 'wd4kx' LIMIT 5"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "analytics_bu/ocp-lakehouse-bench/common.yaml",
+          "ref": "main"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "analytics_bu/ocp-lakehouse-bench/prod.yaml",
+          "ref": "main"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "why-over",
+        "any_of": [
+          "12 more",
+          "exceeds the 64",
+          "over the 64",
+          "more than the 64",
+          "76 vCPUs requested",
+          "needs 76",
+          "requests 76",
+          "asks for 76",
+          "76 > 64",
+          "76 vs 64",
+          "76 versus 64",
+          "76 against"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "explain why the request overflowed it",
+        "rationale": "the synthesis: the sum from the catalog item compared against the limit from the log",
+        "note": "common.yaml sets one m6i.xlarge bastion (4 vCPU), 3 m6i.2xlarge control nodes (8 vCPU) and 3 m6i.4xlarge workers (16 vCPU), 76 vCPU in total, and the job log gives the account's vCPU limit as 64."
+      }
+    ],
+    "required_total": 2,
+    "counts_missed": [],
+    "counts_total": 2,
+    "citations_missed": [
+      {
+        "id": "worker-type-line",
+        "repo": "rhpds/agnosticv",
+        "path": "analytics_bu/ocp-lakehouse-bench/common.yaml",
+        "line": 19,
+        "asked_by": "cite the line that sets the worker instance size",
+        "rationale": "the line number is counted from the seeded file; it proves the agnosticv file, not the agnosticd defaults, was read"
+      }
+    ],
+    "citations_total": 1,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 2
+  }
+}

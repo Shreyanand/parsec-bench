@@ -1,0 +1,91 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": [
+    {
+      "sandbox_account_id": "sbx-124-1",
+      "account_id": "730184562391",
+      "name": "sandbox7731",
+      "available": false,
+      "guid": "x4vbn",
+      "owner": "ekarlsson",
+      "owner_email": "ekarlsson@example.com",
+      "envtype": "ocp4-cluster",
+      "reservation": "adriatic-summit-2609",
+      "zone": "sandbox7731.sandbox.example.net",
+      "hosted_zone_id": "Z0718342JX3NQ8PLW5RTA",
+      "comment": "event lab, cleanup pending",
+      "conan_status": "cleanup-failed",
+      "service_uuid": "5f1c2e7a-1241-4b6d-9e3a-7c51d0a8b12f",
+      "annotations": {
+        "event": "Adriatic Summit 2026",
+        "cost_center": "EVT-4471"
+      }
+    },
+    {
+      "sandbox_account_id": "sbx-124-2",
+      "account_id": "730184562392",
+      "name": "sandbox7732",
+      "available": false,
+      "guid": "d9kzr",
+      "owner": "ekarlsson",
+      "owner_email": "ekarlsson@example.com",
+      "envtype": "ocp4-cluster",
+      "reservation": "adriatic-summit-2609",
+      "zone": "sandbox7732.sandbox.example.net",
+      "hosted_zone_id": "Z0904417MS2YDK3HQBV8C",
+      "comment": "event lab",
+      "conan_status": "in-use",
+      "service_uuid": "5f1c2e7a-1242-4b6d-9e3a-7c51d0a8b22f",
+      "annotations": {
+        "event": "Adriatic Summit 2026",
+        "cost_center": "EVT-4471"
+      }
+    },
+    {
+      "sandbox_account_id": "sbx-124-3",
+      "account_id": "730184562393",
+      "name": "sandbox7733",
+      "available": true,
+      "guid": "",
+      "owner": "ekarlsson",
+      "owner_email": "ekarlsson@example.com",
+      "envtype": "ocp4-cluster",
+      "reservation": "adriatic-summit-2609",
+      "zone": "sandbox7733.sandbox.example.net",
+      "hosted_zone_id": "Z0613305PN7KXW1TYE4QD",
+      "comment": "returned to pool 2026-09-27",
+      "conan_status": "clean",
+      "service_uuid": "5f1c2e7a-1243-4b6d-9e3a-7c51d0a8b32f",
+      "annotations": {
+        "event": "Adriatic Summit 2026",
+        "cost_center": "EVT-4471"
+      }
+    },
+    {
+      "sandbox_account_id": "sbx-124-4",
+      "account_id": "730184562399",
+      "name": "sandbox7790",
+      "available": false,
+      "guid": "j8tfw",
+      "owner": "lmakinen",
+      "owner_email": "lmakinen@example.com",
+      "envtype": "ocp4-cluster",
+      "reservation": "baltic-roadshow-2610",
+      "zone": "sandbox7790.sandbox.example.net",
+      "hosted_zone_id": "Z0577120QW4LMB8RCX2NS",
+      "comment": "roadshow lab",
+      "conan_status": "in-use",
+      "service_uuid": "5f1c2e7a-1244-4b6d-9e3a-7c51d0a8b42f",
+      "annotations": {
+        "event": "Adriatic Summit 2026",
+        "cost_center": "EVT-4471"
+      }
+    }
+  ]
+}

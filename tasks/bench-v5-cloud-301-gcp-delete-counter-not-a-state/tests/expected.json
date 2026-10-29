@@ -1,0 +1,136 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_gcp_projects",
+        "args": {
+          "action": "list_projects"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "dr-p4xnl",
+        "any_of": [
+          "openenv-p4xnl"
+        ],
+        "ignore_case": true,
+        "asked_by": "and which ones",
+        "rationale": "openenv-p4xnl is one of the three rows whose stored state is DELETE_REQUESTED; only the listing names it"
+      },
+      {
+        "id": "dr-d6vjs",
+        "any_of": [
+          "openenv-d6vjs"
+        ],
+        "ignore_case": true,
+        "asked_by": "and which ones",
+        "rationale": "openenv-d6vjs is one of the three rows whose stored state is DELETE_REQUESTED; only the listing names it"
+      },
+      {
+        "id": "dr-r8cyh",
+        "any_of": [
+          "openenv-r8cyh"
+        ],
+        "ignore_case": true,
+        "asked_by": "and which ones",
+        "rationale": "openenv-r8cyh is one of the three rows whose stored state is DELETE_REQUESTED; only the listing names it"
+      },
+      {
+        "id": "unspecified-flagged",
+        "any_of": [
+          "STATE_UNSPECIFIED",
+          "state unspecified",
+          "unspecified state",
+          "state is unspecified"
+        ],
+        "ignore_case": true,
+        "asked_by": "flag anything in that folder whose state looks off",
+        "rationale": "the fourth non-ACTIVE row is STATE_UNSPECIFIED; naming its state is what separates reading rows from quoting the delete_requested counter"
+      }
+    ],
+    "counts": [
+      {
+        "id": "scheduled-count",
+        "value": 3,
+        "nouns": [
+          "projects",
+          "scheduled for deletion",
+          "pending deletion",
+          "DELETE_REQUESTED"
+        ],
+        "window": 5,
+        "asked_by": "How many projects in the RHDP open-environments folder are already scheduled for deletion",
+        "rationale": "three rows are DELETE_REQUESTED; the computed delete_requested field says 4 (count - active) and ACTIVE is 5, so neither neighbour figure is 3"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "counter-as-count",
+        "ignore_case": true,
+        "none_of": [
+          "4 projects are scheduled for deletion",
+          "4 projects scheduled for deletion",
+          "four projects are scheduled for deletion",
+          "four projects scheduled for deletion",
+          "4 projects are pending deletion",
+          "4 projects pending deletion",
+          "four projects are pending deletion",
+          "4 projects are marked for deletion",
+          "4 projects are already scheduled",
+          "four projects are already scheduled",
+          "4 are scheduled for deletion",
+          "4 are pending deletion",
+          "4 projects in delete_requested",
+          "4 projects are in delete_requested",
+          "openenv-w3gkt is scheduled for deletion",
+          "openenv-w3gkt is pending deletion",
+          "openenv-w3gkt is marked for deletion",
+          "openenv-w3gkt is delete_requested",
+          "openenv-w3gkt is in delete_requested",
+          "openenv-w3gkt is also scheduled for deletion",
+          "openenv-w3gkt is also pending deletion",
+          "openenv-w3gkt is being deleted",
+          "`openenv-w3gkt` is scheduled for deletion",
+          "`openenv-w3gkt` is pending deletion",
+          "`openenv-w3gkt` is marked for deletion",
+          "`openenv-w3gkt` is delete_requested",
+          "`openenv-w3gkt` is in delete_requested",
+          "`openenv-w3gkt` is also scheduled for deletion",
+          "`openenv-w3gkt` is also pending deletion",
+          "`openenv-w3gkt` is being deleted",
+          "**openenv-w3gkt** is scheduled for deletion",
+          "**openenv-w3gkt** is pending deletion",
+          "**openenv-w3gkt** is marked for deletion",
+          "**openenv-w3gkt** is delete_requested",
+          "**openenv-w3gkt** is in delete_requested",
+          "**openenv-w3gkt** is also scheduled for deletion",
+          "**openenv-w3gkt** is also pending deletion",
+          "**openenv-w3gkt** is being deleted",
+          "w3gkt is scheduled for deletion",
+          "w3gkt is pending deletion",
+          "w3gkt is marked for deletion",
+          "w3gkt is delete_requested",
+          "w3gkt is in delete_requested",
+          "w3gkt is also scheduled for deletion",
+          "w3gkt is also pending deletion",
+          "w3gkt is being deleted"
+        ],
+        "rationale": "the plausible wrong answer reports the delete_requested counter (count minus ACTIVE, SKILL.md derived fields) as the number scheduled for deletion and so counts openenv-w3gkt"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  }
+}

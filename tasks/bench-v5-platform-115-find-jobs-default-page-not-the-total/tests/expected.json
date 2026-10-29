@@ -1,0 +1,124 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "controller": "partner0",
+          "status": "failed"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "top-template",
+        "any_of": [
+          "retail-pos-edge-lab"
+        ],
+        "ignore_case": true,
+        "asked_by": "Which job template accounts for the most of those failures",
+        "rationale": "the right template only wins once all 57 rows are fetched; on the default page fintech-api-gateway-lab leads"
+      }
+    ],
+    "counts": [
+      {
+        "id": "failed-total",
+        "value": 57,
+        "nouns": [
+          "failed",
+          "failures",
+          "failure",
+          "jobs"
+        ],
+        "window": 5,
+        "asked_by": "Exactly how many jobs on `partner0` ended with status `failed` in that month",
+        "rationale": "57 rows match; the default page returns 50 with total 50, so 57 needs a larger max_results"
+      },
+      {
+        "id": "top-count",
+        "value": 19,
+        "nouns": [
+          "failed",
+          "failures",
+          "jobs",
+          "retail-pos-edge-lab"
+        ],
+        "window": 6,
+        "asked_by": "and how many it had",
+        "rationale": "19 over the month; the first page shows 15"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "fifty-is-the-month",
+        "none_of": [
+          "50 failed",
+          "50 failures",
+          "50 jobs failed",
+          "fifty failed"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "first page",
+          "only the first 50",
+          "default page",
+          "page of 50",
+          "default max_results",
+          "capped at 50",
+          "cut at 50",
+          "the first call",
+          "first call",
+          "page cut"
+        ],
+        "rationale": "50 is the default max_results page; stating it as the month's count is the trap"
+      },
+      {
+        "id": "page-top-template",
+        "none_of": [
+          "fintech-api-gateway-lab had the most",
+          "fintech-api-gateway-lab: 18 failed jobs (the most)",
+          "most failures was fintech",
+          "fintech-api-gateway-lab.prod-provision had the most",
+          "most failures is fintech",
+          "fintech-api-gateway-lab is the worst",
+          "fintech-api-gateway-lab was the worst"
+        ],
+        "ignore_case": true,
+        "attributed_to": [
+          "first page",
+          "only the first 50",
+          "default page",
+          "page of 50",
+          "default max_results",
+          "capped at 50",
+          "cut at 50",
+          "the first call",
+          "first call",
+          "page cut",
+          "looked like"
+        ],
+        "rationale": "the page-only winner"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "floors": {
+    "exempt": [
+      "mute",
+      "nocall"
+    ],
+    "reason": "Weak discriminator, flagged in the baseline report (controller ruling 2026-10-13, in place of the owner-approved breakdown counts; flagged to the owner): the contract grades three required facts (counts failed-total and top-count, required top-template) and two forbidden facts at weights 0.3/0.7, so an agent that makes the golden calls and asserts nothing keeps the two forbidden facts and collects 0.3 + 0.7 x 2/5 = 0.580 (mute), and one that makes no call collects 0.280 (nocall), above the 0.50 / 0.25 caps; the fabricate probe scores 0.300 (max 0.440, below mute). A reweight to 0.25/0.75 alone gives 0.550 / 0.300 and still fails. The owner-approved counts for the asked 'one-line breakdown per template' (fintech-count 18, telco-count 12, claims-count 8) were tried (d8bc265) and reverted, because fresh honest answers that state the breakdown correctly lost them: 3 of 13 fresh honest breakdown answers lost points (0.7375, 0.9125, 0.9125): a free-form breakdown can put a template's figure more than 6 tokens from its name (number-first lines, an inserted parenthetical, a long clause). So they were not kept."
+  }
+}

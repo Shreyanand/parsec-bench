@@ -1,0 +1,166 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "west",
+          "job_id": 512944
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs"
+        }
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "agnosticd",
+          "repo": "agnosticd-v2",
+          "path": "ansible/configs/iot-fleet-sim/default_vars_ec2.yml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "cancel_job"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "cancel"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "stop_job"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "already-exists",
+        "any_of": [
+          "AlreadyExistsException",
+          "already exists"
+        ],
+        "ignore_case": true,
+        "asked_by": "why it failed",
+        "rationale": "the literal only the job log supplies"
+      },
+      {
+        "id": "sibling-job",
+        "any_of": [
+          "512937"
+        ],
+        "ignore_case": true,
+        "asked_by": "whether anything else on that controller touched this lab",
+        "rationale": "only find_jobs without a failed-only filter surfaces the running sibling"
+      },
+      {
+        "id": "sibling-running",
+        "any_of": [
+          "still running",
+          "is running",
+          "was running",
+          "running"
+        ],
+        "ignore_case": true,
+        "asked_by": "whether anything else on that controller touched this lab",
+        "rationale": "the sibling's status; a status=failed filter would hide it"
+      },
+      {
+        "id": "guid-only-name",
+        "any_of": [
+          "GUID alone",
+          "guid alone",
+          "only the guid",
+          "only from the guid",
+          "derived from the guid",
+          "built from the guid",
+          "same stack name",
+          "always collide"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "why it failed",
+        "rationale": "the stack-name rule is only in the fetched defaults",
+        "note": "default_vars_ec2.yml sets stack_name: \"{{ env_type }}-{{ guid }}\", and the log's failing stack is iot-fleet-sim-h8cuy, so every run for GUID h8cuy creates the same stack name while job 512937 still holds it."
+      }
+    ],
+    "counts": [
+      {
+        "id": "guid-jobs",
+        "value": 2,
+        "nouns": [
+          "provision jobs",
+          "jobs",
+          "runs",
+          "provisions"
+        ],
+        "window": 4,
+        "asked_by": "how many provision runs exist for the GUID",
+        "rationale": "find_jobs.total for the GUID; the same-template job for x4pzd must not be counted"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "wrong-cause",
+        "none_of": [
+          "template bug",
+          "leftover stack",
+          "orphaned stack",
+          "stale stack",
+          "previous failed run",
+          "x4pzd created the iot-fleet-sim stack",
+          "x4pzd created the stack",
+          "512902 created the iot-fleet-sim stack",
+          "512902 created the stack",
+          "x4pzd already created",
+          "512902 already created",
+          "was created by job 512902",
+          "was created by 512902",
+          "was created by x4pzd",
+          "was created by the x4pzd",
+          "stack belongs to x4pzd",
+          "stack belongs to 512902",
+          "stack belongs to job 512902",
+          "x4pzd left the stack",
+          "512902 left the stack",
+          "left behind by x4pzd",
+          "left behind by 512902",
+          "left behind by job 512902",
+          "left over from x4pzd",
+          "left over from 512902",
+          "left over from job 512902",
+          "collided with x4pzd",
+          "collided with 512902",
+          "collided with job 512902",
+          "x4pzd owns the",
+          "512902 owns the"
+        ],
+        "ignore_case": true,
+        "rationale": "the stack belongs to a live sibling run; calling it leftover or a template defect, or dragging in the other GUID's job, is the wrong inference"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

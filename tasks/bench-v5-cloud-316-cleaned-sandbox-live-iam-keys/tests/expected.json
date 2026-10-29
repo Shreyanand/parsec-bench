@@ -1,0 +1,225 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "sandbox9174"
+        }
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "318274950613",
+          "action": "list_users"
+        }
+      }
+    ],
+    "forbidden": []
+  },
+  "answer": {
+    "fold_markup": true,
+    "required": [
+      {
+        "id": "account-id",
+        "any_of": [
+          "318274950613"
+        ],
+        "ignore_case": true,
+        "asked_by": "what is its AWS account id",
+        "rationale": "the account DB maps sandbox9174 to 318274950613; the instruction gives only the name"
+      },
+      {
+        "id": "leftover-lab-admin",
+        "any_of": [
+          "lab-admin-7rq2m"
+        ],
+        "ignore_case": true,
+        "asked_by": "which IAM users does it hold besides rhdp-audit-ro",
+        "rationale": "a leftover user from the previous event; only list_users names it"
+      },
+      {
+        "id": "leftover-ci-deployer",
+        "any_of": [
+          "ci-deployer"
+        ],
+        "ignore_case": true,
+        "asked_by": "which IAM users does it hold besides rhdp-audit-ro",
+        "rationale": "a second leftover user, whose key is Inactive; only list_users names it"
+      },
+      {
+        "id": "active-key-1",
+        "any_of": [
+          "AKIA9NC3H6P1LBAD7K21"
+        ],
+        "ignore_case": true,
+        "asked_by": "give me the key ids",
+        "rationale": "one of lab-admin-7rq2m's two Active keys"
+      },
+      {
+        "id": "active-key-2",
+        "any_of": [
+          "AKIA9NC3H6P1LBAD7K38"
+        ],
+        "ignore_case": true,
+        "asked_by": "give me the key ids",
+        "rationale": "the other Active key, created 2026-10-01"
+      },
+      {
+        "id": "console-after-cleanup",
+        "any_of": [
+          "2026-10-07",
+          "October 7",
+          "7 October",
+          "Oct 7",
+          "7 Oct",
+          "10/07",
+          "07/10/2026"
+        ],
+        "ignore_case": true,
+        "asked_by": "has anyone signed in to the console with a password since the cleanup",
+        "rationale": "lab-admin-7rq2m's password_last_used is 2026-10-07T09:12:40Z, after the 2026-10-06 cleanup time in the account DB comment; ci-deployer's 2026-09-30 is before it"
+      },
+      {
+        "id": "not-safe",
+        "derived": true,
+        "note": "The account DB row says available and conan_status clean, but list_users returns lab-admin-7rq2m with two Active access keys and a console sign-in on 2026-10-07, after the cleanup recorded in the row's comment, so the agent concludes the account must not be handed over yet.",
+        "any_of": [
+          "not safe",
+          "isn't safe",
+          "is not safe",
+          "unsafe",
+          "not clean",
+          "isn't clean",
+          "not ready",
+          "isn't ready",
+          "should not be handed",
+          "shouldn't be handed",
+          "not be handed",
+          "hold off",
+          "not hand it over",
+          "n't hand it over",
+          "keep it back",
+          "keep it out of",
+          "pull it from",
+          "do not give",
+          "don't give",
+          "should not go",
+          "shouldn't go",
+          "no, it is not",
+          "no, it's not",
+          "safe to hand over: no",
+          "safe to hand over? no",
+          "not until",
+          "only after",
+          "needs another cleanup",
+          "needs to be re-cleaned",
+          "re-run the cleanup",
+          "rerun the cleanup",
+          "re-clean",
+          "cleanup missed",
+          "cleanup did not",
+          "cleanup didn't",
+          "cleanup failed"
+        ],
+        "ignore_case": true,
+        "asked_by": "is it safe to hand over",
+        "rationale": "the clean flag is contradicted by IAM: a leftover admin user holds working keys and signed in after cleanup"
+      }
+    ],
+    "counts": [
+      {
+        "id": "active-keys",
+        "value": 2,
+        "nouns": [
+          "active",
+          "active keys",
+          "active access keys",
+          "keys are still active",
+          "still active",
+          "working keys",
+          "usable keys"
+        ],
+        "window": 5,
+        "asked_by": "how many of their access keys are still Active",
+        "rationale": "two Active keys, both on lab-admin-7rq2m; counting every key gives 3, counting users with a key gives 2 users (not keys) and reading ci-deployer's Inactive key as live gives 3"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "account-declared-clean",
+        "ignore_case": true,
+        "none_of": [
+          "clean and ready",
+          "clean and safe",
+          "ready and clean",
+          "safe and clean",
+          "safe to hand over as is",
+          "safe to hand over as-is",
+          "ready to hand over as is",
+          "ready to hand over as-is",
+          "can be handed over as is",
+          "can be handed over as-is",
+          "good to hand over",
+          "go ahead and hand",
+          "yes, it is safe",
+          "yes, it's safe",
+          "yes, hand it over",
+          "yes, it can be handed",
+          "safe to hand over: yes",
+          "ready for handover: yes",
+          "safe to hand over? yes",
+          "no leftover users",
+          "no leftover IAM users",
+          "no leftover keys",
+          "no leftovers",
+          "clean bill of health",
+          "passes the handover check",
+          "nothing left to clean"
+        ],
+        "rationale": "trusting conan_status clean and available true hands an account with a leftover admin and working keys to the next workshop; conditional readiness after a fix is not forbidden, only unconditional claims"
+      },
+      {
+        "id": "no-active-keys",
+        "ignore_case": true,
+        "none_of": [
+          "there are no active access keys",
+          "there are no active keys",
+          "no access keys are active",
+          "no keys are active",
+          "none of the keys are active",
+          "none of the access keys are active",
+          "all access keys are inactive",
+          "all keys are inactive",
+          "all of the access keys are inactive",
+          "every access key is inactive",
+          "both access keys are inactive",
+          "both keys are inactive",
+          "no working access keys",
+          "no working keys",
+          "no usable access keys",
+          "no usable keys",
+          "active keys: none",
+          "active access keys: none",
+          "active keys: 0",
+          "active access keys: 0",
+          "7rq2m has no access keys",
+          "7rq2m has no active",
+          "7rq2m's keys are inactive",
+          "7rq2m's keys are both inactive"
+        ],
+        "rationale": "lab-admin-7rq2m holds two Active keys; claiming none are active is the reading of an agent that stopped at the account DB or read only ci-deployer's Inactive key"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

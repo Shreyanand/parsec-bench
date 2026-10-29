@@ -1,0 +1,111 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [
+    {
+      "azure_cost_result_id": "azr-h3d-0930",
+      "period_id": "per-az-h3d-0930",
+      "source": "cache",
+      "subscriptions_queried": "1",
+      "period": {
+        "start": "2026-09-01",
+        "end": "2026-09-30"
+      },
+      "cache_last_refresh": "2026-09-17T04:10:00Z",
+      "results": [
+        {
+          "subscription_name": "pool-62-819",
+          "services": {
+            "Virtual Machines": {
+              "cost": 4981.75,
+              "meter_subcategories": {
+                "Ev5 Series": 3104.55,
+                "Dasv5 Series": 1877.2
+              }
+            },
+            "Azure Database for PostgreSQL": {
+              "cost": 655.4,
+              "meter_subcategories": {
+                "Flexible Server Burstable": 655.4
+              }
+            },
+            "Storage": {
+              "cost": 402.18,
+              "meter_subcategories": {
+                "Premium SSD v2 Disks": 402.18
+              }
+            }
+          },
+          "total": 6039.33,
+          "gpu_cost": 0.0
+        }
+      ],
+      "total_cost": 6039.33
+    }
+  ],
+  "azure_service_costs": [
+    {
+      "azure_service_cost_id": "azsc-h3d-pool-62-819-virtual-machines",
+      "cost": 4981.75,
+      "meter_subcategories": {
+        "Ev5 Series": 3104.55,
+        "Dasv5 Series": 1877.2
+      }
+    },
+    {
+      "azure_service_cost_id": "azsc-h3d-pool-62-819-azure-database-for-postgresql",
+      "cost": 655.4,
+      "meter_subcategories": {
+        "Flexible Server Burstable": 655.4
+      }
+    },
+    {
+      "azure_service_cost_id": "azsc-h3d-pool-62-819-storage",
+      "cost": 402.18,
+      "meter_subcategories": {
+        "Premium SSD v2 Disks": 402.18
+      }
+    }
+  ],
+  "azure_subscription_costs": [
+    {
+      "subscription_name": "pool-62-819",
+      "services": {
+        "Virtual Machines": {
+          "cost": 4981.75,
+          "meter_subcategories": {
+            "Ev5 Series": 3104.55,
+            "Dasv5 Series": 1877.2
+          }
+        },
+        "Azure Database for PostgreSQL": {
+          "cost": 655.4,
+          "meter_subcategories": {
+            "Flexible Server Burstable": 655.4
+          }
+        },
+        "Storage": {
+          "cost": 402.18,
+          "meter_subcategories": {
+            "Premium SSD v2 Disks": 402.18
+          }
+        }
+      },
+      "total": 6039.33,
+      "gpu_cost": 0.0,
+      "azure_subscription_cost_id": "azsc-h3d-pool-62-819"
+    }
+  ],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [],
+  "gcp_cost_results": [],
+  "periods": [
+    {
+      "period_id": "per-az-h3d-0930",
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    }
+  ]
+}

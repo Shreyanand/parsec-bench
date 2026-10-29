@@ -1,0 +1,56 @@
+{
+  "catalog_items": [],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/render_farm_nodes/tasks/main.yml",
+      "content": "---\n# render_farm_nodes: GPU render nodes for the render farm workshop\n\n- name: Show the target region\n  ansible.builtin.debug:\n    msg: \"Deploying {{ guid }} to {{ aws_region }}\"\n\n- name: Launch the render nodes\n  amazon.aws.ec2_instance:\n    region: \"{{ aws_region }}\"\n    image_id: ami-0c7d41e9b25f83a16    # RHEL 9 render image\n    instance_type: \"{{ render_farm_node_type }}\"\n    count: \"{{ render_farm_node_count }}\"\n    key_name: \"{{ guid }}-key\"\n    vpc_subnet_id: \"{{ render_farm_subnet_id }}\"\n    tags:\n      guid: \"{{ guid }}\"\n      lab_role: render-node\n    wait: true\n  register: r_render_nodes\n\n- name: Wait for the render nodes to pass status checks\n  amazon.aws.ec2_instance_info:\n    region: \"{{ aws_region }}\"\n    instance_ids: \"{{ r_render_nodes.instance_ids }}\"\n  register: r_render_info\n  until: r_render_info.instances | map(attribute='state.name') | unique == ['running']\n  retries: 30\n  delay: 10\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/render_farm_nodes/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/render_farm_nodes/tasks/main.yml",
+      "content": "---\n# render_farm_nodes: GPU render nodes for the render farm workshop\n\n- name: Show the target region\n  ansible.builtin.debug:\n    msg: \"Deploying {{ guid }} to {{ aws_region }}\"\n\n- name: Launch the render nodes\n  amazon.aws.ec2_instance:\n    region: \"{{ aws_region }}\"\n    image_id: ami-0c7d41e9b25f83a16    # RHEL 9 render image\n    instance_type: \"{{ render_farm_node_type }}\"\n    count: \"{{ render_farm_node_count }}\"\n    key_name: \"{{ guid }}-key\"\n    vpc_subnet_id: \"{{ render_farm_subnet_id }}\"\n    tags:\n      guid: \"{{ guid }}\"\n      lab_role: render-node\n    wait: true\n  register: r_render_nodes\n\n- name: Wait for the render nodes to pass status checks\n  amazon.aws.ec2_instance_info:\n    region: \"{{ aws_region }}\"\n    instance_ids: \"{{ r_render_nodes.instance_ids }}\"\n  register: r_render_info\n  until: r_render_info.instances | map(attribute='state.name') | unique == ['running']\n  retries: 30\n  delay: 10\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/render_farm_nodes/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "9e2a6c41d8b07f35a1c94e6b2d0f7a8c53e1b4d9",
+      "path": "ansible/roles/render_farm_nodes/tasks/main.yml",
+      "content": "---\n# render_farm_nodes: GPU render nodes for the render farm workshop\n\n- name: Show the target region\n  ansible.builtin.debug:\n    msg: \"Deploying {{ guid }} to {{ aws_region }}\"\n\n- name: Launch the render nodes\n  amazon.aws.ec2_instance:\n    region: \"{{ aws_region }}\"\n    image_id: ami-0c7d41e9b25f83a16    # RHEL 9 render image\n    instance_type: \"{{ render_farm_node_type }}\"\n    count: \"{{ render_farm_node_count }}\"\n    key_name: \"{{ guid }}-key\"\n    vpc_subnet_id: \"{{ render_farm_subnet_id }}\"\n    tags:\n      guid: \"{{ guid }}\"\n      lab_role: render-node\n    wait: true\n  register: r_render_nodes\n\n- name: Wait for the render nodes to pass status checks\n  amazon.aws.ec2_instance_info:\n    region: \"{{ aws_region }}\"\n    instance_ids: \"{{ r_render_nodes.instance_ids }}\"\n  register: r_render_info\n  until: r_render_info.instances | map(attribute='state.name') | unique == ['running']\n  retries: 30\n  delay: 10\n",
+      "file_id": "agnosticd/agnosticd-v2@9e2a6c41d8b07f35a1c94e6b2d0f7a8c53e1b4d9-ansible/roles/render_farm_nodes/tasks/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "ansible/roles/render_farm_nodes/defaults/main.yml",
+      "content": "---\n# render_farm_nodes defaults\nrender_farm_node_type: g5.2xlarge\nrender_farm_node_count: 2\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-ansible/roles/render_farm_nodes/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "ansible/roles/render_farm_nodes/defaults/main.yml",
+      "content": "---\n# render_farm_nodes defaults\nrender_farm_node_type: g5.2xlarge\nrender_farm_node_count: 2\n",
+      "file_id": "agnosticd/agnosticd-v2@main-ansible/roles/render_farm_nodes/defaults/main.yml"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "9e2a6c41d8b07f35a1c94e6b2d0f7a8c53e1b4d9",
+      "path": "ansible/roles/render_farm_nodes/defaults/main.yml",
+      "content": "---\n# render_farm_nodes defaults\nrender_farm_node_type: g5.2xlarge\nrender_farm_node_count: 2\n",
+      "file_id": "agnosticd/agnosticd-v2@9e2a6c41d8b07f35a1c94e6b2d0f7a8c53e1b4d9-ansible/roles/render_farm_nodes/defaults/main.yml"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

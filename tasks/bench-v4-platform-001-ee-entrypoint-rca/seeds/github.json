@@ -1,0 +1,72 @@
+{
+  "catalog_items": [
+    {
+      "found": true,
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "account": "sandboxes_gpte",
+      "directory": "ans-bu-wksp-rhel-90",
+      "path": "sandboxes_gpte/ans-bu-wksp-rhel-90/prod.yaml",
+      "default_branch": "main",
+      "files": [
+        "common.yaml",
+        "prod.yaml"
+      ],
+      "message": "",
+      "catalog_item_id": "sandboxes_gpte-sandboxes_gpte/ans-bu-wksp-rhel-90/prod.yaml"
+    }
+  ],
+  "files": [
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "tools/execution_environments/ee-multicloud-public/entrypoint.sh",
+      "content": "#!/bin/bash\n# Chained entrypoint for the ee-multicloud-public execution environment.\nset -e\n\n# Hand every argument straight to ansible-playbook.\nexec ansible-playbook \"$@\"\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-tools/execution_environments/ee-multicloud-public/entrypoint.sh"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "tools/execution_environments/ee-multicloud-public/Containerfile",
+      "content": "FROM registry.redhat.io/ansible-automation-platform/ee-minimal-rhel9\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-tools/execution_environments/ee-multicloud-public/Containerfile"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "HEAD",
+      "path": "tools/execution_environments/README.md",
+      "content": "# Execution environments\n\nOne directory per EE image.\n",
+      "file_id": "agnosticd/agnosticd-v2@HEAD-tools/execution_environments/README.md"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "tools/execution_environments/ee-multicloud-public/entrypoint.sh",
+      "content": "#!/bin/bash\n# Chained entrypoint for the ee-multicloud-public execution environment.\nset -e\n\n# Hand every argument straight to ansible-playbook.\nexec ansible-playbook \"$@\"\n",
+      "file_id": "agnosticd/agnosticd-v2@main-tools/execution_environments/ee-multicloud-public/entrypoint.sh"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "tools/execution_environments/ee-multicloud-public/Containerfile",
+      "content": "FROM registry.redhat.io/ansible-automation-platform/ee-minimal-rhel9\n",
+      "file_id": "agnosticd/agnosticd-v2@main-tools/execution_environments/ee-multicloud-public/Containerfile"
+    },
+    {
+      "owner": "agnosticd",
+      "repo": "agnosticd-v2",
+      "ref": "main",
+      "path": "tools/execution_environments/README.md",
+      "content": "# Execution environments\n\nOne directory per EE image.\n",
+      "file_id": "agnosticd/agnosticd-v2@main-tools/execution_environments/README.md"
+    }
+  ],
+  "pull_requests": [],
+  "repo_search_results": [],
+  "similar_items": []
+}

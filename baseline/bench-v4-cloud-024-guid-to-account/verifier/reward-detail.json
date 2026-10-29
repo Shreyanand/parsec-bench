@@ -1,0 +1,58 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.2,
+    "answer": 0.8
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [],
+    "unmatched_expected": [
+      {
+        "name": "query_aws_account_db",
+        "args": {}
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [
+      {
+        "id": "sandbox-name",
+        "any_of": [
+          "sandbox2291"
+        ],
+        "ignore_case": true,
+        "asked_by": "jbfsq",
+        "rationale": "the sandbox the GUID belongs to. A bare GUID can only be read as 'what is this', so the sandbox it names is the minimum a correct answer supplies"
+      },
+      {
+        "id": "owner",
+        "any_of": [
+          "rrivers"
+        ],
+        "ignore_case": true,
+        "asked_by": "jbfsq",
+        "rationale": "who holds it -- the second thing anyone asking about a GUID wants, and unguessable"
+      },
+      {
+        "id": "account-id",
+        "any_of": [
+          "419283746501"
+        ],
+        "ignore_case": true,
+        "asked_by": "jbfsq",
+        "rationale": "the AWS account, which is what makes the answer actionable. The second seeded sandbox has a neighbouring id, so the value discriminates"
+      }
+    ],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

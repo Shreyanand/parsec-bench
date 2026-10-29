@@ -1,0 +1,66 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "breakdown",
+          "group_by": "LINKED_ACCOUNT",
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30",
+          "top_n": 25
+        }
+      },
+      {
+        "name": "query_cost_monitor",
+        "args": {
+          "endpoint": "drilldown",
+          "drilldown_type": "account_services",
+          "selected_key": "593027418866",
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        }
+      },
+      {
+        "name": "query_aws_costs",
+        "args": {
+          "account_ids": [
+            "593027418866"
+          ],
+          "start_date": "2026-09-01",
+          "end_date": "2026-10-01",
+          "group_by": "INSTANCE_TYPE"
+        }
+      },
+      {
+        "name": "query_aws_capacity_manager",
+        "args": {
+          "metric": "utilization",
+          "account_id": "593027418866",
+          "group_by": "instance-type",
+          "instance_type": "g6e.12xlarge"
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 3,
+    "counts_missed": [],
+    "counts_total": 3,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 0
+  }
+}

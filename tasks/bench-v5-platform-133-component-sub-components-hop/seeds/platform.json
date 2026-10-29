@@ -1,0 +1,178 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [],
+  "babylon_catalog_items": [],
+  "babylon_components": [
+    {
+      "babylon_component_id": "kite-ai-platform-bundle",
+      "cluster": "kite",
+      "name": "ai-platform-bundle",
+      "cloud_provider": "none",
+      "env_type": "multi-component",
+      "platform": "rhpds",
+      "expected_instances": [],
+      "definition": {
+        "__meta__": {
+          "components": [
+            {
+              "name": "base",
+              "item": "ai-platform.base-ocp"
+            },
+            {
+              "name": "accelerators",
+              "item": "ai-platform.gpu-nodes"
+            }
+          ],
+          "catalog": {
+            "display_name": "AI Platform Bundle"
+          }
+        }
+      },
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "ai-platform/bundle/common.yaml",
+      "scm_ref": "main",
+      "sub_components": [
+        {
+          "name": "base",
+          "item": "ai-platform.base-ocp"
+        },
+        {
+          "name": "accelerators",
+          "item": "ai-platform.gpu-nodes"
+        }
+      ]
+    },
+    {
+      "babylon_component_id": "kite-ai-platform.base-ocp",
+      "cluster": "kite",
+      "name": "ai-platform.base-ocp",
+      "cloud_provider": "aws",
+      "env_type": "ocp4-cluster",
+      "platform": "rhpds",
+      "expected_instances": [
+        {
+          "purpose": "bastion",
+          "instance_type": "t3a.large",
+          "count": 1
+        },
+        {
+          "purpose": "control_plane",
+          "instance_type": "m6a.2xlarge",
+          "count": 3
+        },
+        {
+          "purpose": "worker",
+          "instance_type": "m6a.4xlarge",
+          "count": 2
+        }
+      ],
+      "definition": {
+        "cloud_provider": "ec2",
+        "master_instance_type": "m6a.2xlarge",
+        "compute_replicas": 2,
+        "compute_instance_type": "m6a.4xlarge"
+      },
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "ai-platform/base-ocp/common.yaml",
+      "scm_ref": "main"
+    },
+    {
+      "babylon_component_id": "kite-ai-platform.gpu-nodes",
+      "cluster": "kite",
+      "name": "ai-platform.gpu-nodes",
+      "cloud_provider": "aws",
+      "env_type": "ocp4-workload-gpu-machineset",
+      "platform": "rhpds",
+      "expected_instances": [
+        {
+          "purpose": "gpu-worker",
+          "instance_type": "g6e.12xlarge",
+          "count": 4
+        }
+      ],
+      "definition": {
+        "cloud_provider": "ec2",
+        "gpu_machineset_instance_type": "g6e.12xlarge",
+        "gpu_machineset_replicas": 4,
+        "nvidia_driver_channel": "v580"
+      },
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "ai-platform/gpu-nodes/common.yaml",
+      "scm_ref": "main"
+    },
+    {
+      "babylon_component_id": "condor-ai-platform-bundle",
+      "cluster": "condor",
+      "name": "ai-platform-bundle",
+      "cloud_provider": "none",
+      "env_type": "multi-component",
+      "platform": "rhpds",
+      "expected_instances": [],
+      "definition": {
+        "__meta__": {
+          "components": [
+            {
+              "name": "base",
+              "item": "ai-platform.base-ocp"
+            },
+            {
+              "name": "accelerators",
+              "item": "ai-platform.gpu-nodes"
+            }
+          ]
+        }
+      },
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "ai-platform/bundle/common.yaml",
+      "scm_ref": "release-2026.09",
+      "sub_components": [
+        {
+          "name": "base",
+          "item": "ai-platform.base-ocp"
+        },
+        {
+          "name": "accelerators",
+          "item": "ai-platform.gpu-nodes"
+        }
+      ]
+    },
+    {
+      "babylon_component_id": "condor-ai-platform.gpu-nodes",
+      "cluster": "condor",
+      "name": "ai-platform.gpu-nodes",
+      "cloud_provider": "aws",
+      "env_type": "ocp4-workload-gpu-machineset",
+      "platform": "rhpds",
+      "expected_instances": [
+        {
+          "purpose": "gpu-worker",
+          "instance_type": "g5.8xlarge",
+          "count": 2
+        }
+      ],
+      "definition": {
+        "cloud_provider": "ec2",
+        "gpu_machineset_instance_type": "g5.8xlarge",
+        "gpu_machineset_replicas": 2
+      },
+      "agnosticv_repo": "rhpds/agnosticv",
+      "agnosticv_path": "ai-platform/gpu-nodes/common.yaml",
+      "scm_ref": "release-2026.09"
+    }
+  ],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

@@ -1,0 +1,16 @@
+{
+  "tool_calls": [
+    {
+      "name": "query_icinga",
+      "args": {
+        "action": "get_services",
+        "filter_expr": "service.name==\"cert-expiry\""
+      },
+      "result": {
+        "result": "[{\"name\":\"aap2-prod-us-west-2!cert-expiry\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Certificate expiry\",\"host_name\":\"aap2-prod-us-west-2\",\"state\":1,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":0,\"groups\":[],\"last_check_result\":{\"output\":\"WARNING - controller certificate expires in 19 days\",\"state\":1,\"exit_status\":1}}},{\"name\":\"aap2-prod-us-east-2!cert-expiry\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Certificate expiry\",\"host_name\":\"aap2-prod-us-east-2\",\"state\":2,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":0,\"groups\":[],\"last_check_result\":{\"output\":\"CRITICAL - controller certificate expires in 4 days\",\"state\":2,\"exit_status\":2}}},{\"name\":\"babylon-ocp-prod-us-east-1!cert-expiry\",\"type\":\"Service\",\"attrs\":{\"display_name\":\"Certificate expiry\",\"host_name\":\"babylon-ocp-prod-us-east-1\",\"state\":0,\"state_type\":1,\"acknowledgement\":0,\"downtime_depth\":0,\"groups\":[],\"last_check_result\":{\"output\":\"OK - certificate valid for 214 days\",\"state\":0,\"exit_status\":0}}}]"
+      },
+      "is_error": false
+    }
+  ],
+  "answer": "cert-expiry exists on 3 hosts:\n\n- aap2-prod-us-east-2 -- CRITICAL, controller certificate expires in 4 days\n- aap2-prod-us-west-2 -- WARNING, controller certificate expires in 19 days\n- babylon-ocp-prod-us-east-1 -- OK, certificate valid for 214 days, no action needed\n\naap2-prod-us-east-2 needs attention first: it is the only CRITICAL of the three and its certificate has 4 days left. The west-2 controller is worth scheduling but not urgent at 19 days, and the Babylon host is fine."
+}

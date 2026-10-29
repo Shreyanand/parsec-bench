@@ -1,0 +1,3 @@
+Payments Eventbus Lab orders on the `event0` AAP2 controller have failed every time since the evening of 2026-10-05. The latest is job `9917306`. The step that creates the Kafka topics cannot find the KafkaTopic kind, and our event lead is convinced the latest Strimzi operator release dropped the `kafka.strimzi.io/v1beta2` API and wants the operator pinned to an older version.
+
+Look into it before we pin anything. Read the job log, look up the catalog item and read its configuration, check the item's agnosticv pull requests, and read the failing workload's task file in the repository the job ran from. Tell me why the KafkaTopic kind did not exist when that step ran, which pull request introduced the problem and what it changed, and how to fix the item.

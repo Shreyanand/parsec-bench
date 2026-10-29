@@ -1,0 +1,192 @@
+{
+  "tool_calls": {
+    "match": "unordered-subset",
+    "expected": [
+      {
+        "name": "query_gcp_costs",
+        "args": {
+          "start_date": "2026-07-01",
+          "end_date": "2026-07-31",
+          "group_by": "PROJECT"
+        }
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "unknown-is-not-a-project",
+        "derived": true,
+        "ignore_case": true,
+        "any_of": [
+          "not a project",
+          "isn't a project",
+          "not an actual project",
+          "not a real project",
+          "no project id",
+          "no project attached",
+          "no project associated",
+          "no project assigned",
+          "no associated project",
+          "no owning project",
+          "without a project",
+          "missing a project",
+          "missing project",
+          "lack a project",
+          "lacks a project",
+          "lacked a project",
+          "null project",
+          "empty project",
+          "project is null",
+          "project was null",
+          "project field is empty",
+          "project id is empty",
+          "not attributed to any project",
+          "not attributable to any project",
+          "not tied to any project",
+          "not tied to a project",
+          "not assigned to a project",
+          "not assigned to any project",
+          "isn't attributed to any project",
+          "isn't tied to any project",
+          "can't be attributed",
+          "cannot be attributed",
+          "can't be assigned to",
+          "cannot be assigned to",
+          "can't be billed to",
+          "cannot be billed to",
+          "can't be re-billed",
+          "cannot be re-billed",
+          "can't be rebilled",
+          "cannot be rebilled",
+          "no team to bill",
+          "no owning team",
+          "no owner to bill",
+          "has no owner",
+          "unattributed",
+          "unallocated",
+          "unassigned",
+          "with no project",
+          "no project on",
+          "no project label",
+          "no project tag",
+          "no project set",
+          "no team to send",
+          "no team to charge",
+          "no team to re-bill",
+          "no team owns",
+          "nobody owns",
+          "not a sixth project",
+          "isn't a sixth project",
+          "not a team's project",
+          "costs with no project",
+          "charges with no project"
+        ],
+        "asked_by": "will those re-bills add up to the full GCP total for the month",
+        "rationale": "parsec labels a billing row whose project is null or empty with the literal `unknown`; it is a residual bucket, not a team's project",
+        "note": "The PROJECT breakdown carries a $6,412.30 line named `unknown`, the tool's label for rows with no project, so that amount has no project owner to re-bill."
+      },
+      {
+        "id": "top-project",
+        "ignore_case": true,
+        "any_of": [
+          "ml-feature-store-prod"
+        ],
+        "asked_by": "give me each project's cost",
+        "rationale": "the per-project list must actually be reported"
+      }
+    ],
+    "counts": [
+      {
+        "id": "billable-projects",
+        "value": 5,
+        "derived": true,
+        "note": "Six breakdown lines, one of which is the `unknown` bucket, leave 5 named projects.",
+        "nouns": [
+          "projects",
+          "named projects",
+          "billable projects",
+          "re-bills",
+          "rebills",
+          "teams"
+        ],
+        "window": 4,
+        "asked_by": "How many projects do I need to raise a re-bill for",
+        "rationale": "6 if the `unknown` bucket is counted as a project, which is the trap"
+      },
+      {
+        "id": "unattributed-amount",
+        "value": 6412,
+        "nouns": [
+          "unknown",
+          "unattributed"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "6,412.30",
+          "6412.30",
+          "6,412.3 ",
+          "6412.3 "
+        ],
+        "asked_by": "will those re-bills add up to the full GCP total for the month",
+        "rationale": "the size of the gap between the re-bills and the total"
+      },
+      {
+        "id": "month-total",
+        "value": 31709,
+        "nouns": [
+          "total"
+        ],
+        "window": 6,
+        "extra_any_of": [
+          "31,709.78",
+          "31709.78"
+        ],
+        "asked_by": "the month total",
+        "rationale": "total_cost as stored"
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "unknown-billed-as-project",
+        "ignore_case": true,
+        "none_of": [
+          "6 projects to re-bill",
+          "six projects to re-bill",
+          "6 projects to bill",
+          "six projects to bill",
+          "6 billable projects",
+          "six billable projects",
+          "6 re-bills",
+          "six re-bills",
+          "re-bill all 6",
+          "re-bill all six",
+          "the unknown project's owner",
+          "owner of the unknown project",
+          "owner of the \"unknown\" project",
+          "owner of the 'unknown' project",
+          "the team that owns unknown",
+          "bill the unknown project",
+          "re-bill the unknown project",
+          "the re-bills will add up to the full",
+          "the re-bills add up to the full",
+          "re-bills will cover the full",
+          "every dollar is assigned",
+          "every dollar is attributed",
+          "fully attributed to projects",
+          "the whole total is attributed"
+        ],
+        "rationale": "the wrong answer treats `unknown` as a sixth project and promises re-bills that cover the whole total"
+      }
+    ]
+  },
+  "schema": "bench/v4",
+  "completion": {
+    "nonempty_answer": true,
+    "status": "ok"
+  }
+}

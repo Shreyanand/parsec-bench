@@ -1,0 +1,140 @@
+{
+  "babylon_anarchy_actions": [],
+  "babylon_anarchy_subjects": [
+    {
+      "babylon_anarchy_subject_id": "heron-sap-hana-lab.m6qpz",
+      "cluster": "heron",
+      "name": "sap-hana-lab.m6qpz",
+      "namespace": "babylon-anarchy-sap-hana-lab",
+      "governor": "sap-hana-lab",
+      "current_state": "stopped",
+      "desired_state": "stopped",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "m6qpz",
+        "env_type": "sap-hana-lab",
+        "aws_region": "eu-central-1"
+      },
+      "requester_email": "dkowalczyk@redhat.com",
+      "resource_claim": {
+        "name": "sap-hana-lab-m6qpz",
+        "namespace": "user-dkowalczyk-redhat-com"
+      },
+      "tower_jobs": {
+        "provision": {
+          "controller": "east",
+          "job_id": 4417203
+        },
+        "stop": {
+          "controller": "event0",
+          "job_id": 4419860
+        }
+      }
+    },
+    {
+      "babylon_anarchy_subject_id": "heron-sap-hana-lab.q9tdr",
+      "cluster": "heron",
+      "name": "sap-hana-lab.q9tdr",
+      "namespace": "babylon-anarchy-sap-hana-lab",
+      "governor": "sap-hana-lab",
+      "current_state": "started",
+      "desired_state": "started",
+      "healthy": true,
+      "instance_vars": {
+        "guid": "q9tdr",
+        "env_type": "sap-hana-lab",
+        "aws_region": "eu-central-1"
+      },
+      "requester_email": "ybergstrom@redhat.com",
+      "resource_claim": {
+        "name": "sap-hana-lab-q9tdr",
+        "namespace": "user-ybergstrom-redhat-com"
+      },
+      "tower_jobs": {
+        "provision": {
+          "controller": "east",
+          "job_id": 4418555
+        },
+        "stop": {
+          "controller": "event0",
+          "job_id": 4419871
+        }
+      }
+    }
+  ],
+  "babylon_catalog_items": [],
+  "babylon_components": [],
+  "babylon_deployments": [],
+  "babylon_multiworkshops": [],
+  "babylon_resource_pools": [],
+  "babylon_workshops": [],
+  "jobs": [
+    {
+      "job_id": 4417203,
+      "job_name": "RHDP sap-hana-lab.prod-m6qpz-1-provision",
+      "status": "successful",
+      "failed": false,
+      "started": "2026-10-06T09:14:02.000Z",
+      "finished": "2026-10-06T10:31:40.000Z",
+      "template_name": "RHDP sap-hana-lab.prod-provision",
+      "guid": "m6qpz",
+      "action": "provision",
+      "controller": "east",
+      "env_type": "sap-hana-lab",
+      "cloud_provider": "ec2",
+      "display_name": "SAP HANA on RHEL Lab",
+      "launch_type": "workflow",
+      "job_explanation": "",
+      "duration_seconds": 4658,
+      "id": "east-4417203"
+    },
+    {
+      "job_id": 4419860,
+      "job_name": "RHDP sap-hana-lab.prod-m6qpz-2-stop",
+      "status": "successful",
+      "failed": false,
+      "started": "2026-10-08T17:02:11.000Z",
+      "finished": "2026-10-08T18:49:35.000Z",
+      "template_name": "RHDP sap-hana-lab.prod-stop",
+      "guid": "m6qpz",
+      "action": "stop",
+      "controller": "event0",
+      "env_type": "sap-hana-lab",
+      "cloud_provider": "ec2",
+      "display_name": "SAP HANA on RHEL Lab",
+      "launch_type": "workflow",
+      "job_explanation": "",
+      "duration_seconds": 6444,
+      "id": "event0-4419860"
+    },
+    {
+      "job_id": 4419871,
+      "job_name": "RHDP sap-hana-lab.prod-q9tdr-2-stop",
+      "status": "failed",
+      "failed": true,
+      "started": "2026-10-08T17:40:00.000Z",
+      "finished": "2026-10-08T17:52:19.000Z",
+      "template_name": "RHDP sap-hana-lab.prod-stop",
+      "guid": "q9tdr",
+      "action": "stop",
+      "controller": "event0",
+      "job_explanation": "Job terminated: instance stop request timed out",
+      "env_type": "sap-hana-lab",
+      "cloud_provider": "ec2",
+      "display_name": "SAP HANA on RHEL Lab",
+      "launch_type": "workflow",
+      "duration_seconds": 739,
+      "id": "event0-4419871"
+    }
+  ],
+  "job_events": [],
+  "ocpv_machines": [],
+  "ocpv_machinesets": [],
+  "ocpv_namespaces": [],
+  "ocpv_pvcs": [],
+  "ocpv_storage_classes": [],
+  "ocpv_vms": [],
+  "splunk_aap2_log_entries": [],
+  "splunk_ocp_log_entries": [],
+  "workshops": []
+}

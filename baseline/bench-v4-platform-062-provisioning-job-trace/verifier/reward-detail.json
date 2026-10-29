@@ -1,0 +1,70 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "name": "sandbox4718"
+        }
+      },
+      {
+        "name": "query_provisions_db",
+        "args": {
+          "sql": "SELECT p.uuid, p.babylon_guid, p.catalog_id, p.status, p.provisioned_at, p.retired_at, p.ordered_by, ci.name AS catalog_item_name FROM provisions p LEFT JOIN catalog_items ci ON p.catalog_id = ci.id WHERE p.account = 'sandbox4718' ORDER BY p.provisioned_at DESC LIMIT 10"
+        }
+      },
+      {
+        "name": "query_babylon_catalog",
+        "args": {
+          "action": "list_anarchy_subjects",
+          "guid": "wq4ke"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "find_jobs",
+          "template_name": "wq4ke",
+          "status": "failed"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "job_id": 66215,
+          "controller": "event0"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_events",
+          "job_id": 66215,
+          "controller": "event0",
+          "failed_only": true
+        }
+      }
+    ],
+    "unmatched_expected": [],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 0,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 0
+  }
+}

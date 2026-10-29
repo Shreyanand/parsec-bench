@@ -1,0 +1,121 @@
+{
+  "schema": "bench/v4",
+  "completion": {
+    "status": "ok",
+    "nonempty_answer": true
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "expected": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "get_job_log",
+          "controller": "event0",
+          "job_id": 915738
+        }
+      },
+      {
+        "name": "lookup_catalog_item",
+        "args": {}
+      },
+      {
+        "name": "fetch_github_file",
+        "args": {
+          "owner": "rhpds",
+          "repo": "agnosticv",
+          "path": "summit_events/summit-mesh-lab/common.yaml"
+        }
+      }
+    ],
+    "forbidden": [
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "relaunch_job"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "relaunch"
+        }
+      },
+      {
+        "name": "query_aap2",
+        "args": {
+          "action": "launch_job"
+        }
+      }
+    ]
+  },
+  "answer": {
+    "required": [
+      {
+        "id": "url-4-2",
+        "any_of": [
+          "latest-4.2",
+          "4.2 installer",
+          "asked for 4.2",
+          "ocp4_installer_version=4.2"
+        ],
+        "ignore_case": true,
+        "asked_by": "what the download actually requested",
+        "rationale": "the log shows 4.2 where 4.20 was intended; only the log read supplies it"
+      },
+      {
+        "id": "float-parse",
+        "any_of": [
+          "float",
+          "as a number",
+          "numeric",
+          "trailing zero",
+          "parses an unquoted",
+          "parsed as 4.2",
+          "read as 4.2",
+          "becomes 4.2"
+        ],
+        "ignore_case": true,
+        "derived": true,
+        "asked_by": "what the download actually requested and why",
+        "rationale": "the synthesis: the unquoted value in common.yaml is the cause, not the download server",
+        "note": "common.yaml sets ocp4_installer_version: 4.20 unquoted, and the job log prints ocp4_installer_version=4.2 and a latest-4.2 URL, so YAML loaded the value as the number 4.2 and dropped the trailing zero."
+      },
+      {
+        "id": "quote-fix",
+        "any_of": [
+          "\"4.20\"",
+          "'4.20'",
+          "quote it",
+          "quote the",
+          "quoted"
+        ],
+        "ignore_case": true,
+        "asked_by": "what to change",
+        "rationale": "the specific fix, which requires having seen the unquoted line",
+        "derived": true,
+        "note": "a recommendation, so no seed literal; quoting the common.yaml value (ocp4_installer_version: \"4.20\") keeps it a string, which the unquoted 4.20 in the seed is not (hazard 15)."
+      }
+    ],
+    "forbidden": [
+      {
+        "id": "server-blamed",
+        "none_of": [
+          "artifact server is down",
+          "artifact server was down",
+          "server is flaking",
+          "server was flaking",
+          "outage",
+          "transient",
+          "flaky"
+        ],
+        "ignore_case": true,
+        "rationale": "the user's guess; the artifact server answered a request for a file that does not exist"
+      }
+    ]
+  },
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  }
+}

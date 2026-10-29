@@ -1,0 +1,110 @@
+{
+  "account_costs": [],
+  "aws_cost_results": [],
+  "azure_cost_results": [],
+  "azure_service_costs": [],
+  "azure_subscription_costs": [],
+  "capacity_metric_results": [],
+  "capacity_totals": [],
+  "capacity_windows": [],
+  "cost_monitor_results": [
+    {
+      "cost_monitor_result_id": "cmr-brk-itype-0926q",
+      "endpoint": "breakdown",
+      "results": [
+        {
+          "rank": 1,
+          "provider": "aws",
+          "instance_type": "m7i.xlarge",
+          "usage_hours": 46800.0,
+          "cost": 8985.6,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "rank": 2,
+          "provider": "aws",
+          "instance_type": "c7i.2xlarge",
+          "usage_hours": 27360.0,
+          "cost": 9302.4,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "rank": 3,
+          "provider": "aws",
+          "instance_type": "t3.large",
+          "usage_hours": 25920.0,
+          "cost": 2156.54,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "rank": 4,
+          "provider": "aws",
+          "instance_type": "r6i.xlarge",
+          "usage_hours": 18720.0,
+          "cost": 4717.44,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "rank": 5,
+          "provider": "aws",
+          "instance_type": "m7i.2xlarge",
+          "usage_hours": 13440.0,
+          "cost": 5160.96,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "rank": 6,
+          "provider": "aws",
+          "instance_type": "g5.4xlarge",
+          "usage_hours": 7920.0,
+          "cost": 12862.08,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "rank": 7,
+          "provider": "aws",
+          "instance_type": "c6i.4xlarge",
+          "usage_hours": 5040.0,
+          "cost": 3427.2,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "rank": 8,
+          "provider": "aws",
+          "instance_type": "r6i.4xlarge",
+          "usage_hours": 4320.0,
+          "cost": 4354.56,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "rank": 9,
+          "provider": "aws",
+          "instance_type": "p3.2xlarge",
+          "usage_hours": 3600.0,
+          "cost": 11016.0,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        },
+        {
+          "rank": 10,
+          "provider": "aws",
+          "instance_type": "x2iedn.xlarge",
+          "usage_hours": 1440.0,
+          "cost": 1200.43,
+          "start_date": "2026-09-01",
+          "end_date": "2026-09-30"
+        }
+      ]
+    }
+  ],
+  "gcp_cost_results": [],
+  "periods": []
+}

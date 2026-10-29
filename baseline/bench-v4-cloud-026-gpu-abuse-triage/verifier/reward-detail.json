@@ -1,0 +1,92 @@
+{
+  "gate": 1.0,
+  "weights": {
+    "tool_calls": 0.3,
+    "answer": 0.7
+  },
+  "tool_calls": {
+    "match": "ordered-subsequence",
+    "actual": [
+      {
+        "name": "query_aws_account_db",
+        "args": {
+          "account_id": "419283746777"
+        }
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "419283746777",
+          "action": "describe_instances",
+          "region": "ap-south-1"
+        }
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "419283746777",
+          "action": "list_users"
+        }
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "419283746777",
+          "action": "describe_marketplace"
+        }
+      },
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "\nSELECT eventTime, eventName, recipientAccountId,\n       userIdentity.arn AS caller_arn,\n       userIdentity.type AS caller_type,\n       sourceIPAddress,\n       requestParameters,\n       responseElements\nFROM cloudtrail_events\nWHERE eventName = 'RunInstances'\n  AND recipientAccountId = '419283746777'\n  AND eventTime > '2026-06-01'\nORDER BY eventTime DESC\n",
+          "max_results": 50
+        }
+      },
+      {
+        "name": "query_cloudtrail",
+        "args": {
+          "query": "\nSELECT eventTime, eventName, recipientAccountId,\n       userIdentity.arn AS caller_arn,\n       userIdentity.type AS caller_type,\n       sourceIPAddress,\n       requestParameters\nFROM cloudtrail_events\nWHERE recipientAccountId = '419283746777'\n  AND eventTime > '2026-01-01'\nORDER BY eventTime DESC\n",
+          "max_results": 100
+        }
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "419283746777",
+          "action": "lookup_events",
+          "region": "ap-south-1",
+          "filters": {
+            "event_name": "RunInstances"
+          }
+        }
+      },
+      {
+        "name": "query_aws_account",
+        "args": {
+          "account_id": "419283746777",
+          "action": "lookup_events",
+          "region": "ap-south-1"
+        }
+      }
+    ],
+    "unmatched_expected": [
+      {
+        "name": "query_marketplace_agreements",
+        "args": {}
+      }
+    ],
+    "forbidden_violations": []
+  },
+  "answer": {
+    "required_missed": [],
+    "required_total": 4,
+    "counts_missed": [],
+    "counts_total": 1,
+    "citations_missed": [],
+    "citations_total": 0,
+    "verdict_missed": [],
+    "verdict_total": 0,
+    "forbidden_hit": [],
+    "forbidden_total": 1
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "access_keys": [],
+  "azure_subscriptions": [],
+  "ec2_instances": [],
+  "events": [
+    {
+      "event_id": "3f1c8a62-0d4e-4b97-a5c2-91e7d03b6f48",
+      "account_id": "274619035821",
+      "event_name": "ModifyRule",
+      "event_source": "elasticloadbalancing.amazonaws.com",
+      "event_time": "2026-09-17T12:41:15Z",
+      "username": "hvesterlund",
+      "resources": [
+        {
+          "resourceType": "AWS::ElasticLoadBalancingV2::ListenerRule",
+          "resourceName": "arn:aws:elasticloadbalancing:us-east-1:274619035821:listener-rule/app/storefront-public-alb/5c7e19a04b3d2f86/0e4a9b1c7d2f5e38/a91f03d6e2c4b758"
+        }
+      ]
+    },
+    {
+      "event_id": "d7a20e94-6b3f-4c18-8e51-2f09c7b4a6d3",
+      "account_id": "274619035821",
+      "event_name": "DeleteRule",
+      "event_source": "events.amazonaws.com",
+      "event_time": "2026-09-17T13:09:44Z",
+      "username": "pdasgupta",
+      "resources": [
+        {
+          "resourceType": "AWS::Events::Rule",
+          "resourceName": "arn:aws:events:us-east-1:274619035821:rule/nightly-invoice-export"
+        }
+      ]
+    },
+    {
+      "event_id": "58e6b1f0-9c27-4a3d-b0e4-7d1a6f2c9e85",
+      "account_id": "274619035821",
+      "event_name": "DescribeRules",
+      "event_source": "elasticloadbalancing.amazonaws.com",
+      "event_time": "2026-09-17T13:18:02Z",
+      "username": "hvesterlund",
+      "resources": []
+    },
+    {
+      "event_id": "a0c94d37-2e8b-4f61-9d75-0b3e8a1f6c29",
+      "account_id": "274619035821",
+      "event_name": "DeleteRule",
+      "event_source": "elasticloadbalancing.amazonaws.com",
+      "event_time": "2026-09-17T13:24:51Z",
+      "username": "hvesterlund",
+      "resources": [
+        {
+          "resourceType": "AWS::ElasticLoadBalancingV2::ListenerRule",
+          "resourceName": "arn:aws:elasticloadbalancing:us-east-1:274619035821:listener-rule/app/storefront-public-alb/5c7e19a04b3d2f86/0e4a9b1c7d2f5e38/6d2e8f41b07c93a5"
+        }
+      ]
+    },
+    {
+      "event_id": "e4b71f0c-5a93-4d26-87c1-3f6e2d90b5a7",
+      "account_id": "274619035821",
+      "event_name": "DeleteRule",
+      "event_source": "elasticloadbalancing.amazonaws.com",
+      "event_time": "2026-09-17T13:58:06Z",
+      "username": "hvesterlund",
+      "resources": [
+        {
+          "resourceType": "AWS::ElasticLoadBalancingV2::ListenerRule",
+          "resourceName": "arn:aws:elasticloadbalancing:us-east-1:274619035821:listener-rule/app/storefront-public-alb/5c7e19a04b3d2f86/0e4a9b1c7d2f5e38/f3087c2a9d5e1b64"
+        }
+      ]
+    },
+    {
+      "event_id": "17d5c3a9-8f02-4e4b-b6a1-c9e04f7d2b38",
+      "account_id": "274619035821",
+      "event_name": "DeleteRule",
+      "event_source": "elasticloadbalancing.amazonaws.com",
+      "event_time": "2026-09-17T14:38:12Z",
+      "username": "hvesterlund",
+      "resources": [
+        {
+          "resourceType": "AWS::ElasticLoadBalancingV2::ListenerRule",
+          "resourceName": "arn:aws:elasticloadbalancing:us-east-1:274619035821:listener-rule/app/storefront-public-alb/5c7e19a04b3d2f86/0e4a9b1c7d2f5e38/2b9a64e0c1f7d835"
+        }
+      ]
+    },
+    {
+      "event_id": "6c0e2b85-3d7a-4f19-a2e6-8b5f1c94d07e",
+      "account_id": "274619035821",
+      "event_name": "DeleteRule",
+      "event_source": "events.amazonaws.com",
+      "event_time": "2026-09-17T14:52:18Z",
+      "username": "pdasgupta",
+      "resources": [
+        {
+          "resourceType": "AWS::Events::Rule",
+          "resourceName": "arn:aws:events:us-east-1:274619035821:rule/stale-cart-reminder"
+        }
+      ]
+    },
+    {
+      "event_id": "b25f9e13-74c6-4a08-9e3b-5d81a0c6f2e4",
+      "account_id": "274619035821",
+      "event_name": "DeleteRule",
+      "event_source": "elasticloadbalancing.amazonaws.com",
+      "event_time": "2026-09-17T15:12:40Z",
+      "username": "jokafor",
+      "resources": [
+        {
+          "resourceType": "AWS::ElasticLoadBalancingV2::ListenerRule",
+          "resourceName": "arn:aws:elasticloadbalancing:us-east-1:274619035821:listener-rule/app/storefront-public-alb/5c7e19a04b3d2f86/0e4a9b1c7d2f5e38/c47e1d09a3b6f528"
+        }
+      ]
+    }
+  ],
+  "gcp_projects": [],
+  "iam_users": [],
+  "marketplace_agreements": [],
+  "sandbox_accounts": []
+}
